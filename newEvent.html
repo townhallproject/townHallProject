@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+  <body>
+    <main>
+      <section class="forms">
+        <h1>Add new event</h1>
+        <form id="save-event" class="" action="#">
+          <div class="form-group">
+            <label class="col-md-6" for="name">Event Name</label>
+            <input type="text" name="name" value="" id="name">
+          </div>
+          <div class="form-group">
+            <label class="col-md-6" for="address">Address</label>
+            <input type="text" name="address" value="" id="address">
+          </div>
+          <div class="form-group">
+            <label class="col-md-6" for="date">Date</label>
+            <input type="date" name="address" value="" id="date">
+          </div>
+          <div class="form-group">
+            <label class="col-md-6" for="time">Start Time (use local time)</label>
+            <input type="time" name="time" value="" id="time">
+          </div>
+          <div class="form-group">
+            <label class="col-md-6" for="link">Link</label>
+              <input type="text" name="link" value="" id="link">
+          </div>
+          <button type="submit" name="button">Save</button>
+        </form>
+        <form id="look-up" class="" action="index.html" method="post">
+          <div class="form-group">
+            <label class="col-md-6" for="zip">Look Up Events by Zip</label>
+            <input type="zip" name="" value="">
+          </div>
+          <button type="submit" name="button">Look Up</button>
+
+        </form>
+      </section>
+      <div id="nearest"></div>
+
+      <div id="map"></div>
+
+    </main>
+    <footer>
+    </footer>
+    <!-- Vendor Files -->
+    <script src="/vendor/scripts/jquery-2.1.4.js"></script>
+    <script src="/vendor/scripts/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
+    <script src="/scripts/event.js"></script>
+    <script src="/scripts/eventEntry.js"></script>
+    <script src="/scripts/mapUsers.js"></script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_1gaWM06y2_P1kbH4jTMi3zy6vJUYp1E&callback=initMap&libraries=visualization,geometry"></script>
+
+
+
+  </body>
+</html>
