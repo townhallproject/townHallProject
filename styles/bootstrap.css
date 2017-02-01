@@ -6780,4 +6780,12 @@ input {
   background-color: white;
   color: #8dd0ea;
 }
+.panel-dem {
+  color: #1E2528;
+  background-color: #37acda;
+}
+.panel-rep {
+  color: #1E2528;
+  background-color: #8c1b12;
+}
 /*# sourceMappingURL=bootstrap.css.map */

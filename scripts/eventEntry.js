@@ -51,8 +51,22 @@
     e.preventDefault();
     Event.lookupZip($('#look-up input').val())
   }
-  eventHandler.render = function (data) {
-    $('#nearest').text('The closest town hall to you is: ' + data)
+
+  eventHandler.render = function (events, num) {
+    var $parent = $('#nearest')
+    $parent.empty();
+    recenterMap(events.slice(0,num));
+    for (var i = 0; i < num; i++) {
+      var $panel = $(events[i].toHtml($('#event-template')))
+      if (events[i].Party === 'Democratic') {
+        $panel.children('.panel').addClass('panel-dem');
+        $panel.appendTo($parent);
+      }
+      else {
+        $panel.children('.panel').addClass('panel-rep');
+        $panel.appendTo($parent);
+      }
+    }
   }
 
   $('#save-event').on('submit', eventHandler.save);

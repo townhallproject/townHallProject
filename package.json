@@ -26,6 +26,7 @@
     "firebase": "^3.6.6",
     "geo-distance": "^0.1.2",
     "google-maps": "^3.2.1",
+    "handlebars": "^4.0.6",
     "twilio": "^2.11.1"
   },
   "devDependencies": {

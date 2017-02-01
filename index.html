@@ -3,9 +3,33 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Town Hall Project 2018</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
+    <script id="event-template" type="text/x-handlebars-template">
+      <div class="col-sm-12">
+        <div class="panel panel-secondary">
+          <div class="panel-heading">
+            <h4>{{Location}}</h4>
+            <p>{{Member}}</p>
+          </div>
+          <div class="panel-body">
+            <ul class="list-group">
+              <li class="list-group-item"><span class="profile-summary-key">Party: </span><span class="profile-summary-value">{{Party}}</span></li>
+              <li class="list-group-item"><span class="profile-summary-key">Meeting Type:</span> <span class="profile-summary-value">{{meetingType}}</span></li>
+              <li class="list-group-item"><span class="profile-summary-key">Date: </span><span class="profile-summary-value">{{Date}}</span></li>
+              <li class="list-group-item"><span class="profile-summary-key">Address:</span> <span class="profile-summary-value">{{address}}</span></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      </div>
+
+      <p>{{description}}</p>
+    </script>
   </head>
   <body>
     <nav class="navbar navbar-default ">
@@ -28,30 +52,30 @@
     <section class=" container container-fluid">
 
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div  class=" text-left site-header clearfix col-md-12 displayoff">
               <h2 >Show Up.</h2>
               <h2 >Speak Up.</h2>
               <h2 class="text-secondary-dark">Fight Back.</h2>
+              <form id="look-up" class="form-inline" action="index.html" method="post">
+                <div class="form-group">
+                  <label  for="zip"></label>
+                  <input class="form-control input-md " type="zip" name="" value="" placeholder="Zip Code">
+                  <button type="submit" name="button" class="btn btn-primary btn-sm ">Find Town Hall</button>
+                </div>
 
+              </form>
         </div>
       </div>
-
+      <section class="results col-sm-8 state-info-bg">
+        <div id="nearest"></div>
+      </section>
     </div>
     <section class=" container container-fluid">
 
     <main>
-      <section class="forms">
-        <form id="look-up" class="form-inline" action="index.html" method="post">
-          <div class="form-group">
-            <label  for="zip"></label>
-            <input class="form-control input-md " type="zip" name="" value="" placeholder="Zip Code">
-            <button type="submit" name="button" class="btn btn-primary btn-sm ">Find Town Hall</button>
-          </div>
 
-        </form>
-      </section>
-      <div id="nearest"></div>
+
 
 
     </main>
@@ -64,6 +88,8 @@
     <!-- Vendor Files -->
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
+    <script src="/node_modules/handlebars/dist/handlebars.js"></script>
+
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
 
     <script src="/scripts/event.js"></script>

@@ -13,22 +13,30 @@
     messagingSenderId: '47559178634',
   }
 
-  firebase.initializeApp(config)
+  firebase.initializeApp(config);
 
-  var firebasedb = firebase.database()
+  var firebasedb = firebase.database();
 
   var provider = new firebase.auth.GoogleAuthProvider();
 
   Event.prototype.writetoFB = function () {
     console.log('saving to firebase');
-    var newEvent = firebasedb.ref('/townHalls/').push()
-    newEvent.set(this)
+    var newEvent = firebasedb.ref('/townHalls/').push();
+    newEvent.set(this);
+  };
+
+  Event.prototype.toHtml= function(templateid){
+    var source = $(templateid).html();
+    var renderTemplate = Handlebars.compile(source);
+    return renderTemplate(this);
   };
 
   Event.lookupZip = function (zip) {
     return firebasedb.ref('/publicInfo/zips/' + zip).once('value').then(function(snapshot) {
       var location = new google.maps.LatLng(snapshot.val().LAT,  snapshot.val().LNG)
       Event.returnNearest(location)
+    }).catch(function(error){
+      console.log('That is not a real zip');
     })
   }
 
@@ -38,16 +46,14 @@
       snapshot.forEach(function(ele){
         locations.push(new Event(ele.val()))
       })
-      var position = locations.sort(function (a , b) {
+      var positions = locations.sort(function (a , b) {
         var apos = google.maps.geometry.spherical.computeDistanceBetween(location, new google.maps.LatLng(a.lat,a.long));
         var bpos = google.maps.geometry.spherical.computeDistanceBetween(location,  new google.maps.LatLng(b.lat,b.long));
         return apos <= bpos ? -1 : 1;
       })
-      first = position[0]
-      console.log(first);
-      eventHandler.render(first.Location+' '+ first.address +' '+ first.Date)
-    })
-  }
+      eventHandler.render(positions, 2);
+    });
+  };
 
   Event.prototype.getLatandLog = function(address) {
     var newEvent = this
