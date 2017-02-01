@@ -56,7 +56,7 @@
 @import "responsive-utilities.less";
 
 // Brand Colors
-@brand-primary: #7DBEB8;
+@brand-primary: #8dd0ea;
 @brand-secondary: #E32F21;
 @brand-cool: #ABCCBD;
 @brand-text: #1E2528;
@@ -75,7 +75,7 @@
 @nav-tabs-link-hover-border-color:  @brand-success;
 @nav-tabs-border-color:             @brand-info;
 
-@btn-warning-border: @brand-warning;
+@btn-warning-border: white;
 @btn-info-border: @brand-info;
 @btn-danger-border: @btn-danger-bg;
 @btn-danger-color: @brand-info;
@@ -142,13 +142,39 @@ body{
 
 .navbar{
   border-bottom: @brand-secondary 2px solid;
+  margin-bottom: 0;
 }
 
 header{
-  background-color: darken(@brand-primary, 20%);
+  background-color: @brand-primary;
   color: white;
 }
 
+input{
+  border: none;
+}
+
 .text-secondary{
-  color: @brand-secondary
+  color: @brand-secondary;
+}
+
+.text-secondary-dark{
+  color: darken(@brand-secondary, 10%);
+}
+
+.input-md{
+  background-color: darken(@brand-secondary, 10%);
+  color: white;
+}
+
+.btn-primary{
+  border: white solid 2px;
+  background-color: @brand-primary;
+}
+
+.btn-primary:hover{
+  border: white solid 2px;
+  background-color:white;
+  color: @brand-primary;
+
 }

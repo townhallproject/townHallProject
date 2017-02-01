@@ -19,38 +19,9 @@
 
   var provider = new firebase.auth.GoogleAuthProvider();
 
-  Event.signIn = function (){
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-    }).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-    });
-  }
-
-
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-    // User is signed in.
-      console.log(user.displayName, ' is signed in');
-    } else {
-      Event.signIn()
-      // No user is signed in.
-    }
-  });
-
   Event.prototype.writetoFB = function () {
     console.log('saving to firebase');
-    var newEvent = firebasedb.ref('events').push()
+    var newEvent = firebasedb.ref('/townHalls/').push()
     newEvent.set(this)
   };
 
@@ -62,18 +33,19 @@
   }
 
   Event.returnNearest = function (location) {
-    firebase.database().ref('/events/').once('value').then(function(snapshot) {
-      var locations = [];
+    var locations = []
+    firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
       snapshot.forEach(function(ele){
-        locations.push(ele.val())
+        locations.push(new Event(ele.val()))
       })
-      var position = locations.reduce(function (prev, curr) {
-        var cpos = google.maps.geometry.spherical.computeDistanceBetween(location, new google.maps.LatLng(curr.lat,curr.long));
-        var ppos = google.maps.geometry.spherical.computeDistanceBetween(location,  new google.maps.LatLng(prev.lat,prev.long));
-        return cpos < ppos ? curr : prev;
+      var position = locations.sort(function (a , b) {
+        var apos = google.maps.geometry.spherical.computeDistanceBetween(location, new google.maps.LatLng(a.lat,a.long));
+        var bpos = google.maps.geometry.spherical.computeDistanceBetween(location,  new google.maps.LatLng(b.lat,b.long));
+        return apos <= bpos ? -1 : 1;
       })
-      console.log(position);
-      eventHandler.render(position.name+''+ position.address)
+      first = position[0]
+      console.log(first);
+      eventHandler.render(first.Location+' '+ first.address +' '+ first.Date)
     })
   }
 
