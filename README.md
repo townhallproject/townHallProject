@@ -21,5 +21,6 @@ Submit an event for review by researchers
 
 ## Bootstrap
 
-Make changes to customboot.less
-Run grunt dist-css to create new bootstrap.min.css
+- Make changes to customboot.less
+- Run grunt dist-css 
+- New changes will be written to bootstrap.min.css
