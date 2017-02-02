@@ -1,4 +1,6 @@
 (function(module) {
+
+  // event Object
   function Event (opts) {
     for (var key in opts) {
       this[key] = opts[key];
@@ -39,15 +41,18 @@
     return renderTemplate(this);
   };
 
+  // takes a zip code, finds lat/lng, then calls return nearest
   Event.lookupZip = function (zip) {
     return firebasedb.ref('/publicInfo/zips/' + zip).once('value').then(function(snapshot) {
       var location = new google.maps.LatLng(snapshot.val().LAT,  snapshot.val().LNG)
       Event.returnNearest(location)
     }).catch(function(error){
+      // TODO: front end error message
       console.log('That is not a real zip');
     })
   }
 
+  //Takes a current location, iterates over all events, returns the two nearest. Then calls a render function.
   Event.returnNearest = function (location) {
     var locations = []
     firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
@@ -63,6 +68,8 @@
     });
   };
 
+  // Loads everything in the database
+  // TODO: seperate out this function into a Load and a View
   Event.viewAll = function (location) {
     var locations = []
     firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
@@ -76,6 +83,8 @@
     })
   }
 
+  // gets a google formatted address.
+  // Stores the resulting lat lng info in the Event object
   Event.prototype.getLatandLog = function(address, key) {
     var newEvent = this
     $.ajax({

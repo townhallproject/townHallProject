@@ -53,6 +53,8 @@
     })
   }
 
+// recenters map based on lookup
+// TODO: create a data context so this over-rides the map resize listener
   window.recenterMap = function(markers) {
     var bounds = new google.maps.LatLngBounds()
     var geocoder = new google.maps.Geocoder()
@@ -71,7 +73,7 @@
     })
   }
 
-// listens for new events
+// listens for new events, also initalizes
   firebase.database().ref('/townHalls').on('child_added', function getSnapShot(snapshot) {
     var ele = new Event (snapshot.val())
     var coords = [ele.long, ele.lat]

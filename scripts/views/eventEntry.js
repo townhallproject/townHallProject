@@ -2,7 +2,10 @@
   var firebasedb = firebase.database()
   var provider = new firebase.auth.GoogleAuthProvider();
 
+  // object to hold the front end view functions
   var eventHandler = {};
+
+  // creates new Event object from form
   eventHandler.save = function (e) {
     e.preventDefault();
     var newEvent = new Event( $('#save-event input').get().reduce(function(newObj, cur){
@@ -13,11 +16,13 @@
     newEvent.getLatandLog(newEvent.address);
   };
 
+// Given a new event, creates Event Object and encodes with lat and lng based on address from google docs
   eventHandler.saveSimple = function (newevent) {
     var newEvent = new Event(newevent)
     newEvent.getLatandLog(newEvent.streetNumber + newEvent.streetName +newEvent.Zip);
   };
 
+  // given an event and a current key, update that event.
   eventHandler.update = function (newevent , key) {
     var newEvent = new Event(newevent)
     var address = newEvent.streetNumber +' '+ newEvent.streetName +' '+ newEvent.City + ' ' + newEvent.Zip
@@ -25,6 +30,7 @@
     newEvent.getLatandLog(address, key);
   };
 
+  //Sign in fuction for firebase
   eventHandler.signIn = function (){
     firebase.auth().signInWithRedirect(provider);
     firebase.auth().getRedirectResult().then(function(result) {
@@ -44,7 +50,7 @@
     });
   }
 
-
+  //listens for auth state
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
     // User is signed in.
@@ -60,6 +66,8 @@
     Event.lookupZip($('#look-up input').val())
   }
 
+  //renders the results of lookup to the page
+  //colors based on party
   eventHandler.render = function (events, num) {
     var $parent = $('#nearest')
     $parent.empty();
@@ -77,6 +85,7 @@
     }
   }
 
+  // for front end editor.
   $('#all-events').on('focusout', '.event-row', function(){
     id = this.id;
     console.log(id);
