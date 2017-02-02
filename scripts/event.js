@@ -25,6 +25,14 @@
     newEvent.set(this);
   };
 
+  Event.prototype.updateFB = function (key) {
+    console.log('saving to firebase');
+    if (!key) {
+      var key = firebasedb.ref('/townHalls/').push();
+    }
+    firebasedb.ref('/townHalls/' + key).set(this);
+  };
+
   Event.prototype.toHtml= function(templateid){
     var source = $(templateid).html();
     var renderTemplate = Handlebars.compile(source);
@@ -55,7 +63,20 @@
     });
   };
 
-  Event.prototype.getLatandLog = function(address) {
+  Event.viewAll = function (location) {
+    var locations = []
+    firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
+      snapshot.forEach(function(ele){
+        console.log(ele.key);
+        newEvent = new Event(ele.val())
+        $newRow = $(newEvent.toHtml($('#view-firebase-template')))
+        $newRow.attr('id' , ele.key)
+        $('#all-events').append($newRow)
+      })
+    })
+  }
+
+  Event.prototype.getLatandLog = function(address, key) {
     var newEvent = this
     $.ajax({
       url : 'https://maps.googleapis.com/maps/api/geocode/json',
@@ -69,7 +90,7 @@
         newEvent.long = r.results[0].geometry.location.lng
         newEvent.address = r.results[0].formatted_address
         console.log(newEvent);
-        newEvent.writetoFB()
+        newEvent.updateFB(key)
       },
       error: function(e){
         console.log('error', e);
