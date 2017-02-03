@@ -13,7 +13,7 @@ Submit an event for review by researchers
 
 ## Contributing
 
-- Open an issue in the repository describing the feature you intend to work on. Ex: "Add support for calling City Representatives".
+- Open an issue in the repository describing the feature you intend to work on.
 - Check out a new branch for this feature from the repository's `development` branch. 
 - Do your work on that branch.
 - When your changes are ready to be merged, open a pull request from your feature branch to the repo's `development` branch.
