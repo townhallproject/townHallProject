@@ -59,7 +59,7 @@
         var bpos = google.maps.geometry.spherical.computeDistanceBetween(location,  new google.maps.LatLng(b.lat,b.long));
         return apos <= bpos ? -1 : 1;
       })
-      eventHandler.render(positions, 2);
+      eventHandler.render(positions);
     });
   };
 

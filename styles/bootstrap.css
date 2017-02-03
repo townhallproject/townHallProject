@@ -6761,6 +6761,9 @@ header {
 input {
   border: none;
 }
+form {
+  margin-bottom: 20px;
+}
 .text-secondary {
   color: #E32F21;
 }
@@ -6770,6 +6773,7 @@ input {
 .input-md {
   background-color: #ba2317;
   color: white;
+  margin-bottom: 10px;
 }
 .btn-primary {
   border: white solid 2px;
@@ -6780,12 +6784,19 @@ input {
   background-color: white;
   color: #8dd0ea;
 }
-.panel-dem {
+.panel {
+  color: #1E2528;
+}
+.panel-dem .panel-heading {
   color: #1E2528;
   background-color: #37acda;
 }
-.panel-rep {
+.panel-rep .panel-heading {
   color: #1E2528;
   background-color: #8c1b12;
+}
+#nearest {
+  max-height: 300px;
+  overflow: scroll;
 }
 /*# sourceMappingURL=bootstrap.css.map */

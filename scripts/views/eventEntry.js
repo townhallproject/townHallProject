@@ -60,11 +60,11 @@
     Event.lookupZip($('#look-up input').val())
   }
 
-  eventHandler.render = function (events, num) {
+  eventHandler.render = function (events) {
     var $parent = $('#nearest')
     $parent.empty();
-    recenterMap(events.slice(0,num));
-    for (var i = 0; i < num; i++) {
+    recenterMap(events.slice(0, 2));
+    for (var i = 0; i < events.length; i++) {
       var $panel = $(events[i].toHtml($('#event-template')))
       if (events[i].Party === 'Democratic') {
         $panel.children('.panel').addClass('panel-dem');
