@@ -1,10 +1,10 @@
 
-(function closure(firebase) {
-  var map
+(function(module) {
+  var mapRender = {}
   var google
 
 //draws map
-  window.initMap = function initMap() {
+  mapRender.initMap = function initMap() {
     google = window.google
     var styleArray = [
       {
@@ -55,7 +55,7 @@
 
 // recenters map based on lookup
 // TODO: create a data context so this over-rides the map resize listener
-  window.recenterMap = function(markers) {
+  mapRender.recenterMap = function(markers) {
     var bounds = new google.maps.LatLngBounds()
     var geocoder = new google.maps.Geocoder()
     for (var i = 0; i < markers.length; i++) {
@@ -100,4 +100,5 @@
        });
   })
 
-}(window.firebase))
+  module.mapRender = mapRender;
+})(window);
