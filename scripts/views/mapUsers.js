@@ -1,11 +1,10 @@
 
-(function(module) {
-  var mapRender = {}
+(function closure(firebase) {
   var map
   var google
 
 //draws map
-  mapRender.initMap = function initMap() {
+  window.initMap = function initMap() {
     google = window.google
     var styleArray = [
       {
@@ -54,9 +53,7 @@
     })
   }
 
-// recenters map based on lookup
-// TODO: create a data context so this over-rides the map resize listener
-  mapRender.recenterMap = function(markers) {
+  window.recenterMap = function(markers) {
     var bounds = new google.maps.LatLngBounds()
     var geocoder = new google.maps.Geocoder()
     for (var i = 0; i < markers.length; i++) {
@@ -70,10 +67,11 @@
       google.maps.event.trigger(map, 'resize')
       map.setCenter(results[0].geometry.location)
       map.fitBounds(bounds)
+
     })
   }
 
-// listens for new events, also initalizes
+// listens for new events
   firebase.database().ref('/townHalls').on('child_added', function getSnapShot(snapshot) {
     var ele = new Event (snapshot.val())
     var coords = [ele.long, ele.lat]
@@ -101,5 +99,4 @@
        });
   })
 
-  module.mapRender = mapRender;
-})(window);
+}(window.firebase))
