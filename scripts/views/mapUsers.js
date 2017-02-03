@@ -1,6 +1,7 @@
 
 (function(module) {
   var mapRender = {}
+  var map
   var google
 
 //draws map
