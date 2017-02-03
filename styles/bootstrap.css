@@ -6780,12 +6780,16 @@ input {
   background-color: white;
   color: #8dd0ea;
 }
-.panel-dem {
+.panel-dem .panel-heading {
   color: #1E2528;
   background-color: #37acda;
 }
-.panel-rep {
+.panel-rep .panel-heading {
   color: #1E2528;
   background-color: #8c1b12;
+}
+#nearest {
+  max-height: 300px;
+  overflow: scroll;
 }
 /*# sourceMappingURL=bootstrap.css.map */

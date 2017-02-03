@@ -18,7 +18,7 @@
 
 // Given a new event, creates Event Object and encodes with lat and lng based on address from google docs
   eventHandler.saveSimple = function (newevent) {
-    var newEvent = new Event(newevent)
+    var newEvent = new Event(newevent);
     newEvent.getLatandLog(newEvent.streetNumber + newEvent.streetName +newEvent.Zip);
   };
 

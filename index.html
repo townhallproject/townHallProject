@@ -6,7 +6,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Town Hall Project 2018</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-    <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
     <script id="event-template" type="text/x-handlebars-template">
       <div class="col-sm-12">
@@ -18,19 +17,18 @@
           <div class="panel-body">
             <ul class="list-group">
               <li class="list-group-item"><span class="profile-summary-key">Party: </span><span class="profile-summary-value">{{Party}}</span></li>
+              <li class="list-group-item"><span class="profile-summary-key">District:</span> <span class="profile-summary-value">{{District}}</span></li>
               <li class="list-group-item"><span class="profile-summary-key">Meeting Type:</span> <span class="profile-summary-value">{{meetingType}}</span></li>
               <li class="list-group-item"><span class="profile-summary-key">Date: </span><span class="profile-summary-value">{{Date}}</span></li>
               <li class="list-group-item"><span class="profile-summary-key">Time: </span><span class="profile-summary-value">{{Time}}</span></li>
               <li class="list-group-item"><span class="profile-summary-key">Address:</span> <span class="profile-summary-value">{{address}}</span></li>
             </ul>
           </div>
-
         </div>
       </div>
-      </div>
-
-    </script>
-  </head>
+    </div>
+  </script>
+</head>
   <body>
     <nav class="navbar navbar-default ">
         <div class="navbar-header">
@@ -48,58 +46,44 @@
         </div>
     </nav>
     <header class="site-header clearfix">
-
-    <section class=" container container-fluid">
-
-    <div class="row">
-      <div class="col-sm-4">
-        <div  class=" text-left site-header clearfix col-md-12 displayoff">
-              <h2 >Show Up.</h2>
-              <h2 >Speak Up.</h2>
-              <h2 class="text-secondary-dark">Fight Back.</h2>
-              <form id="look-up" class="form-inline" action="index.html" method="post">
-                <div class="form-group">
-                  <label  for="zip"></label>
-                  <input class="form-control input-md " type="zip" name="" value="" placeholder="Zip Code">
-                  <button type="submit" name="button" class="btn btn-primary btn-sm ">Find Town Hall</button>
-                </div>
-
-              </form>
+      <section class=" container container-fluid">
+        <div class="row">
+          <div class="col-sm-4">
+            <div  class=" text-left site-header clearfix col-md-12 displayoff">
+                  <h2 >Show Up.</h2>
+                  <h2 >Speak Up.</h2>
+                  <h2 class="text-secondary-dark">Fight Back.</h2>
+                  <form id="look-up" class="form-inline" action="index.html" method="post">
+                    <div class="form-group">
+                      <label  for="zip"></label>
+                      <input class="form-control input-md " type="zip" name="" value="" placeholder="Zip Code">
+                      <button type="submit" name="button" class="btn btn-primary btn-sm ">Find Town Hall</button>
+                    </div>
+                  </form>
+            </div>
+          </div>
+          <section class="results col-sm-8 state-info-bg">
+            <div id="nearest"></div>
+          </section>
         </div>
-      </div>
-      <section class="results col-sm-8 state-info-bg">
-        <div id="nearest"></div>
-      </section>
-    </div>
-    <section class=" container container-fluid">
-
-    <main>
-
-
-
-
-    </main>
-  </header>
+      <section class=" container container-fluid">
+      <main>
+      </main>
+    </header>
     <div id="map"></div>
-
-
     <footer>
     </footer>
     <!-- Vendor Files -->
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
     <script src="/node_modules/handlebars/dist/handlebars.js"></script>
-
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
 
-    <script src="/scripts/event.js"></script>
-    <script src="/scripts/eventEntry.js"></script>
-    <script src="/scripts/mapUsers.js"></script>
-    <script src="data.js"></script>
+    <script src="/scripts/models/event.js"></script>
+    <script src="/scripts/views/eventEntry.js"></script>
+    <script src="/scripts/views/mapUsers.js"></script>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_1gaWM06y2_P1kbH4jTMi3zy6vJUYp1E&callback=initMap&libraries=visualization,geometry"></script>
-
-
 
   </body>
 </html>

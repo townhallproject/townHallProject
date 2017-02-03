@@ -69,7 +69,6 @@
       google.maps.event.trigger(map, 'resize')
       map.setCenter(results[0].geometry.location)
       map.fitBounds(bounds)
-
     })
   }
 
