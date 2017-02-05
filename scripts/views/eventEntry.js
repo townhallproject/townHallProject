@@ -45,15 +45,15 @@
   }
 
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-    // User is signed in.
-      console.log(user.displayName, ' is signed in');
-    } else {
-      eventHandler.signIn()
-      // No user is signed in.
-    }
-  });
+  // firebase.auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //   // User is signed in.
+  //     console.log(user.displayName, ' is signed in');
+  //   } else {
+  //     eventHandler.signIn()
+  //     // No user is signed in.
+  //   }
+  // });
 
   eventHandler.lookup = function (e) {
     e.preventDefault();

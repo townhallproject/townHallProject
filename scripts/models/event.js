@@ -13,6 +13,32 @@
     messagingSenderId: '47559178634',
   }
 
+  Event.fetchAll = function() {
+    var googlekeys = ['Member', 	'Party'	, 'State'	, 'District', 	'meetingType', 	'Date', 	'Time'	,'timeZone', 	'Location', 	'streetAddress', 	'City', 	'State'	, 'Zip', 'Notes']
+    url = "http://proxy.avandamiri.com/get?url=" + escape('https://sheets.googleapis.com/v4/spreadsheets/1yq1NT9DZ2z3B8ixhid894e77u9rN5XIgOwWtTW72IYA/values/Upcoming%20Events!C:P?key=AIzaSyBw6HZ7Y4J1dATyC4-_mKmt3u0hLRRqthQ')
+    $.get(url, function(data) {
+      console.log(data);
+    }).then(function(response){
+      console.log(response);
+      var range = response.values;
+      if (range.length > 0) {
+        for (i = 12; i < range.length; i++) {
+          var row = range[i];
+          rowObj = {}
+          for (var k = 0; k < row.length; k++) {
+            rowObj[googlekeys[k]] = row[k];
+          }
+          console.log(rowObj);
+          // Print columns A and E, which correspond to indices 0 and 4.
+        }
+      } else {
+        appendPre('No data found.');
+      }
+    }, function(response) {
+      appendPre('Error: ' + response.result.error.message);
+    });
+  };
+
   firebase.initializeApp(config);
 
   var firebasedb = firebase.database();
@@ -97,6 +123,8 @@
       }
     })
   }
+
+
 
   module.Event = Event;
 })(window);
