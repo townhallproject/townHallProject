@@ -7,6 +7,58 @@
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
+  <script id="event-template" type="text/x-handlebars-template">
+    <div class="col-sm-12">
+      <div class="panel panel-secondary">
+        <div class="panel-heading">
+          <h4>{{Location}}</h4>
+          <p>{{Member}}</p>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <li class="list-group-item"><span class="profile-summary-key">Party: </span><span class="profile-summary-value">{{Party}}</span></li>
+            <li class="list-group-item"><span class="profile-summary-key">Meeting Type:</span> <span class="profile-summary-value">{{meetingType}}</span></li>
+            <li class="list-group-item"><span class="profile-summary-key">Date: </span><span class="profile-summary-value">{{Date}}</span></li>
+            <li class="list-group-item"><span class="profile-summary-key">Time: </span><span class="profile-summary-value">{{Time}}</span></li>
+            <li class="list-group-item"><span class="profile-summary-key">Address:</span> <span class="profile-summary-value">{{address}}</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    </div>
+
+  </script>
+  <script id="view-firebase-template" type="text/x-handlebars-template">
+    <tr class="event-row">
+      <td id="Member" contenteditable>{{Member}}
+      </td>
+      <td id="Party" contenteditable>{{Party}}
+      </td>
+      <td id="State" contenteditable>{{State}}
+      </td>
+      <td id="District" contenteditable>{{District}}
+      </td>
+      <td id="meetingType" contenteditable>{{meetingType}}
+      </td>
+      <td id="Date" contenteditable>{{Date}}
+      </td>
+      <td id="Time" contenteditable>{{Time}}
+      </td>
+      <td id="Location" contenteditable>{{Location}}
+      </td>
+      <td id="streetNumber" contenteditable>{{streetNumber}}
+      </td>
+      <td id="streetName" contenteditable>{{streetName}}
+      </td>
+      <td id="City" contenteditable>{{City}}
+      </td>
+      <td id="Zip" contenteditable>{{Zip}}
+      </td>
+      <td id="Notes" contenteditable>{{Notes}}
+      </td>
+    </tr>
+  </script>
   <body>
     <main>
       <section class="forms">
@@ -32,12 +84,22 @@
             <label class="col-md-6" for="link">Link</label>
               <input type="text" name="link" value="" id="link">
           </div>
-          <button type="submit" name="button">Save</button>
+          <button type="submit" name="button" class="btn btn-primary">Save</button>
         </form>
 
       </section>
+      <section>
+        <a href="#" class="btn btn-primary" id="view-all">View all</a>
+        <table class="table" >
+          <tbody id="all-events" class="table-striped">
+
+          </tbody>
+
+        </table>
+      </section>
 
       <div id="map"></div>
+
 
     </main>
     <footer>
@@ -46,6 +108,7 @@
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="/node_modules/handlebars/dist/handlebars.js"></script>
 
     <script src="/scripts/event.js"></script>
     <script src="/scripts/eventEntry.js"></script>

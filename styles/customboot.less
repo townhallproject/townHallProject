@@ -154,6 +154,10 @@ input{
   border: none;
 }
 
+form{
+  margin-bottom: 20px;p
+}
+
 .text-secondary{
   color: @brand-secondary;
 }
@@ -165,6 +169,7 @@ input{
 .input-md{
   background-color: darken(@brand-secondary, 10%);
   color: white;
+  margin-bottom: 10px
 }
 
 .btn-primary{
@@ -178,12 +183,21 @@ input{
   color: @brand-primary;
 }
 
-.panel-dem{
+.panel{
+  color: @brand-text
+}
+
+.panel-dem .panel-heading{
   color: @brand-text;
   background-color: darken(@brand-primary, 20%);
 }
 
-.panel-rep{
+.panel-rep .panel-heading{
   color: @brand-text;
   background-color: darken(@brand-secondary, 20%);
+}
+
+#nearest{
+  max-height: 300px;
+  overflow: scroll;
 }

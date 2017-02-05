@@ -1,5 +1,6 @@
 (function(module) {
   var firebasedb = firebase.database()
+  var provider = new firebase.auth.GoogleAuthProvider();
 
   var eventHandler = {};
   eventHandler.save = function (e) {
@@ -12,9 +13,16 @@
     newEvent.getLatandLog(newEvent.address);
   };
 
-  eventHandler.saveSimple = function (event) {
-    var newEvent = new Event(event)
-    newEvent.getLatandLog(newEvent.streetNumber + newEvent.streetName);
+  eventHandler.saveSimple = function (newevent) {
+    var newEvent = new Event(newevent)
+    newEvent.getLatandLog(newEvent.streetNumber + newEvent.streetName +newEvent.Zip);
+  };
+
+  eventHandler.update = function (newevent , key) {
+    var newEvent = new Event(newevent)
+    var address = newEvent.streetNumber +' '+ newEvent.streetName +' '+ newEvent.City + ' ' + newEvent.Zip
+    console.log(address);
+    newEvent.getLatandLog(address, key);
   };
 
   eventHandler.signIn = function (){
@@ -52,11 +60,11 @@
     Event.lookupZip($('#look-up input').val())
   }
 
-  eventHandler.render = function (events, num) {
+  eventHandler.render = function (events) {
     var $parent = $('#nearest')
     $parent.empty();
-    recenterMap(events.slice(0,num));
-    for (var i = 0; i < num; i++) {
+    recenterMap(events.slice(0, 2));
+    for (var i = 0; i < events.length; i++) {
       var $panel = $(events[i].toHtml($('#event-template')))
       if (events[i].Party === 'Democratic') {
         $panel.children('.panel').addClass('panel-dem');
@@ -69,8 +77,20 @@
     }
   }
 
+  $('#all-events').on('focusout', '.event-row', function(){
+    id = this.id;
+    console.log(id);
+    newEvent = $(this).children('td').get().reduce(function(newObj, cur){
+      newObj[cur.id] = $(cur).html();
+      return newObj;
+    }, {})
+    console.log(newEvent);
+    eventHandler.update(newEvent , id);
+  })
+
   $('#save-event').on('submit', eventHandler.save);
   $('#look-up').on('submit', eventHandler.lookup);
+  $('#view-all').on('click', Event.viewAll);
 
   module.eventHandler = eventHandler;
 })(window);

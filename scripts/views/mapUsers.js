@@ -73,7 +73,7 @@
 
 // listens for new events
   firebase.database().ref('/townHalls').on('child_added', function getSnapShot(snapshot) {
-    var ele = new Event ( snapshot.val())
+    var ele = new Event (snapshot.val())
     var coords = [ele.long, ele.lat]
     var latLng = new google.maps.LatLng(coords[1], coords[0])
     // eslint-disable-next-line no-unused-vars
