@@ -56,6 +56,8 @@
               <li class="list-group-item"><span class="profile-summary-key">Date: </span><span class="profile-summary-value">{{Date}}</span></li>
               <li class="list-group-item"><span class="profile-summary-key">Time: </span><span class="profile-summary-value">{{Time}}, {{timeZone}}</span></li>
               <li class="list-group-item"><span class="profile-summary-key">Address:</span> <span class="profile-summary-value">{{address}}</span></li>
+              <li class="list-group-item"><span class="profile-summary-key">Distance:</span> <span class="profile-summary-value">{{dist}} miles</span></li>
+
             </ul>
           </div>
 
@@ -148,10 +150,7 @@
               <p class = 'errors hidden'>Nothing matches your filters</p>
             </tbody>
           </table>
-
-
         </div>
-
     </div>
     <footer>
     </footer>
@@ -159,13 +158,11 @@
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
     <script src="/node_modules/handlebars/dist/handlebars.js"></script>
-
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
-
+    <!-- Script Files -->
     <script src="/scripts/models/event.js"></script>
     <script src="/scripts/views/eventEntry.js"></script>
     <script src="/scripts/views/mapUsers.js"></script>
-
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxalR3vEWphXFxMP9FT_vxngSbq5RAH_k&callback=initMap&libraries=visualization,geometry"></script>
   </body>
 </html>
