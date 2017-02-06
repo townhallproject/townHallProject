@@ -96,6 +96,7 @@
           // newTownHall.updateFB(key)
         },
         error: function(e){
+          console(newTownHall);
           console.log('error', e, address);
         }
       });
@@ -104,7 +105,7 @@
 
   //Gets everything from the google doc and does geo coding in batches
   TownHall.fetchAll = function() {
-    url = 'https://sheets.googleapis.com/v4/spreadsheets/1yq1NT9DZ2z3B8ixhid894e77u9rN5XIgOwWtTW72IYA/values/Upcoming%20TownHalls!C:P?key=AIzaSyBw6HZ7Y4J1dATyC4-_mKmt3u0hLRRqthQ';
+    url = 'https://sheets.googleapis.com/v4/spreadsheets/1yq1NT9DZ2z3B8ixhid894e77u9rN5XIgOwWtTW72IYA/values/Upcoming%20Events!C:P?key=AIzaSyBw6HZ7Y4J1dATyC4-_mKmt3u0hLRRqthQ';
     $.ajax({
       url: url,
       success: function (response){
@@ -112,7 +113,7 @@
         if (range.length > 0) {
           console.log('data from google');
           setTimeout(function(){
-            TownHall.batchCalls(range.splice(12, range.length));
+            TownHall.batchCalls(range.splice(11, range.length));
           }, 2000);
         }
         else {
@@ -140,17 +141,23 @@
   };
 
   TownHall.encodeFromGoogle = function(array){
-    var googlekeys = ['Member', 	'Party'	, 'State'	, 'District', 	'meetingType', 	'Date', 	'Time'	,'timeZone', 	'Location', 	'streetAddress', 	'City', 	'State-ab'	, 'Zip', 'Notes'];
+    var googlekeys = ['Member', 	'Party'	, 'State'	, 'District', 	'meetingType', 	'Date', 	'Time'	,'timeZone', 	'Location', 	'streetAddress', 	'City', 	'StateAb'	, 'Zip', 'Notes'];
     for (var j = 0; j < array.length; j++) {
       var row = array[j];
       rowObj = new TownHall;
       for (var k = 0; k < row.length; k++) {
         rowObj[googlekeys[k]] = row[k];
       }
-      rowObj.getLatandLog(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.State + ' ' + rowObj.Zip);
+      if (rowObj.streetAddress.length>2) {
+        rowObj.getLatandLog(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip);
+      }
+      else {
+        rowObj.noLoc = true;
+        rowObj.getLatandLog(rowObj.State);
+      }
     };
   };
 
-  TownHall.fetchAll();
+  // TownHall.fetchAll();
   module.TownHall = TownHall;
 })(window);

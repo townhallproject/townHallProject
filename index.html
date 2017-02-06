@@ -39,6 +39,9 @@
         <td>
           {{address}}
         </td>
+        <td>
+          {{Notes}}
+        </td>
       </tr>
     </script>
     <script id="event-template" type="text/x-handlebars-template">
@@ -55,6 +58,7 @@
                 <li class="list-group-item"><span class="profile-summary-key">District:</span> <span class="profile-summary-value">{{District}}</span></li>
               <li class="list-group-item"><span class="profile-summary-key">Date: </span><span class="profile-summary-value">{{Date}}</span></li>
               <li class="list-group-item"><span class="profile-summary-key">Time: </span><span class="profile-summary-value">{{Time}}, {{timeZone}}</span></li>
+              <li class="list-group-item"><span class="profile-summary-key">Notes: </span><span class="profile-summary-value">{{Notes}}</span></li>
               <li class="list-group-item">
                 <span class="profile-summary-key">Address:</span>
                 <span class="profile-summary-value">
@@ -69,13 +73,12 @@
                   <var class="atc_date_end">{{Date}} 18:00:00</var>
                   <var class="atc_timezone">Europe/London</var>
                   <var class="atc_title">{{meetingType}} {{Member}}</var>
-                  <var class="atc_description">{{District}}</var>
+                  <var class="atc_description">{{Notes}}</var>
                   <var class="atc_location">{{address}}</var>
                   <var class="atc_organizer">{{Party}}</var>
               </var>
           </span>
           </div>
-
         </div>
       </div>
       </div>
@@ -175,8 +178,6 @@
     <script src="/node_modules/handlebars/dist/handlebars.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
     <script src="http://addtocalendar.com/atc/1.5/atc.min.js"></script>
-
-
     <script type="text/javascript">(function () {
             if (window.addtocalendar)if(typeof window.addtocalendar.start == "function")return;
             if (window.ifaddtocalendar == undefined) { window.ifaddtocalendar = 1;

@@ -5,6 +5,7 @@
 
 //draws map
   window.initMap = function initMap() {
+    console.log('making map');
     google = window.google;
     var styleArray = [
       {
