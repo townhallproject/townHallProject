@@ -49,6 +49,20 @@
           <div class="panel-heading">
             <h4>{{Location}}</h4>
             <p>{{Member}}</p>
+            {{#if dateValid}}
+            <span class="addtocalendar ">
+              <a class="atcb-link btn btn-secondary">Add to Calendar</a> <!-- You can change button title by adding this line -->
+              <var class="atc_event">
+                <var class="atc_date_start">{{Date}} {{Time}}</var>
+                  <var class="atc_date_end">{{Date}} 18:00:00</var>
+                  <var class="atc_timezone">Europe/London</var>
+                  <var class="atc_title">{{meetingType}} {{Member}}</var>
+                  <var class="atc_description">{{Notes}}</var>
+                  <var class="atc_location">{{address}}</var>
+                  <var class="atc_organizer">{{Party}}</var>
+              </var>
+          </span>
+          {{/if}}
           </div>
           <div class="panel-body">
             <ul class="list-group">
@@ -65,18 +79,7 @@
               <li class="list-group-item"><span class="profile-summary-key">Distance:</span> <span class="profile-summary-value">{{dist}} miles</span></li>
 
             </ul>
-            <span class="addtocalendar ">
-              <a class="atcb-link btn btn-secondary">Add to Calendar</a> <!-- You can change button title by adding this line -->
-              <var class="atc_event">
-                <var class="atc_date_start">{{Date}} {{Time}}</var>
-                  <var class="atc_date_end">{{Date}} 18:00:00</var>
-                  <var class="atc_timezone">Europe/London</var>
-                  <var class="atc_title">{{meetingType}} {{Member}}</var>
-                  <var class="atc_description">{{Notes}}</var>
-                  <var class="atc_location">{{address}}</var>
-                  <var class="atc_organizer">{{Party}}</var>
-              </var>
-          </span>
+
           </div>
         </div>
       </div>
