@@ -61,7 +61,7 @@
 @brand-cool: #ABCCBD;
 @brand-text: #1E2528;
 
-@brand-success: #7DBEB8;
+@brand-success: darken(@brand-primary, 10%);
 @brand-warning: #274f70;
 @brand-danger: #bad636;
 @brand-info: #003056;
@@ -109,7 +109,7 @@
 
 // Navbar brand label
 @navbar-default-brand-color:               @navbar-default-link-color;
-@navbar-default-brand-hover-color:         darken(@navbar-default-brand-color, 10%);
+@navbar-default-brand-hover-color:         darken(@navbar-default-brand-color, 5%);
 @navbar-default-brand-hover-bg:            transparent;
 
 // Navbar toggle
@@ -154,6 +154,10 @@ input{
   border: none;
 }
 
+form{
+  margin-bottom: 20px;
+}
+
 .text-secondary{
   color: @brand-secondary;
 }
@@ -165,11 +169,14 @@ input{
 .input-md{
   background-color: darken(@brand-secondary, 10%);
   color: white;
+  margin-bottom: 10px
 }
 
 .btn-primary{
   border: white solid 2px;
   background-color: @brand-primary;
+  margin-bottom: 10px;
+
 }
 
 .btn-primary:hover{
@@ -178,12 +185,23 @@ input{
   color: @brand-primary;
 }
 
-.panel-dem{
+.panel{
+  color: @brand-text;
+  box-shadow: gray 0px 0px 7px;
+  border: none;
+}
+
+.panel-dem .panel-heading{
   color: @brand-text;
   background-color: darken(@brand-primary, 20%);
 }
 
-.panel-rep{
+.panel-rep .panel-heading{
   color: @brand-text;
   background-color: darken(@brand-secondary, 20%);
+}
+
+#nearest{
+  max-height: 500px;
+  overflow: scroll;
 }

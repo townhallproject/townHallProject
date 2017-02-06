@@ -16,6 +16,7 @@
     newEvent.getLatandLog(newEvent.address);
   };
 
+
 // Given a new event, creates Event Object and encodes with lat and lng based on address from google docs
   eventHandler.saveSimple = function (newevent) {
     var newEvent = new Event(newevent)
@@ -48,54 +49,81 @@
       // The firebase.auth.AuthCredential type that was used.
       var credential = error.credential;
     });
-  }
+  };
 
-  //listens for auth state
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-    // User is signed in.
-      console.log(user.displayName, ' is signed in');
-    } else {
-      eventHandler.signIn()
-      // No user is signed in.
-    }
-  });
+  // firebase.auth().onAuthStateChanged(function(user) {
+  //   if (user) {
+  //   // User is signed in.
+  //     console.log(user.displayName, ' is signed in');
+  //   } else {
+  //     eventHandler.signIn()
+  //     // No user is signed in.
+  //   }
+  // });
 
   eventHandler.lookup = function (e) {
     e.preventDefault();
-    Event.lookupZip($('#look-up input').val())
-  }
+    Event.lookupZip($('#look-up input').val());
+  };
 
-  //renders the results of lookup to the page
-  //colors based on party
-  eventHandler.render = function (events, num) {
-    var $parent = $('#nearest')
-    $parent.empty();
-    recenterMap(events.slice(0,num));
-    for (var i = 0; i < num; i++) {
-      var $panel = $(events[i].toHtml($('#event-template')))
-      if (events[i].Party === 'Democratic') {
-        $panel.children('.panel').addClass('panel-dem');
-        $panel.appendTo($parent);
-      }
-      else {
-        $panel.children('.panel').addClass('panel-rep');
-        $panel.appendTo($parent);
-      }
+  eventHandler.renderPanels = function(event, $parent) {
+    var $panel = $(event.toHtml($('#event-template')));
+    if (event.Party === 'Democratic') {
+      $panel.children('.panel').addClass('panel-dem');
+      $panel.appendTo($parent);
+    }
+    else {
+      $panel.children('.panel').addClass('panel-rep');
+      $panel.appendTo($parent);
+    }
+  };
+
+  eventHandler.renderTable = function (events, $tableid) {
+    for (var i = 0; i < events.length; i++) {
+      events[i].Date = events[i].Date.toDateString();
+      events[i].dist = Math.round(events[i].dist/1609.344);
+      $($tableid).append(events[i].toHtml($('#table-template')));
     }
   }
 
-  // for front end editor.
+  eventHandler.render = function (events) {
+    var $parent = $('#nearest');
+    $parent.empty();
+    var $table = $('#all-events-table');
+    $table.empty();
+    maxDist = 80467.2;
+    recenterMap(events.slice(0, 2));
+    var nearest = events.reduce(function(acc, cur){
+      if (cur.dist < maxDist) {
+        acc.push(cur);
+      }
+      return acc;
+    },[])
+    if (nearest.length === 0) {
+      events[0].dist = Math.round(events[0].dist/1609.344);
+      $parent.html('<h4>No events within 50 miles of your zip, the closest one is ' + events[0].dist + ' miles away</h4>')
+      eventHandler.renderPanels(events[0], $parent);
+      eventHandler.renderTable(events, $table)
+    } else {
+      eventHandler.renderTable(nearest, $table)
+      nearest.forEach(function(ele){
+        eventHandler.renderPanels(ele, $parent);
+      })
+    }
+  };
+
+
   $('#all-events').on('focusout', '.event-row', function(){
     id = this.id;
     console.log(id);
     newEvent = $(this).children('td').get().reduce(function(newObj, cur){
       newObj[cur.id] = $(cur).html();
       return newObj;
-    }, {})
+    }, {});
     console.log(newEvent);
     eventHandler.update(newEvent , id);
-  })
+  });
+
 
   $('#save-event').on('submit', eventHandler.save);
   $('#look-up').on('submit', eventHandler.lookup);
