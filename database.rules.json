@@ -1,7 +1,7 @@
 {
   "rules": {
      ".read": "true",
-     ".write": "auth !=null",
+     ".write": "true",
     "campagins": {
       "$campagin_id": {
         ".validate": "newData.isString()"
@@ -22,7 +22,7 @@
               "$other": { ".validate": false },
             	"zip": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 6"
                      }
-            }         
+            }
       },
         "events" : {
            ".read": "true",
@@ -30,7 +30,7 @@
         },
         "townHalls" : {
            ".read": "true",
-     			".write": "auth !=null"
+     			".write": "true"
         }
     }
   }

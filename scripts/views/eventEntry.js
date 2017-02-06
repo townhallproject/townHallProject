@@ -1,8 +1,9 @@
 (function(module) {
-  var firebasedb = firebase.database()
+  var firebasedb = firebase.database();
   var provider = new firebase.auth.GoogleAuthProvider();
-
   var eventHandler = {};
+
+
   eventHandler.save = function (e) {
     e.preventDefault();
     var newEvent = new Event( $('#save-event input').get().reduce(function(newObj, cur){
@@ -14,13 +15,13 @@
   };
 
   eventHandler.saveSimple = function (newevent) {
-    var newEvent = new Event(newevent)
+    var newEvent = new Event(newevent);
     newEvent.getLatandLog(newEvent.streetNumber + newEvent.streetName +newEvent.Zip);
   };
 
   eventHandler.update = function (newevent , key) {
-    var newEvent = new Event(newevent)
-    var address = newEvent.streetNumber +' '+ newEvent.streetName +' '+ newEvent.City + ' ' + newEvent.Zip
+    var newEvent = new Event(newevent);
+    var address = newEvent.streetNumber +' '+ newEvent.streetName +' '+ newEvent.City + ' ' + newEvent.Zip;
     console.log(address);
     newEvent.getLatandLog(address, key);
   };
@@ -42,7 +43,7 @@
       // The firebase.auth.AuthCredential type that was used.
       var credential = error.credential;
     });
-  }
+  };
 
 
   // firebase.auth().onAuthStateChanged(function(user) {
@@ -57,15 +58,18 @@
 
   eventHandler.lookup = function (e) {
     e.preventDefault();
-    Event.lookupZip($('#look-up input').val())
-  }
+    Event.lookupZip($('#look-up input').val());
+  };
 
   eventHandler.render = function (events) {
-    var $parent = $('#nearest')
+    var $parent = $('#nearest');
     $parent.empty();
     recenterMap(events.slice(0, 2));
+    $('#all-events-table').empty();
     for (var i = 0; i < events.length; i++) {
-      var $panel = $(events[i].toHtml($('#event-template')))
+      events[i].Date = events[i].Date.toDateString();
+      $('#all-events-table').append(events[i].toHtml($('#table-template')));
+      var $panel = $(events[i].toHtml($('#event-template')));
       if (events[i].Party === 'Democratic') {
         $panel.children('.panel').addClass('panel-dem');
         $panel.appendTo($parent);

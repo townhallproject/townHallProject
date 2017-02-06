@@ -57,12 +57,11 @@
     var bounds = new google.maps.LatLngBounds()
     var geocoder = new google.maps.Geocoder()
     for (var i = 0; i < markers.length; i++) {
-      marker = new google.maps.LatLng(markers[i].lat, markers[i].long)
+      marker = new google.maps.LatLng(markers[i].lat, markers[i].lng)
       bounds.extend(marker)
       console.log(bounds);
     }
     geocoder.geocode({ 'address': markers[0].address}, function onGeocode(results, status) {
-      console.log(results);
       map.setCenter(results[0].geometry.location)
       google.maps.event.trigger(map, 'resize')
       map.setCenter(results[0].geometry.location)
@@ -72,9 +71,12 @@
   }
 
 // listens for new events
-  firebase.database().ref('/townHalls').on('child_added', function getSnapShot(snapshot) {
+  firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
     var ele = new Event (snapshot.val())
-    var coords = [ele.long, ele.lat]
+    ele.Date = ele.Date.toDateString()
+    $('#all-events-table').append(ele.toHtml($('#table-template')))
+
+    var coords = [ele.lng, ele.lat]
     var latLng = new google.maps.LatLng(coords[1], coords[0])
     // eslint-disable-next-line no-unused-vars
     var contentString = ele.toHtml('#event-template')
