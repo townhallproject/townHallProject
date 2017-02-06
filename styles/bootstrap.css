@@ -6785,6 +6785,31 @@ form {
   background-color: white;
   color: #8dd0ea;
 }
+.btn-secondary {
+  color: white;
+  border: white solid 2px;
+  background-color: #8dd0ea;
+}
+.btn-secondary:hover {
+  border: #E32F21 solid 2px;
+  background-color: white;
+  color: #E32F21;
+}
+.atcb-list {
+  width: 170px;
+  border: 1px solid #bababa;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 5px #AAA;
+          box-shadow: 0 0 5px #AAA;
+}
+.atcb-item-link {
+  color: #000;
+  font-family: "Verdana";
+  font-size: 14px;
+  text-decoration: none;
+  outline: none;
+  padding: 5px 15px;
+}
 .panel {
   color: #1E2528;
   -webkit-box-shadow: gray 0px 0px 7px;

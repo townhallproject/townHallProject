@@ -76,6 +76,7 @@
     for (var i = 0; i < events.length; i++) {
       events[i].Date = events[i].Date.toDateString();
       events[i].dist = Math.round(events[i].dist/1609.344);
+      events[i].addressLink = "https://www.google.com/maps?q=" + escape(events[i].address);
       $($tableid).append(events[i].toHtml($('#table-template')));
     }
   }
@@ -94,7 +95,9 @@
       return acc;
     },[])
     if (nearest.length === 0) {
+      events[0].Date = events[0].Date.toDateString();
       events[0].dist = Math.round(events[0].dist/1609.344);
+      events[0].addressLink = "https://www.google.com/maps?q=" + escape(events[0].address);
       $parent.html('<h4>No events within 50 miles of your zip, the closest one is ' + events[0].dist + ' miles away</h4>')
       eventHandler.renderPanels(events[0], $parent);
       eventHandler.renderTable(events, $table)
@@ -104,6 +107,7 @@
         eventHandler.renderPanels(ele, $parent);
       })
     }
+    addtocalendar.load();
   };
 
   $('#all-events').on('focusout', '.event-row', function(){

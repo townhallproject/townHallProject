@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Town Hall Project 2018</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-    <link rel="stylesheet" href="./css/styles.css">
+    <link href="http://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
     <script id="table-template" type="text/x-handlebars-template">
       <tr class= 'event-row'
@@ -55,10 +55,25 @@
                 <li class="list-group-item"><span class="profile-summary-key">District:</span> <span class="profile-summary-value">{{District}}</span></li>
               <li class="list-group-item"><span class="profile-summary-key">Date: </span><span class="profile-summary-value">{{Date}}</span></li>
               <li class="list-group-item"><span class="profile-summary-key">Time: </span><span class="profile-summary-value">{{Time}}, {{timeZone}}</span></li>
-              <li class="list-group-item"><span class="profile-summary-key">Address:</span> <span class="profile-summary-value">{{address}}</span></li>
+              <li class="list-group-item">
+                <span class="profile-summary-key">Address:</span>
+                <span class="profile-summary-value">
+                  <a href={{addressLink}}>{{address}}</a></span></li>
               <li class="list-group-item"><span class="profile-summary-key">Distance:</span> <span class="profile-summary-value">{{dist}} miles</span></li>
 
             </ul>
+            <span class="addtocalendar ">
+              <a class="atcb-link btn btn-secondary">Add to Calendar</a> <!-- You can change button title by adding this line -->
+              <var class="atc_event">
+                <var class="atc_date_start">{{Date}} {{Time}}</var>
+                  <var class="atc_date_end">{{Date}} 18:00:00</var>
+                  <var class="atc_timezone">Europe/London</var>
+                  <var class="atc_title">{{meetingType}} {{Member}}</var>
+                  <var class="atc_description">{{District}}</var>
+                  <var class="atc_location">{{address}}</var>
+                  <var class="atc_organizer">{{Party}}</var>
+              </var>
+          </span>
           </div>
 
         </div>
@@ -159,6 +174,17 @@
     <script src="/vendor/scripts/bootstrap.min.js"></script>
     <script src="/node_modules/handlebars/dist/handlebars.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="http://addtocalendar.com/atc/1.5/atc.min.js"></script>
+
+
+    <script type="text/javascript">(function () {
+            if (window.addtocalendar)if(typeof window.addtocalendar.start == "function")return;
+            if (window.ifaddtocalendar == undefined) { window.ifaddtocalendar = 1;
+                var d = document, s = d.createElement('script'), g = 'getElementsByTagName';
+                s.type = 'text/javascript';s.charset = 'UTF-8';s.async = true;
+                s.src = ('https:' == window.location.protocol ? 'https' : 'http')+'://addtocalendar.com/atc/1.5/atc.min.js';
+                var h = d[g]('body')[0];h.appendChild(s); }})();
+    </script>
     <!-- Script Files -->
     <script src="/scripts/models/event.js"></script>
     <script src="/scripts/views/eventEntry.js"></script>
