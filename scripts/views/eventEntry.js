@@ -1,9 +1,11 @@
 (function(module) {
-  var firebasedb = firebase.database();
+  var firebasedb = firebase.database()
   var provider = new firebase.auth.GoogleAuthProvider();
+
+  // object to hold the front end view functions
   var eventHandler = {};
 
-
+  // creates new Event object from form
   eventHandler.save = function (e) {
     e.preventDefault();
     var newTownHall = new TownHall( $('#save-event input').get().reduce(function(newObj, cur){
@@ -14,11 +16,15 @@
     newTownHall.getLatandLog(newTownHall.address);
   };
 
+
+// Given a new event, creates Event Object and encodes with lat and lng based on address from google docs
   eventHandler.saveSimple = function (newevent) {
     var newTownHall = new TownHall(newevent);
     newTownHall.getLatandLog(newTownHall.streetNumber + newTownHall.streetName +newTownHall.Zip);
+
   };
 
+  // given an event and a current key, update that event.
   eventHandler.update = function (newevent , key) {
     var newTownHall = new TownHall(newevent);
     var address = newTownHall.streetNumber +' '+ newTownHall.streetName +' '+ newTownHall.City + ' ' + newTownHall.Zip;
@@ -26,6 +32,7 @@
     newTownHall.getLatandLog(address, key);
   };
 
+  //Sign in fuction for firebase
   eventHandler.signIn = function (){
     firebase.auth().signInWithRedirect(provider);
     firebase.auth().getRedirectResult().then(function(result) {
@@ -110,6 +117,7 @@
     addtocalendar.load();
   };
 
+
   $('#all-events').on('focusout', '.event-row', function(){
     id = this.id;
     console.log(id);
@@ -120,6 +128,7 @@
     console.log(newTownHall);
     eventHandler.update(newTownHall , id);
   });
+
 
   $('#save-event').on('submit', eventHandler.save);
   $('#look-up').on('submit', eventHandler.lookup);

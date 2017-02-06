@@ -28,6 +28,7 @@
         ],
       },
     ];
+
     var options = {
       zoom: 4,
       scrollwheel: false,
@@ -99,3 +100,4 @@
   });
 
 }(window.firebase));
+

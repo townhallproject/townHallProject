@@ -160,4 +160,5 @@
 
   // TownHall.fetchAll();
   module.TownHall = TownHall;
+
 })(window);
