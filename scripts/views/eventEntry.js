@@ -6,24 +6,24 @@
 
   eventHandler.save = function (e) {
     e.preventDefault();
-    var newEvent = new Event( $('#save-event input').get().reduce(function(newObj, cur){
+    var newTownHall = new TownHall( $('#save-event input').get().reduce(function(newObj, cur){
       newObj[cur.id] = $(cur).val();
       return newObj;
     }, {})
   );
-    newEvent.getLatandLog(newEvent.address);
+    newTownHall.getLatandLog(newTownHall.address);
   };
 
   eventHandler.saveSimple = function (newevent) {
-    var newEvent = new Event(newevent);
-    newEvent.getLatandLog(newEvent.streetNumber + newEvent.streetName +newEvent.Zip);
+    var newTownHall = new TownHall(newevent);
+    newTownHall.getLatandLog(newTownHall.streetNumber + newTownHall.streetName +newTownHall.Zip);
   };
 
   eventHandler.update = function (newevent , key) {
-    var newEvent = new Event(newevent);
-    var address = newEvent.streetNumber +' '+ newEvent.streetName +' '+ newEvent.City + ' ' + newEvent.Zip;
+    var newTownHall = new TownHall(newevent);
+    var address = newTownHall.streetNumber +' '+ newTownHall.streetName +' '+ newTownHall.City + ' ' + newTownHall.Zip;
     console.log(address);
-    newEvent.getLatandLog(address, key);
+    newTownHall.getLatandLog(address, key);
   };
 
   eventHandler.signIn = function (){
@@ -57,7 +57,7 @@
 
   eventHandler.lookup = function (e) {
     e.preventDefault();
-    Event.lookupZip($('#look-up input').val());
+    TownHall.lookupZip($('#look-up input').val());
   };
 
   eventHandler.renderPanels = function(event, $parent) {
@@ -113,17 +113,17 @@
   $('#all-events').on('focusout', '.event-row', function(){
     id = this.id;
     console.log(id);
-    newEvent = $(this).children('td').get().reduce(function(newObj, cur){
+    newTownHall = $(this).children('td').get().reduce(function(newObj, cur){
       newObj[cur.id] = $(cur).html();
       return newObj;
     }, {});
-    console.log(newEvent);
-    eventHandler.update(newEvent , id);
+    console.log(newTownHall);
+    eventHandler.update(newTownHall , id);
   });
 
   $('#save-event').on('submit', eventHandler.save);
   $('#look-up').on('submit', eventHandler.lookup);
-  $('#view-all').on('click', Event.viewAll);
+  $('#view-all').on('click', TownHall.viewAll);
 
   module.eventHandler = eventHandler;
 })(window);
