@@ -5,7 +5,7 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
-  // creates new Event object from form
+  // creates new TownHall object from form
   eventHandler.save = function (e) {
     e.preventDefault();
     var newTownHall = new TownHall( $('#save-event input').get().reduce(function(newObj, cur){
@@ -17,17 +17,16 @@
   };
 
 
-// Given a new event, creates Event Object and encodes with lat and lng based on address from google docs
+// Given a new event, creates TownHall Object and encodes with lat and lng based on address from google docs
   eventHandler.saveSimple = function (newevent) {
     var newTownHall = new TownHall(newevent);
     newTownHall.getLatandLog(newTownHall.streetNumber + newTownHall.streetName +newTownHall.Zip);
-
   };
 
   // given an event and a current key, update that event.
   eventHandler.update = function (newevent , key) {
-    var newTownHall = new TownHall(newevent);
-    var address = newTownHall.streetNumber +' '+ newTownHall.streetName +' '+ newTownHall.City + ' ' + newTownHall.Zip;
+    var newTownHall = new TownHall(newevent)
+    var address = newTownHall.streetNumber +' '+ newTownHall.streetName +' '+ newTownHall.City + ' ' + newTownHall.Zip
     console.log(address);
     newTownHall.getLatandLog(address, key);
   };

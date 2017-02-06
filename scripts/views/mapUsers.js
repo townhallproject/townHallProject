@@ -100,4 +100,3 @@
   });
 
 }(window.firebase));
-

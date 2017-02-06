@@ -96,34 +96,35 @@
           <ul class="nav navbar-nav">
             <li id="home" ><a href="/">Home<span class="sr-only">(current)</span></a></li>
             <li id="about"><a href="#about">About</a></li>
-          </ul>
+           </ul>
         </div>
     </nav>
     <header class="site-header clearfix">
-      <section class=" container container-fluid">
-        <div class="row">
-         <div class="col-sm-4">
-           <div  class=" text-left site-header clearfix col-md-12 displayoff">
-             <h2 >Show Up.</h2>
-             <h2 >Speak Up.</h2>
-             <h2 class="text-secondary-dark">Fight Back.</h2>
-             <form id="look-up" class="form-inline" action="index.html" method="post">
-               <div class="form-group">
-                 <label  for="zip"></label>
-                 <input class="form-control input-md " type="zip" name="" value="" placeholder="Zip Code">
-                 <button type="submit" name="button" class="btn btn-primary btn-sm ">Find Town Hall</button>
-               </div>
-             </form>
-           </div>
-         </div>
-         <section class="results col-sm-8 state-info-bg">
-           <div id="nearest"></div>
-         </section>
-       </div>
-     </section>
+     <section class=" container container-fluid">
+       <div class="row">
+        <div class="col-sm-4">
+          <div  class=" text-left site-header clearfix col-md-12 displayoff">
+              <h2 >Show Up.</h2>
+              <h2 >Speak Up.</h2>
+              <h2 class="text-secondary-dark">Fight Back.</h2>
+              <form id="look-up" class="form-inline" action="index.html" method="post">
+                <div class="form-group">
+                  <label  for="zip"></label>
+                  <input class="form-control input-md " type="zip" name="" value="" placeholder="Zip Code">
+                  <button type="submit" name="button" class="btn btn-primary btn-sm ">Find Town Hall</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <section class="results col-sm-8 state-info-bg">
+            <div id="nearest"></div>
+          </section>
+        </div>
+      </section>
     </header>
     <div id="map"></div>
-    <div class="table-responsive">
+    <section class=" container container-fluid">
+      <div class="table-responsive">
           <h3 class="text-primary table-title">All events</h3>
           <table class="table table-hover table-striped" id="complete">
             <thead class='text-info'>
@@ -183,6 +184,10 @@
     <script src="/scripts/models/event.js"></script>
     <script src="/scripts/views/eventEntry.js"></script>
     <script src="/scripts/views/mapUsers.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxalR3vEWphXFxMP9FT_vxngSbq5RAH_k&callback=initMap&libraries=visualization,geometry"></script>
+    <script src="data.js"></script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMap&libraries=visualization,geometry"></script>
+
+    >
   </body>
 </html>

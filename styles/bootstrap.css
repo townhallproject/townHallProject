@@ -6828,4 +6828,13 @@ form {
   max-height: 500px;
   overflow: scroll;
 }
+#map {
+  height: 400px;
+  width: 100%;
+}
+.forms {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+}
 /*# sourceMappingURL=bootstrap.css.map */

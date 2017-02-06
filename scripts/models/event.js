@@ -4,6 +4,7 @@
       this[key] = opts[key];
       this['Date'] = new Date(opts.Date);
     }
+    this.Date = new Date(opts.Date);
   }
 
   TownHall.allTownHalls = [];
@@ -130,7 +131,7 @@
     if (response.length > 0) {
       setTimeout(function(){
         TownHall.batchCalls(response);
-      }, 1000);
+      }, 2000);
     } else {
       // When done, update firebase
       console.log('got all data', TownHall.allTownHalls);
@@ -158,7 +159,6 @@
     };
   };
 
-  // TownHall.fetchAll();
+//   TownHall.fetchAll();
   module.TownHall = TownHall;
-
 })(window);
