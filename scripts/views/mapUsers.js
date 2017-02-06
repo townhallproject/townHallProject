@@ -71,7 +71,7 @@
 
 // listens for new events
   firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
-    var ele = new Event (snapshot.val());
+    var ele = new TownHall (snapshot.val());
     ele.Date = ele.Date.toDateString();
     $('#all-events-table').append(ele.toHtml($('#table-template')));
     var coords = [ele.lng, ele.lat];
