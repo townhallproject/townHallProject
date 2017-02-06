@@ -63,8 +63,6 @@
 
         </div>
       </div>
-      </div>
-
     </script>
   </head>
   <body>
@@ -81,15 +79,14 @@
           <ul class="nav navbar-nav">
             <li id="home" ><a href="/">Home<span class="sr-only">(current)</span></a></li>
             <li id="about"><a href="#about">About</a></li>
+           </ul> 
         </div>
     </nav>
     <header class="site-header clearfix">
-
-    <section class=" container container-fluid">
-
-    <div class="row">
-      <div class="col-sm-4">
-        <div  class=" text-left site-header clearfix col-md-12 displayoff">
+     <section class=" container container-fluid">
+       <div class="row">
+        <div class="col-sm-4">
+          <div  class=" text-left site-header clearfix col-md-12 displayoff">
               <h2 >Show Up.</h2>
               <h2 >Speak Up.</h2>
               <h2 class="text-secondary-dark">Fight Back.</h2>
@@ -99,20 +96,19 @@
                   <input class="form-control input-md " type="zip" name="" value="" placeholder="Zip Code">
                   <button type="submit" name="button" class="btn btn-primary btn-sm ">Find Town Hall</button>
                 </div>
-
               </form>
+          </div>
         </div>
+        <section class="results col-sm-8 state-info-bg">
+         <div id="nearest"></div>
+        </section>
       </div>
-      <section class="results col-sm-8 state-info-bg">
-        <div id="nearest"></div>
       </section>
-    </div>
+    </header>
+
     <section class=" container container-fluid">
-    <main>
-    </main>
-  </header>
-    <div id="map"></div>
-    <div class="table-responsive">
+      <div id="map"></div>
+      <div class="table-responsive">
           <h3 class="text-primary table-title">All events</h3>
           <table class="table table-hover table-striped" id="complete">
             <thead class='text-info'>
@@ -151,7 +147,7 @@
             </tbody>
           </table>
         </div>
-    </div>
+      </section>
     <footer>
     </footer>
     <!-- Vendor Files -->

@@ -113,7 +113,7 @@
         if (range.length > 0) {
           console.log('data from google');
           setTimeout(function(){
-            Event.batchCalls(range.splice(12, range.length));
+            Event.batchCalls(range.splice(11, range.length));
           }, 2000);
         }
         else {
@@ -151,6 +151,6 @@
     };
   };
 
-  Event.fetchAll();
+//   Event.fetchAll();
   module.Event = Event;
 })(window);
