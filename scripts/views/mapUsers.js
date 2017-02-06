@@ -1,7 +1,7 @@
 
 (function closure(firebase) {
-  var map;
-  var google;
+  var map
+  var google
 
 //draws map
   window.initMap = function initMap() {
