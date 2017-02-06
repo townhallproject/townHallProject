@@ -12,7 +12,6 @@ Sign up for email alerts
 Submit an event for review by researchers
 
 ## Contributing
-
 - Open an issue in the repository describing the feature you intend to work on.
 - Check out a new branch for this feature from the repository's `development` branch.
 - Do your work on that branch.
@@ -20,6 +19,6 @@ Submit an event for review by researchers
 - In the comments of your Pull Request, point out which issue you've resolved and how.
 
 ## Bootstrap
-
-Make changes to customboot.less
-Run grunt dist-css to create new bootstrap.min.css
+- Make changes to customboot.less
+- Run grunt dist-css
+- New changes will be written to bootstrap.min.css

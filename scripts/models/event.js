@@ -1,26 +1,26 @@
 (function(module) {
-
-  // event Object
   function Event (opts) {
     for (var key in opts) {
       this[key] = opts[key];
+      this['Date'] = new Date(opts.Date);
     }
     this.Date = new Date(opts.Date);
   }
 
+  Event.allEvents = [];
+
+
   // Initialize Firebase
   var config = {
-    apiKey: 'AIzaSyBw6HZ7Y4J1dATyC4-_mKmt3u0hLRRqthQ',
-    authDomain: 'staywokesignups.firebaseapp.com',
-    databaseURL: 'https://staywokesignups.firebaseio.com',
-    storageBucket: 'staywokesignups.appspot.com',
-    messagingSenderId: '47559178634',
+    apiKey: 'AIzaSyDwZ41RWIytGELNBnVpDr7Y_k1ox2F2Heg',
+    authDomain: 'townhallproject-86312.firebaseapp.com',
+    databaseURL: 'https://townhallproject-86312.firebaseio.com',
+    storageBucket: 'townhallproject-86312.appspot.com',
+    messagingSenderId: '208752196071'
   };
 
   firebase.initializeApp(config);
-
   var firebasedb = firebase.database();
-
   var provider = new firebase.auth.GoogleAuthProvider();
 
   Event.prototype.writetoFB = function () {
@@ -43,18 +43,15 @@
     return renderTemplate(this);
   };
 
-  // takes a zip code, finds lat/lng, then calls return nearest
   Event.lookupZip = function (zip) {
-    return firebasedb.ref('/publicInfo/zips/' + zip).once('value').then(function(snapshot) {
+    return firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
       var location = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
       Event.returnNearest(location);
     }).catch(function(error){
-      // TODO: front end error message
       console.log('That is not a real zip');
     });
   };
 
-  //Takes a current location, iterates over all events, returns the two nearest. Then calls a render function.
   Event.returnNearest = function (location) {
     var locations = [];
     firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
@@ -62,21 +59,18 @@
         locations.push(new Event(ele.val()));
       });
       var positions = locations.sort(function (a , b) {
-        var apos = google.maps.geometry.spherical.computeDistanceBetween(location, new google.maps.LatLng(a.lat,a.long));
-        var bpos = google.maps.geometry.spherical.computeDistanceBetween(location, new google.maps.LatLng(b.lat,b.long));
-        return apos <= bpos ? -1 : 1;
+        a.dist = google.maps.geometry.spherical.computeDistanceBetween(location, new google.maps.LatLng(a.lat,a.lng));
+        b.dist = google.maps.geometry.spherical.computeDistanceBetween(location, new google.maps.LatLng(b.lat,b.lng));
+        return a.dist <= b.dist ? -1 : 1;
       });
-      eventHandler.render(positions, 10);
+      eventHandler.render(positions);
     });
   };
 
-  // Loads everything in the database
-  // TODO: seperate out this function into a Load and a View
   Event.viewAll = function (location) {
     var locations = [];
     firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
       snapshot.forEach(function(ele){
-        console.log(ele.key);
         newEvent = new Event(ele.val());
         $newRow = $(newEvent.toHtml($('#view-firebase-template')));
         $newRow.attr('id' , ele.key);
@@ -85,29 +79,79 @@
     });
   };
 
-  // gets a google formatted address.
-  // Stores the resulting lat lng info in the Event object
   Event.prototype.getLatandLog = function(address, key) {
     var newEvent = this;
+    if (address === 'undefined undefined undefined undefined') {
+      console.log('address', address, this);
+    } else {
+      $.ajax({
+        url : 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBmEKpZ6cePaTMPRERaoMj9Gx-dyQ5Lxkk',
+        data : {
+          'address' : address
+        },
+        dataType : 'json',
+        success: function(r){
+          newEvent.lat = r.results[0].geometry.location.lat;
+          newEvent.lng = r.results[0].geometry.location.lng;
+          newEvent.address = r.results[0].formatted_address;
+          Event.allEvents.push(newEvent);
+          // newEvent.updateFB(key)
+        },
+        error: function(e){
+          console.log('error', e, address);
+        }
+      });
+    }
+  };
+
+  //Gets everything from the google doc and does geo coding in batches
+  Event.fetchAll = function() {
+    url = 'https://sheets.googleapis.com/v4/spreadsheets/1yq1NT9DZ2z3B8ixhid894e77u9rN5XIgOwWtTW72IYA/values/Upcoming%20Events!C:P?key=AIzaSyBw6HZ7Y4J1dATyC4-_mKmt3u0hLRRqthQ';
     $.ajax({
-      url : 'https://maps.googleapis.com/maps/api/geocode/json',
-      data : {
-        'address' : address
-      },
-      dataType : 'json',
-      success: function(r){
-        console.log('success', r);
-        newEvent.lat = r.results[0].geometry.location.lat;
-        newEvent.long = r.results[0].geometry.location.lng;
-        newEvent.address = r.results[0].formatted_address;
-        console.log(newEvent);
-        newEvent.updateFB(key);
-      },
-      error: function(e){
-        console.log('error', e);
+      url: url,
+      success: function (response){
+        var range = response.values;
+        if (range.length > 0) {
+          console.log('data from google');
+          setTimeout(function(){
+            Event.batchCalls(range.splice(11, range.length));
+          }, 2000);
+        }
+        else {
+          console.log('No data found.');
+        }
       }
     });
   };
 
+  // the geocoding API has a rate limit. This looks up 10 every 2 seconds.
+  Event.batchCalls = function(response){
+    chunck = response.splice(0,10);
+    Event.encodeFromGoogle(chunck);
+    if (response.length > 0) {
+      setTimeout(function(){
+        Event.batchCalls(response);
+      }, 2000);
+    } else {
+      // When done, update firebase
+      // firebase.database().ref('/townHalls/').remove();
+      // Event.allEvents.forEach(function(event){
+      // })
+    };
+  };
+
+  Event.encodeFromGoogle = function(array){
+    var googlekeys = ['Member', 	'Party'	, 'State'	, 'District', 	'meetingType', 	'Date', 	'Time'	,'timeZone', 	'Location', 	'streetAddress', 	'City', 	'State-ab'	, 'Zip', 'Notes'];
+    for (var j = 0; j < array.length; j++) {
+      var row = array[j];
+      rowObj = new Event;
+      for (var k = 0; k < row.length; k++) {
+        rowObj[googlekeys[k]] = row[k];
+      }
+      rowObj.getLatandLog(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.State + ' ' + rowObj.Zip);
+    };
+  };
+
+//   Event.fetchAll();
   module.Event = Event;
 })(window);
