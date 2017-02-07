@@ -2,12 +2,17 @@
   function TownHall (opts) {
     for (var key in opts) {
       this[key] = opts[key];
-      this['Date'] = new Date(opts.Date);
     }
-    this.Date = new Date(opts.Date);
   }
 
   TownHall.allTownHalls = [];
+  TownHall.timeZones = {
+    PST : 'America/Los_Angeles',
+    MST : 'America/Denver',
+    CST : 'America/Chicago',
+    EST : 'America/New_York',
+    other : 'no time zone'
+  }
 
   // Initialize Firebase
   var config = {
@@ -40,6 +45,64 @@
     var source = $(templateid).html();
     var renderTemplate = Handlebars.compile(source);
     return renderTemplate(this);
+  };
+
+  TownHall.prototype.validateZone = function () {
+    var tz = TownHall.timeZones[this.timeZone];
+    if (!tz) {
+      var time = Date.now();
+      var loc = this.lat+','+this.lng
+      url = 'https://maps.googleapis.com/maps/api/timezone/json?location='+loc+'&timestamp=1331766000&key=AIzaSyBlmL9awpTV6AQKQJOmOuUlH1APXWmCHLQ'
+      $.get(url, function (response){
+        this.zoneString = response.timeZoneId;
+        return this;
+      })
+    }
+    else {
+      this.zoneString = tz
+      return this;
+    }
+  }
+
+  TownHall.toTwentyFour = function (time) {
+    var hourmin = time.split(' ')[0];
+    var ampm = time.split(' ')[1];
+    if (ampm ==='PM') {
+      var hour = hourmin.split(':')[0]
+      hour = Number(hour) +12;
+      hourmin = hour + ':' + hourmin.split(':')[1]
+    }
+    return hourmin + ':' + '00';
+  };
+
+  TownHall.prototype.formatDateTime = function (){
+    this.dateObj = new Date(this.Date);
+    this.dateString = this.dateObj.toDateString();
+    if (this.dateString !== 'Invalid Date') {
+      this.dateValid = true;
+      var month = this.dateObj.getMonth() + 1;
+      var month = month.toString().length === 1 ? (0 + month.toString()) :month.toString();
+      var day = this.dateObj.getDay() + 1;
+      var day  = day.toString().length === 1 ? (0 + day.toString()) :day.toString();
+      var yearMonthDay = this.dateObj.getFullYear() + '-' + month + '-'+day ;
+
+      this.timeStart24 = TownHall.toTwentyFour(this.Time);
+      if (!this.TimeEnd) {
+        hour = parseInt(this.timeStart24.split(':')[0]) + 2;
+        this.timeEnd24 = hour + ':' + this.timeStart24.split(':')[1] + ':' + '00';
+      }
+      else {
+        this.timeEnd24 = TownHall.toTwentyFour(this.TimeEnd);
+      }
+      this.validateZone();
+      this.yearMonthDay = yearMonthDay;
+      return this;
+    }
+    else {
+      return this;
+
+    }
+
   };
 
   TownHall.lookupZip = function (zip) {
@@ -93,6 +156,7 @@
           newTownHall.lat = r.results[0].geometry.location.lat;
           newTownHall.lng = r.results[0].geometry.location.lng;
           newTownHall.address = r.results[0].formatted_address;
+          newTownHall.formatDateTime();
           TownHall.allTownHalls.push(newTownHall);
           // newTownHall.updateFB(key)
         },
@@ -135,9 +199,10 @@
     } else {
       // When done, update firebase
       console.log('got all data', TownHall.allTownHalls);
-      // firebase.database().ref('/townHalls/').remove();
-      // TownHall.allTownHalls.forEach(function(event){
-      // })
+      firebase.database().ref('/townHalls/').remove();
+      TownHall.allTownHalls.forEach(function(event){
+        event.writetoFB();
+      })
     };
   };
 
@@ -159,6 +224,6 @@
     };
   };
 
-//   TownHall.fetchAll();
+  // TownHall.fetchAll();
   module.TownHall = TownHall;
 })(window);
