@@ -87,7 +87,7 @@
     }
   }
 
-  eventHandler.render = function (events) {
+  eventHandler.render = function (events, zipQuery) {
     var $parent = $('#nearest');
     $parent.empty();
     var $table = $('#all-events-table');
@@ -101,15 +101,13 @@
     },[])
     if (nearest.length === 0) {
       var townHall = events[0]
-      recenterMap(townHall);
-      // townHall.Date = townHall.Date.toDateString();
-      // townHall.dist = Math.round(townHall.dist/1609.344);
-      // townHall.addressLink = "https://www.google.com/maps?q=" + escape(townHall.address);
+      var townHalls = [townHall];
+      recenterMap(townHalls, zipQuery);
       eventHandler.renderTable(events, $table)
       $parent.html('<h4>No events within 50 miles of your zip, the closest one is ' + townHall.dist + ' miles away</h4>');
       eventHandler.renderPanels(townHall, $parent);
     } else {
-      recenterMap(nearest);
+      recenterMap(nearest, zipQuery);
       eventHandler.renderTable(nearest, $table);
       $parent.html('<h4>There are ' + nearest.length + ' events within 50 miles of you</h4>');
       nearest.forEach(function(ele){
@@ -137,7 +135,12 @@
       $("a[href='" + location.hash + "']").tab('show')
     }
     $('.nav').on('click', 'a[data-toggle]', function onClickGethref(event) {
-      location.hash = this.getAttribute('href')
+      var hashid = this.getAttribute('href')
+      if (hashid === '#home') {
+        history.replaceState({}, document.title, ".");        }
+      else {
+        location.hash = this.getAttribute('href')
+      }
     })
   })
 

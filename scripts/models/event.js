@@ -106,29 +106,29 @@
 
   TownHall.lookupZip = function (zip) {
     return firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
-      var location = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
-      TownHall.returnNearest(location);
+      var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
+      TownHall.returnNearest(zipQueryLoc);
     }).catch(function(error){
       console.log('That is not a real zip');
     });
   };
 
-  TownHall.returnNearest = function (location) {
+  TownHall.returnNearest = function (zipQueryLoc) {
     var locations = [];
     firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
       snapshot.forEach(function(ele){
         locations.push(new TownHall(ele.val()));
       });
       var positions = locations.sort(function (a , b) {
-        a.dist = google.maps.geometry.spherical.computeDistanceBetween(location, new google.maps.LatLng(a.lat,a.lng));
-        b.dist = google.maps.geometry.spherical.computeDistanceBetween(location, new google.maps.LatLng(b.lat,b.lng));
+        a.dist = google.maps.geometry.spherical.computeDistanceBetween(zipQueryLoc, new google.maps.LatLng(a.lat,a.lng));
+        b.dist = google.maps.geometry.spherical.computeDistanceBetween(zipQueryLoc, new google.maps.LatLng(b.lat,b.lng));
         return a.dist <= b.dist ? -1 : 1;
       });
-      eventHandler.render(positions);
+      eventHandler.render(positions, zipQueryLoc);
     });
   };
 
-  TownHall.viewAll = function (location) {
+  TownHall.viewAll = function (zipQueryLoc) {
     var locations = [];
     firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
       snapshot.forEach(function(ele){

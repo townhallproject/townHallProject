@@ -53,19 +53,25 @@
     });
   };
 
-  window.recenterMap = function(markers) {
+  window.recenterMap = function(markers, zipQuery) {
     var bounds = new google.maps.LatLngBounds();
     var geocoder = new google.maps.Geocoder();
+
     for (var i = 0; i < markers.length; i++) {
       marker = new google.maps.LatLng(markers[i].lat, markers[i].lng);
       bounds.extend(marker);
     }
-    geocoder.geocode({ 'address': markers[0].address}, function onGeocode(results, status) {
-      map.setCenter(results[0].geometry.location);
-      google.maps.event.trigger(map, 'resize');
-      map.setCenter(results[0].geometry.location);
+      // google.maps.event.trigger(map, 'resize');
+      bounds.extend(zipQuery);
+      map.setCenter(zipQuery);
       map.fitBounds(bounds);
-    });
+      //TODO: add maker for search query, but need to be able to remove it.
+      // var marker = new google.maps.Marker({
+      //   map: map,
+      //   position: zipQuery,
+      //   name: 'zipQuery',
+      //
+      // })
   };
 
 // listens for new events
@@ -87,10 +93,13 @@
       fillColor: '#FF0000',
       fillOpacity: 0.35,
       map: map,
+
       position: latLng,
       name: ele.name,
       time: ele.time,
     });
+    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+
     marker.addListener('click', function() {
       infowindow.open(map, marker);
     });
