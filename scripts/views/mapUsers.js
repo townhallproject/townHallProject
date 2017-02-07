@@ -59,7 +59,6 @@
     for (var i = 0; i < markers.length; i++) {
       marker = new google.maps.LatLng(markers[i].lat, markers[i].lng);
       bounds.extend(marker);
-      console.log(bounds);
     }
     geocoder.geocode({ 'address': markers[0].address}, function onGeocode(results, status) {
       map.setCenter(results[0].geometry.location);

@@ -85,7 +85,6 @@
       var day = this.dateObj.getDay() + 1;
       var day  = day.toString().length === 1 ? (0 + day.toString()) :day.toString();
       var yearMonthDay = this.dateObj.getFullYear() + '-' + month + '-'+day ;
-
       this.timeStart24 = TownHall.toTwentyFour(this.Time);
       if (!this.TimeEnd) {
         hour = parseInt(this.timeStart24.split(':')[0]) + 2;

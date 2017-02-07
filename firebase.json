@@ -12,7 +12,8 @@
       "README.md",
       "server.js",
       "styles/bootstrap.css",
-      "styles/bootstrap.map"
+      "styles/bootstrap.map",
+      ".DS_Store"
     ]
   }
 }
