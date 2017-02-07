@@ -14,11 +14,11 @@ module.exports = function(grunt) {
           sourceMap: true,
           outputSourceFiles: true,
           sourceMapURL: 'bootstrap.css.map',
-          sourceMapFilename: 'styles/bootstrap.css.map',
+          sourceMapFilename: 'styles/css/bootstrap.css.map',
           paths: '<%= bspath %>/less'
         },
         files: {
-          'styles/bootstrap.css': 'styles/customboot.less'
+          'styles/css/bootstrap.css': 'styles/customboot.less'
         }
       }
     },
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
         options: {
           map: true
         },
-        src: 'styles/bootstrap.css'
+        src: 'styles/css/bootstrap.css'
       }
     },
     cssmin: {
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
       },
       core: {
         files: {
-          'styles/bootstrap.min.css': 'styles/bootstrap.css'
+          'styles/css/bootstrap.min.css': 'styles/bootstrap.css'
         }
       }
     }

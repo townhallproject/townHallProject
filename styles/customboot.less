@@ -29,12 +29,12 @@
 @import "input-groups.less";
 @import "navs.less";
 @import "navbar.less";
-@import "breadcrumbs.less";
-@import "pagination.less";
+// @import "breadcrumbs.less";
+// @import "pagination.less";
 @import "pager.less";
 @import "labels.less";
 @import "badges.less";
-@import "jumbotron.less";
+// @import "jumbotron.less";
 @import "thumbnails.less";
 @import "alerts.less";
 @import "progress-bars.less";
@@ -48,8 +48,8 @@
 // Components w/ JavaScript
 @import "modals.less";
 @import "tooltip.less";
-@import "popovers.less";
-@import "carousel.less";
+// @import "popovers.less";
+// @import "carousel.less";
 
 // Utility classes
 @import "utilities.less";
@@ -249,3 +249,21 @@ form{
   margin: auto;
   padding: 20px;
 }
+
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow:
+  hidden;
+  max-width: 100%;
+}
+  .embed-container iframe,
+  .embed-container object,
+  .embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+ }
