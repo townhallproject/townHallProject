@@ -72,7 +72,7 @@
       $panel.children('.panel').addClass('panel-dem');
       $panel.appendTo($parent);
     }
-    else {
+    else if ('Republican') {
       $panel.children('.panel').addClass('panel-rep');
       $panel.appendTo($parent);
     }
@@ -80,8 +80,9 @@
 
   eventHandler.renderTable = function (events, $tableid) {
     for (var i = 0; i < events.length; i++) {
-      events[i].Date = events[i].Date.toDateString();
+      events[i].formatDateTime();
       events[i].dist = Math.round(events[i].dist/1609.344);
+      events[i].addressLink = "https://www.google.com/maps?q=" + escape(events[i].address);
       $($tableid).append(events[i].toHtml($('#table-template')));
     }
   }
@@ -100,16 +101,20 @@
       return acc;
     },[])
     if (nearest.length === 0) {
-      events[0].dist = Math.round(events[0].dist/1609.344);
-      $parent.html('<h4>No events within 50 miles of your zip, the closest one is ' + events[0].dist + ' miles away</h4>')
-      eventHandler.renderPanels(events[0], $parent);
+      var townHall = events[0]
+      // townHall.Date = townHall.Date.toDateString();
+      // townHall.dist = Math.round(townHall.dist/1609.344);
+      // townHall.addressLink = "https://www.google.com/maps?q=" + escape(townHall.address);
       eventHandler.renderTable(events, $table)
+      $parent.html('<h4>No events within 50 miles of your zip, the closest one is ' + townHall.dist + ' miles away</h4>');
+      eventHandler.renderPanels(townHall, $parent);
     } else {
       eventHandler.renderTable(nearest, $table)
       nearest.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       })
     }
+    addtocalendar.load();
   };
 
 

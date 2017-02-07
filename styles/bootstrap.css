@@ -6785,22 +6785,51 @@ form {
   background-color: white;
   color: #8dd0ea;
 }
+.btn-secondary {
+  color: white;
+  border: white solid 2px;
+  background-color: #8dd0ea;
+}
+.btn-secondary:hover {
+  border: #E32F21 solid 2px;
+  background-color: white;
+  color: #E32F21;
+}
+.atcb-list {
+  width: 170px;
+  border: 1px solid #bababa;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 5px #AAA;
+          box-shadow: 0 0 5px #AAA;
+  margin-top: 10px;
+}
+.atcb-item-link {
+  color: #000;
+  font-family: "Verdana";
+  font-size: 14px;
+  text-decoration: none;
+  outline: none;
+  padding: 5px 15px;
+}
+.addtocalendar {
+  margin: 10px;
+}
 .panel {
   color: #1E2528;
-  -webkit-box-shadow: gray 0px 0px 7px;
-          box-shadow: gray 0px 0px 7px;
+  -webkit-box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.2);
   border: none;
 }
 .panel-dem .panel-heading {
-  color: #1E2528;
+  color: white;
   background-color: #37acda;
 }
 .panel-rep .panel-heading {
-  color: #1E2528;
+  color: white;
   background-color: #8c1b12;
 }
 #nearest {
-  max-height: 500px;
+  max-height: 575px;
   overflow: scroll;
 }
 #map {

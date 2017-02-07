@@ -10,7 +10,9 @@
       "package.json",
       "Gruntfile.js",
       "README.md",
-      "server.js"
+      "server.js",
+      "styles/bootstrap.css",
+      "styles/bootstrap.map"
     ]
   }
 }

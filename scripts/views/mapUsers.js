@@ -1,7 +1,7 @@
 
 (function closure(firebase) {
-  var map;
-  var google;
+  var map
+  var google
 
 //draws map
   window.initMap = function initMap() {
@@ -72,7 +72,6 @@
 // listens for new events
   firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
     var ele = new TownHall (snapshot.val());
-    ele.Date = ele.Date.toDateString();
     $('#all-events-table').append(ele.toHtml($('#table-template')));
     var coords = [ele.lng, ele.lat];
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
