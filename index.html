@@ -47,22 +47,28 @@
       <div class="col-sm-12">
         <div class="panel panel-secondary">
           <div class="panel-heading">
-            <h4>{{Location}}</h4>
-            <p>{{Member}}</p>
-            {{#if dateValid}}
-            <span class="addtocalendar ">
-              <a class="atcb-link btn btn-secondary">Add to Calendar</a> <!-- You can change button title by adding this line -->
-              <var class="atc_event">
-                <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
-                  <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
-                  <var class="atc_timezone">{{zoneString}}</var>
-                  <var class="atc_title">{{meetingType}}: {{Member}}</var>
-                  <var class="atc_description">{{Notes}}</var>
-                  <var class="atc_location">{{address}}</var>
-                  <var class="atc_organizer">{{Party}}</var>
-              </var>
-          </span>
-          {{/if}}
+            <div class="row">
+              <div class="col-xs-6">
+                <h4>{{Location}}</h4>
+                <p>{{Member}}</p>
+              </div>
+              {{#if dateValid}}
+              <div class="col-xs-6 ">
+                <span class="addtocalendar pull-right ">
+                  <a class="atcb-link btn btn-secondary">Add to Calendar</a> <!-- You can change button title by adding this line -->
+                  <var class="atc_event">
+                    <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
+                      <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
+                      <var class="atc_timezone">{{zoneString}}</var>
+                      <var class="atc_title">{{meetingType}}: {{Member}}</var>
+                      <var class="atc_description">{{Notes}}</var>
+                      <var class="atc_location">{{address}}</var>
+                      <var class="atc_organizer">{{Party}}</var>
+                    </var>
+                </span>
+              </div>
+            {{/if}}
+            </div>
           </div>
           <div class="panel-body">
             <ul class="list-group">
