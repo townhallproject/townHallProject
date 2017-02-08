@@ -265,6 +265,7 @@ th{
   max-height: 575px;
   overflow-y: scroll;
   overflow-x: hidden;
+  -ms-overflow-style: none;
 }
 
 #map {
@@ -300,3 +301,7 @@ ul {
    list-style: none !important;
    padding-left: 10px;
  }
+
+ ::-webkit-scrollbar {
+    display: none;
+}
