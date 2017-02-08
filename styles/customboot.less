@@ -136,9 +136,15 @@
 @state-danger-bg:                @brand-danger;
 @state-danger-border:            darken(spin(@state-danger-bg, -10), 5%);
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body{
   color: #1E2528;
   font-family: 'Poppins', sans-serif;
+  margin-bottom: 60px;
 }
 
 .navbar{
@@ -151,6 +157,18 @@ header{
   color: white;
   border-bottom: #E32F21 2px solid;
 }
+
+.footer {
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 80px;
+  background-color: @brand-success;
+  padding: 40px;
+}
+
 
 input{
   border: none;
@@ -238,7 +256,8 @@ form{
 
 #nearest{
   max-height: 575px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: auto;
 }
 
 #map {

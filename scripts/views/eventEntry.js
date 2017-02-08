@@ -85,6 +85,13 @@
       events[i].addressLink = "https://www.google.com/maps?q=" + escape(events[i].address);
       $($tableid).append(events[i].toHtml($('#table-template')));
     }
+  };
+
+  eventHandler.viewByDate = function () {
+    $table = $('#all-events-table');
+    $table.empty();
+    var events = TownHall.sortDate(TownHall.allTownHalls);
+    eventHandler.renderTable(events, $table);
   }
 
   eventHandler.render = function (events, zipQuery) {
@@ -147,6 +154,7 @@
   $('#save-event').on('submit', eventHandler.save);
   $('#look-up').on('submit', eventHandler.lookup);
   $('#view-all').on('click', TownHall.viewAll);
+  $('#sort-date').on('click', eventHandler.viewByDate);
 
   module.eventHandler = eventHandler;
 })(window);

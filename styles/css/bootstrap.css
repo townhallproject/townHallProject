@@ -6233,9 +6233,14 @@ button.close {
     display: none !important;
   }
 }
+html {
+  position: relative;
+  min-height: 100%;
+}
 body {
   color: #1E2528;
   font-family: 'Poppins', sans-serif;
+  margin-bottom: 60px;
 }
 .navbar {
   border-bottom: #E32F21 2px solid;
@@ -6245,6 +6250,16 @@ header {
   background-color: #8dd0ea;
   color: white;
   border-bottom: #E32F21 2px solid;
+}
+.footer {
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 80px;
+  background-color: #62bee2;
+  padding: 40px;
 }
 input {
   border: none;
@@ -6317,7 +6332,8 @@ form {
 }
 #nearest {
   max-height: 575px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: auto;
 }
 #map {
   height: 400px;

@@ -358,7 +358,6 @@
   window.recenterMap = function(markers, zipQuery) {
     var bounds = new google.maps.LatLngBounds();
     var geocoder = new google.maps.Geocoder();
-
     for (var i = 0; i < markers.length; i++) {
       marker = new google.maps.LatLng(markers[i].lat, markers[i].lng);
       bounds.extend(marker);
@@ -379,6 +378,7 @@
 // listens for new events
   firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
     var ele = new TownHall (snapshot.val());
+    TownHall.allTownHalls.push(ele)
     $('#all-events-table').append(ele.toHtml($('#table-template')));
     var coords = [ele.lng, ele.lat];
     var latLng = new google.maps.LatLng(coords[1], coords[0]);

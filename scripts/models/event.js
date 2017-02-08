@@ -41,12 +41,6 @@
     firebasedb.ref('/townHalls/' + key).set(this);
   };
 
-  TownHall.prototype.toHtml= function(templateid){
-    var source = $(templateid).html();
-    var renderTemplate = Handlebars.compile(source);
-    return renderTemplate(this);
-  };
-
   TownHall.prototype.validateZone = function () {
     var tz = TownHall.timeZones[this.timeZone];
     if (!tz) {
@@ -99,10 +93,21 @@
     }
     else {
       return this;
-
     }
-
   };
+
+  TownHall.prototype.toHtml= function(templateid){
+    var source = $(templateid).html();
+    var renderTemplate = Handlebars.compile(source);
+    return renderTemplate(this);
+  };
+
+  TownHall.sortDate = function(array) {
+    return array.sort(function(a, b ){
+      return new Date(a.dateString) - new Date(b.dateString);
+    })
+  }
+
 
   TownHall.lookupZip = function (zip) {
     return firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
