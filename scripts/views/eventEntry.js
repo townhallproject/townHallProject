@@ -174,7 +174,7 @@
   });
 
   // url hash for direct links to subtabs on inauguration.html
-  $(document).ready(() => {
+  $(document).ready(function(){
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show')
     }
