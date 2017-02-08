@@ -356,6 +356,7 @@
   };
 
   window.recenterMap = function(markers, zipQuery) {
+    google.maps.event.trigger(map, 'resize');
     var bounds = new google.maps.LatLngBounds();
     var geocoder = new google.maps.Geocoder();
     for (var i = 0; i < markers.length; i++) {
@@ -383,7 +384,7 @@
     var coords = [ele.lng, ele.lat];
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
     // eslint-disable-next-line no-unused-vars
-    var contentString = ele.toHtml('#event-template');
+    var contentString = ele.toHtml('#marker-template');
     var infowindow = new google.maps.InfoWindow({
       content: contentString,
       maxWidth: 200
@@ -395,13 +396,11 @@
       fillColor: '#FF0000',
       fillOpacity: 0.35,
       map: map,
-
       position: latLng,
       name: ele.name,
       time: ele.time,
     });
-    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
-
+    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
     marker.addListener('click', function() {
       infowindow.open(map, marker);
     });

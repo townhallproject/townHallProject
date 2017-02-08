@@ -64,6 +64,11 @@
   eventHandler.lookup = function (e) {
     e.preventDefault();
     TownHall.lookupZip($('#look-up input').val());
+    $('.header-small').removeClass('hidden');
+    $('.header-large').hide();
+    $('.form-text-results').addClass('text-center')
+
+
   };
 
   eventHandler.renderPanels = function(event, $parent) {
@@ -136,6 +141,8 @@
       }
       return acc;
     },[])
+    $('#map').appendTo('.map-small');
+
     if (nearest.length === 0) {
       var townHall = events[0]
       var townHalls = [townHall];
@@ -146,7 +153,7 @@
     } else {
       recenterMap(nearest, zipQuery);
       eventHandler.renderTable(nearest, $table);
-      $parent.html('<h4>There are ' + nearest.length + ' events within 50 miles of you</h4>');
+      $parent.html('<h4>There are ' + nearest.length + ' upcoming events within 50 miles of you</h4>');
       nearest.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       })

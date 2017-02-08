@@ -44,14 +44,21 @@
         </td>
       </tr>
     </script>
+    <script id="marker-template" type="text/x-handlebars-template">
+      <div class=text-info>
+        <h4>{{Member}}</h4>
+        <p>{{Location}}</p>
+        <span>{{Time}}</span> on <span>{{Date}}</span> at <a href={{addressLink}}>{{address}}</a></span></li>
+      </script>
+      </div>
     <script id="event-template" type="text/x-handlebars-template">
       <div class="col-sm-12">
         <div class="panel panel-secondary">
           <div class="panel-heading">
             <div class="row">
               <div class="col-xs-6">
-                <h4>{{Location}}</h4>
-                <p>{{Member}}</p>
+                <h4>{{Member}} ({{Party}}, {{District}})</h4>
+                <p>{{meetingType}} at {{Location}}</p>
               </div>
               {{#if dateValid}}
               <div class="col-xs-6 ">
@@ -72,18 +79,14 @@
             </div>
           </div>
           <div class="panel-body">
-            <ul class="list-group">
-              <li class="list-group-item"><span class="profile-summary-key">Party: </span><span class="profile-summary-value">{{Party}}</span></li>
-              <li class="list-group-item"><span class="profile-summary-key">Meeting Type:</span> <span class="profile-summary-value">{{meetingType}}</span></li>
-                <li class="list-group-item"><span class="profile-summary-key">District:</span> <span class="profile-summary-value">{{District}}</span></li>
-              <li class="list-group-item"><span class="profile-summary-key">Date: </span><span class="profile-summary-value">{{Date}}</span></li>
-              <li class="list-group-item"><span class="profile-summary-key">Time: </span><span class="profile-summary-value">{{Time}}, {{timeZone}}</span></li>
-              <li class="list-group-item"><span class="profile-summary-key">Notes: </span><span class="profile-summary-value">{{Notes}}</span></li>
-              <li class="list-group-item">
-                <span class="profile-summary-key">Address:</span>
-                <span class="profile-summary-value">
+            <ul>
+              <li class="text-secondary"><h4><span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}, {{timeZone}}</span></h4></li>
+              <li><span class="profile-summary-key">Notes: </span><span class="profile-summary-value">{{Notes}}</span></li>
+              <li>
+                <span>Directions:</span>
+                <span>
                   <a href={{addressLink}}>{{address}}</a></span></li>
-              <li class="list-group-item"><span class="profile-summary-key">Distance:</span> <span class="profile-summary-value">{{dist}} miles</span></li>
+              <li >{{dist}} miles away from your search</span></li>
             </ul>
           </div>
         </div>
@@ -111,32 +114,40 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="home">
         <header class="site-header clearfix">
-         <section class=" container container-fluid">
-           <div class="row">
-            <div class="col-sm-4">
-              <div  class=" text-left site-header clearfix col-md-12 displayoff">
-                  <h2 >Show Up.</h2>
-                  <h2 >Speak Out.</h2>
-                  <h2 class="text-secondary-dark">Fight Back.</h2>
-                  <form id="look-up" class="form-inline" action="index.html" method="post">
-                    <div class="form-group">
-                      <label  for="zip"></label>
-                      <input class="form-control input-md " type="zip" name="" value="" placeholder="Zip Code">
-                      <button type="submit" name="button" class="btn btn-primary btn-sm ">Find A Town Hall</button>
+           <section class=" container container-fluid">
+             <div class="row">
+               <div class="col-sm-6">
+                  <div  class=" text-left site-header clearfix displayoff ">
+                    <div class="form-text-results">
+                      <div class="text-toggle header-large">
+                        <h2 >Show Up.</h2>
+                        <h2 >Speak Out.</h2>
+                        <h2 class="text-secondary-dark">Fight Back.</h2>
+                      </div>
+                      <div class="text-toggle header-small hidden ">
+                        <h4>Show up. Speak out. <span class="text-secondary-dark">Fight back.</span></h4>
+                      </div>
+                      <form id="look-up" class="form-inline " action="index.html" method="post">
+                        <div class="form-group">
+                          <label  for="zip"></label>
+                          <input class="form-control input-md " type="zip" name="" value="" placeholder="Zip Code">
+                          <button type="submit" name="button" class="btn btn-primary btn-sm ">Find A Town Hall</button>
+                        </div>
+                      </form>
                     </div>
-                  </form>
+                    <section class="results">
+                      <div id="nearest"></div>
+                    </section>
+                  </div>
+                </div>
+                <div class="col-sm-6 map-small">
                 </div>
               </div>
-              <section class="results col-sm-8 state-info-bg">
-                <div id="nearest"></div>
-              </section>
-            </div>
-          </section>
+            </section>
         </header>
         <div class="container-fluid">
           <div class="row">
             <div id="map"></div>
-
           </div>
 
         </div>
@@ -151,7 +162,7 @@
         <a name="events-table" id="events-table"></a>
         <section class=" container container-fluid">
           <div class="table-responsive">
-              <h2 class="text-success table-title text-center">All Upcoming Events</h2>
+              <h2 class="text-success table-title text-center">Upcoming Events</h2>
               <div >
                 <small>
                   Glossary:
@@ -167,7 +178,7 @@
               <table class="table table-hover table-striped" id="complete">
                 <thead class='text-info'>
                   <tr>
-                    <th class="">
+                    <th class="Member">
                       Member
                     </th>
                     <th>Party
@@ -195,11 +206,11 @@
                     <th>
                       District
                     </th>
-                    <th>
+                    <th class="meetingType">
                       Meeting type
                       <div class="btn-group">
                         <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="center-block glyphicon glyphicon-menu-down"></span>
+                        <span class="center-block glyphicon glyphicon-menu-down"></span>
                         </button>
                         <div class="dropdown-menu filter">
                           <ul>
@@ -223,7 +234,7 @@
                         <span class="center-block glyphicon glyphicon-menu-down"></span>
                       </button>
                     </th>
-                    <th>
+                    <th class="time">
                       Time
                     </th>
                     <th>

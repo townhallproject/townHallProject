@@ -6267,6 +6267,12 @@ input {
 form {
   margin-bottom: 20px;
 }
+th {
+  min-width: 130px;
+}
+.meetingType {
+  min-width: 200px;
+}
 .text-secondary {
   color: #E32F21;
 }
@@ -6331,11 +6337,10 @@ form {
 #nearest {
   max-height: 575px;
   overflow-y: scroll;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 #map {
-  height: 400px;
-  width: 100%;
+  height: 679px;
 }
 .forms {
   width: 80%;
@@ -6358,7 +6363,7 @@ form {
   width: 100%;
   height: 100%;
 }
-.dropdown-menu ul {
+ul {
   list-style: none !important;
   padding-left: 10px;
 }

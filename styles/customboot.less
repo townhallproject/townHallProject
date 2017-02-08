@@ -178,6 +178,15 @@ form{
   margin-bottom: 20px;
 }
 
+th{
+  min-width: 130px;
+}
+
+.meetingType{
+  min-width: 200px;
+
+}
+
 .text-secondary{
   color: @brand-secondary;
 }
@@ -189,7 +198,7 @@ form{
 .input-md{
   background-color: darken(@brand-secondary, 10%);
   color: white;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 
 .btn-primary{
@@ -255,12 +264,12 @@ form{
 #nearest{
   max-height: 575px;
   overflow-y: scroll;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 #map {
-  height: 400px;
-  width: 100%;
+  height: 679px;
+  // width: 100%;
 }
 
 .forms{
@@ -287,7 +296,7 @@ form{
     height: 100%;
  }
 
- .dropdown-menu ul {
+ul {
    list-style: none !important;
    padding-left: 10px;
  }
