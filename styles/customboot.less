@@ -68,7 +68,7 @@
 
 @border-radius-base:        0px;
 
-@link-hover-color:                  @brand-primary;
+@link-color:                        darken(@brand-primary, 10%);
 @component-active-bg:               @brand-secondary;
 @nav-tabs-active-link-hover-color:  @brand-cool;
 @nav-link-hover-bg:                 @brand-cool;
@@ -99,7 +99,7 @@
 @navbar-default-border:            darken(@navbar-default-bg, 6.5%);
 
 // Navbar links
-@navbar-default-link-color:                @brand-primary;
+@navbar-default-link-color:                @link-color;
 @navbar-default-link-hover-color:          @brand-warning;
 @navbar-default-link-hover-bg:             @brand-success;
 @navbar-default-link-active-color:         #ffffff;
@@ -138,6 +138,7 @@
 
 body{
   color: #1E2528;
+  font-family: 'Poppins', sans-serif;
 }
 
 .navbar{
@@ -148,6 +149,7 @@ body{
 header{
   background-color: @brand-primary;
   color: white;
+  border-bottom: #E32F21 2px solid;
 }
 
 input{

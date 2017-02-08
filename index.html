@@ -7,6 +7,7 @@
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <link href="https://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/styles/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400" rel="stylesheet">
     <script id="table-template" type="text/x-handlebars-template">
       <tr class= 'event-row'
        data-Main_State-filter={{State}} data-Member-filter ={{Member}}
@@ -132,7 +133,13 @@
             </div>
           </section>
         </header>
-        <div id="map"></div>
+        <div class="container-fluid">
+          <div class="row">
+            <div id="map"></div>
+
+          </div>
+
+        </div>
         <section class="scroll-to-form text-center">
             <p>
               <a href="#events-table" class="scroll-button btn btn-primary btn-lg">
@@ -144,7 +151,16 @@
         <a name="events-table" id="events-table"></a>
         <section class=" container container-fluid">
           <div class="table-responsive">
-              <h3 class="text-primary table-title">All events</h3>
+              <h3 class="text-primary table-title">All Upcoming Events</h3>
+              <small>
+                Glossary:
+                <ul>
+                  <li><span>Town Hall - </span><span>A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents</span></li>
+                  <li><span>District Office Hours - </span><span>Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend	</span></li>
+                  <li><span>Ticketed Event - </span><span>Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
+                  <li><span>TeleTown Hall Meeting - </span><span>	A town Hall conducted by conference call.</span></li>
+                </ul>
+              </small>
               <table class="table table-hover table-striped" id="complete">
                 <thead class='text-info'>
                   <tr>

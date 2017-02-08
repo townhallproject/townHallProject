@@ -50,7 +50,7 @@ module.exports = function(grunt) {
       },
       core: {
         files: {
-          'styles/css/bootstrap.min.css': 'styles/bootstrap.css'
+          'styles/css/bootstrap.min.css': 'styles/css/bootstrap.css'
         }
       }
     }
