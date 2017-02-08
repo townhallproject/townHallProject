@@ -142,7 +142,7 @@
         </div>
         <section class="scroll-to-form text-center">
             <p>
-              <a href="#events-table" class="scroll-button btn btn-primary btn-lg">
+              <a href="#events-table" class="scroll-button btn btn-secondary btn-lg">
                 <span>Table of Events</span>
                 <span class="center-block glyphicon glyphicon-menu-down"></span>
               </a>
@@ -170,8 +170,24 @@
                     <th class="">
                       Member
                     </th>
-                    <th>
-                      Party
+                    <th>Party
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="center-block glyphicon glyphicon-menu-down"></span>
+                        </button>
+                        <div class="dropdown-menu filter">
+                          <ul>
+                            <li><a data-filter="Party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
+                            </li>
+                            <li><a data-filter="Party" id="Republican" class="dropdown-item" href="#">Republican</a>
+                            </li>
+                            <li><a data-filter="Party" id="Independent" class="dropdown-item" href="#">Independent</a>
+                            </li>
+                            <li><a data-filter="Party" id="All" class="dropdown-item" href="#">All</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </th>
                     <th>
                       State
@@ -181,6 +197,25 @@
                     </th>
                     <th>
                       Meeting type
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="center-block glyphicon glyphicon-menu-down"></span>
+                        </button>
+                        <div class="dropdown-menu filter">
+                          <ul>
+                            <li><a data-filter="meetingType" id="Town Hall" class="dropdown-item" href="#">Town Hall</a>
+                            </li>
+                            <li><a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a>
+                            </li>
+                            <li><a data-filter="meetingType" id="Ticketed Event" class="dropdown-item" href="#">Ticketed Event</a>
+                            </li>
+                            <li><a data-filter="meetingType" id="Tele-Town Hall" class="dropdown-item" href="#">Tele-Town Hall</a>
+                            </li>
+                            <li><a data-filter="meetingType" id="All" class="dropdown-item" href="#">All</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </th>
                     <th>
                       Date

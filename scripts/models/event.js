@@ -6,6 +6,10 @@
   }
 
   TownHall.allTownHalls = [];
+  TownHall.currentContext = [];
+  TownHall.filterIds = [];
+  TownHall.isCurrentContext = false;
+
   TownHall.timeZones = {
     PST : 'America/Los_Angeles',
     MST : 'America/Denver',
@@ -102,12 +106,20 @@
     return renderTemplate(this);
   };
 
-  TownHall.sortDate = function(array) {
-    return array.sort(function(a, b ){
+  //  Table Sorting Methods
+
+  //takes an array and sorts by date objects
+  TownHall.sortDate = function(data) {
+    return data.sort(function(a, b ){
       return new Date(a.dateString) - new Date(b.dateString);
     })
   }
 
+  TownHall.filterByCol = function(filterCol, filterID, data) {
+    return data.filter(function(ele){
+      return ele[filterCol] === filterID;
+    })
+  };
 
   TownHall.lookupZip = function (zip) {
     return firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {

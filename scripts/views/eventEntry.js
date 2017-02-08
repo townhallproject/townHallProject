@@ -87,12 +87,42 @@
     }
   };
 
-  eventHandler.viewByDate = function () {
+  // takes the current set of data in the table and sorts by date
+  eventHandler.viewByDate = function (e) {
+    e.preventDefault();
     $table = $('#all-events-table');
     $table.empty();
-    var events = TownHall.sortDate(TownHall.allTownHalls);
-    eventHandler.renderTable(events, $table);
+    TownHall.allTownHalls = TownHall.sortDate(TownHall.allTownHalls);
+    eventHandler.renderTable(TownHall.allTownHalls, $table);
   }
+
+  eventHandler.filterTable = function (e) {
+    e.preventDefault();
+    $table = $('#all-events-table');
+    var filterID= this.id;
+    console.log(filterID);
+    var filterCol =$(this).attr('data-filter')
+    $table.empty();
+    var index = TownHall.filterIds.indexOf(filterCol);
+    if (filterID === 'All') {
+      TownHall.currentContext = TownHall.allTownHalls;
+      TownHall.filterIds.pop(index);
+    }
+    else if (index < 0 ) {
+      console.log(TownHall.filterIds, index);
+      var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+      TownHall.currentContext = TownHall.filterByCol(filterCol, filterID, data);
+      TownHall.filterIds.push(filterCol);
+      TownHall.isCurrentContext = true;
+    }
+    else {
+      TownHall.currentContext = TownHall.filterByCol(filterCol, filterID, TownHall.allTownHalls);
+
+    }
+    eventHandler.renderTable(TownHall.currentContext, $table);
+  }
+
+
 
   eventHandler.render = function (events, zipQuery) {
     var $parent = $('#nearest');
@@ -155,6 +185,7 @@
   $('#look-up').on('submit', eventHandler.lookup);
   $('#view-all').on('click', TownHall.viewAll);
   $('#sort-date').on('click', eventHandler.viewByDate);
+  $('.filter').on('click', 'a', eventHandler.filterTable);
 
   module.eventHandler = eventHandler;
 })(window);

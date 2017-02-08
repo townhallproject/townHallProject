@@ -6294,9 +6294,7 @@ form {
   background-color: #8dd0ea;
 }
 .btn-secondary:hover {
-  border: #E32F21 solid 2px;
-  background-color: white;
-  color: #E32F21;
+  color: #1E2528;
 }
 .atcb-list {
   width: 170px;
@@ -6359,5 +6357,9 @@ form {
   left: 0;
   width: 100%;
   height: 100%;
+}
+.dropdown-menu ul {
+  list-style: none !important;
+  padding-left: 10px;
 }
 /*# sourceMappingURL=bootstrap.css.map */
