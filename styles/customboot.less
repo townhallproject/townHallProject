@@ -193,10 +193,6 @@ form{
   margin-bottom: 20px;
 }
 
-th{
-  min-width: 130px;
-}
-
 article{
   margin-top:50px;
 }
@@ -249,9 +245,16 @@ article{
 }
 
 // Table formatting
-.meetingType{
-  min-width: 200px;
+.table .meetingType{
+  min-width: 180px;
 }
+.table .time{
+  min-width: 120px;
+}
+.table .party{
+  min-width: 120px;
+}
+
 .table{
   margin-bottom: 180px;
 }
@@ -305,16 +308,16 @@ article{
   padding: 20px;
 }
 
-
+.page{
+  margin-bottom: 200px;
+}
 
 // google forms
 .embed-container {
   position: relative;
-  padding-bottom: 100%;
+  padding-bottom: 1056px;
   height: 0;
-  overflow:
-  hidden;
-  max-width: 100%;
+  overflow: hidden;
 }
   .embed-container iframe,
   .embed-container object,
@@ -334,8 +337,8 @@ article{
 
 @media screen and (max-width: 1020px){
   .embed-container{
-    padding-bottom: 120%;
-    margin-bottom: 20%;
+    // padding-bottom: 120%;
+    // margin-bottom: 20%;
   }
 }
 
@@ -348,7 +351,7 @@ article{
     margin-bottom: 200px;
   }
   .embed-container{
-    padding-bottom: 164%;
-    margin-bottom: 43%;
+    padding-bottom: 2871px;
+    // margin-bottom: 43%;
   }
 }

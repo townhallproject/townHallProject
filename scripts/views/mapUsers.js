@@ -340,27 +340,31 @@
     };
 
     map = new google.maps.Map(document.getElementById('map'), options);
+    console.log(map);
     var bounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(40, -124.39),
       new google.maps.LatLng(49.38, -66.94)
     );
     map.fitBounds(bounds);
+    google.maps.event.addDomListener(window, 'resize', onResizeMap)
+
+  };
+
+  window.onResizeMap = function onResizeMap() {
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': 'US' }, function onGeocode(results, status) {
-      map.setCenter(results[0].geometry.location);
-      google.maps.event.addDomListener(window, 'resize', function onResize() {
-        var resizeBounds = new google.maps.LatLngBounds();
-        var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-        data.forEach(function(ele){
-          marker = new google.maps.LatLng(ele.lat, ele.lng)
-          resizeBounds.extend(marker)
-        })
-        google.maps.event.trigger(map, 'resize');
-        map.setCenter(results[0].geometry.location);
-        map.fitBounds(resizeBounds);
-      });
-    });
-  };
+      google.maps.event.trigger(map, 'resize');
+      // map.setCenter(results[0].geometry.location);
+      var resizeBounds = new google.maps.LatLngBounds();
+      var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+      data.forEach(function(ele){
+        marker = new google.maps.LatLng(ele.lat, ele.lng)
+        resizeBounds.extend(marker)
+    })
+    // map.setCenter(results[0].geometry.location);
+    map.fitBounds(resizeBounds);
+  });
+}
 
   window.recenterMap = function(markers, zipQuery) {
     google.maps.event.trigger(map, 'resize');

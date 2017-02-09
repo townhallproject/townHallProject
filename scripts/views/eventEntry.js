@@ -69,6 +69,15 @@
     $('.form-text-results').addClass('text-center')
   };
 
+  eventHandler.resetHome = function () {
+    $('.header-small').addClass('hidden');
+    $('.header-large').removeClass('hidden');
+    $('.form-text-results').removeClass('text-center');
+    TownHall.isCurrentContext = false;
+    TownHall.currentContext = [];
+    $('#map').appendTo('.map-large');
+  };
+
   eventHandler.renderPanels = function(event, $parent) {
     var $panel = $(event.toHtml($('#event-template')));
       $panel.children('.panel').addClass(event.Party);
@@ -187,10 +196,27 @@
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show')
     }
-    $('.nav').on('click', 'a[data-toggle]', function onClickGethref(event) {
+    else  {
+      TownHall.isMap = true;
+      console.log(map);
+    }
+    $('.nav').on('click', 'a', function onClickGethref(event) {
       var hashid = this.getAttribute('href')
-      if (hashid === '#home') {
-        history.replaceState({}, document.title, ".");        }
+      if (hashid === '#home' && TownHall.isMap === false) {
+        history.replaceState({}, document.title, ".");
+        setTimeout( function(){
+          onResizeMap()
+          if (location.pathname ='/') {
+              eventHandler.resetHome()
+              TownHall.isMap === true
+          }
+        }, 50);
+       }
+       else if ((hashid === '#home' && TownHall.isMap === true)) {
+         history.replaceState({}, document.title, ".");
+         eventHandler.resetHome()
+
+       }
       else {
         location.hash = this.getAttribute('href')
       }

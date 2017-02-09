@@ -10,6 +10,7 @@
   TownHall.filteredResults = [];
   TownHall.filterIds = [];
   TownHall.isCurrentContext = false;
+  TownHall.isMap = false;
 
   TownHall.timeZones = {
     PST : 'America/Los_Angeles',
