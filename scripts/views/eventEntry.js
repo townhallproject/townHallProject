@@ -70,12 +70,17 @@
   };
 
   eventHandler.resetHome = function () {
-    $('.header-small').addClass('hidden');
-    $('.header-large').removeClass('hidden');
+    $('.header-small').hide();
+    $('.header-large').show();
+    $('#look-up input').val('')
     $('.form-text-results').removeClass('text-center');
     TownHall.isCurrentContext = false;
     TownHall.currentContext = [];
     $('#map').appendTo('.map-large');
+    var $parent = $('#nearest');
+    var $results = $('#textresults')
+    $parent.empty();
+    $results.empty();
   };
 
   eventHandler.renderPanels = function(event, $parent) {
@@ -215,6 +220,7 @@
        else if ((hashid === '#home' && TownHall.isMap === true)) {
          history.replaceState({}, document.title, ".");
          eventHandler.resetHome()
+         onResizeMap()
 
        }
       else {
