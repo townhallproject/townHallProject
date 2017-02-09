@@ -6,6 +6,10 @@
   }
 
   TownHall.allTownHalls = [];
+  TownHall.currentContext = [];
+  TownHall.filterIds = [];
+  TownHall.isCurrentContext = false;
+
   TownHall.timeZones = {
     PST : 'America/Los_Angeles',
     MST : 'America/Denver',
@@ -39,12 +43,6 @@
       var key = firebasedb.ref('/townHalls/').push();
     }
     firebasedb.ref('/townHalls/' + key).set(this);
-  };
-
-  TownHall.prototype.toHtml= function(templateid){
-    var source = $(templateid).html();
-    var renderTemplate = Handlebars.compile(source);
-    return renderTemplate(this);
   };
 
   TownHall.prototype.validateZone = function () {
@@ -99,9 +97,28 @@
     }
     else {
       return this;
-
     }
+  };
 
+  TownHall.prototype.toHtml= function(templateid){
+    var source = $(templateid).html();
+    var renderTemplate = Handlebars.compile(source);
+    return renderTemplate(this);
+  };
+
+  //  Table Sorting Methods
+
+  //takes an array and sorts by date objects
+  TownHall.sortDate = function(data) {
+    return data.sort(function(a, b ){
+      return new Date(a.dateString) - new Date(b.dateString);
+    })
+  }
+
+  TownHall.filterByCol = function(filterCol, filterID, data) {
+    return data.filter(function(ele){
+      return ele[filterCol] === filterID;
+    })
   };
 
   TownHall.lookupZip = function (zip) {

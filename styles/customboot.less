@@ -68,7 +68,7 @@
 
 @border-radius-base:        0px;
 
-@link-hover-color:                  @brand-primary;
+@link-color:                        darken(@brand-primary, 10%);
 @component-active-bg:               @brand-secondary;
 @nav-tabs-active-link-hover-color:  @brand-cool;
 @nav-link-hover-bg:                 @brand-cool;
@@ -99,7 +99,7 @@
 @navbar-default-border:            darken(@navbar-default-bg, 6.5%);
 
 // Navbar links
-@navbar-default-link-color:                @brand-primary;
+@navbar-default-link-color:                @link-color;
 @navbar-default-link-hover-color:          @brand-warning;
 @navbar-default-link-hover-bg:             @brand-success;
 @navbar-default-link-active-color:         #ffffff;
@@ -136,8 +136,15 @@
 @state-danger-bg:                @brand-danger;
 @state-danger-border:            darken(spin(@state-danger-bg, -10), 5%);
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body{
   color: #1E2528;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 60px;
 }
 
 .navbar{
@@ -148,7 +155,20 @@ body{
 header{
   background-color: @brand-primary;
   color: white;
+  border-bottom: #E32F21 2px solid;
 }
+
+.footer {
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 80px;
+  background-color: @brand-success;
+  padding: 40px;
+}
+
 
 input{
   border: none;
@@ -156,6 +176,15 @@ input{
 
 form{
   margin-bottom: 20px;
+}
+
+th{
+  min-width: 130px;
+}
+
+.meetingType{
+  min-width: 200px;
+
 }
 
 .text-secondary{
@@ -169,7 +198,7 @@ form{
 .input-md{
   background-color: darken(@brand-secondary, 10%);
   color: white;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 
 .btn-primary{
@@ -191,9 +220,7 @@ form{
 }
 
 .btn-secondary:hover{
-  border: @brand-secondary solid 2px;
-  background-color:white;
-  color: @brand-secondary;
+  color: @brand-text;
 }
 
 // add to cal styles
@@ -236,12 +263,14 @@ form{
 
 #nearest{
   max-height: 575px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
 }
 
 #map {
-  height: 400px;
-  width: 100%;
+  height: 679px;
+  // width: 100%;
 }
 
 .forms{
@@ -267,3 +296,12 @@ form{
     width: 100%;
     height: 100%;
  }
+
+ul {
+   list-style: none !important;
+   padding-left: 10px;
+ }
+
+ ::-webkit-scrollbar {
+    display: none;
+}
