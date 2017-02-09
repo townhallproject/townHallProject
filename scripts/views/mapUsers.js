@@ -338,22 +338,33 @@
       styles: styleArray,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
     };
+
     map = new google.maps.Map(document.getElementById('map'), options);
+    console.log(map);
     var bounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(40, -124.39),
       new google.maps.LatLng(49.38, -66.94)
     );
     map.fitBounds(bounds);
+    google.maps.event.addDomListener(window, 'resize', onResizeMap)
+
+  };
+
+  window.onResizeMap = function onResizeMap() {
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': 'US' }, function onGeocode(results, status) {
-      map.setCenter(results[0].geometry.location);
-      google.maps.event.addDomListener(window, 'resize', function onResize() {
-        google.maps.event.trigger(map, 'resize');
-        map.setCenter(results[0].geometry.location);
-        map.fitBounds(bounds);
-      });
-    });
-  };
+      google.maps.event.trigger(map, 'resize');
+      // map.setCenter(results[0].geometry.location);
+      var resizeBounds = new google.maps.LatLngBounds();
+      var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+      data.forEach(function(ele){
+        marker = new google.maps.LatLng(ele.lat, ele.lng)
+        resizeBounds.extend(marker)
+    })
+    // map.setCenter(results[0].geometry.location);
+    map.fitBounds(resizeBounds);
+  });
+}
 
   window.recenterMap = function(markers, zipQuery) {
     google.maps.event.trigger(map, 'resize');
@@ -379,31 +390,33 @@
 // listens for new events
   firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
     var ele = new TownHall (snapshot.val());
-    TownHall.allTownHalls.push(ele)
-    $('#all-events-table').append(ele.toHtml($('#table-template')));
-    var coords = [ele.lng, ele.lat];
-    var latLng = new google.maps.LatLng(coords[1], coords[0]);
-    // eslint-disable-next-line no-unused-vars
-    var contentString = ele.toHtml('#marker-template');
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString,
-      maxWidth: 200
-    });
-    var marker = new google.maps.Marker({
-      strokeColor: '#FF0000',
-      strokeOpacity: 0.8,
-      strokeWeight: 0.5,
-      fillColor: '#FF0000',
-      fillOpacity: 0.35,
-      map: map,
-      position: latLng,
-      name: ele.name,
-      time: ele.time,
-    });
-    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-    });
-  });
+    if (ele.isInFuture() === true) {
+      TownHall.allTownHalls.push(ele)
+      $('#all-events-table').append(ele.toHtml($('#table-template')))
+      var coords = [ele.lng, ele.lat];
+      var latLng = new google.maps.LatLng(coords[1], coords[0]);
+      // eslint-disable-next-line no-unused-vars
+      var contentString = ele.toHtml('#marker-template');
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString,
+        maxWidth: 200
+      });
+      var marker = new google.maps.Marker({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 0.5,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+        map: map,
+        position: latLng,
+        name: ele.name,
+        time: ele.time,
+      });
+      marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+      marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
+    };
+  })
 
 }(window.firebase));

@@ -30,7 +30,8 @@
         },
         "townHalls" : {
            ".read": "true",
-     			".write": "true"
+     			".write": "true",
+          ".validate": "newData.hasChildren(['Member','Party','State','District','meetingType','Date','Time','timeZone','Location','streetAddress','City','StateAb','Zip'])"
         }
     }
   }

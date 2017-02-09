@@ -2,12 +2,13 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="width=device-width, initial-scale=1.0 user-scalable=no" name="viewport">
     <title>Town Hall Project 2018</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <script src="https://use.fontawesome.com/316bfde8e8.js"></script>
     <link href="https://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/styles/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,700" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/css/bootstrap.min.css">
     <script id="table-template" type="text/x-handlebars-template">
       <tr class= 'event-row'
        data-Main_State-filter={{State}} data-Member-filter ={{Member}}
@@ -79,7 +80,7 @@
             </div>
           </div>
           <div class="panel-body">
-            <ul>
+            <ul class="list-unstyled">
               <li class="text-secondary"><h4><span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}, {{timeZone}}</span></h4></li>
               <li><span class="profile-summary-key">Notes: </span><span class="profile-summary-value">{{Notes}}</span></li>
               <li>
@@ -95,24 +96,31 @@
   </head>
   <body>
     <nav class="navbar navbar-default">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse" id="main-nav">
-        <ul class="nav navbar-nav" roll="tablists">
-          <li><a data-toggle="tab" href="#home">Home<span class="sr-only">(current)</span></a></li>
-          <li><a data-toggle="tab" href="#contribute">Contribute</a></li>
-          <li><a  data-toggle="tab" href="#about">About</a></li>
-        </ul>
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse " id="main-nav">
+          <ul class="nav navbar-nav navbar-left" roll="tablists">
+            <li><a data-toggle="tab" href="#home"><strong>Home</strong><span class="sr-only">(current)</span></a></li>
+            <li><a data-toggle="tab" href="#contribute"><strong>Submit an Event</strong></a></li>
+            <li><a  data-toggle="tab" href="#about"><strong>About</strong></a></li>
+            <li><a  data-toggle="tab" href="#faq"><strong>FAQ</strong></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://twitter.com/townhallproject" ><i class="fa fa-twitter-square fa-1x" aria-hidden="true"></i></a></li>
+            <li><a href="https://www.facebook.com/TownHallProject/" ><i class="fa fa-facebook-square fa-1x" aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
       </div>
     </nav>
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="home">
+      <div role="tabpanel" class="tab-pane page active" id="home">
         <header class="site-header clearfix">
            <section class=" container container-fluid">
              <div class="row">
@@ -136,6 +144,7 @@
                       </form>
                     </div>
                     <section class="results">
+                      <div id="textresults" class="text-center text-info"></div>
                       <div id="nearest" class="flexcroll"></div>
                     </section>
                   </div>
@@ -146,7 +155,7 @@
             </section>
         </header>
         <div class="container-fluid">
-          <div class="row">
+          <div class="row map-large">
             <div id="map"></div>
           </div>
 
@@ -154,40 +163,38 @@
         <section class="scroll-to-form text-center">
             <p>
               <a href="#events-table" class="scroll-button btn btn-secondary btn-lg">
-                <span>Table of Events</span>
                 <span class="center-block glyphicon glyphicon-menu-down"></span>
               </a>
             </p>
         </section>
         <a name="events-table" id="events-table"></a>
         <section class=" container container-fluid">
-          <div class="table-responsive">
-              <h2 class="text-success table-title text-center">Upcoming Events</h2>
-              <div >
-                <small>
-                  Glossary:
-                  <ul>
-                    <li><span class="text-secondary">Town Hall - </span><span>A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents</span></li>
-                    <li><span class="text-secondary">District Office Hours - </span><span>Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend	</span></li>
-                    <li><span class="text-secondary">Ticketed Event - </span><span>Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
-                    <li><span class="text-secondary">TeleTown Hall Meeting - </span><span>	A town Hall conducted by conference call.</span></li>
-                  </ul>
-                </small>
-              </div>
-
+          <h2 class="text-success table-title text-center">Upcoming Events</h2>
+          <div >
+            <small>
+              Glossary:
+              <ul class="list-unstyled">
+                <li><span class="text-secondary">Town Hall - </span><span>A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents</span></li>
+                <li><span class="text-secondary">District Office Hours - </span><span>Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend	</span></li>
+                <li><span class="text-secondary">Ticketed Event - </span><span>Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
+                <li><span class="text-secondary">TeleTown Hall Meeting - </span><span>	A town Hall conducted by conference call.</span></li>
+              </ul>
+            </small>
+          </div>
+              <div class="table-responsive">
               <table class="table table-hover table-striped" id="complete">
                 <thead class='text-info'>
                   <tr>
                     <th class="Member">
                       Member
                     </th>
-                    <th>Party
+                    <th class="party">Party
                       <div class="btn-group">
                         <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <span class="center-block glyphicon glyphicon-menu-down"></span>
                         </button>
                         <div class="dropdown-menu filter">
-                          <ul>
+                          <ul class="list-unstyled">
                             <li><a data-filter="Party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
                             </li>
                             <li><a data-filter="Party" id="Republican" class="dropdown-item" href="#">Republican</a>
@@ -213,7 +220,7 @@
                         <span class="center-block glyphicon glyphicon-menu-down"></span>
                         </button>
                         <div class="dropdown-menu filter">
-                          <ul>
+                          <ul class="list-unstyled">
                             <li><a data-filter="meetingType" id="Town Hall" class="dropdown-item" href="#">Town Hall</a>
                             </li>
                             <li><a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a>
@@ -255,10 +262,19 @@
             </div>
           </section>
       </div>
-      <div role="tabpanel" class="tab-pane" id="contribute">
-        <div class='embed-container'><iframe src='https://docs.google.com/forms/d/e/1FAIpQLSfvIJikraQCZcqUpYfDZHC7KvxDUp4zcfzlLQ7RoaDQcBZUbQ/viewform?c=0&w=1' style='border:0'></iframe></div>
+      <div role="tabpanel" class="tab-pane " id="contribute">
+        <div class='embed-container'><iframe src='https://docs.google.com/forms/d/e/1FAIpQLSfvIJikraQCZcqUpYfDZHC7KvxDUp4zcfzlLQ7RoaDQcBZUbQ/viewform?c=0&w=1' style=" border-width:0 " width="800" height="600" frameborder="0" ></iframe></div>
       </div>
-      <div role="tabpanel" class="tab-pane" id="about">
+      <div role="tabpanel" class="tab-pane page" id="about">
+        <header>
+          <section class="container container-fluid quote-header">
+              <blockquote class ="col-sm-6 col-sm-offset-3">
+                <p class="text-info">"It falls to each of us to be those anxious, jealous guardians of our democracy. Embrace the joyous task we have been given to continually try to improve this great nation of ours because, for all our outward differences, we in fact all share the same proud type, the most important office in a democracy, <span class="text-white">citizen</span>."</p>
+                <footer class="text-info">President Obama <cite title="Source Title">Farewell Address</cite></footer>
+              </blockquote>
+          </section>
+
+        </header>
         <section class="container">
             <article class=".center-block about">
               <h2 class="text-secondary-dark">About The Town Hall Project</h2>
@@ -266,14 +282,90 @@
               </p>
               <p class="text-secondary-dark">Show Up. Speak Out. Fight Back</p>
             </article>
+            <article class="row">
+              <div class="col-sm-4 col-sm-offset-1">
+                <h3>Why Town Halls</h3>
+                <p>There is no better way to influence your representatives than in-person conversations. Town halls are a longstanding American tradition--where our elected representatives must listen and respond to the concerns of their constituents. Remember: you are their boss.
+You have more power than you think. Town halls are one of the most effective ways to use it.
+</p>
+              </div>
+              <div class="col-sm-4 col-sm-offset-2">
+                <h3>What to expect</h3>
+                <p>The most powerful thing you can do, as a constituent, is ask an earnest, pressing question on an issue close to you. Your personal story is incredibly valuable. It’s precisely how sometimes dry policy is connected with the lives of real people. It’s not always easy to speak up, but these times call for courage in all of us. Take the mic and tell your representative why she or he needs to act in your best interest.
+
+For more, we recommend the valuable <a href="https://www.indivisibleguide.com/">Indivisible Guide</a>, which goes into detail on town hall best practices and other ways to hold your elected representatives accountable.</p>
+              </div>
+
+            </article>
           </div>
+          <div role="tabpanel" class="tab-pane page" id="faq">
+            <section class="container">
+                <article class="row">
+                  <div class="col-md-8 col-md-offset-2 class-xs-10 col-xs-offset-1">
+                    <h3>Why Town Halls</h3>
+                    <p>There is no better way to influence your representatives than in-person conversations. Town halls are a longstanding American tradition--where our elected representatives must listen and respond to the concerns of their constituents. Remember: you are their boss.
+    You have more power than you think. Town halls are one of the most effective ways to use it.
+    </p>
+                    <h3>What kind of events do you include?
+                    </h3>
+                    <p>Our project is currently focused on federal elected officials. We strongly believe that state legislatures deserve attention and citizen engagement, but at the moment these events are outside our current mission.
+                    <ul>Our event listing includes:
+                      <li>Town halls</li>
+                      <li>Other public events with members of Congress in their district/state</li>
+                      <li>Ticketed events in the district/state</li>
+                      <li>Staff office hours</li>
+                      <li>Opportunities in Washington, D.C. to speak with your representative</li>
+                    </ul>
+                    <ul>We do not currently include:
+                      <li>Fundraisers outside the district/state</li>
+                      <li>Events where it would be inappropriate to ask policy questions of you representative (i.e. a funeral)</li>
+                      <li>Campaign events where the member will not take questions</li>
+
+                    </ul>
+
+
+
+
+                  </p>
+
+                  <h3>Why include Democrats as well as Republicans?</h3>
+                  <p>We believe every citizen, no matter the party of their members of Congress, should have the opportunity to speak with his or her representatives.</p>
+                  <h3>Who are you?</h3>
+                  <p>Founded by veteran campaign organizers, The Town Hall Project is powered by the passion and hard work of volunteers from across the country.
+</p>
+                  <h3>Are you associated with ___________?</h3>
+                  <p>The Town Hall Project offers our town hall event list to everyone, across the entire political spectrum. Our founders are dedicated to progressive values and actively encourage progressive allies to use our town hall data, but we are independent of any political party or organization.
+                  </p>
+                  <p>
+                    This movement is diverse, open source, and powered by citizens. We are proud to be a part of it. </p>
+                  <h3>What do I do at a town hall?</h3>
+                  <p>The most powerful thing you can do, as a constituent, is ask an earnest, pressing question on an issue close to you. Your personal story is incredibly valuable. It’s precisely how sometimes dry policy is connected with the lives of real people. It’s not always easy to speak up, but these times call for courage in all of us. Take the mic and tell your representative why she or he needs to act in your best interest. </p>
+                  <p>For more, we recommend the valuable Indivisible Guide, which goes into detail on town hall best practices and other ways to hold your elected representatives accountable: https://www.indivisibleguide.com/</p>
+                  <h3>Should I go to a town hall outside of my district/state?</h3>
+                  <p>The Town Hall Project strongly encourages you to only attend and ask questions of your own representatives. Remember that any town hall has limited time, and a question you take is one less question for a constituent. </p>
+                  <h3>What do I do if my representatives do not have any public events scheduled?</h3>
+                  <p>Call their <a href="https://www.govtrack.us/congress/members">district offices</a> and let them know you expect them to hold public events with their constituents. To have even more impact, join with other citizens in your district or state and organize group efforts. Visit the district office together, deliver petitions, inform your local press, or even hold an “Empty Chair” town hall and invite your member of Congress to fill that chair.</p>
+                  <h3>How do I find other citizens and groups in my area?</h3>
+                  <p><a href="mailto:townhalproject2018@gmail.com">Email us </a>and one of our organizers will connect you!</p>
+                  <h3>Can I send you town halls that I find?</h3>
+                  <p>Yes! Please send town hall or any other congressional events to us  <a href="#contribute">here</a>. Please include as much detail as you can, including a date, time, and link or other source of the event information. </p>
+                  </div>
+
+
+                </article>
+              </div>
         </section>
       </div>
     <footer class="footer">
-      Please send all questions/comments/updates to townhallproject2018@gmail.com
-      Compiled by volunteers from each Congress member's official website, Twitter, or Facebook.	G
-      Find the Town Hall Project 2018 on:	Twitter
-      Facebook
+      <div class="container text-center">
+        <ul class="list-unstyled">
+          <li>Compiled by volunteers from each Congress member's official website, Twitter, or Facebook</li>
+          <li><a href="mailto:townhallproject2018@gmail.com">Email us questions/comments/updates </a></li>
+          <li><a href="https://twitter.com/townhallproject" class="text-white"><i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a>
+            <a href="https://www.facebook.com/TownHallProject/" class="text-white"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
+          </li>
+        </ul>
+      </div>
     </footer>
     <!-- Vendor Files -->
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
@@ -291,8 +383,8 @@
     </script>
     <!-- Script Files -->
     <script src="/scripts/models/event.js"></script>
-    <script src="/scripts/views/eventEntry.js"></script>
     <script src="/scripts/views/mapUsers.js"></script>
+    <script src="/scripts/views/eventEntry.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMap&libraries=visualization,geometry"></script>
   </body>
 </html>

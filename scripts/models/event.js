@@ -7,8 +7,10 @@
 
   TownHall.allTownHalls = [];
   TownHall.currentContext = [];
+  TownHall.filteredResults = [];
   TownHall.filterIds = [];
   TownHall.isCurrentContext = false;
+  TownHall.isMap = false;
 
   TownHall.timeZones = {
     PST : 'America/Los_Angeles',
@@ -18,6 +20,7 @@
     other : 'no time zone'
   }
 
+  //FIREBASE METHODS
   // Initialize Firebase
   var config = {
     apiKey: 'AIzaSyDwZ41RWIytGELNBnVpDr7Y_k1ox2F2Heg',
@@ -45,6 +48,9 @@
     firebasedb.ref('/townHalls/' + key).set(this);
   };
 
+
+  // DATA PROCESSING BEFORE WRITE
+  // check if there is a time zone, if not, looks up on google
   TownHall.prototype.validateZone = function () {
     var tz = TownHall.timeZones[this.timeZone];
     if (!tz) {
@@ -62,6 +68,7 @@
     }
   }
 
+  // converts time to 24hour time
   TownHall.toTwentyFour = function (time) {
     var hourmin = time.split(' ')[0];
     var ampm = time.split(' ')[1];
@@ -73,6 +80,7 @@
     return hourmin + ':' + '00';
   };
 
+  // formatting date and time for the calendar app
   TownHall.prototype.formatDateTime = function (){
     this.dateObj = new Date(this.Date);
     this.dateString = this.dateObj.toDateString();
@@ -100,6 +108,15 @@
     }
   };
 
+  TownHall.prototype.isInFuture = function (){
+    this.dateObj = new Date(this.Date);
+    var now = new Date();
+    if (now - this.dateObj < 0) {
+      return true;
+    }
+  };
+
+  //Handlebars write
   TownHall.prototype.toHtml= function(templateid){
     var source = $(templateid).html();
     var renderTemplate = Handlebars.compile(source);
@@ -107,7 +124,6 @@
   };
 
   //  Table Sorting Methods
-
   //takes an array and sorts by date objects
   TownHall.sortDate = function(data) {
     return data.sort(function(a, b ){
@@ -115,33 +131,41 @@
     })
   }
 
+  // filters by an value in a column
   TownHall.filterByCol = function(filterCol, filterID, data) {
     return data.filter(function(ele){
       return ele[filterCol] === filterID;
     })
   };
 
+  // METHODS IN RESPONSE TO lookup
+  // Converts zip to lat lng google obj
   TownHall.lookupZip = function (zip) {
     return firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
       var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
       TownHall.returnNearest(zipQueryLoc);
     }).catch(function(error){
-      console.log('That is not a real zip');
+      var $results = $('#textresults')
+      $results.empty();
+      var $text = $('<h4>')
+      $text.text('That is not a real zip code')
+      $results.append($text)
     });
   };
 
+  // given a zip, returns sorted array of events
   TownHall.returnNearest = function (zipQueryLoc) {
     var locations = [];
     firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
       snapshot.forEach(function(ele){
         locations.push(new TownHall(ele.val()));
       });
-      var positions = locations.sort(function (a , b) {
+      var sorted = locations.sort(function (a , b) {
         a.dist = google.maps.geometry.spherical.computeDistanceBetween(zipQueryLoc, new google.maps.LatLng(a.lat,a.lng));
         b.dist = google.maps.geometry.spherical.computeDistanceBetween(zipQueryLoc, new google.maps.LatLng(b.lat,b.lng));
         return a.dist <= b.dist ? -1 : 1;
       });
-      eventHandler.render(positions, zipQueryLoc);
+      eventHandler.render(sorted, zipQueryLoc);
     });
   };
 
@@ -207,6 +231,7 @@
   // the geocoding API has a rate limit. This looks up 10 every 2 seconds.
   TownHall.batchCalls = function(response){
     chunck = response.splice(0,10);
+    console.log(chunck);
     TownHall.encodeFromGoogle(chunck);
     if (response.length > 0) {
       setTimeout(function(){
@@ -230,6 +255,8 @@
       for (var k = 0; k < row.length; k++) {
         rowObj[googlekeys[k]] = row[k];
       }
+    }
+    if (row.length > 12) {
       if (rowObj.streetAddress.length>2) {
         rowObj.getLatandLog(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip);
       }
@@ -237,7 +264,12 @@
         rowObj.noLoc = true;
         rowObj.getLatandLog(rowObj.State);
       }
-    };
+    }
+    else {
+      console.log('missing columns');
+      var newTownHall = firebasedb.ref('/townHallsErrors/').push();
+      newTownHall.set(rowObj);
+    }
   };
 
   // TownHall.fetchAll();

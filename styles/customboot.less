@@ -60,32 +60,37 @@
 @brand-secondary: #E32F21;
 @brand-cool: #ABCCBD;
 @brand-text: #1E2528;
-
+@brand-gray: #80b2c6;
 @brand-success: darken(@brand-primary, 10%);
 @brand-warning: #274f70;
 @brand-danger: #bad636;
 @brand-info: #003056;
 
-@border-radius-base:        0px;
+.text-white{
+  color: white;
+}
 
+.text-secondary{
+  color: @brand-secondary;
+}
+
+.text-secondary-dark{
+  color: darken(@brand-secondary, 10%);
+}
+
+@border-radius-base:        0px;
 @link-color:                        darken(@brand-primary, 10%);
 @component-active-bg:               @brand-secondary;
 @nav-tabs-active-link-hover-color:  @brand-cool;
 @nav-link-hover-bg:                 @brand-cool;
 @nav-tabs-link-hover-border-color:  @brand-success;
 @nav-tabs-border-color:             @brand-info;
-
 @btn-warning-border: white;
 @btn-info-border: @brand-info;
 @btn-danger-border: @btn-danger-bg;
 @btn-danger-color: @brand-info;
 
-@font-family-sans-serif: Hind Siliguri, "Helvetica Neue", Helvetica, Arial, sans-serif;
-@font-family-serif: Lora, Georgia, "Times New Roman", Times, serif;
-
 @table-bg-hover:                @brand-success;
-
-
 // Basics of a navbar
 @navbar-height:                    60px;
 @navbar-margin-bottom:             @line-height-computed;
@@ -136,6 +141,8 @@
 @state-danger-bg:                @brand-danger;
 @state-danger-border:            darken(spin(@state-danger-bg, -10), 5%);
 
+
+// base styles
 html {
   position: relative;
   min-height: 100%;
@@ -147,9 +154,17 @@ body{
   margin-bottom: 60px;
 }
 
+h2 {
+  font-weight: 600;
+}
+
 .navbar{
   border-bottom: @brand-secondary 2px solid;
   margin-bottom: 0;
+}
+
+.fa-1x{
+  font-size: 1.3em;
 }
 
 header{
@@ -163,11 +178,11 @@ header{
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 80px;
-  background-color: @brand-success;
+  height: 160px;
+  background-color: @brand-info;
   padding: 40px;
 }
+
 
 
 input{
@@ -178,49 +193,8 @@ form{
   margin-bottom: 20px;
 }
 
-th{
-  min-width: 130px;
-}
-
-.meetingType{
-  min-width: 200px;
-
-}
-
-.text-secondary{
-  color: @brand-secondary;
-}
-
-.text-secondary-dark{
-  color: darken(@brand-secondary, 10%);
-}
-
-.input-md{
-  background-color: darken(@brand-secondary, 10%);
-  color: white;
-  margin-bottom: 10px;
-}
-
-.btn-primary{
-  border: white solid 2px;
-  background-color: @brand-primary;
-  margin-bottom: 10px;
-}
-
-.btn-primary:hover{
-  border: white solid 2px;
-  background-color:white;
-  color: @brand-primary;
-}
-
-.btn-secondary{
-  color: white;
-  border: white solid 2px;
-  background-color: @brand-primary;
-}
-
-.btn-secondary:hover{
-  color: @brand-text;
+article{
+  margin-top:50px;
 }
 
 // add to cal styles
@@ -251,14 +225,68 @@ th{
   border: none;
 }
 
-.panel-dem .panel-heading{
+.Democratic .panel-heading{
   color: white;
   background-color: darken(@brand-primary, 20%);
 }
 
-.panel-rep .panel-heading{
+.Republican .panel-heading{
   color: white;
   background-color: darken(@brand-secondary, 20%);
+}
+
+.Independent .panel-heading{
+  color: white;
+  background-color: darken(#705f8c, 20%);
+}
+
+::-webkit-scrollbar {
+   display: none;
+}
+
+// Table formatting
+.table .meetingType{
+  min-width: 180px;
+}
+.table .time{
+  min-width: 120px;
+}
+.table .party{
+  min-width: 120px;
+}
+
+.table{
+  margin-bottom: 180px;
+}
+
+
+// Results
+.input-md{
+  background-color: darken(@brand-secondary, 10%);
+  color: white;
+  margin-bottom: 10px;
+}
+
+.btn-primary{
+  border: white solid 2px;
+  background-color: @brand-primary;
+  margin-bottom: 10px;
+}
+
+.btn-primary:hover{
+  border: white solid 2px;
+  background-color:white;
+  color: @brand-primary;
+}
+
+.btn-secondary{
+  color: white;
+  border: white solid 2px;
+  background-color: @brand-primary;
+}
+
+.btn-secondary:hover{
+  color: @brand-text;
 }
 
 #nearest{
@@ -266,10 +294,11 @@ th{
   overflow-y: scroll;
   overflow-x: hidden;
   -ms-overflow-style: none;
+
 }
 
 #map {
-  height: 679px;
+  height: 707px;
   // width: 100%;
 }
 
@@ -279,13 +308,16 @@ th{
   padding: 20px;
 }
 
+.page{
+  margin-bottom: 200px;
+}
+
+// google forms
 .embed-container {
   position: relative;
-  padding-bottom: 56.25%;
+  padding-bottom: 1056px;
   height: 0;
-  overflow:
-  hidden;
-  max-width: 100%;
+  overflow: hidden;
 }
   .embed-container iframe,
   .embed-container object,
@@ -297,11 +329,29 @@ th{
     height: 100%;
  }
 
-ul {
-   list-style: none !important;
-   padding-left: 10px;
- }
+// about page
+.quote-header{
+  padding-top: 40px;
 
- ::-webkit-scrollbar {
-    display: none;
+}
+
+@media screen and (max-width: 1020px){
+  .embed-container{
+    // padding-bottom: 120%;
+    // margin-bottom: 20%;
+  }
+}
+
+@media screen and (max-width: 767px){
+  .footer{
+    padding: 0px;
+    padding-top: 20px;
+  }
+  .page{
+    margin-bottom: 200px;
+  }
+  .embed-container{
+    padding-bottom: 2871px;
+    // margin-bottom: 43%;
+  }
 }

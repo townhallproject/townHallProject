@@ -67,29 +67,28 @@
     $('.header-small').removeClass('hidden');
     $('.header-large').hide();
     $('.form-text-results').addClass('text-center')
+  };
 
-
+  eventHandler.resetHome = function () {
+    $('.header-small').addClass('hidden');
+    $('.header-large').removeClass('hidden');
+    $('.form-text-results').removeClass('text-center');
+    TownHall.isCurrentContext = false;
+    TownHall.currentContext = [];
+    $('#map').appendTo('.map-large');
   };
 
   eventHandler.renderPanels = function(event, $parent) {
     var $panel = $(event.toHtml($('#event-template')));
-    if (event.Party === 'Democratic') {
-      $panel.children('.panel').addClass('panel-dem');
+      $panel.children('.panel').addClass(event.Party);
       $panel.appendTo($parent);
-    }
-    else if ('Republican') {
-      $panel.children('.panel').addClass('panel-rep');
-      $panel.appendTo($parent);
-    }
   };
 
-  eventHandler.renderTable = function (events, $tableid) {
-    for (var i = 0; i < events.length; i++) {
-      events[i].formatDateTime();
-      events[i].dist = Math.round(events[i].dist/1609.344);
-      events[i].addressLink = "https://www.google.com/maps?q=" + escape(events[i].address);
-      $($tableid).append(events[i].toHtml($('#table-template')));
-    }
+  eventHandler.renderTable = function (townhall, $tableid) {
+      townhall.formatDateTime();
+      townhall.dist = Math.round(townhall.dist/1609.344);
+      townhall.addressLink = "https://www.google.com/maps?q=" + escape(townhall.address);
+      $($tableid).append(townhall.toHtml($('#table-template')));
   };
 
   // takes the current set of data in the table and sorts by date
@@ -97,42 +96,56 @@
     e.preventDefault();
     $table = $('#all-events-table');
     $table.empty();
-    TownHall.allTownHalls = TownHall.sortDate(TownHall.allTownHalls);
-    eventHandler.renderTable(TownHall.allTownHalls, $table);
+    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+    var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
+    TownHall.currentContext = TownHall.sortDate(filtereddata);
+    TownHall.currentContext.forEach(function(ele){
+      eventHandler.renderTable(ele, $table);
+    })
   }
 
   eventHandler.filterTable = function (e) {
     e.preventDefault();
     $table = $('#all-events-table');
-    var filterID= this.id;
-    console.log(filterID);
-    var filterCol =$(this).attr('data-filter')
+    var filterID = this.id;
+    var filterCol = $(this).attr('data-filter')
     $table.empty();
     var index = TownHall.filterIds.indexOf(filterCol);
+    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+    var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
     if (filterID === 'All') {
-      TownHall.currentContext = TownHall.allTownHalls;
+      TownHall.filteredResults = [];
       TownHall.filterIds.pop(index);
-    }
-    else if (index < 0 ) {
-      console.log(TownHall.filterIds, index);
-      var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-      TownHall.currentContext = TownHall.filterByCol(filterCol, filterID, data);
-      TownHall.filterIds.push(filterCol);
-      TownHall.isCurrentContext = true;
+      data.forEach(function(ele){
+        eventHandler.renderTable(ele, $table);
+      })
     }
     else {
-      TownHall.currentContext = TownHall.filterByCol(filterCol, filterID, TownHall.allTownHalls);
-
+      // check if filtering by the same column
+      if (index < 0 ) {
+        var filtered = TownHall.filterByCol(filterCol, filterID, filtereddata);
+      }
+      else {
+        var filtered = TownHall.filterByCol(filterCol, filterID, data);
+      }
+      TownHall.filteredResults = filtered;
+      TownHall.filterIds.push(filterCol);
+      filtered.forEach(function(ele){
+        eventHandler.renderTable(ele, $table);
+      })
     }
-    eventHandler.renderTable(TownHall.currentContext, $table);
+
   }
 
 
-
+  // renders results of search
   eventHandler.render = function (events, zipQuery) {
     var $parent = $('#nearest');
+    var $results = $('#textresults')
     $parent.empty();
+    $results.empty();
     var $table = $('#all-events-table');
+    var $text = $('<h4>')
     $table.empty();
     maxDist = 80467.2;
     var nearest = events.reduce(function(acc, cur){
@@ -142,19 +155,24 @@
       return acc;
     },[])
     $('#map').appendTo('.map-small');
-
     if (nearest.length === 0) {
       var townHall = events[0]
       var townHalls = [townHall];
       recenterMap(townHalls, zipQuery);
-      eventHandler.renderTable(events, $table)
-      $parent.html('<h4>No events within 50 miles of your zip, the closest one is ' + townHall.dist + ' miles away</h4>');
+      events.forEach(function(ele){
+        eventHandler.renderTable(ele,  $table);
+      })
+      $text.text('No events within 50 miles of your zip, the closest one is ' + townHall.dist + ' miles away');
+      $results.append($text)
       eventHandler.renderPanels(townHall, $parent);
     } else {
+      TownHall.currentContext = nearest;
+      TownHall.isCurrentContext = true;
       recenterMap(nearest, zipQuery);
-      eventHandler.renderTable(nearest, $table);
-      $parent.html('<h4>There are ' + nearest.length + ' upcoming events within 50 miles of you</h4>');
+      $text.text('There are ' + nearest.length + ' upcoming events within 50 miles of you')
+      $results.append($text)
       nearest.forEach(function(ele){
+        eventHandler.renderTable(ele, $table);
         eventHandler.renderPanels(ele, $parent);
       })
     }
@@ -178,10 +196,27 @@
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show')
     }
-    $('.nav').on('click', 'a[data-toggle]', function onClickGethref(event) {
+    else  {
+      TownHall.isMap = true;
+      console.log(map);
+    }
+    $('.nav').on('click', 'a', function onClickGethref(event) {
       var hashid = this.getAttribute('href')
-      if (hashid === '#home') {
-        history.replaceState({}, document.title, ".");        }
+      if (hashid === '#home' && TownHall.isMap === false) {
+        history.replaceState({}, document.title, ".");
+        setTimeout( function(){
+          onResizeMap()
+          if (location.pathname ='/') {
+              eventHandler.resetHome()
+              TownHall.isMap === true
+          }
+        }, 50);
+       }
+       else if ((hashid === '#home' && TownHall.isMap === true)) {
+         history.replaceState({}, document.title, ".");
+         eventHandler.resetHome()
+
+       }
       else {
         location.hash = this.getAttribute('href')
       }
