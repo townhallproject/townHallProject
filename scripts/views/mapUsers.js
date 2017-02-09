@@ -338,6 +338,7 @@
       styles: styleArray,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
     };
+
     map = new google.maps.Map(document.getElementById('map'), options);
     var bounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(40, -124.39),
@@ -348,9 +349,16 @@
     geocoder.geocode({ 'address': 'US' }, function onGeocode(results, status) {
       map.setCenter(results[0].geometry.location);
       google.maps.event.addDomListener(window, 'resize', function onResize() {
+        var resizeBounds = new google.maps.LatLngBounds();
+        var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+        data.forEach(function(ele){
+          console.log('maerk' , ele.lat, ele.lng);
+          marker = new google.maps.LatLng(ele.lat, ele.lng)
+          resizeBounds.extend(marker)
+        })
         google.maps.event.trigger(map, 'resize');
         map.setCenter(results[0].geometry.location);
-        map.fitBounds(bounds);
+        map.fitBounds(resizeBounds);
       });
     });
   };

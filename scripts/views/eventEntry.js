@@ -67,8 +67,6 @@
     $('.header-small').removeClass('hidden');
     $('.header-large').hide();
     $('.form-text-results').addClass('text-center')
-
-
   };
 
   eventHandler.renderPanels = function(event, $parent) {
@@ -97,8 +95,9 @@
     e.preventDefault();
     $table = $('#all-events-table');
     $table.empty();
-    TownHall.allTownHalls = TownHall.sortDate(TownHall.allTownHalls);
-    eventHandler.renderTable(TownHall.allTownHalls, $table);
+    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+    TownHall.currentContext = TownHall.sortDate(data);
+    eventHandler.renderTable(data, $table);
   }
 
   eventHandler.filterTable = function (e) {
@@ -128,7 +127,7 @@
   }
 
 
-
+  // renders results of search
   eventHandler.render = function (events, zipQuery) {
     var $parent = $('#nearest');
     $parent.empty();
@@ -142,7 +141,6 @@
       return acc;
     },[])
     $('#map').appendTo('.map-small');
-
     if (nearest.length === 0) {
       var townHall = events[0]
       var townHalls = [townHall];
@@ -151,6 +149,8 @@
       $parent.html('<h4>No events within 50 miles of your zip, the closest one is ' + townHall.dist + ' miles away</h4>');
       eventHandler.renderPanels(townHall, $parent);
     } else {
+      TownHall.currentContext = nearest;
+      TownHall.isCurrentContext = true;
       recenterMap(nearest, zipQuery);
       eventHandler.renderTable(nearest, $table);
       $parent.html('<h4>There are ' + nearest.length + ' upcoming events within 50 miles of you</h4>');
