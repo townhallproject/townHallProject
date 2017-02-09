@@ -352,7 +352,6 @@
         var resizeBounds = new google.maps.LatLngBounds();
         var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
         data.forEach(function(ele){
-          console.log('maerk' , ele.lat, ele.lng);
           marker = new google.maps.LatLng(ele.lat, ele.lng)
           resizeBounds.extend(marker)
         })
@@ -387,8 +386,10 @@
 // listens for new events
   firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
     var ele = new TownHall (snapshot.val());
-    TownHall.allTownHalls.push(ele)
-    $('#all-events-table').append(ele.toHtml($('#table-template')));
+    if (ele.isInFuture() === true) {
+      TownHall.allTownHalls.push(ele)
+      $('#all-events-table').append(ele.toHtml($('#table-template')));
+    }
     var coords = [ele.lng, ele.lat];
     var latLng = new google.maps.LatLng(coords[1], coords[0]);
     // eslint-disable-next-line no-unused-vars

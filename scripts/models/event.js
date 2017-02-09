@@ -7,6 +7,7 @@
 
   TownHall.allTownHalls = [];
   TownHall.currentContext = [];
+  TownHall.filteredResults = [];
   TownHall.filterIds = [];
   TownHall.isCurrentContext = false;
 
@@ -106,6 +107,14 @@
     }
   };
 
+  TownHall.prototype.isInFuture = function (){
+    this.dateObj = new Date(this.Date);
+    var now = new Date();
+    if (now - this.dateObj < 0) {
+      return true;
+    }
+  };
+
   //Handlebars write
   TownHall.prototype.toHtml= function(templateid){
     var source = $(templateid).html();
@@ -135,7 +144,11 @@
       var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
       TownHall.returnNearest(zipQueryLoc);
     }).catch(function(error){
-      console.log('That is not a real zip');
+      var $results = $('#textresults')
+      $results.empty();
+      var $text = $('<h4>')
+      $text.text('That is not a real zip code')
+      $results.append($text)
     });
   };
 
@@ -217,6 +230,7 @@
   // the geocoding API has a rate limit. This looks up 10 every 2 seconds.
   TownHall.batchCalls = function(response){
     chunck = response.splice(0,10);
+    console.log(chunck);
     TownHall.encodeFromGoogle(chunck);
     if (response.length > 0) {
       setTimeout(function(){
@@ -240,6 +254,8 @@
       for (var k = 0; k < row.length; k++) {
         rowObj[googlekeys[k]] = row[k];
       }
+    }
+    if (row.length > 12) {
       if (rowObj.streetAddress.length>2) {
         rowObj.getLatandLog(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip);
       }
@@ -247,7 +263,12 @@
         rowObj.noLoc = true;
         rowObj.getLatandLog(rowObj.State);
       }
-    };
+    }
+    else {
+      console.log('missing columns');
+      var newTownHall = firebasedb.ref('/townHallsErrors/').push();
+      newTownHall.set(rowObj);
+    }
   };
 
   // TownHall.fetchAll();
