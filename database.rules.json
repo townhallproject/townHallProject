@@ -5,7 +5,7 @@
         "townHalls" : {
            ".read": "true",
      			".write": "true",
-              ".validate": "newData.hasChildren(['Member', 	'Party'	, 'State'	, 'District', 	'meetingType', 	'Date', 	'Time'	,'timeZone', 	'Location', 	'streetAddress', 	'City', 	'StateAb'	, 'Zip'])",
+              ".validate": "newData.hasChildren(['Member', 'Party, 'State','District','meetingType','Date','Time','timeZone','Location','streetAddress','City','StateAb','Zip'])",
 							"Member": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 20"
                      },
               "Party": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 15"

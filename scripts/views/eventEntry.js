@@ -88,7 +88,6 @@
     $table = $('#all-events-table');
     $table.empty();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    console.log('data', data);
     var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
     TownHall.currentContext = TownHall.sortDate(filtereddata);
     TownHall.currentContext.forEach(function(ele){

@@ -388,31 +388,31 @@
     var ele = new TownHall (snapshot.val());
     if (ele.isInFuture() === true) {
       TownHall.allTownHalls.push(ele)
-      $('#all-events-table').append(ele.toHtml($('#table-template')));
-    }
-    var coords = [ele.lng, ele.lat];
-    var latLng = new google.maps.LatLng(coords[1], coords[0]);
-    // eslint-disable-next-line no-unused-vars
-    var contentString = ele.toHtml('#marker-template');
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString,
-      maxWidth: 200
-    });
-    var marker = new google.maps.Marker({
-      strokeColor: '#FF0000',
-      strokeOpacity: 0.8,
-      strokeWeight: 0.5,
-      fillColor: '#FF0000',
-      fillOpacity: 0.35,
-      map: map,
-      position: latLng,
-      name: ele.name,
-      time: ele.time,
-    });
-    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-    });
-  });
+      $('#all-events-table').append(ele.toHtml($('#table-template')))
+      var coords = [ele.lng, ele.lat];
+      var latLng = new google.maps.LatLng(coords[1], coords[0]);
+      // eslint-disable-next-line no-unused-vars
+      var contentString = ele.toHtml('#marker-template');
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString,
+        maxWidth: 200
+      });
+      var marker = new google.maps.Marker({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 0.5,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+        map: map,
+        position: latLng,
+        name: ele.name,
+        time: ele.time,
+      });
+      marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+      marker.addListener('click', function() {
+        infowindow.open(map, marker);
+      });
+    };
+  })
 
 }(window.firebase));
