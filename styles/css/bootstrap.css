@@ -6233,6 +6233,9 @@ button.close {
     display: none !important;
   }
 }
+.text-white {
+  color: white;
+}
 html {
   position: relative;
   min-height: 100%;
@@ -6269,6 +6272,9 @@ form {
 }
 th {
   min-width: 130px;
+}
+article {
+  margin-top: 50px;
 }
 .meetingType {
   min-width: 200px;
@@ -6364,11 +6370,10 @@ th {
   width: 100%;
   height: 100%;
 }
-ul {
-  list-style: none !important;
-  padding-left: 10px;
-}
 ::-webkit-scrollbar {
   display: none;
+}
+.quote-header {
+  padding-top: 40px;
 }
 /*# sourceMappingURL=bootstrap.css.map */

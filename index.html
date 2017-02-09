@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="panel-body">
-            <ul>
+            <ul class="list-unstyled">
               <li class="text-secondary"><h4><span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}, {{timeZone}}</span></h4></li>
               <li><span class="profile-summary-key">Notes: </span><span class="profile-summary-value">{{Notes}}</span></li>
               <li>
@@ -166,7 +166,7 @@
               <div >
                 <small>
                   Glossary:
-                  <ul>
+                  <ul class="list-unstyled">
                     <li><span class="text-secondary">Town Hall - </span><span>A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents</span></li>
                     <li><span class="text-secondary">District Office Hours - </span><span>Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend	</span></li>
                     <li><span class="text-secondary">Ticketed Event - </span><span>Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
@@ -187,7 +187,7 @@
                           <span class="center-block glyphicon glyphicon-menu-down"></span>
                         </button>
                         <div class="dropdown-menu filter">
-                          <ul>
+                          <ul class="list-unstyled">
                             <li><a data-filter="Party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
                             </li>
                             <li><a data-filter="Party" id="Republican" class="dropdown-item" href="#">Republican</a>
@@ -213,7 +213,7 @@
                         <span class="center-block glyphicon glyphicon-menu-down"></span>
                         </button>
                         <div class="dropdown-menu filter">
-                          <ul>
+                          <ul class="list-unstyled">
                             <li><a data-filter="meetingType" id="Town Hall" class="dropdown-item" href="#">Town Hall</a>
                             </li>
                             <li><a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a>
@@ -259,12 +259,32 @@
         <div class='embed-container'><iframe src='https://docs.google.com/forms/d/e/1FAIpQLSfvIJikraQCZcqUpYfDZHC7KvxDUp4zcfzlLQ7RoaDQcBZUbQ/viewform?c=0&w=1' style='border:0'></iframe></div>
       </div>
       <div role="tabpanel" class="tab-pane" id="about">
+        <header>
+          <section class="container container-fluid quote-header">
+              <blockquote class ="col-sm-6 col-sm-offset-3">
+                <p class="text-info">"It falls to each of us to be those anxious, jealous guardians of our democracy. Embrace the joyous task we have been given to continually try to improve this great nation of ours because, for all our outward differences, we in fact all share the same proud type, the most important office in a democracy, <span class="text-white">citizen</span>."</p>
+                <footer class="text-info">President Obama <cite title="Source Title">Farewell Address</cite></footer>
+              </blockquote>
+          </section>
+
+        </header>
         <section class="container">
             <article class=".center-block about">
               <h2 class="text-secondary-dark">About The Town Hall Project</h2>
               <p>We are is an entirely volunteer-run, grassroots effort that empowers constituents across the country to have face-to-face conversations with their elected representatives. We are campaign veterans and first time volunteers. We come from a diversity of backgrounds and live across the country. We share progressive values and believe strongly in civic engagement. We research every district and state for public events with Members of Congress. Then we share our findings far and wide to promote participation in the democratic process and make it as accessible as possible for everyone. We have a team of organizers that works with local groups on the ground to coordinate efforts and encourage citizens to amplify their voices.
               </p>
               <p class="text-secondary-dark">Show Up. Speak Out. Fight Back</p>
+            </article>
+            <article class="row">
+              <div class="col-sm-4 col-sm-offset-1">
+                <h3>Why Town Halls</h3>
+                <p>Text about importance of meeting with reps face to face</p>
+              </div>
+              <div class="col-sm-4 col-sm-offset-2">
+                <h3>What to expect</h3>
+                <p>Advice on how to be effective.</p>
+              </div>
+
             </article>
           </div>
         </section>
