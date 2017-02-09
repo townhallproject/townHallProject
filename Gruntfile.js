@@ -22,7 +22,7 @@ module.exports = function(grunt) {
           strictMath: true,
           sourceMap: true,
           outputSourceFiles: true,
-          sourceMapURL: 'bootstrap.css.map',
+          sourceMapURL: 'styles/css/bootstrap.css.map',
           sourceMapFilename: 'styles/css/bootstrap.css.map',
           paths: '<%= bspath %>/less'
         },
