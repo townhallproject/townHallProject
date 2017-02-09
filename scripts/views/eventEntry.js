@@ -175,7 +175,6 @@
 
   // url hash for direct links to subtabs on inauguration.html
   $(document).ready(function(){
-    $('.scroll-pane').jScrollPane();
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show')
     }
