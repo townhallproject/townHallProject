@@ -64,6 +64,11 @@
   eventHandler.lookup = function (e) {
     e.preventDefault();
     TownHall.lookupZip($('#look-up input').val());
+    $('.header-small').removeClass('hidden');
+    $('.header-large').hide();
+    $('.form-text-results').addClass('text-center')
+
+
   };
 
   eventHandler.renderPanels = function(event, $parent) {
@@ -85,7 +90,44 @@
       events[i].addressLink = "https://www.google.com/maps?q=" + escape(events[i].address);
       $($tableid).append(events[i].toHtml($('#table-template')));
     }
+  };
+
+  // takes the current set of data in the table and sorts by date
+  eventHandler.viewByDate = function (e) {
+    e.preventDefault();
+    $table = $('#all-events-table');
+    $table.empty();
+    TownHall.allTownHalls = TownHall.sortDate(TownHall.allTownHalls);
+    eventHandler.renderTable(TownHall.allTownHalls, $table);
   }
+
+  eventHandler.filterTable = function (e) {
+    e.preventDefault();
+    $table = $('#all-events-table');
+    var filterID= this.id;
+    console.log(filterID);
+    var filterCol =$(this).attr('data-filter')
+    $table.empty();
+    var index = TownHall.filterIds.indexOf(filterCol);
+    if (filterID === 'All') {
+      TownHall.currentContext = TownHall.allTownHalls;
+      TownHall.filterIds.pop(index);
+    }
+    else if (index < 0 ) {
+      console.log(TownHall.filterIds, index);
+      var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+      TownHall.currentContext = TownHall.filterByCol(filterCol, filterID, data);
+      TownHall.filterIds.push(filterCol);
+      TownHall.isCurrentContext = true;
+    }
+    else {
+      TownHall.currentContext = TownHall.filterByCol(filterCol, filterID, TownHall.allTownHalls);
+
+    }
+    eventHandler.renderTable(TownHall.currentContext, $table);
+  }
+
+
 
   eventHandler.render = function (events, zipQuery) {
     var $parent = $('#nearest');
@@ -99,6 +141,8 @@
       }
       return acc;
     },[])
+    $('#map').appendTo('.map-small');
+
     if (nearest.length === 0) {
       var townHall = events[0]
       var townHalls = [townHall];
@@ -109,7 +153,7 @@
     } else {
       recenterMap(nearest, zipQuery);
       eventHandler.renderTable(nearest, $table);
-      $parent.html('<h4>There are ' + nearest.length + ' events within 50 miles of you</h4>');
+      $parent.html('<h4>There are ' + nearest.length + ' upcoming events within 50 miles of you</h4>');
       nearest.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       })
@@ -130,7 +174,7 @@
   });
 
   // url hash for direct links to subtabs on inauguration.html
-  $(document).ready(() => {
+  $(document).ready(function(){
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show')
     }
@@ -147,6 +191,8 @@
   $('#save-event').on('submit', eventHandler.save);
   $('#look-up').on('submit', eventHandler.lookup);
   $('#view-all').on('click', TownHall.viewAll);
+  $('#sort-date').on('click', eventHandler.viewByDate);
+  $('.filter').on('click', 'a', eventHandler.filterTable);
 
   module.eventHandler = eventHandler;
 })(window);
