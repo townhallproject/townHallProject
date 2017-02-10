@@ -11,6 +11,7 @@
   TownHall.filterIds = [];
   TownHall.isCurrentContext = false;
   TownHall.isMap = false;
+  TownHall.zipQuery
 
   TownHall.timeZones = {
     PST : 'America/Los_Angeles',
@@ -143,6 +144,7 @@
   TownHall.lookupZip = function (zip) {
     return firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
       var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
+      TownHall.zipQuery = zipQueryLoc;
       TownHall.returnNearest(zipQueryLoc);
     }).catch(function(error){
       var $results = $('#textresults')
@@ -184,7 +186,6 @@
   TownHall.prototype.getLatandLog = function(address, key) {
     var newTownHall = this;
     if (address === 'undefined undefined undefined undefined') {
-      console.log('address', address, this);
     } else {
       $.ajax({
         url : 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBmEKpZ6cePaTMPRERaoMj9Gx-dyQ5Lxkk',
@@ -198,7 +199,15 @@
           newTownHall.address = r.results[0].formatted_address;
           newTownHall.formatDateTime();
           TownHall.allTownHalls.push(newTownHall);
-          // newTownHall.updateFB(key)
+          var addresskey = address.replace(/[,.]/g ,'');
+          addresskey.trim()
+          firebasedb.ref('geolocate/' + addresskey).set(
+            {
+              lat : newTownHall.lat,
+              lng : newTownHall.lng,
+              formatted_address : newTownHall.address
+            }
+          );
         },
         error: function(e){
           console(newTownHall);
@@ -207,6 +216,22 @@
       });
     }
   };
+
+  TownHall.prototype.geoCodeFirebase = function (address, key) {
+    var newTownHall = this;
+    var addresskey = address.replace(/[,.]/g ,'')
+    addresskey.trim()
+    firebasedb.ref('geolocate/' + addresskey).once('value').then(function(snapshot){
+      newTownHall.lat = snapshot.val().lat;
+      newTownHall.lng = snapshot.val().lng;
+      newTownHall.address = snapshot.val().formatted_address;
+      newTownHall.formatDateTime();
+      TownHall.allTownHalls.push(newTownHall);
+    }).catch(function(error){
+      newTownHall.getLatandLog(address, key)
+      console.log('not in database', addresskey, error);
+    });
+  }
 
   //Gets everything from the google doc and does geo coding in batches
   TownHall.fetchAll = function() {
@@ -240,10 +265,10 @@
     } else {
       // When done, update firebase
       console.log('got all data', TownHall.allTownHalls);
-      firebase.database().ref('/townHalls/').remove();
-      TownHall.allTownHalls.forEach(function(event){
-        event.writetoFB();
-      })
+      // firebase.database().ref('/townHalls/').remove();
+      // TownHall.allTownHalls.forEach(function(event){
+      //   event.writetoFB();
+      // })
     };
   };
 
@@ -255,21 +280,21 @@
       for (var k = 0; k < row.length; k++) {
         rowObj[googlekeys[k]] = row[k];
       }
-    }
-    if (row.length > 12) {
-      if (rowObj.streetAddress.length>2) {
-        rowObj.getLatandLog(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip);
+        if (row.length > 12) {
+          if (rowObj.streetAddress.length>2) {
+            rowObj.geoCodeFirebase(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip);
+          }
+          else {
+            rowObj.noLoc = true;
+            rowObj.geoCodeFirebase(rowObj.State);
+          }
+        }
+        else {
+          console.log('missing columns');
+          var newTownHall = firebasedb.ref('/townHallsErrors/').push();
+          newTownHall.set(rowObj);
+        }
       }
-      else {
-        rowObj.noLoc = true;
-        rowObj.getLatandLog(rowObj.State);
-      }
-    }
-    else {
-      console.log('missing columns');
-      var newTownHall = firebasedb.ref('/townHallsErrors/').push();
-      newTownHall.set(rowObj);
-    }
   };
 
   // TownHall.fetchAll();

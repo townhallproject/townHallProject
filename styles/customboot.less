@@ -221,8 +221,24 @@ article{
 //panels
 .panel{
   color: @brand-text;
-  box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.2);
-  border: none;
+  margin-bottom: 5px;
+  border-top-color: rgb(229, 230, 233);
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-right-color: rgb(223, 224, 228);
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-bottom-color: rgb(208, 209, 213);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-left-color: rgb(223, 224, 228);
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-image-source: initial;
+  border-image-slice: initial;
+  border-image-width: initial;
+  border-image-outset: initial;
+  border-image-repeat: initial;
 }
 
 .Democratic .panel-heading{
@@ -290,15 +306,19 @@ article{
 }
 
 #nearest{
-  max-height: 575px;
+  padding-top:10px;
   overflow-y: scroll;
   overflow-x: hidden;
   -ms-overflow-style: none;
+  background-color: #cee3ea;
+}
 
+.nearest-with-results{
+  height: 528px;
 }
 
 #map {
-  height: 707px;
+  height: 661px;
   // width: 100%;
 }
 
@@ -310,6 +330,22 @@ article{
 
 .page{
   margin-bottom: 200px;
+}
+
+.no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.left-panels-border{
+  border-left: #7490a8 solid 1px;
+  border-right: #7490a8 solid 1px;
+}
+
+#textresults h4 {
+  border-bottom: #7490a8 1px solid;
+  margin-bottom: 0px;
+  padding: 10px;
 }
 
 // google forms

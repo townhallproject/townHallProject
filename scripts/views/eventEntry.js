@@ -65,8 +65,11 @@
     e.preventDefault();
     TownHall.lookupZip($('#look-up input').val());
     $('.header-small').removeClass('hidden');
+    $('.header-small').show()
     $('.header-large').hide();
-    $('.form-text-results').addClass('text-center')
+    $('.form-text-results').addClass('text-center');
+    $('.left-panels').addClass('left-panels-border');
+    $('#nearest').addClass('nearest-with-results');
   };
 
   eventHandler.resetHome = function () {
@@ -74,13 +77,23 @@
     $('.header-large').show();
     $('#look-up input').val('')
     $('.form-text-results').removeClass('text-center');
+    $('.left-panels').removeClass('left-panels-border');
+    $('#nearest').removeClass('nearest-with-results');
     TownHall.isCurrentContext = false;
     TownHall.currentContext = [];
+    TownHall.zipQuery = '';
     $('#map').appendTo('.map-large');
+    onResizeMap()
     var $parent = $('#nearest');
     var $results = $('#textresults')
     $parent.empty();
     $results.empty();
+    $table = $('#all-events-table');
+    $table.empty()
+    TownHall.allTownHalls.forEach(function(ele){
+      eventHandler.renderTable(ele, $table);
+    })
+
   };
 
   eventHandler.renderPanels = function(event, $parent) {
@@ -99,11 +112,11 @@
   // takes the current set of data in the table and sorts by date
   eventHandler.viewByDate = function (e) {
     e.preventDefault();
-    $table = $('#all-events-table');
-    $table.empty();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
     TownHall.currentContext = TownHall.sortDate(filtereddata);
+    $table = $('#all-events-table');
+    $table.empty()
     TownHall.currentContext.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
     })
@@ -203,11 +216,11 @@
     }
     else  {
       TownHall.isMap = true;
-      console.log(map);
     }
     $('.nav').on('click', 'a', function onClickGethref(event) {
       var hashid = this.getAttribute('href')
       if (hashid === '#home' && TownHall.isMap === false) {
+        console.log('going home and no map');
         history.replaceState({}, document.title, ".");
         setTimeout( function(){
           onResizeMap()
@@ -217,11 +230,10 @@
           }
         }, 50);
        }
-       else if ((hashid === '#home' && TownHall.isMap === true)) {
+       else if (hashid === '#home' && TownHall.isMap === true) {
+         console.log('going home and map');
          history.replaceState({}, document.title, ".");
          eventHandler.resetHome()
-         onResizeMap()
-
        }
       else {
         location.hash = this.getAttribute('href')
