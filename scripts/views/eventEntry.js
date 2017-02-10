@@ -61,6 +61,7 @@
   //   }
   // });
 
+  // Renders the page in response to lookup
   eventHandler.lookup = function (e) {
     e.preventDefault();
     TownHall.lookupZip($('#look-up input').val());
@@ -72,6 +73,7 @@
     $('#nearest').addClass('nearest-with-results');
   };
 
+  // reset the home page to originial view
   eventHandler.resetHome = function () {
     $('.header-small').hide();
     $('.header-large').show();
@@ -96,12 +98,14 @@
 
   };
 
+  // Renders one panel, assumes data processing has happened
   eventHandler.renderPanels = function(event, $parent) {
     var $panel = $(event.toHtml($('#event-template')));
       $panel.children('.panel').addClass(event.Party);
       $panel.appendTo($parent);
   };
 
+  // render table row
   eventHandler.renderTable = function (townhall, $tableid) {
       townhall.formatDateTime();
       townhall.dist = Math.round(townhall.dist/1609.344);

@@ -11,7 +11,7 @@
 // Reset and dependencies
 @import "normalize.less";
 @import "print.less";
-@import "glyphicons.less";
+// @import "glyphicons.less";
 
 // Core CSS
 @import "scaffolding.less";
@@ -79,13 +79,12 @@
 }
 
 @border-radius-base:        0px;
-@link-color:                        darken(@brand-primary, 10%);
+@link-color:                        lighten(@brand-info, 10%);
 @component-active-bg:               @brand-secondary;
-@nav-tabs-active-link-hover-color:  @brand-cool;
-@nav-link-hover-bg:                 @brand-cool;
+@nav-tabs-active-link-hover-color:  @brand-primary;
 @nav-tabs-link-hover-border-color:  @brand-success;
 @nav-tabs-border-color:             @brand-info;
-@btn-warning-border: white;
+@btn-warning-border:                    white;
 @btn-info-border: @brand-info;
 @btn-danger-border: @btn-danger-bg;
 @btn-danger-color: @brand-info;
@@ -105,22 +104,12 @@
 
 // Navbar links
 @navbar-default-link-color:                @link-color;
-@navbar-default-link-hover-color:          @brand-warning;
-@navbar-default-link-hover-bg:             @brand-success;
-@navbar-default-link-active-color:         #ffffff;
-@navbar-default-link-active-bg:            @brand-primary;
+@navbar-default-link-hover-color:          @brand-primary;
+@navbar-default-link-hover-bg:             transparent;
+@navbar-default-link-active-color:         @brand-primary;
+@navbar-default-link-active-bg:            #ffffff;
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
-
-// Navbar brand label
-@navbar-default-brand-color:               @navbar-default-link-color;
-@navbar-default-brand-hover-color:         darken(@navbar-default-brand-color, 5%);
-@navbar-default-brand-hover-bg:            transparent;
-
-// Navbar toggle
-@navbar-default-toggle-hover-bg:           #ddd;
-@navbar-default-toggle-icon-bar-bg:        #888;
-@navbar-default-toggle-border-color:       #ddd;
 
 
 //## Define colors for form feedback states and, by default, alerts.
@@ -305,6 +294,11 @@ article{
   color: @brand-text;
 }
 
+.btn-white{
+  background-color: white;
+  color: @brand-info;
+}
+
 #nearest{
   padding-top:10px;
   overflow-y: scroll;
@@ -315,6 +309,9 @@ article{
 
 .nearest-with-results{
   height: 528px;
+  border-left: 1px solid rgb(186, 188, 193);
+  border-right: 1px solid #c0c4d0;
+
 }
 
 #map {
