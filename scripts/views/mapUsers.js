@@ -340,9 +340,8 @@
     };
 
     map = new google.maps.Map(document.getElementById('map'), options);
-    console.log(map);
     var bounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(40, -124.39),
+      new google.maps.LatLng(20, -124.39),
       new google.maps.LatLng(49.38, -66.94)
     );
     map.fitBounds(bounds);
@@ -396,6 +395,7 @@
       var coords = [ele.lng, ele.lat];
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars
+      ele.addressLink = "https://www.google.com/maps?q=" + escape(ele.address);
       var contentString = ele.toHtml('#marker-template');
       var infowindow = new google.maps.InfoWindow({
         content: contentString,

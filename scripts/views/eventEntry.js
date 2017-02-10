@@ -81,7 +81,9 @@
     $('#nearest').removeClass('nearest-with-results');
     TownHall.isCurrentContext = false;
     TownHall.currentContext = [];
+    TownHall.zipQuery = '';
     $('#map').appendTo('.map-large');
+    onResizeMap()
     var $parent = $('#nearest');
     var $results = $('#textresults')
     $parent.empty();
@@ -91,6 +93,7 @@
     TownHall.allTownHalls.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
     })
+
   };
 
   eventHandler.renderPanels = function(event, $parent) {
@@ -213,11 +216,11 @@
     }
     else  {
       TownHall.isMap = true;
-      console.log(map);
     }
     $('.nav').on('click', 'a', function onClickGethref(event) {
       var hashid = this.getAttribute('href')
       if (hashid === '#home' && TownHall.isMap === false) {
+        console.log('going home and no map');
         history.replaceState({}, document.title, ".");
         setTimeout( function(){
           onResizeMap()
@@ -227,11 +230,10 @@
           }
         }, 50);
        }
-       else if ((hashid === '#home' && TownHall.isMap === true)) {
+       else if (hashid === '#home' && TownHall.isMap === true) {
+         console.log('going home and map');
          history.replaceState({}, document.title, ".");
          eventHandler.resetHome()
-         onResizeMap()
-
        }
       else {
         location.hash = this.getAttribute('href')
