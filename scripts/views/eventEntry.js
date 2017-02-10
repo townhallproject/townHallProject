@@ -65,8 +65,10 @@
     e.preventDefault();
     TownHall.lookupZip($('#look-up input').val());
     $('.header-small').removeClass('hidden');
+    $('.header-small').show()
     $('.header-large').hide();
-    $('.form-text-results').addClass('text-center')
+    $('.form-text-results').addClass('text-center');
+    $('.left-panels').addClass('left-panels-border')
   };
 
   eventHandler.resetHome = function () {
@@ -74,6 +76,7 @@
     $('.header-large').show();
     $('#look-up input').val('')
     $('.form-text-results').removeClass('text-center');
+    $('.left-panels').removeClass('left-panels-border')
     TownHall.isCurrentContext = false;
     TownHall.currentContext = [];
     $('#map').appendTo('.map-large');
@@ -81,6 +84,11 @@
     var $results = $('#textresults')
     $parent.empty();
     $results.empty();
+    $table = $('#all-events-table');
+    $table.empty()
+    TownHall.allTownHalls.forEach(function(ele){
+      eventHandler.renderTable(ele, $table);
+    })
   };
 
   eventHandler.renderPanels = function(event, $parent) {
@@ -99,11 +107,11 @@
   // takes the current set of data in the table and sorts by date
   eventHandler.viewByDate = function (e) {
     e.preventDefault();
-    $table = $('#all-events-table');
-    $table.empty();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
     TownHall.currentContext = TownHall.sortDate(filtereddata);
+    $table = $('#all-events-table');
+    $table.empty()
     TownHall.currentContext.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
     })
