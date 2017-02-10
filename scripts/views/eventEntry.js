@@ -68,7 +68,8 @@
     $('.header-small').show()
     $('.header-large').hide();
     $('.form-text-results').addClass('text-center');
-    $('.left-panels').addClass('left-panels-border')
+    $('.left-panels').addClass('left-panels-border');
+    $('#nearest').addClass('nearest-with-results');
   };
 
   eventHandler.resetHome = function () {
@@ -76,7 +77,8 @@
     $('.header-large').show();
     $('#look-up input').val('')
     $('.form-text-results').removeClass('text-center');
-    $('.left-panels').removeClass('left-panels-border')
+    $('.left-panels').removeClass('left-panels-border');
+    $('#nearest').removeClass('nearest-with-results');
     TownHall.isCurrentContext = false;
     TownHall.currentContext = [];
     $('#map').appendTo('.map-large');
