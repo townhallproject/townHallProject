@@ -105,7 +105,7 @@
     $table.empty();
     var index = TownHall.filterIds.indexOf(filterCol);
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
+    var filteredData = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
     if (filterID === 'All') {
       TownHall.filteredResults = [];
       TownHall.filterIds.pop(index);
@@ -115,11 +115,12 @@
     }
     else {
       // check if filtering by the same column
+      var filtered;
       if (index < 0 ) {
-        var filtered = TownHall.filterByCol(filterCol, filterID, filtereddata);
+        filtered = TownHall.filterByCol(filterCol, filterID, filteredData);
       }
       else {
-        var filtered = TownHall.filterByCol(filterCol, filterID, data);
+        filtered = TownHall.filterByCol(filterCol, filterID, data);
       }
       TownHall.filteredResults = filtered;
       TownHall.filterIds.push(filterCol);
@@ -127,8 +128,22 @@
         eventHandler.renderTable(ele, $table);
       })
     }
-
   }
+
+  eventHandler.filterTableByInput = function(e) {
+    e.preventDefault();
+    $table = $('#all-events-table');
+    var query = $(this).val();
+    var filterCol = $(this).attr('data-filter');
+    $table.empty();
+    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+    var filtered = TownHall.filterColumnByQuery(filterCol, query, data);
+    TownHall.filteredResults = filtered;
+    TownHall.filterIds.push(filterCol);
+    filtered.forEach(function(ele){
+      eventHandler.renderTable(ele, $table);
+    })
+  };
 
 
   // renders results of search
@@ -176,11 +191,13 @@
   // url hash for direct links to subtabs
   // slightly hacky routing
   $(document).ready(function(){
+    var filterSelector = $('.filter');
     $('#save-event').on('submit', eventHandler.save);
     $('#look-up').on('submit', eventHandler.lookup);
     $('#view-all').on('click', TownHall.viewAll);
     $('#sort-date').on('click', eventHandler.viewByDate);
-    $('.filter').on('click', 'a', eventHandler.filterTable);
+    filterSelector.on('click', 'a', eventHandler.filterTable);
+    filterSelector.keyup(eventHandler.filterTableByInput);
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show')
     }
@@ -196,7 +213,7 @@
           onResizeMap()
           if (location.pathname ='/') {
               eventHandler.resetHome()
-              TownHall.isMap === true
+              TownHall.isMap = true;
           }
         }, 50);
        }

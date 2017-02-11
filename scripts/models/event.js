@@ -134,11 +134,18 @@
     })
   }
 
-  // filters by an value in a column
+  // filters by a value in a column
   TownHall.filterByCol = function(filterCol, filterID, data) {
     return data.filter(function(ele){
       return ele[filterCol] === filterID;
     })
+  };
+
+  // Filters by a query in a column
+  TownHall.filterColumnByQuery = function(filterCol, query, data) {
+    return data.filter(function(element) {
+      return element[filterCol].indexOf(query) !== -1;
+    });
   };
 
   // METHODS IN RESPONSE TO lookup
