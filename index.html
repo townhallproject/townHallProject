@@ -221,7 +221,13 @@
                 <thead class='text-info'>
                   <tr>
                     <th class="Member">
-                      Member
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <strong>Member</strong>
+                          <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <input data-filter="Member" type="text" class="form-control dropdown-menu filter" placeholder="Member">
+                      </div>
                     </th>
                     <th class="party">
                       <div class="btn-group">
@@ -244,10 +250,18 @@
                       </div>
                     </th>
                     <th>
-                      State
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <strong>State</strong>
+                          <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                          <input data-filter="State" type="text" class="form-control dropdown-menu filter" placeholder="State">
+                      </div>
                     </th>
                     <th>
-                      District
+                      <div class="noninteractive-header">
+                        District
+                      </div>
                     </th>
                     <th class="meetingType">
                       <div class="btn-group">
@@ -278,16 +292,24 @@
                       </button>
                     </th>
                     <th class="time">
-                      Time
+                      <div class="noninteractive-header">
+                        Time
+                      </div>
                     </th>
                     <th>
-                      Location
+                      <div class="noninteractive-header">
+                        Location
+                      </div>
                     </th>
                     <th>
-                      Address
+                      <div class="noninteractive-header">
+                        Address
+                      </div>
                     </th>
                     <th>
-                      Notes
+                      <div class="noninteractive-header">
+                        Notes
+                      </div>
                     </th>
                   </tr>
                 </thead>
