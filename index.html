@@ -65,7 +65,7 @@
               {{#if dateValid}}
               <div class="col-xs-6 ">
                 <span class="addtocalendar pull-right ">
-                  <a class="atcb-link btn btn-secondary">Add to Calendar</a> <!-- You can change button title by adding this line -->
+                  <a class="atcb-link btn btn-secondary">Add to Calendar <i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
                   <var class="atc_event">
                     <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
                       <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
@@ -116,6 +116,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="https://twitter.com/townhallproject" ><i class="fa fa-twitter-square fa-1x" aria-hidden="true"></i></a></li>
             <li><a href="https://www.facebook.com/TownHallProject/" ><i class="fa fa-facebook-square fa-1x" aria-hidden="true"></i></a></li>
+            <li><a href="mailto:townhallproject2018@gmail.com" class="text-white"><i class="fa fa-envelope-square fa-1x" aria-hidden="true"></i></a></li>
           </ul>
         </div>
       </div>
@@ -140,7 +141,7 @@
                         <div class="form-group">
                           <label  for="zip"></label>
                           <input class="form-control input-md " type="zip" name="" value="" placeholder="Zip Code">
-                          <button type="submit" name="button" class="btn btn-primary btn-sm ">Find A Town Hall</button>
+                          <button type="submit" name="button" class="btn btn-primary btn-md ">Find A Town Hall</button>
                         </div>
                       </form>
                     </div>
@@ -163,8 +164,8 @@
         </div>
         <section class="scroll-to-form text-center">
             <p>
-              <a href="#events-table" class="scroll-button btn btn-secondary btn-lg">
-                <span class="center-block glyphicon glyphicon-menu-down"></span>
+              <a href="#events-table" class="scroll-button btn btn-white btn-lg">
+                <i class="fa fa-chevron-down fa-2x" aria-hidden="true"></i>
               </a>
             </p>
         </section>
@@ -189,10 +190,11 @@
                     <th class="Member">
                       Member
                     </th>
-                    <th class="party">Party
+                    <th class="party">
                       <div class="btn-group">
-                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="center-block glyphicon glyphicon-menu-down"></span>
+                        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <strong>Party</strong>
+                          <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </button>
                         <div class="dropdown-menu filter">
                           <ul class="list-unstyled">
@@ -215,10 +217,10 @@
                       District
                     </th>
                     <th class="meetingType">
-                      Meeting type
                       <div class="btn-group">
-                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="center-block glyphicon glyphicon-menu-down"></span>
+                        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <strong>Meeting Type</strong>
+                          <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </button>
                         <div class="dropdown-menu filter">
                           <ul class="list-unstyled">
@@ -237,9 +239,9 @@
                       </div>
                     </th>
                     <th>
-                      Date
-                      <button id="sort-date" class="btn btn-secondary dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="center-block glyphicon glyphicon-menu-down"></span>
+                      <button id="sort-date" class="btn btn-white dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+                        <strong>Date</strong>
+                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
                       </button>
                     </th>
                     <th class="time">
@@ -360,9 +362,9 @@ For more, we recommend the valuable <a href="https://www.indivisibleguide.com/">
     <footer class="footer">
       <div class="container text-center">
         <ul class="list-unstyled">
-          <li>Compiled by volunteers from each Congress member's official website, Twitter, or Facebook</li>
-          <li><a href="mailto:townhallproject2018@gmail.com">Email us questions/comments/updates </a></li>
-          <li><a href="https://twitter.com/townhallproject" class="text-white"><i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a>
+          <li><small>Compiled by volunteers from each Congress member's official website, Twitter, or Facebook</small></li>
+          <li><a href="mailto:townhallproject2018@gmail.com" class="text-white"><i class="fa fa-envelope-square fa-3x" aria-hidden="true"></i></a>
+            <a href="https://twitter.com/townhallproject" class="text-white"><i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a>
             <a href="https://www.facebook.com/TownHallProject/" class="text-white"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
           </li>
         </ul>
