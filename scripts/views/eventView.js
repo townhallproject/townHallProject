@@ -1,5 +1,5 @@
 (function(module) {
-  var firebasedb = firebase.database()
+  var firebasedb = firebase.database();
   var provider = new firebase.auth.GoogleAuthProvider();
 
   // object to hold the front end view functions
@@ -25,7 +25,7 @@
 
   // given an event and a current key, update that event.
   eventHandler.update = function (newevent , key) {
-    var newTownHall = new TownHall(newevent)
+    var newTownHall = new TownHall(newevent);
     var address = newTownHall.streetNumber +' '+ newTownHall.streetName +' '+ newTownHall.City + ' ' + newTownHall.Zip
     console.log(address);
     newTownHall.getLatandLog(address, key);
@@ -36,7 +36,7 @@
     e.preventDefault();
     TownHall.lookupZip($('#look-up input').val());
     $('.header-small').removeClass('hidden');
-    $('.header-small').show()
+    $('.header-small').show();
     $('.header-large').hide();
     $('.form-text-results').addClass('text-center');
     $('.left-panels').addClass('left-panels-border');
@@ -47,7 +47,7 @@
   eventHandler.resetHome = function () {
     $('.header-small').hide();
     $('.header-large').show();
-    $('#look-up input').val('')
+    $('#look-up input').val('');
     $('.form-text-results').removeClass('text-center');
     $('.left-panels').removeClass('left-panels-border');
     $('#nearest').removeClass('nearest-with-results');
@@ -55,13 +55,13 @@
     TownHall.currentContext = [];
     TownHall.zipQuery = '';
     $('#map').appendTo('.map-large');
-    onResizeMap()
+    onResizeMap();
     var $parent = $('#nearest');
-    var $results = $('#textresults')
+    var $results = $('#textresults');
     $parent.empty();
     $results.empty();
     $table = $('#all-events-table');
-    $table.empty()
+    $table.empty();
     TownHall.allTownHalls.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
     })
@@ -90,18 +90,18 @@
     var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
     TownHall.currentContext = TownHall.sortDate(filtereddata);
     $table = $('#all-events-table');
-    $table.empty()
+    $table.empty();
     TownHall.currentContext.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
     })
-  }
+  };
 
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
     $table = $('#all-events-table');
     var filterID = this.id;
-    var filterCol = $(this).attr('data-filter')
+    var filterCol = $(this).attr('data-filter');
     $table.empty();
     var index = TownHall.filterIds.indexOf(filterCol);
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
