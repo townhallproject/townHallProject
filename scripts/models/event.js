@@ -19,7 +19,7 @@
     CST : 'America/Chicago',
     EST : 'America/New_York',
     other : 'no time zone'
-  }
+  };
 
   //FIREBASE METHODS
   // Initialize Firebase
@@ -57,7 +57,7 @@
     var tz = TownHall.timeZones[this.timeZone];
     if (!tz) {
       var time = Date.now();
-      var loc = this.lat+','+this.lng
+      var loc = this.lat+','+this.lng;
       url = 'https://maps.googleapis.com/maps/api/timezone/json?location='+loc+'&timestamp=1331766000&key=AIzaSyBlmL9awpTV6AQKQJOmOuUlH1APXWmCHLQ'
       $.get(url, function (response){
         this.zoneString = response.timeZoneId;
@@ -65,17 +65,17 @@
       })
     }
     else {
-      this.zoneString = tz
+      this.zoneString = tz;
       return this;
     }
-  }
+  };
 
   // converts time to 24hour time
   TownHall.toTwentyFour = function (time) {
     var hourmin = time.split(' ')[0];
     var ampm = time.split(' ')[1];
     if (ampm ==='PM') {
-      var hour = hourmin.split(':')[0]
+      var hour = hourmin.split(':')[0];
       hour = Number(hour) +12;
       hourmin = hour + ':' + hourmin.split(':')[1]
     }
@@ -132,7 +132,7 @@
     return data.sort(function(a, b ){
       return new Date(a.dateString) - new Date(b.dateString);
     })
-  }
+  };
 
   // filters by a value in a column
   TownHall.filterByCol = function(filterCol, filterID, data) {
@@ -156,10 +156,10 @@
       TownHall.zipQuery = zipQueryLoc;
       TownHall.returnNearest(zipQueryLoc);
     }).catch(function(error){
-      var $results = $('#textresults')
+      var $results = $('#textresults');
       $results.empty();
-      var $text = $('<h4>')
-      $text.text('That is not a real zip code')
+      var $text = $('<h4>');
+      $text.text('That is not a real zip code');
       $results.append($text)
     });
   };
@@ -198,7 +198,7 @@
           newTownHall.formatDateTime();
           TownHall.allTownHalls.push(newTownHall);
           var addresskey = address.replace(/[,.]/g ,'');
-          addresskey.trim()
+          addresskey.trim();
           firebasedb.ref('geolocate/' + addresskey).set(
             {
               lat : newTownHall.lat,
@@ -218,8 +218,8 @@
   // checks firebase for address, if it's not there, calls google geocode
   TownHall.prototype.geoCodeFirebase = function (address, key) {
     var newTownHall = this;
-    var addresskey = address.replace(/[,.]/g ,'')
-    addresskey.trim()
+    var addresskey = address.replace(/[,.]/g ,'');
+    addresskey.trim();
     firebasedb.ref('geolocate/' + addresskey).once('value').then(function(snapshot){
       newTownHall.lat = snapshot.val().lat;
       newTownHall.lng = snapshot.val().lng;
@@ -227,10 +227,10 @@
       newTownHall.formatDateTime();
       TownHall.allTownHalls.push(newTownHall);
     }).catch(function(error){
-      newTownHall.getLatandLog(address, key)
+      newTownHall.getLatandLog(address, key);
       console.log('not in database', addresskey, error);
     });
-  }
+  };
 
   //Gets everything from the google doc and does geo coding in batches
   TownHall.fetchAll = function() {

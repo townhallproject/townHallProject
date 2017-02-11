@@ -1,7 +1,7 @@
 
 (function closure(firebase) {
-  var map
-  var google
+  var map;
+  var google;
 
 //draws map
   window.initMap = function initMap() {
@@ -328,7 +328,7 @@
             }
         ]
     }
-]
+];
 
     var options = {
       zoom: 4,
@@ -336,7 +336,7 @@
       navigationControl: false,
       mapTypeControl: false,
       styles: styleArray,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
     map = new google.maps.Map(document.getElementById('map'), options);
@@ -356,13 +356,13 @@
       var resizeBounds = new google.maps.LatLngBounds();
       var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
       data.forEach(function(ele){
-        marker = new google.maps.LatLng(ele.lat, ele.lng)
+        marker = new google.maps.LatLng(ele.lat, ele.lng);
         resizeBounds.extend(marker)
-    })
+    });
     // map.setCenter(results[0].geometry.location);
     map.fitBounds(resizeBounds);
   });
-}
+};
 
   // TODO; Probably redudent with resize map
   window.recenterMap = function(markers, zipQuery) {
@@ -394,8 +394,8 @@
   firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
     var ele = new TownHall (snapshot.val());
     if (ele.isInFuture() === true) {
-      TownHall.allTownHalls.push(ele)
-      $('#all-events-table').append(ele.toHtml($('#table-template')))
+      TownHall.allTownHalls.push(ele);
+      $('#all-events-table').append(ele.toHtml($('#table-template')));
       var coords = [ele.lng, ele.lat];
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars
@@ -414,13 +414,13 @@
         map: map,
         position: latLng,
         name: ele.name,
-        time: ele.time,
+        time: ele.time
       });
       marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
       marker.addListener('click', function() {
         infowindow.open(map, marker);
       });
-    };
+    }
   })
 
 }(window.firebase));
