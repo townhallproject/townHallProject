@@ -2,7 +2,7 @@
   var firebasedb = firebase.database()
   var provider = new firebase.auth.GoogleAuthProvider();
 
-  // object to hold the front end view functions
+  // object to hold the frontend view functions
   var eventHandler = {};
 
   // creates new TownHall object from form
@@ -15,7 +15,6 @@
   );
     newTownHall.getLatandLog(newTownHall.address);
   };
-
 
 // Given a new event, creates TownHall Object and encodes with lat and lng based on address from google docs
   eventHandler.saveSimple = function (newevent) {
@@ -30,36 +29,6 @@
     console.log(address);
     newTownHall.getLatandLog(address, key);
   };
-
-  //Sign in fuction for firebase
-  eventHandler.signIn = function (){
-    firebase.auth().signInWithRedirect(provider);
-    firebase.auth().getRedirectResult().then(function(result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-    }).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-    });
-  };
-
-  // firebase.auth().onAuthStateChanged(function(user) {
-  //   if (user) {
-  //   // User is signed in.
-  //     console.log(user.displayName, ' is signed in');
-  //   } else {
-  //     eventHandler.signIn()
-  //     // No user is signed in.
-  //   }
-  // });
 
   // Renders the page in response to lookup
   eventHandler.lookup = function (e) {
@@ -126,6 +95,7 @@
     })
   }
 
+  // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
     $table = $('#all-events-table');
@@ -202,19 +172,14 @@
   };
 
 
-  $('#all-events').on('focusout', '.event-row', function(){
-    id = this.id;
-    console.log(id);
-    newTownHall = $(this).children('td').get().reduce(function(newObj, cur){
-      newObj[cur.id] = $(cur).html();
-      return newObj;
-    }, {});
-    console.log(newTownHall);
-    eventHandler.update(newTownHall , id);
-  });
-
-  // url hash for direct links to subtabs on inauguration.html
+  // url hash for direct links to subtabs
+  // slightly hacky routing
   $(document).ready(function(){
+    $('#save-event').on('submit', eventHandler.save);
+    $('#look-up').on('submit', eventHandler.lookup);
+    $('#view-all').on('click', TownHall.viewAll);
+    $('#sort-date').on('click', eventHandler.viewByDate);
+    $('.filter').on('click', 'a', eventHandler.filterTable);
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show')
     }
@@ -245,11 +210,6 @@
     })
   })
 
-  $('#save-event').on('submit', eventHandler.save);
-  $('#look-up').on('submit', eventHandler.lookup);
-  $('#view-all').on('click', TownHall.viewAll);
-  $('#sort-date').on('click', eventHandler.viewByDate);
-  $('.filter').on('click', 'a', eventHandler.filterTable);
 
   module.eventHandler = eventHandler;
 })(window);

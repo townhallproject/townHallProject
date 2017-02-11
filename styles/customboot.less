@@ -79,7 +79,7 @@
 }
 
 @border-radius-base:        0px;
-@link-color:                        lighten(@brand-info, 10%);
+@link-color:                        @brand-secondary;
 @component-active-bg:               @brand-secondary;
 @nav-tabs-active-link-hover-color:  @brand-primary;
 @nav-tabs-link-hover-border-color:  @brand-success;
@@ -103,7 +103,7 @@
 @navbar-default-border:            darken(@navbar-default-bg, 6.5%);
 
 // Navbar links
-@navbar-default-link-color:                @link-color;
+@navbar-default-link-color:                lighten(@brand-info, 10%);
 @navbar-default-link-hover-color:          @brand-primary;
 @navbar-default-link-hover-bg:             transparent;
 @navbar-default-link-active-color:         @brand-primary;
@@ -366,6 +366,14 @@ article{
 .quote-header{
   padding-top: 40px;
 
+}
+#hand-raised{
+  background-image: url('/Images/handraised.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 35em;
 }
 
 @media screen and (max-width: 1020px){
