@@ -393,7 +393,7 @@
 // TODO: sperate out into more concise functions
   firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
     var ele = new TownHall (snapshot.val());
-    if (ele.isInFuture() === true) {
+    // if (ele.isInFuture() === true) {
       TownHall.allTownHalls.push(ele)
       $('#all-events-table').append(ele.toHtml($('#table-template')))
       var coords = [ele.lng, ele.lat];
@@ -420,7 +420,11 @@
       marker.addListener('click', function() {
         infowindow.open(map, marker);
       });
-    };
+    // }
+    // else {
+    //   console.log('in past', ele);
+    //
+    // }
   })
 
 }(window.firebase));

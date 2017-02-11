@@ -56,16 +56,14 @@
 @import "responsive-utilities.less";
 
 // Brand Colors
-@brand-primary: #a2c6d7;
-@brand-secondary: #FA2A00;
-@brand-cool: #6496af;
-@brand-text: #1E2528;
-@brand-gray: #80b2c6;
+@brand-primary: #127abd;
+@brand-secondary: #EF4A46; //red
+@brand-cool: #0478BE;
+@brand-text: #21445f;
+@brand-gray: #C5C6C8;
 @brand-success: darken(@brand-primary, 10%);
-@brand-warning: #274f70;
-@brand-danger: #bad636;
-@brand-info: #003056;
-
+@brand-info: #21445f;
+@brand-secondary-dark : darken(@brand-secondary, 10%);
 .text-white{
   color: white;
 }
@@ -145,12 +143,12 @@ html {
 
 body{
   color: #1E2528;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Raleway', sans-serif;
   margin-bottom: 60px;
 }
 
 h2 {
-  font-weight: 600;
+  font-weight: 900;
 }
 
 .navbar{
@@ -163,9 +161,10 @@ h2 {
 }
 
 header{
-  background-color: @brand-primary;
+  background-color: #bee2f9;
+  // background-color: @brand-primary;
   color: white;
-  border-bottom: #E32F21 2px solid;
+  border-bottom: @brand-secondary-dark 2px solid;
 }
 
 .footer {
@@ -273,9 +272,22 @@ article{
 
 // Results
 .input-md, .input-lg{
-  background-color: darken(@brand-secondary, 10%);
+  background-color: @brand-secondary;
   color: white;
   margin-bottom: 10px;
+}
+
+.input-lg::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+}
+.input-lg::-moz-placeholder { /* Firefox 19+ */
+  color: white;
+}
+.input-lg:-ms-input-placeholder { /* IE 10+ */
+  color: white;
+}
+.input-lg:-moz-placeholder { /* Firefox 18- */
+  color: white;
 }
 
 .btn-primary{
@@ -310,10 +322,10 @@ article{
   overflow-y: scroll;
   overflow-x: hidden;
   -ms-overflow-style: none;
-  background-color: #cee3ea;
 }
 
 .nearest-with-results{
+  background-color: #cee3ea;
   height: 528px;
   border-left: 1px solid rgb(186, 188, 193);
   border-right: 1px solid #c0c4d0;
