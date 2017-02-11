@@ -45,7 +45,7 @@
         "elementType": "labels.text.fill",
         "stylers": [
             {
-                "color": "#ba2317"
+                "color": "#fd7567"
             }
         ]
     },
@@ -309,13 +309,13 @@
         "elementType": "geometry.fill",
         "stylers": [
             {
-                "color": "#274f70"
+                "color": "#003056"
             },
             {
                 "saturation": "-52"
             },
             {
-                "lightness": "37"
+                "lightness": "10"
             }
         ]
     },
@@ -324,7 +324,7 @@
         "elementType": "geometry.stroke",
         "stylers": [
             {
-                "color": "#8dd0ea"
+                "color": "#6496af"
             }
         ]
     }
@@ -346,7 +346,6 @@
     );
     map.fitBounds(bounds);
     google.maps.event.addDomListener(window, 'resize', onResizeMap)
-
   };
 
   window.onResizeMap = function onResizeMap() {
@@ -365,6 +364,7 @@
   });
 }
 
+  // TODO; Probably redudent with resize map
   window.recenterMap = function(markers, zipQuery) {
     google.maps.event.trigger(map, 'resize');
     var bounds = new google.maps.LatLngBounds();
@@ -387,6 +387,10 @@
   };
 
 // listens for new events
+// Adds all events into main data array
+// Adds all events as markers
+// renders tables
+// TODO: sperate out into more concise functions
   firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
     var ele = new TownHall (snapshot.val());
     if (ele.isInFuture() === true) {

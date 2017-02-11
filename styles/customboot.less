@@ -56,9 +56,9 @@
 @import "responsive-utilities.less";
 
 // Brand Colors
-@brand-primary: #8dd0ea;
-@brand-secondary: #E32F21;
-@brand-cool: #ABCCBD;
+@brand-primary: #a2c6d7;
+@brand-secondary: #FA2A00;
+@brand-cool: #6496af;
 @brand-text: #1E2528;
 @brand-gray: #80b2c6;
 @brand-success: darken(@brand-primary, 10%);
@@ -110,7 +110,13 @@
 @navbar-default-link-active-bg:            #ffffff;
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
+.navbar-brand img{
+  width: 125px;
+}
 
+.navbar-brand{
+  padding-top: 0px!important;
+}
 
 //## Define colors for form feedback states and, by default, alerts.
 
@@ -266,7 +272,7 @@ article{
 
 
 // Results
-.input-md{
+.input-md, .input-lg{
   background-color: darken(@brand-secondary, 10%);
   color: white;
   margin-bottom: 10px;
@@ -394,5 +400,8 @@ article{
   .embed-container{
     padding-bottom: 2871px;
     // margin-bottom: 43%;
+  }
+  #brand-icon{
+    padding-top: 0px!important;
   }
 }

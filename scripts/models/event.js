@@ -4,7 +4,7 @@
       this[key] = opts[key];
     }
   }
-
+  //Global data stete
   TownHall.allTownHalls = [];
   TownHall.currentContext = [];
   TownHall.filteredResults = [];
@@ -41,6 +41,7 @@
     newTownHall.set(this);
   };
 
+  // writes to townhall, can take a key for update
   TownHall.prototype.updateFB = function (key) {
     console.log('saving to firebase');
     if (!key) {
@@ -93,6 +94,7 @@
       var day  = day.toString().length === 1 ? (0 + day.toString()) :day.toString();
       var yearMonthDay = this.dateObj.getFullYear() + '-' + month + '-'+day ;
       this.timeStart24 = TownHall.toTwentyFour(this.Time);
+      // If no ending time, just add 2 hours
       if (!this.TimeEnd) {
         hour = parseInt(this.timeStart24.split(':')[0]) + 2;
         this.timeEnd24 = hour + ':' + this.timeStart24.split(':')[1] + ':' + '00';
@@ -171,18 +173,7 @@
     });
   };
 
-  TownHall.viewAll = function (zipQueryLoc) {
-    var locations = [];
-    firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
-      snapshot.forEach(function(ele){
-        newTownHall = new TownHall(ele.val());
-        $newRow = $(newTownHall.toHtml($('#view-firebase-template')));
-        $newRow.attr('id' , ele.key);
-        $('#all-events').append($newRow);
-      });
-    });
-  };
-
+  // geocodes an address
   TownHall.prototype.getLatandLog = function(address, key) {
     var newTownHall = this;
     if (address === 'undefined undefined undefined undefined') {
@@ -196,7 +187,7 @@
         success: function(r){
           newTownHall.lat = r.results[0].geometry.location.lat;
           newTownHall.lng = r.results[0].geometry.location.lng;
-          newTownHall.address = r.results[0].formatted_address;
+          newTownHall.address = r.results[0].formatted_address.split(', USA')[0];
           newTownHall.formatDateTime();
           TownHall.allTownHalls.push(newTownHall);
           var addresskey = address.replace(/[,.]/g ,'');
@@ -217,6 +208,7 @@
     }
   };
 
+  // checks firebase for address, if it's not there, calls google geocode
   TownHall.prototype.geoCodeFirebase = function (address, key) {
     var newTownHall = this;
     var addresskey = address.replace(/[,.]/g ,'')
@@ -224,7 +216,7 @@
     firebasedb.ref('geolocate/' + addresskey).once('value').then(function(snapshot){
       newTownHall.lat = snapshot.val().lat;
       newTownHall.lng = snapshot.val().lng;
-      newTownHall.address = snapshot.val().formatted_address;
+      newTownHall.address = snapshot.val().formatted_address.split(', USA')[0];
       newTownHall.formatDateTime();
       TownHall.allTownHalls.push(newTownHall);
     }).catch(function(error){
@@ -264,11 +256,12 @@
       }, 2000);
     } else {
       // When done, update firebase
+      // TODO: unique IDS for event so we don't have to dump the db
       console.log('got all data', TownHall.allTownHalls);
-      // firebase.database().ref('/townHalls/').remove();
-      // TownHall.allTownHalls.forEach(function(event){
-      //   event.writetoFB();
-      // })
+      firebase.database().ref('/townHalls/').remove();
+      TownHall.allTownHalls.forEach(function(event){
+        event.writetoFB();
+      })
     };
   };
 
@@ -280,15 +273,19 @@
       for (var k = 0; k < row.length; k++) {
         rowObj[googlekeys[k]] = row[k];
       }
+      // checks if data is complete
         if (row.length > 12) {
+          // if full address use that for location
           if (rowObj.streetAddress.length>2) {
             rowObj.geoCodeFirebase(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip);
           }
+          // Otherwise, geocode on Home state
           else {
             rowObj.noLoc = true;
             rowObj.geoCodeFirebase(rowObj.State);
           }
         }
+        // If incomplete store to seperate table
         else {
           console.log('missing columns');
           var newTownHall = firebasedb.ref('/townHallsErrors/').push();

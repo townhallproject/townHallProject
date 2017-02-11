@@ -1,7 +1,7 @@
 
 (function(module) {
 // For handling user submitted events.
-// Not being used yet. 
+// Not being used yet.
 
   var newEventView = {};
   $('#all-events').on('focusout', '.event-row', function(){
@@ -15,6 +15,18 @@
     eventHandler.update(newTownHall , id);
   });
 
+
+  TownHall.viewAll = function () {
+    var locations = [];
+    firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
+      snapshot.forEach(function(ele){
+        newTownHall = new TownHall(ele.val());
+        $newRow = $(newTownHall.toHtml($('#view-firebase-template')));
+        $newRow.attr('id' , ele.key);
+        $('#all-events').append($newRow);
+      });
+    });
+  };
 
   // firebase.auth().onAuthStateChanged(function(user) {
   //   if (user) {
