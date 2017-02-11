@@ -127,18 +127,17 @@
         eventHandler.renderTable(ele, $table);
       })
     }
-
-  }
+  };
 
 
   // renders results of search
   eventHandler.render = function (events, zipQuery) {
     var $parent = $('#nearest');
-    var $results = $('#textresults')
+    var $results = $('#textresults');
     $parent.empty();
     $results.empty();
     var $table = $('#all-events-table');
-    var $text = $('<h4>')
+    var $text = $('<h4>');
     $table.empty();
     maxDist = 80467.2;
     var nearest = events.reduce(function(acc, cur){
@@ -146,24 +145,24 @@
         acc.push(cur);
       }
       return acc;
-    },[])
+    },[]);
     $('#map').appendTo('.map-small');
     if (nearest.length === 0) {
-      var townHall = events[0]
+      var townHall = events[0];
       var townHalls = [townHall];
       recenterMap(townHalls, zipQuery);
       events.forEach(function(ele){
         eventHandler.renderTable(ele,  $table);
-      })
+      });
       $text.text('No events within 50 miles of your zip, the closest one is ' + townHall.dist + ' miles away');
-      $results.append($text)
+      $results.append($text);
       eventHandler.renderPanels(townHall, $parent);
     } else {
       TownHall.currentContext = nearest;
       TownHall.isCurrentContext = true;
       recenterMap(nearest, zipQuery);
       $text.text('There are ' + nearest.length + ' upcoming events within 50 miles of you')
-      $results.append($text)
+      $results.append($text);
       nearest.forEach(function(ele){
         eventHandler.renderTable(ele, $table);
         eventHandler.renderPanels(ele, $parent);
@@ -188,14 +187,14 @@
       TownHall.isMap = true;
     }
     $('.nav').on('click', 'a', function onClickGethref(event) {
-      var hashid = this.getAttribute('href')
+      var hashid = this.getAttribute('href');
       if (hashid === '#home' && TownHall.isMap === false) {
         console.log('going home and no map');
         history.replaceState({}, document.title, ".");
         setTimeout( function(){
-          onResizeMap()
+          onResizeMap();
           if (location.pathname ='/') {
-              eventHandler.resetHome()
+              eventHandler.resetHome();
               TownHall.isMap === true
           }
         }, 50);
@@ -209,7 +208,7 @@
         location.hash = this.getAttribute('href')
       }
     })
-  })
+  });
 
 
   module.eventHandler = eventHandler;
