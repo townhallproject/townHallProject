@@ -26,7 +26,7 @@
   // given an event and a current key, update that event.
   eventHandler.update = function (newevent , key) {
     var newTownHall = new TownHall(newevent);
-    var address = newTownHall.streetNumber +' '+ newTownHall.streetName +' '+ newTownHall.City + ' ' + newTownHall.Zip
+    var address = newTownHall.streetNumber +' '+ newTownHall.streetName +' '+ newTownHall.City + ' ' + newTownHall.Zip;
     console.log(address);
     newTownHall.getLatandLog(address, key);
   };
