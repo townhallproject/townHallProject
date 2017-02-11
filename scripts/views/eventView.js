@@ -2,7 +2,7 @@
   var firebasedb = firebase.database()
   var provider = new firebase.auth.GoogleAuthProvider();
 
-  // object to hold the frontend view functions
+  // object to hold the front end view functions
   var eventHandler = {};
 
   // creates new TownHall object from form
@@ -15,6 +15,7 @@
   );
     newTownHall.getLatandLog(newTownHall.address);
   };
+
 
 // Given a new event, creates TownHall Object and encodes with lat and lng based on address from google docs
   eventHandler.saveSimple = function (newevent) {
