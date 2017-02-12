@@ -157,6 +157,7 @@
       TownHall.returnNearest(zipQueryLoc);
     }).catch(function(error){
       var $results = $('#textresults');
+      console.log(error);
       $results.empty();
       var $text = $('<h4>');
       $text.text('That is not a real zip code');
@@ -195,6 +196,7 @@
           newTownHall.lat = r.results[0].geometry.location.lat;
           newTownHall.lng = r.results[0].geometry.location.lng;
           newTownHall.address = r.results[0].formatted_address.split(', USA')[0];
+          console.log(TownHall.address);
           newTownHall.formatDateTime();
           TownHall.allTownHalls.push(newTownHall);
           var addresskey = address.replace(/[,.]/g ,'');

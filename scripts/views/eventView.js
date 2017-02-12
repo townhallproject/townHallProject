@@ -34,13 +34,11 @@
   // Renders the page in response to lookup
   eventHandler.lookup = function (e) {
     e.preventDefault();
-    TownHall.lookupZip($('#look-up input').val());
-    $('.header-small').removeClass('hidden');
-    $('.header-small').show();
-    $('.header-large').hide();
-    $('.form-text-results').addClass('text-center');
-    $('.left-panels').addClass('left-panels-border');
-    $('#nearest').addClass('nearest-with-results');
+    var zip = $('#look-up input').val();
+    if (zip) {
+      TownHall.lookupZip($('#look-up input').val());
+    }
+
   };
 
   // reset the home page to originial view
@@ -148,6 +146,16 @@
 
   // renders results of search
   eventHandler.render = function (events, zipQuery) {
+    $('.header-small').removeClass('hidden');
+    $('.header-small').show();
+    $('.header-large').hide();
+    $('.form-text-results').addClass('text-center');
+    $('.left-panels').addClass('left-panels-border');
+    $('#nearest').addClass('nearest-with-results');
+    $('#look-up').appendTo($('.left-panels'));
+    $('#can-form-area-stay-up-to-date-on-our-work').fadeIn();
+    $('.spacer').hide();
+    $('#form-zip_code').val($('#look-up input').val());
     var $parent = $('#nearest');
     var $results = $('#textresults');
     $parent.empty();
@@ -182,8 +190,13 @@
       nearest.forEach(function(ele){
         eventHandler.renderTable(ele, $table);
         eventHandler.renderPanels(ele, $parent);
+        $('[data-toggle="popover"]').popover();
+
       })
     }
+    $('[data-toggle="popover"]').popover({
+      container: 'body'
+    })
     addtocalendar.load();
   };
 
@@ -192,6 +205,8 @@
   // slightly hacky routing
   $(document).ready(function(){
     var filterSelector = $('.filter');
+    $('[data-toggle="popover"]').popover();
+    $('#can-form-area-stay-up-to-date-on-our-work').hide();
     $('#save-event').on('submit', eventHandler.save);
     $('#look-up').on('submit', eventHandler.lookup);
     $('#view-all').on('click', TownHall.viewAll);

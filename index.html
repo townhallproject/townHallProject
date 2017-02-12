@@ -39,7 +39,7 @@
     <meta property="og:description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
     identify and promote upcoming Congressional forums nationwide.">
     <meta property="og:site_name" content="Town Hall Project" />
-
+    <link href='https://actionnetwork.org/css/style-embed-whitelabel.css' rel='stylesheet' type='text/css' />
     <script src="https://use.fontawesome.com/316bfde8e8.js"></script>
     <link href="https://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,900" rel="stylesheet">
@@ -47,7 +47,7 @@
     <script id="table-template" type="text/x-handlebars-template">
       <tr class= 'event-row'
        data-Main_State-filter={{State}} data-Member-filter ={{Member}}
-       id = {{Member}} + {{Date}}>
+       id = "{{Member}} + {{Date}}" data-container="body" {{#if Notes}} data-toggle="popover" data-placement="top" title="Notes" data-content="{{Notes}}" {{/if}}>
         <td class='member'>
           {{Member}}
         </td>
@@ -75,9 +75,7 @@
         <td>
           {{address}}
         </td>
-        <td>
-          {{Notes}}
-        </td>
+
       </tr>
     </script>
     <script id="marker-template" type="text/x-handlebars-template">
@@ -142,14 +140,15 @@
         </div>
         <div class="collapse navbar-collapse " id="main-nav">
           <ul class="nav navbar-nav navbar-left" roll="tablists">
-            <li><a data-toggle="tab" href="#home" class="navbar-brand" id="brand-icon"><img src="/Images/icon.png" alt=""><span class="sr-only">(current)</span></a></li>
+            <li><a data-toggle="tab" href="#home" class="navbar-brand" id="brand-icon"><img src="/Images/THP_logo_horizontal_simple.png" alt=""><span class="sr-only">(current)</span></a></li>
             <li><a data-toggle="tab" href="#contribute"><strong>Submit an Event</strong></a></li>
             <li><a  data-toggle="tab" href="#about"><strong>About</strong></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="https://twitter.com/townhallproject" ><i class="fa fa-twitter-square fa-1x" aria-hidden="true"></i></a></li>
-            <li><a href="https://www.facebook.com/TownHallProject/" ><i class="fa fa-facebook-square fa-1x" aria-hidden="true"></i></a></li>
-            <li><a href="mailto:townhallproject2018@gmail.com" class="text-white"><i class="fa fa-envelope-square fa-1x" aria-hidden="true"></i></a></li>
+            <li><a href="https://twitter.com/townhallproject" ><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a></li>
+            <li><a href="https://www.facebook.com/TownHallProject/" ><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a></li>
+            <li><a href="mailto:townhallproject2018@gmail.com" class="text-white"><i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i></a></li>
+            <li><a  data-toggle="tab" href="#signUp" class="btn">Sign Up</a></li>
           </ul>
         </div>
       </div>
@@ -159,32 +158,35 @@
         <header class="site-header clearfix">
            <section class=" container container-fluid">
              <div class="row">
-               <div class="col-md-6 no-padding left-panels">
+               <div class="col-md-6 left-panels">
                   <div  class=" text-left site-header clearfix displayoff ">
                     <div class="form-text-results col-md-12">
                       <div class="text-toggle header-large">
-                        <h2 >Show Up.</h2>
-                        <h2 >Speak Out.</h2>
-                        <h2 class="text-secondary-dark">Fight Back.</h2>
+                        <img src="/Images/THP_logo_inverse.png" alt="">
                       </div>
                       <div class="text-toggle header-small hidden ">
-                        <h4>Show up. Speak out. <span class="text-secondary-dark">Fight back.</span></h4>
+                        <img src="/Images/THP_logo_inverse_simple.png" alt="">
                       </div>
-                      <form id="look-up" class="form-inline " action="index.html" method="post">
-                        <div class="form-group">
-                          <label  for="zip"></label>
-                          <input class="form-control input-lg " type="zip" name="" value="" placeholder="Zip Code">
-                          <button type="submit" name="button" class="btn btn-primary btn-lg">Find A Town Hall</button>
-                        </div>
-                      </form>
                     </div>
-                    <section class="results">
-                      <div id="textresults" class="text-center text-info"></div>
-                      <div id="nearest" class="flexcroll"></div>
-                    </section>
                   </div>
                 </div>
-                <div class="col-md-6 map-small no-padding">
+                <div class="col-md-6">
+                  <div class="spacer">
+
+                  </div>
+                  <form id="look-up" class="form-inline text-center" action="index.html" method="post">
+                    <div class="form-group text-center">
+                      <label  for="zip"></label>
+                      <input class="form-control input-lg " type="zip" name="" value="" placeholder="Zip Code">
+                      <button type="submit" name="button" class="btn btn-primary btn-lg">Find A Town Hall</button>
+                      <div id="textresults" class="text-center "></div>
+                    </div>
+                  </form>
+                  <div id="signupform ">
+                    <link href='https://actionnetwork.org/css/style-embed-whitelabel.css' rel='stylesheet' type='text/css' />
+                    <div class="text-center" id='can-form-area-stay-up-to-date-on-our-work' style="padding-top:10px color:black"><!-- this div is the target for our HTML insertion --></div>
+
+                  </div>
                 </div>
               </div>
             </section>
@@ -193,7 +195,19 @@
           <div class="row map-large">
             <div id="map"></div>
           </div>
-
+        </div>
+        <div class="header-with-results">
+          <section class=" container container-fluid">
+            <div class="row">
+              <div class="col-md-6 no-padding ">
+                   <section class="results">
+                     <div id="nearest" class="flexcroll"></div>
+                   </section>
+               </div>
+               <div class="col-md-6 map-small no-padding">
+               </div>
+             </div>
+           </section>
         </div>
         <section class="scroll-to-form text-center">
             <p>
@@ -204,15 +218,15 @@
         </section>
         <a name="events-table" id="events-table"></a>
         <section class=" container container-fluid">
-          <h2 class="text-success table-title text-center">Upcoming Events</h2>
+          <h2 class="text-primary table-title text-center">Upcoming Events</h2>
           <div >
             <small>
-              Glossary:
               <ul class="list-unstyled">
-                <li><span class="text-secondary">Town Hall - </span><span>A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents</span></li>
-                <li><span class="text-secondary">District Office Hours - </span><span>Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend	</span></li>
-                <li><span class="text-secondary">Ticketed Event - </span><span>Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
-                <li><span class="text-secondary">TeleTown Hall Meeting - </span><span>	A town Hall conducted by conference call.</span></li>
+                <li><span class="text-secondary">Town Hall</span><span> - A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents</span></li>
+                <li><span class="text-secondary">Office Hours </span><span> - Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend	</span></li>
+                <li><span class="text-secondary">Ticketed Event</span><span> - Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
+                <li><span class="text-secondary">TeleTown Hall Meeting </span><span>	- A town Hall conducted by conference call.</span></li>
+                <li><span class="text-secondary">Coffee</span><span> - Usually a small regular meeting with constituents in Washington D.C. while Congress is in session.</span></li>
               </ul>
             </small>
           </div>
@@ -226,7 +240,7 @@
                           <strong>Member</strong>
                           <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </button>
-                        <input data-filter="Member" type="text" class="form-control dropdown-menu filter" placeholder="Member">
+                        <input data-filter="Member" type="text" class="form-control dropdown-menu filter" placeholder="Search by member">
                       </div>
                     </th>
                     <th class="party">
@@ -252,10 +266,10 @@
                     <th>
                       <div class="btn-group">
                         <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <strong>State</strong>
+                          <strong>Home State</strong>
                           <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </button>
-                          <input data-filter="State" type="text" class="form-control dropdown-menu filter" placeholder="State">
+                          <input data-filter="State" type="text" class="form-control dropdown-menu filter" placeholder="Search by state">
                       </div>
                     </th>
                     <th>
@@ -306,11 +320,7 @@
                         Address
                       </div>
                     </th>
-                    <th>
-                      <div class="noninteractive-header">
-                        Notes
-                      </div>
-                    </th>
+              
                   </tr>
                 </thead>
                 <tbody id="all-events-table">
@@ -327,8 +337,8 @@
         <header>
           <section class="container container-fluid quote-header">
               <blockquote class ="col-sm-6 col-sm-offset-3">
-                <p class="text-info">"It falls to each of us to be those anxious, jealous guardians of our democracy. Embrace the joyous task we have been given to continually try to improve this great nation of ours because, for all our outward differences, we in fact all share the same proud type, the most important office in a democracy, <span class="text-white">citizen</span>."</p>
-                <footer class="text-info">President Obama <cite title="Source Title">Farewell Address</cite></footer>
+                <p class="text-white">"It falls to each of us to be those anxious, jealous guardians of our democracy. Embrace the joyous task we have been given to continually try to improve this great nation of ours because, for all our outward differences, we in fact all share the same proud type, the most important office in a democracy, <span class="text-secondary">citizen</span>."</p>
+                <footer class="text-success">President Obama <cite title="Source Title">Farewell Address</cite></footer>
               </blockquote>
           </section>
 
@@ -336,7 +346,7 @@
         <section class="container">
             <article class=".center-block about">
               <h2 class="text-secondary-dark">About The Town Hall Project</h2>
-              <p>We are is an entirely volunteer-run, grassroots effort that empowers constituents across the country to have face-to-face conversations with their elected representatives. We are campaign veterans and first time volunteers. We come from a diversity of backgrounds and live across the country. We share progressive values and believe strongly in civic engagement. We research every district and state for public events with Members of Congress. Then we share our findings far and wide to promote participation in the democratic process and make it as accessible as possible for everyone. We have a team of organizers that works with local groups on the ground to coordinate efforts and encourage citizens to amplify their voices.
+              <p>We are a volunteer-powered, grassroots effort that empowers constituents across the country to have face-to-face conversations with their elected representatives. We are campaign veterans and first time volunteers. We come from a diversity of backgrounds and live across the country. We share progressive values and believe strongly in civic engagement. We research every district and state for public events with Members of Congress. Then we share our findings far and wide to promote participation in the democratic process and make it as accessible as possible for everyone. We have a team of organizers that works with local groups on the ground to coordinate efforts and encourage citizens to amplify their voices.
               </p>
               <p>The Town Hall Project offers our town hall event list to everyone, across the entire political spectrum. Our founders are dedicated to progressive values and actively encourage progressive allies to use our town hall data, but we are independent of any political party or organization.
               </p>
@@ -420,9 +430,12 @@
     <!-- Vendor Files -->
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
+    <script src="/vendor/scripts/tether.js"></script>
+
     <script src="/node_modules/handlebars/dist/handlebars.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
-    <!-- <script src="https://addtocalendar.com/atc/1.5/atc.min.js"></script> -->
+
+    <script src='https://actionnetwork.org/widgets/v2/form/stay-up-to-date-on-our-work?format=js&source=widget'></script>
     <script type="text/javascript">(function () {
             if (window.addtocalendar)if(typeof window.addtocalendar.start == "function")return;
             if (window.ifaddtocalendar == undefined) { window.ifaddtocalendar = 1;

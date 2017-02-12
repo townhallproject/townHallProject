@@ -291,7 +291,7 @@
         "elementType": "all",
         "stylers": [
             {
-                "hue": "#e9ebed"
+                "hue": "#b6e5fb"
             },
             {
                 "saturation": -78
@@ -309,10 +309,10 @@
         "elementType": "geometry.fill",
         "stylers": [
             {
-                "color": "#003056"
+                "color": "#b6e5fb"
             },
             {
-                "saturation": "-52"
+                "saturation": "-72"
             },
             {
                 "lightness": "10"
@@ -396,7 +396,7 @@
     // if (ele.isInFuture() === true) {
       TownHall.allTownHalls.push(ele)
       $('#all-events-table').append(ele.toHtml($('#table-template')))
-
+      $('[data-toggle="popover"]').popover();
       var coords = [ele.lng, ele.lat];
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars

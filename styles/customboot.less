@@ -48,7 +48,7 @@
 // Components w/ JavaScript
 @import "modals.less";
 @import "tooltip.less";
-// @import "popovers.less";
+@import "popovers.less";
 // @import "carousel.less";
 
 // Utility classes
@@ -56,14 +56,14 @@
 @import "responsive-utilities.less";
 
 // Brand Colors
-@brand-primary: #127abd;
-@brand-secondary: #EF4A46; //red
-@brand-cool: #0478BE;
-@brand-text: #21445f;
-@brand-gray: #C5C6C8;
-@brand-success: darken(@brand-primary, 10%);
-@brand-info: #21445f;
-@brand-secondary-dark : darken(@brand-secondary, 10%);
+@brand-primary: #0d4668;
+@brand-secondary: #ff4741; //red
+@brand-cool: #b6e5fb;
+@brand-text: #132149;
+@brand-gray: #d4e0e5;
+@brand-success: #3facef;
+@brand-info: #132149;
+@brand-secondary-dark : darken(@brand-secondary, 20%);
 .text-white{
   color: white;
 }
@@ -73,7 +73,7 @@
 }
 
 .text-secondary-dark{
-  color: darken(@brand-secondary, 10%);
+  color: @brand-secondary-dark;
 }
 
 @border-radius-base:        0px;
@@ -113,7 +113,11 @@
 }
 
 .navbar-brand{
-  padding-top: 0px!important;
+  padding-top: 5px!important;
+}
+
+.navbar-left a {
+  font-size: 20px;
 }
 
 //## Define colors for form feedback states and, by default, alerts.
@@ -161,10 +165,8 @@ h2 {
 }
 
 header{
-  background-color: #bee2f9;
-  // background-color: @brand-primary;
+  background-color: @brand-primary;
   color: white;
-  border-bottom: @brand-secondary-dark 2px solid;
 }
 
 .footer {
@@ -177,18 +179,23 @@ header{
   padding: 40px;
 }
 
-
+img{
+  width: 100%;
+}
 
 input{
   border: none;
 }
 
-form{
-  margin-bottom: 20px;
+.spacer{
+  margin-top: 120px;
+}
+#can_embed_form{
+  background-color: @brand-primary;
 }
 
 article{
-  margin-top:50px;
+  margin-top:10px;
 }
 
 // add to cal styles
@@ -237,7 +244,7 @@ article{
 
 .Democratic .panel-heading{
   color: white;
-  background-color: darken(@brand-primary, 20%);
+  background-color: #3facef;
 }
 
 .Republican .panel-heading{
@@ -278,6 +285,14 @@ article{
   background-color: @brand-secondary;
   color: white;
   margin-bottom: 10px;
+  border:none;
+}
+#can-form-area-stay-up-to-date-on-our-work input{
+  color: @brand-text;
+}
+
+#can-form-area-stay-up-to-date-on-our-work h2{
+  display: none;
 }
 
 .input-lg::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -297,6 +312,7 @@ article{
   border: white solid 2px;
   background-color: @brand-primary;
   margin-bottom: 10px;
+  color: white;
 }
 
 .btn-primary:hover{
@@ -308,7 +324,7 @@ article{
 .btn-secondary{
   color: white;
   // border: white solid 2px;
-  background-color: @brand-info;
+  background-color: @brand-primary;
 }
 
 .btn-secondary:hover, .btn-secondary:focus{
@@ -328,15 +344,18 @@ article{
 }
 
 .nearest-with-results{
-  background-color: #cee3ea;
+  // background-color: #cee3ea;
   height: 528px;
-  border-left: 1px solid rgb(186, 188, 193);
-  border-right: 1px solid #c0c4d0;
+  // border-left: 1px solid rgb(186, 188, 193);
+  // border-right: 1px solid #c0c4d0;
+}
 
+.header-with-results{
+  background-color: @brand-gray;
 }
 
 #map {
-  height: 661px;
+  height: 528px;
   // width: 100%;
 }
 
@@ -355,13 +374,7 @@ article{
   padding-right: 0;
 }
 
-.left-panels-border{
-  border-left: #7490a8 solid 1px;
-  border-right: #7490a8 solid 1px;
-}
-
 #textresults h4 {
-  border-bottom: #7490a8 1px solid;
   margin-bottom: 0px;
   padding: 10px;
 }
@@ -398,10 +411,10 @@ article{
 }
 
 @media screen and (max-width: 1020px){
-  .embed-container{
-    // padding-bottom: 120%;
-    // margin-bottom: 20%;
+  form{
+    margin-top: 20px;
   }
+
 }
 
 @media screen and (max-width: 767px){
@@ -416,7 +429,5 @@ article{
     padding-bottom: 2871px;
     // margin-bottom: 43%;
   }
-  #brand-icon{
-    padding-top: 0px!important;
-  }
+
 }
