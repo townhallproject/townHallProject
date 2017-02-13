@@ -48,7 +48,7 @@
 // Components w/ JavaScript
 @import "modals.less";
 @import "tooltip.less";
-// @import "popovers.less";
+@import "popovers.less";
 // @import "carousel.less";
 
 // Utility classes
@@ -56,16 +56,14 @@
 @import "responsive-utilities.less";
 
 // Brand Colors
-@brand-primary: #a2c6d7;
-@brand-secondary: #FA2A00;
-@brand-cool: #6496af;
-@brand-text: #1E2528;
-@brand-gray: #80b2c6;
-@brand-success: darken(@brand-primary, 10%);
-@brand-warning: #274f70;
-@brand-danger: #bad636;
-@brand-info: #003056;
-
+@brand-primary: #0d4668;
+@brand-secondary: #ff4741; //red
+@brand-cool: #b6e5fb;
+@brand-text: #132149;
+@brand-gray: #d4e0e5;
+@brand-success: #3facef;
+@brand-info: #132149;
+@brand-secondary-dark : darken(@brand-secondary, 20%);
 .text-white{
   color: white;
 }
@@ -75,7 +73,7 @@
 }
 
 .text-secondary-dark{
-  color: darken(@brand-secondary, 10%);
+  color: @brand-secondary-dark;
 }
 
 @border-radius-base:        0px;
@@ -115,7 +113,20 @@
 }
 
 .navbar-brand{
-  padding-top: 0px!important;
+  padding-top: 5px!important;
+}
+
+.navbar-left a {
+  font-size: 20px;
+}
+
+.navbar-right .btn {
+  border: solid @brand-info 2px;
+  font-size: 20px;
+}
+
+.navbar .dropdown-menu{
+  min-width: 256px;
 }
 
 //## Define colors for form feedback states and, by default, alerts.
@@ -145,12 +156,12 @@ html {
 
 body{
   color: #1E2528;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Raleway', sans-serif;
   margin-bottom: 60px;
 }
 
 h2 {
-  font-weight: 600;
+  font-weight: 900;
 }
 
 .navbar{
@@ -165,7 +176,7 @@ h2 {
 header{
   background-color: @brand-primary;
   color: white;
-  border-bottom: #E32F21 2px solid;
+  padding: 20px;
 }
 
 .footer {
@@ -178,18 +189,27 @@ header{
   padding: 40px;
 }
 
-
+img{
+  width: 100%;
+}
 
 input{
   border: none;
 }
 
-form{
-  margin-bottom: 20px;
+.spacer{
+  margin-top: 120px;
+}
+#can_embed_form{
+  padding:20px;
 }
 
 article{
-  margin-top:50px;
+  margin-top:10px;
+}
+
+.dropdown-menu{
+  padding-left:20px;
 }
 
 // add to cal styles
@@ -217,33 +237,33 @@ article{
 .panel{
   color: @brand-text;
   margin-bottom: 5px;
-  border-top-color: rgb(229, 230, 233);
+  border-top-color: rgb(208, 209, 213);
   border-top-style: solid;
   border-top-width: 1px;
-  border-right-color: rgb(223, 224, 228);
+  border-right-color: rgb(208, 209, 213);
   border-right-style: solid;
-  border-right-width: 1px;
+  border-right-width: 2px;
   border-bottom-color: rgb(208, 209, 213);
   border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-left-color: rgb(223, 224, 228);
+  border-bottom-width: 2px;
+  border-left-color: rgb(208, 209, 213);
   border-left-style: solid;
-  border-left-width: 1px;
-  border-image-source: initial;
-  border-image-slice: initial;
-  border-image-width: initial;
-  border-image-outset: initial;
-  border-image-repeat: initial;
+  border-left-width: 2px;
+  // border-image-source: initial;
+  // border-image-slice: initial;
+  // border-image-width: initial;
+  // border-image-outset: initial;
+  // border-image-repeat: initial;
 }
 
 .Democratic .panel-heading{
   color: white;
-  background-color: darken(@brand-primary, 20%);
+  background-color: #3facef;
 }
 
 .Republican .panel-heading{
   color: white;
-  background-color: darken(@brand-secondary, 20%);
+  background-color: @brand-secondary;
 }
 
 .Independent .panel-heading{
@@ -253,6 +273,11 @@ article{
 
 ::-webkit-scrollbar {
    display: none;
+}
+
+.list-group-item{
+  border-right:none;
+  border-left:none;
 }
 
 // Table formatting
@@ -276,15 +301,37 @@ article{
 
 // Results
 .input-md, .input-lg{
-  background-color: darken(@brand-secondary, 10%);
+  background-color: @brand-secondary;
   color: white;
   margin-bottom: 10px;
+  border:none;
+}
+#can-form-area-stay-up-to-date-on-our-work input{
+  color: @brand-text;
+}
+
+#can-form-area-stay-up-to-date-on-our-work h2{
+  display: none;
+}
+
+.input-lg::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+}
+.input-lg::-moz-placeholder { /* Firefox 19+ */
+  color: white;
+}
+.input-lg:-ms-input-placeholder { /* IE 10+ */
+  color: white;
+}
+.input-lg:-moz-placeholder { /* Firefox 18- */
+  color: white;
 }
 
 .btn-primary{
   border: white solid 2px;
   background-color: @brand-primary;
   margin-bottom: 10px;
+  color: white;
 }
 
 .btn-primary:hover{
@@ -296,11 +343,7 @@ article{
 .btn-secondary{
   color: white;
   // border: white solid 2px;
-  background-color: @brand-info;
-}
-
-.btn-secondary:hover, .btn-secondary:focus{
-  color: @brand-primary;
+  background-color: @brand-secondary;
 }
 
 .btn-white{
@@ -313,18 +356,22 @@ article{
   overflow-y: scroll;
   overflow-x: hidden;
   -ms-overflow-style: none;
-  background-color: #cee3ea;
 }
 
 .nearest-with-results{
+  // background-color: #cee3ea;
   height: 528px;
-  border-left: 1px solid rgb(186, 188, 193);
-  border-right: 1px solid #c0c4d0;
+  // border-left: 1px solid rgb(186, 188, 193);
+  // border-right: 1px solid #c0c4d0;
+}
 
+.header-with-results{
+  background-color: @brand-gray;
+  border-bottom:solid @brand-primary 1px;
 }
 
 #map {
-  height: 661px;
+  height: 528px;
   // width: 100%;
 }
 
@@ -343,13 +390,7 @@ article{
   padding-right: 0;
 }
 
-.left-panels-border{
-  border-left: #7490a8 solid 1px;
-  border-right: #7490a8 solid 1px;
-}
-
 #textresults h4 {
-  border-bottom: #7490a8 1px solid;
   margin-bottom: 0px;
   padding: 10px;
 }
@@ -385,11 +426,24 @@ article{
   height: 35em;
 }
 
+#cover{
+  background-image: url('/Images/town-hall-cover.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 45em;
+}
+
+
 @media screen and (max-width: 1020px){
-  .embed-container{
-    // padding-bottom: 120%;
-    // margin-bottom: 20%;
+  form{
+    margin-top: 20px;
   }
+  .spacer{
+      margin-top: 20px;
+  }
+
 }
 
 @media screen and (max-width: 767px){
@@ -404,7 +458,6 @@ article{
     padding-bottom: 2871px;
     // margin-bottom: 43%;
   }
-  #brand-icon{
-    padding-top: 0px!important;
-  }
+
+
 }
