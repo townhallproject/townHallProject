@@ -8,7 +8,11 @@
   TownHall.allTownHalls = [];
   TownHall.currentContext = [];
   TownHall.filteredResults = [];
-  TownHall.filterIds = [];
+  TownHall.filterIds = {
+    meetingType:'',
+    Party:'',
+    State:''
+  };
   TownHall.isCurrentContext = false;
   TownHall.isMap = false;
   TownHall.zipQuery
@@ -74,7 +78,7 @@
     $reg_exUrl = /(https?:\/\/[^\s]+)/g
    // make the urls hyper links
    if (this.Notes && this.Notes.length > 0) {
-     var withAnchors = this.Notes.replace($reg_exUrl, "<a href='$1' target='_blank'>Link with further information</a>");
+     var withAnchors = this.Notes.replace($reg_exUrl, '<a href="$1" target="_blank">Link</a>');
      this.Notes = '<p>' + withAnchors + '</p>'
    }
   }
@@ -139,7 +143,7 @@
   //takes an array and sorts by date objects
   TownHall.sortDate = function(data) {
     return data.sort(function(a, b ){
-      return new Date(a.dateString +','+ a.Time +',' + a.timeZone) - new Date(b.dateString +','+ b.Time +',' + b.timeZone);
+      return new Date(a.dateString) - new Date(b.dateString);
     })
   };
 
@@ -202,7 +206,6 @@
         },
         dataType : 'json',
         success: function(r){
-          console.log('sucess', newTownHall);
           newTownHall.lat = r.results[0].geometry.location.lat;
           newTownHall.lng = r.results[0].geometry.location.lng;
           newTownHall.address = r.results[0].formatted_address.split(', USA')[0];
@@ -267,7 +270,7 @@
   // the geocoding API has a rate limit. This looks up 10 every 2 seconds.
   TownHall.batchCalls = function(response){
     chunck = response.splice(0,10);
-    console.log(chunck , response);
+    console.log(chunck );
     TownHall.encodeFromGoogle(chunck);
     if (response.length > 0) {
       setTimeout(function(){
@@ -296,8 +299,6 @@
         if (row.length >= 12) {
           // if full address use that for location
           if (rowObj.streetAddress.length>2) {
-            var lookupAddress = rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip
-            console.log('address',lookupAddress );
             rowObj.geoCodeFirebase(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip);
           }
           // Otherwise, geocode on Home state

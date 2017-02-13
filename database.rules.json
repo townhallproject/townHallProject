@@ -1,12 +1,7 @@
 {
   "rules": {
      ".read": "true",
-     ".write": "true",
-    "campagins": {
-      "$campagin_id": {
-        ".validate": "newData.isString()"
-  	  }
-    },
+     ".write": "false",
     "publicInfo" : {
         ".read": "true",
         ".write": "true",
@@ -27,12 +22,15 @@
         "events" : {
            ".read": "true",
      			".write": "auth !=null"
-        },
-        "townHalls" : {
-           ".read": "true",
-     			".write": "true",
-          ".validate": "newData.hasChildren(['Member','Party','State','District','meetingType','Date','Time','timeZone','Location','streetAddress','City','StateAb','Zip'])"
         }
+
+    },
+    "townHalls" : {
+      "$townHallID": {
+        ".read": "true",
+       ".write": "false",
+       ".validate": "newData.hasChildren(['Member','Party','State','District','meetingType','Date','Time','timeZone','Location','streetAddress','City','StateAb','Zip'])"
+     }
     }
   }
 }

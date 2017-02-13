@@ -31,7 +31,7 @@
     <!-- Open Graph data -->
     <meta property="og:title" content="Town Hall Project" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://townhallproject.com" />
+    <meta property="og:url" content="https://townhallproject-86312.firebaseapp.com/" />
     <meta property="og:image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_horizontal_facebook.png">
     <meta property="og:description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
     identify and promote upcoming Congressional forums nationwide.">
@@ -45,7 +45,7 @@
     <script id="table-template" type="text/x-handlebars-template">
       <tr class= 'event-row'
        data-Main_State-filter={{State}} data-Member-filter ={{Member}}
-       id = "{{Member}} + {{Date}}" data-container="body"  data-html="true" data-toggle="popover" data-placement="top" title="Notes" data-content="{{Notes}}" >
+       id = "{{rowid}}" data-container="body" data-animation="true" data-html="true" data-toggle="popover" data-placement="top" title="Notes" data-content="{{Notes}}" >
         <td class='member'>
           {{Member}}
         </td>
@@ -81,8 +81,7 @@
         <h4>{{Member}}</h4>
         <p>{{Location}}</p>
         <span>{{Time}}</span> on <span>{{Date}}</span> at <a href={{addressLink}} target="_blank">{{address}}</a></span></li>
-      </script>
-      </div>
+    </script>
     <script id="event-template" type="text/x-handlebars-template">
       <div class="col-md-12">
         <div class="panel panel-secondary">
@@ -113,7 +112,8 @@
           <div class="panel-body">
             <span class="text-success text-center"><h4><span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}, {{timeZone}}</span></h4></span>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">{{{Notes}}}</li>
+              <li class="list-group-item">{{{Notes}}}
+              </li>
               <li class="list-group-item">
                 <address>
                   <strong>{{Location}}</strong></br>
@@ -121,11 +121,9 @@
                   {{City}}, {{StateAb}} {{zip}}<br>
                   <a href={{addressLink}} target="_blank">Directions</a></br>
                   <span class="text-center"><small>{{dist}} miles away from your search</small></span>
-
                   <address>
                 </li>
             </ul>
-
           </div>
         </div>
       </div>
@@ -156,8 +154,6 @@
             <li><a href="https://www.facebook.com/TownHallProject/" ><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a></li>
             <li><a href="mailto:townhallproject2018@gmail.com" class="text-white"><i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i></a></li>
          </ul>
-       </li>
-          </ul>
         </div>
       </div>
     </nav>
@@ -178,7 +174,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 right-panels">
                   <div class="spacer">
                   </div>
                   <form id="look-up" class="form-inline text-center" action="index.html" method="post">
@@ -227,20 +223,20 @@
         <a name="events-table" id="events-table"></a>
         <section class=" container container-fluid">
           <h2 class="text-primary table-title text-center">Upcoming Events</h2>
-          <div >
-            <small>
-              <ul class="list-unstyled">
-                <li><span class="text-secondary">Town Hall</span><span> - A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents</span></li>
-                <li><span class="text-secondary">Office Hours </span><span> - Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend	</span></li>
-                <li><span class="text-secondary">Ticketed Event</span><span> - Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
-                <li><span class="text-secondary">TeleTown Hall Meeting </span><span>	- A town Hall conducted by conference call.</span></li>
-                <li><span class="text-secondary">Coffee</span><span> - Usually a small regular meeting with constituents in Washington D.C. while Congress is in session.</span></li>
-              </ul>
-            </small>
+          <div class="row">
+              <small>
+                <ul class="list-unstyled">
+                  <li><span class="text-secondary">Town Hall</span><span> - A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents</span></li>
+                  <li><span class="text-secondary">Office Hours </span><span> - Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend	</span></li>
+                  <li><span class="text-secondary">Ticketed Event</span><span> - Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
+                  <li><span class="text-secondary">TeleTown Hall Meeting </span><span>	- A town Hall conducted by conference call.</span></li>
+                  <li><span class="text-secondary">Coffee</span><span> - Usually a small regular meeting with constituents in Washington D.C. while Congress is in session.</span></li>
+                </ul>
+              </small>
           </div>
               <div class="table-responsive">
               <table class="table table-hover table-striped" id="complete">
-                <thead class='text-info'>
+                <thead class='text-info'><button type="" name="" id="resetTable" class="btn btn-secondary btn-xs pull-right">Reset filters</button>
                   <tr>
                     <th class="Member">
                       <div class="btn-group">

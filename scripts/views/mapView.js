@@ -391,13 +391,17 @@
 // Adds all events as markers
 // renders tables
 // TODO: sperate out into more concise functions
-  firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
-    var ele = new TownHall (snapshot.val());
-    // if (ele.isInFuture() === true) {
-      ele.findLinks();
-      TownHall.allTownHalls.push(ele)
+  window.readData = function (){
+    firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
+      var ele = new TownHall (snapshot.val());
+      var id = ele.Member+ele.Date;
+      ele.rowid = id.replace(/[\W]/g, '');
+      TownHall.allTownHalls.push(ele);
       $('#all-events-table').append(ele.toHtml($('#table-template')))
-      $('[data-toggle="popover"]').popover();
+      $('[data-toggle="popover"]').popover({html:true});
+      $('#'+ele.rowid).on('click', function (e) {
+        $('[data-toggle="popover"]').not(this).popover('hide');
+      });
       var coords = [ele.lng, ele.lat];
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars
@@ -422,12 +426,10 @@
       marker.addListener('click', function() {
         infowindow.open(map, marker);
       });
-    // }
-    // else {
-    //   console.log('in past', ele);
-    //
-    // }
+    })
 
-  })
+  }
+
+  readData();
 
 }(window.firebase));
