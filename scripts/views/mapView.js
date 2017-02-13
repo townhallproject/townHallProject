@@ -355,6 +355,9 @@
       // map.setCenter(results[0].geometry.location);
       var resizeBounds = new google.maps.LatLngBounds();
       var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+      if ( TownHall.zipQuery) {
+        resizeBounds.extend(TownHall.zipQuery)
+      }
       data.forEach(function(ele){
         marker = new google.maps.LatLng(ele.lat, ele.lng);
         resizeBounds.extend(marker)
