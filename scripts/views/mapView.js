@@ -394,6 +394,7 @@
   firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
     var ele = new TownHall (snapshot.val());
     // if (ele.isInFuture() === true) {
+      ele.findLinks();
       TownHall.allTownHalls.push(ele)
       $('#all-events-table').append(ele.toHtml($('#table-template')))
       $('[data-toggle="popover"]').popover();

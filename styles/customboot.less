@@ -120,6 +120,15 @@
   font-size: 20px;
 }
 
+.navbar-right .btn {
+  border: solid @brand-info 2px;
+  font-size: 20px;
+}
+
+.navbar .dropdown-menu{
+  min-width: 256px;
+}
+
 //## Define colors for form feedback states and, by default, alerts.
 
 @state-success-text:             @brand-success;
@@ -167,6 +176,7 @@ h2 {
 header{
   background-color: @brand-primary;
   color: white;
+  padding: 20px;
 }
 
 .footer {
@@ -191,11 +201,15 @@ input{
   margin-top: 120px;
 }
 #can_embed_form{
-  background-color: @brand-primary;
+  padding:20px;
 }
 
 article{
   margin-top:10px;
+}
+
+.dropdown-menu{
+  padding-left:20px;
 }
 
 // add to cal styles
@@ -223,23 +237,23 @@ article{
 .panel{
   color: @brand-text;
   margin-bottom: 5px;
-  border-top-color: rgb(229, 230, 233);
+  border-top-color: rgb(208, 209, 213);
   border-top-style: solid;
   border-top-width: 1px;
-  border-right-color: rgb(223, 224, 228);
+  border-right-color: rgb(208, 209, 213);
   border-right-style: solid;
-  border-right-width: 1px;
+  border-right-width: 2px;
   border-bottom-color: rgb(208, 209, 213);
   border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-left-color: rgb(223, 224, 228);
+  border-bottom-width: 2px;
+  border-left-color: rgb(208, 209, 213);
   border-left-style: solid;
-  border-left-width: 1px;
-  border-image-source: initial;
-  border-image-slice: initial;
-  border-image-width: initial;
-  border-image-outset: initial;
-  border-image-repeat: initial;
+  border-left-width: 2px;
+  // border-image-source: initial;
+  // border-image-slice: initial;
+  // border-image-width: initial;
+  // border-image-outset: initial;
+  // border-image-repeat: initial;
 }
 
 .Democratic .panel-heading{
@@ -249,7 +263,7 @@ article{
 
 .Republican .panel-heading{
   color: white;
-  background-color: darken(@brand-secondary, 20%);
+  background-color: @brand-secondary;
 }
 
 .Independent .panel-heading{
@@ -259,6 +273,11 @@ article{
 
 ::-webkit-scrollbar {
    display: none;
+}
+
+.list-group-item{
+  border-right:none;
+  border-left:none;
 }
 
 // Table formatting
@@ -352,6 +371,7 @@ article{
 
 .header-with-results{
   background-color: @brand-gray;
+  border-bottom:solid @brand-primary 1px;
 }
 
 #map {
@@ -410,9 +430,22 @@ article{
   height: 35em;
 }
 
+#cover{
+  background-image: url('/Images/town-hall-cover.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 45em;
+}
+
+
 @media screen and (max-width: 1020px){
   form{
     margin-top: 20px;
+  }
+  .spacer{
+      margin-top: 20px;
   }
 
 }
@@ -429,5 +462,6 @@ article{
     padding-bottom: 2871px;
     // margin-bottom: 43%;
   }
+
 
 }

@@ -44,7 +44,7 @@
   // reset the home page to originial view
   eventHandler.resetHome = function () {
     $('.header-small').hide();
-    $('.header-large').show();
+    $('.header-large').fadeIn();
     $('#look-up input').val('');
     $('.form-text-results').removeClass('text-center');
     $('.left-panels').removeClass('left-panels-border');
@@ -63,7 +63,10 @@
     TownHall.allTownHalls.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
     })
-
+    $('[data-toggle="popover"]').popover({
+      container: 'body',
+      html:true
+    })
   };
 
   // Renders one panel, assumes data processing has happened
@@ -91,6 +94,10 @@
     $table.empty();
     TownHall.currentContext.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
+    })
+    $('[data-toggle="popover"]').popover({
+      container: 'body',
+      html:true
     })
   };
 
@@ -125,7 +132,12 @@
       filtered.forEach(function(ele){
         eventHandler.renderTable(ele, $table);
       })
+
     }
+    $('[data-toggle="popover"]').popover({
+      container: 'body',
+      html:true
+    })
   };
 
   eventHandler.filterTableByInput = function(e) {
@@ -135,11 +147,16 @@
     var filterCol = $(this).attr('data-filter');
     $table.empty();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    var filtered = TownHall.filterColumnByQuery(filterCol, query, data);
+    var filteredData = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
+    var filtered = TownHall.filterColumnByQuery(filterCol, query, filteredData);
     TownHall.filteredResults = filtered;
     TownHall.filterIds.push(filterCol);
     filtered.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
+    })
+    $('[data-toggle="popover"]').popover({
+      container: 'body',
+      html:true
     })
   };
 
@@ -147,13 +164,14 @@
   // renders results of search
   eventHandler.render = function (events, zipQuery) {
     $('.header-small').removeClass('hidden');
-    $('.header-small').show();
+    $('.header-small').fadeIn();
     $('.header-large').hide();
     $('.form-text-results').addClass('text-center');
     $('.left-panels').addClass('left-panels-border');
     $('#nearest').addClass('nearest-with-results');
     $('#look-up').appendTo($('.left-panels'));
-    $('#can-form-area-stay-up-to-date-on-our-work').fadeIn();
+    $('#button-to-form').removeClass('hidden');
+    $('#button-to-form').fadeIn();
     $('.spacer').hide();
     $('#form-zip_code').val($('#look-up input').val());
     var $parent = $('#nearest');
@@ -178,24 +196,29 @@
       events.forEach(function(ele){
         eventHandler.renderTable(ele,  $table);
       });
-      $text.text('No events within 50 miles of your zip, the closest one is ' + townHall.dist + ' miles away');
+      $text.text('No events within 50 miles of your zip, the closest one is ' + townHall.dist + ' miles away.');
       $results.append($text);
       eventHandler.renderPanels(townHall, $parent);
     } else {
       TownHall.currentContext = nearest;
       TownHall.isCurrentContext = true;
       recenterMap(nearest, zipQuery);
-      $text.text('There are ' + nearest.length + ' upcoming events within 50 miles of you')
+      if (nearest.length ===1) {
+        $text.text('There is ' + nearest.length + ' upcoming events within 50 miles of you.')
+      }
+      else {
+        $text.text('There are ' + nearest.length + ' upcoming events within 50 miles of you.')
+      }
       $results.append($text);
       nearest.forEach(function(ele){
         eventHandler.renderTable(ele, $table);
         eventHandler.renderPanels(ele, $parent);
-        $('[data-toggle="popover"]').popover();
-
+        $('[data-toggle="popover"]').popover({html:true});
       })
     }
     $('[data-toggle="popover"]').popover({
-      container: 'body'
+      container: 'body',
+      html:true
     })
     addtocalendar.load();
   };
@@ -205,8 +228,8 @@
   // slightly hacky routing
   $(document).ready(function(){
     var filterSelector = $('.filter');
-    $('[data-toggle="popover"]').popover();
-    $('#can-form-area-stay-up-to-date-on-our-work').hide();
+    $('[data-toggle="popover"]').popover({html:true});
+    $('#button-to-form').hide();
     $('#save-event').on('submit', eventHandler.save);
     $('#look-up').on('submit', eventHandler.lookup);
     $('#view-all').on('click', TownHall.viewAll);
@@ -214,12 +237,12 @@
     filterSelector.on('click', 'a', eventHandler.filterTable);
     filterSelector.keyup(eventHandler.filterTableByInput);
     if (location.hash) {
-      $("a[href='" + location.hash + "']").tab('show')
+      $("a[href='" + location.hash + "']").tab('show');
     }
     else  {
       TownHall.isMap = true;
     }
-    $('.nav').on('click', 'a', function onClickGethref(event) {
+    $('nav').on('click', 'a', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
       if (hashid === '#home' && TownHall.isMap === false) {
         console.log('going home and no map');

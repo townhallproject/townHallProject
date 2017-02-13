@@ -70,6 +70,15 @@
     }
   };
 
+  TownHall.prototype.findLinks = function() {
+    $reg_exUrl = /(https?:\/\/[^\s]+)/g
+   // make the urls hyper links
+   if (this.Notes && this.Notes.length > 0) {
+     var withAnchors = this.Notes.replace($reg_exUrl, "<a href='$1' target='_blank'>Link with further information</a>");
+     this.Notes = '<p>' + withAnchors + '</p>'
+   }
+  }
+
   // converts time to 24hour time
   TownHall.toTwentyFour = function (time) {
     var hourmin = time.split(' ')[0];
@@ -130,7 +139,7 @@
   //takes an array and sorts by date objects
   TownHall.sortDate = function(data) {
     return data.sort(function(a, b ){
-      return new Date(a.dateString) - new Date(b.dateString);
+      return new Date(a.dateString +','+ a.Time +',' + a.timeZone) - new Date(b.dateString +','+ b.Time +',' + b.timeZone);
     })
   };
 
@@ -193,13 +202,14 @@
         },
         dataType : 'json',
         success: function(r){
+          console.log('sucess', newTownHall);
           newTownHall.lat = r.results[0].geometry.location.lat;
           newTownHall.lng = r.results[0].geometry.location.lng;
           newTownHall.address = r.results[0].formatted_address.split(', USA')[0];
-          console.log(TownHall.address);
           newTownHall.formatDateTime();
+          newTownHall.findLinks();
           TownHall.allTownHalls.push(newTownHall);
-          var addresskey = address.replace(/[,.]/g ,'');
+          var addresskey = address.replace(/\W/g ,'');
           addresskey.trim();
           firebasedb.ref('geolocate/' + addresskey).set(
             {
@@ -207,11 +217,10 @@
               lng : newTownHall.lng,
               formatted_address : newTownHall.address
             }
-          );
+          )
         },
         error: function(e){
-          console(newTownHall);
-          console.log('error', e, address);
+          console.log('error', e);
         }
       });
     }
@@ -220,29 +229,30 @@
   // checks firebase for address, if it's not there, calls google geocode
   TownHall.prototype.geoCodeFirebase = function (address, key) {
     var newTownHall = this;
-    var addresskey = address.replace(/[,.]/g ,'');
-    addresskey.trim();
-    firebasedb.ref('geolocate/' + addresskey).once('value').then(function(snapshot){
-      newTownHall.lat = snapshot.val().lat;
-      newTownHall.lng = snapshot.val().lng;
-      newTownHall.address = snapshot.val().formatted_address.split(', USA')[0];
-      newTownHall.formatDateTime();
-      TownHall.allTownHalls.push(newTownHall);
-    }).catch(function(error){
+    // var addresskey = address.replace(/[,.]/g ,'');
+    // addresskey.trim();
+    // firebasedb.ref('geolocate/' + addresskey).once('value').then(function(snapshot){
+    //   newTownHall.lat = snapshot.val().lat;
+    //   newTownHall.lng = snapshot.val().lng;
+    //   newTownHall.address = snapshot.val().formatted_address;
+    //   console.log(newTownHall.address);
+    //   newTownHall.formatDateTime();
+    //   TownHall.allTownHalls.push(newTownHall);
+    // }).catch(function(error){
       newTownHall.getLatandLog(address, key);
-      console.log('not in database', addresskey, error);
-    });
+      // console.log('not in database', addresskey, error);
+    // });
   };
 
   //Gets everything from the google doc and does geo coding in batches
   TownHall.fetchAll = function() {
+    TownHall.allTownHalls = [];
     url = 'https://sheets.googleapis.com/v4/spreadsheets/1yq1NT9DZ2z3B8ixhid894e77u9rN5XIgOwWtTW72IYA/values/Upcoming%20Events!C:P?key=AIzaSyBw6HZ7Y4J1dATyC4-_mKmt3u0hLRRqthQ';
     $.ajax({
       url: url,
       success: function (response){
         var range = response.values;
         if (range.length > 0) {
-          console.log('data from google');
           setTimeout(function(){
             TownHall.batchCalls(range.splice(11, range.length));
           }, 2000);
@@ -257,7 +267,7 @@
   // the geocoding API has a rate limit. This looks up 10 every 2 seconds.
   TownHall.batchCalls = function(response){
     chunck = response.splice(0,10);
-    console.log(chunck);
+    console.log(chunck , response);
     TownHall.encodeFromGoogle(chunck);
     if (response.length > 0) {
       setTimeout(function(){
@@ -283,9 +293,11 @@
         rowObj[googlekeys[k]] = row[k];
       }
       // checks if data is complete
-        if (row.length > 12) {
+        if (row.length >= 12) {
           // if full address use that for location
           if (rowObj.streetAddress.length>2) {
+            var lookupAddress = rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip
+            console.log('address',lookupAddress );
             rowObj.geoCodeFirebase(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip);
           }
           // Otherwise, geocode on Home state
@@ -296,7 +308,6 @@
         }
         // If incomplete store to seperate table
         else {
-          console.log('missing columns');
           var newTownHall = firebasedb.ref('/townHallsErrors/').push();
           newTownHall.set(rowObj);
         }
