@@ -436,14 +436,19 @@ article{
 }
 
 
-@media screen and (max-width: 1020px){
+@media screen and (max-width: 959px){
   form{
     margin-top: 20px;
   }
   .spacer{
       margin-top: 20px;
   }
+  #map {
+    height: 25em;
+    border-top: solid @brand-primary 2px;
 
+    // width: 100%;
+  }
 }
 
 @media screen and (max-width: 767px){
@@ -458,6 +463,11 @@ article{
     padding-bottom: 2871px;
     // margin-bottom: 43%;
   }
-
+  .map-small #map {
+    display:none;
+    // height: 25em;
+    // border-top: solid @brand-primary 2px;
+    // width: 100%;
+  }
 
 }
