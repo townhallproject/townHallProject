@@ -1,0 +1,20 @@
+{
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "database.rules.json",
+      "package.json",
+      "Gruntfile.js",
+      "README.md",
+      "server.js",
+      "data.js",
+      "styles/bootstrap.css",
+      "styles/bootstrap.map",
+      ".DS_Store"
+    ]
+  }
+}

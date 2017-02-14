@@ -1,0 +1,36 @@
+{
+  "rules": {
+     ".read": "true",
+     ".write": "false",
+    "publicInfo" : {
+        ".read": "true",
+        ".write": "true",
+          "$campagin_id": {
+          	"$user": {
+              ".validate": "newData.hasChildren(['name', 'zip', 'lat', 'long'])",
+              "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 20"
+                     },
+              "long": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 15"
+                     },
+              "lat": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 15"
+                     },
+              "$other": { ".validate": false },
+            	"zip": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 6"
+                     }
+            }
+      },
+        "events" : {
+           ".read": "true",
+     			".write": "auth !=null"
+        }
+
+    },
+    "townHalls" : {
+      "$townHallID": {
+        ".read": "true",
+       ".write": "false",
+       ".validate": "newData.hasChildren(['Member','Party','State','District','meetingType','Date','Time','timeZone','Location','streetAddress','City','StateAb','Zip'])"
+     }
+    }
+  }
+}

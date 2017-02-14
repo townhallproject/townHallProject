@@ -1,5 +1,14 @@
 module.exports = function(grunt) {
   grunt.initConfig({
+        watch: {
+      scripts: {
+        files: ['styles/customboot.less'],
+        tasks: ['dist-css'],
+        options: {
+          spawn: false,
+        },
+      },
+    },
     bspkg: grunt.file.readJSON('bower_components/bootstrap/package.json'),
     bspath: 'bower_components/bootstrap',
     banner: '/*!\n' +
@@ -13,12 +22,12 @@ module.exports = function(grunt) {
           strictMath: true,
           sourceMap: true,
           outputSourceFiles: true,
-          sourceMapURL: 'bootstrap.css.map',
-          sourceMapFilename: 'styles/bootstrap.css.map',
+          sourceMapURL: 'styles/css/bootstrap.css.map',
+          sourceMapFilename: 'styles/css/bootstrap.css.map',
           paths: '<%= bspath %>/less'
         },
         files: {
-          'styles/bootstrap.css': 'styles/customboot.less'
+          'styles/css/bootstrap.css': 'styles/customboot.less'
         }
       }
     },
@@ -39,7 +48,7 @@ module.exports = function(grunt) {
         options: {
           map: true
         },
-        src: 'styles/bootstrap.css'
+        src: 'styles/css/bootstrap.css'
       }
     },
     cssmin: {
@@ -50,7 +59,7 @@ module.exports = function(grunt) {
       },
       core: {
         files: {
-          'styles/bootstrap.min.css': 'styles/bootstrap.css'
+          'styles/css/bootstrap.min.css': 'styles/css/bootstrap.css'
         }
       }
     }
@@ -60,6 +69,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   // CSS distribution task.
   grunt.registerTask('dist-css', ['less:compileCore', 'autoprefixer', 'cssmin']);
