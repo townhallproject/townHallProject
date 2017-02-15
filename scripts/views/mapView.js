@@ -425,7 +425,7 @@
         name: ele.name,
         time: ele.time
       });
-      marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+      marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
       marker.addListener('click', function() {
         infowindow.open(map, marker);
       });

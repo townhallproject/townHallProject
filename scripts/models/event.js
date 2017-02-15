@@ -183,7 +183,9 @@
     var locations = [];
     firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
       snapshot.forEach(function(ele){
-        locations.push(new TownHall(ele.val()));
+        if (ele.val().StateAb !== 'DC') {
+          locations.push(new TownHall(ele.val()));
+        }
       });
       var sorted = locations.sort(function (a , b) {
         a.dist = google.maps.geometry.spherical.computeDistanceBetween(zipQueryLoc, new google.maps.LatLng(a.lat,a.lng));
