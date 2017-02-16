@@ -252,7 +252,7 @@
     else{
       TownHall.isMap = true;
     }
-    $('nav').on('click', 'a', function onClickGethref(event) {
+    $('nav').on('click', '.hash-link', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
