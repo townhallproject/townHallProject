@@ -38,7 +38,6 @@
   //   }
   // });
 
-
   //Sign in fuction for firebase
   newEventView.signIn = function (){
     firebase.auth().signInWithRedirect(provider);
@@ -57,7 +56,7 @@
       // The firebase.auth.AuthCredential type that was used.
       var credential = error.credential;
     });
-};
+  };
 
-module.eventHandler = eventHandler;
+  module.eventHandler = eventHandler;
 })(window);
