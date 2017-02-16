@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0 user-scalable=no" name="viewport">
+    <title>Town Hall Project || Find a Town Hall Near you</title>
+    <meta name="google-site-verification" content="Z-DITr7yziksJNk7OlwHxiD2WK31wNO0GbRP7px3xL8" />
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
+      identify and promote upcoming Congressional forums nationwide.">
+      <link rel="shortcut icon" href="./Images/THP_favicon.png" type="image/x-icon">
+    <!-- Social media meta tags -->
+
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="Town Hall Project">
+    <meta itemprop="description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
+    identify and promote upcoming Congressional forums nationwide.">
+    <meta itemprop="image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_horizontal_facebook.png">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@townhallproject">
+    <meta name="twitter:title" content="Town Hall Project">
+    <meta name="twitter:description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
+    identify and promote upcoming Congressional forums nationwide.">
+    <meta name="twitter:creator" content="@townhallproject">
+    <!-- Twitter summary card must be at least 120px x 120px -->
+    <meta name="twitter:image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_vertical_twitter.png">
+    <meta name="twitter:image:alt" content="The Town Hall Project wordmark with a podium">
+
+    <!-- Open Graph data -->
+    <meta property="og:title" content="Town Hall Project" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://townhallproject-86312.firebaseapp.com/" />
+    <meta property="og:image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_horizontal_facebook.png">
+    <meta property="og:description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
+    identify and promote upcoming Congressional forums nationwide.">
+    <meta property="og:site_name" content="Town Hall Project" />
+    <link rel="stylesheet" href="/styles/css/bootstrap.min.css">
+    <script id="marker-template" type="text/x-handlebars-template">
+      <div class=text-info>
+        <h4>{{Member}}</h4>
+        <p>{{Location}}</p>
+        <span>{{Time}}</span> on <span>{{Date}}</span> at <a href={{addressLink}} target="_blank">{{address}}</a></span></li>
+    </script>
+  </head>
+  <body>
+    <div class="row map-large">
+      <div id="mapEmbed"></div>
+    </div>
+
+    <!-- Vendor Files -->
+    <script src="/vendor/scripts/jquery-2.1.4.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="/node_modules/handlebars/dist/handlebars.js"></script>
+
+    <!-- Script Files -->
+    <script src="/scripts/views/mapViewEmbed.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMapEmbed&libraries=visualization,geometry"></script>
+  </body>
+</html>
