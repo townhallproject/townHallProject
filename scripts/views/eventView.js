@@ -99,7 +99,6 @@
 
   // render table row
   eventHandler.renderTable = function (townhall, $tableid) {
-    townhall.formatDateTime();
     townhall.dist = Math.round(townhall.dist/1609.344);
     townhall.addressLink = 'https://www.google.com/maps?q=' + escape(townhall.address);
     $($tableid).append(townhall.toHtml($('#table-template')));
