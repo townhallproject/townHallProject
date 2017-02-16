@@ -2,9 +2,39 @@
 (function closure(firebase) {
   var map;
   var google;
+  function TownHall (opts) {
+    for (var key in opts) {
+      this[key] = opts[key];
+    }
+  }
+
+  TownHall.allTownHalls = [];
+  TownHall.currentContext = [];
+  TownHall.isCurrentContext = false;
+  TownHall.isMap = false;
+
+  //Handlebars write
+  TownHall.prototype.toHtml= function(templateid){
+    var source = $(templateid).html();
+    var renderTemplate = Handlebars.compile(source);
+    return renderTemplate(this);
+  };
+
+  //FIREBASE METHODS
+  // Initialize Firebase
+  var config = {
+    apiKey: 'AIzaSyDwZ41RWIytGELNBnVpDr7Y_k1ox2F2Heg',
+    authDomain: 'townhallproject-86312.firebaseapp.com',
+    databaseURL: 'https://townhallproject-86312.firebaseio.com',
+    storageBucket: 'townhallproject-86312.appspot.com',
+    messagingSenderId: '208752196071'
+  };
+
+  firebase.initializeApp(config);
+  var firebasedb = firebase.database();
 
 //draws map
-  window.initMap = function initMap() {
+  window.initMapEmbed = function initMap() {
     google = window.google;
     var styleArray =[
       {
@@ -339,13 +369,13 @@
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    map = new google.maps.Map(document.getElementById('map'), options);
+    map = new google.maps.Map(document.getElementById('mapEmbed'), options);
     var bounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(20, -124.39),
       new google.maps.LatLng(49.38, -66.94)
     );
     map.fitBounds(bounds);
-    google.maps.event.addDomListener(window, 'resize', onResizeMap);
+    google.maps.event.addDomListener(window, 'resize', onResizeMap)
   };
 
   window.onResizeMap = function onResizeMap() {
@@ -399,16 +429,11 @@
       var ele = new TownHall (snapshot.val());
       var id = ele.Member+ele.Date;
       ele.rowid = id.replace(/[\W]/g, '');
-      TownHall.allTownHalls.push(ele);
-      $('#all-events-table').append(ele.toHtml($('#table-template')));
-      $("[data-toggle='popover']").popover({html:true});
-      $('#'+ele.rowid).on('click', function (e) {
-        $("[data-toggle='popover']").not(this).popover('hide');
-      });
       var coords = [ele.lng, ele.lat];
+      TownHall.allTownHalls.push(ele);
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars
-      ele.addressLink = 'https://www.google.com/maps?q=' + escape(ele.address);
+      ele.addressLink = "https://www.google.com/maps?q=" + escape(ele.address);
       var contentString = ele.toHtml('#marker-template');
       var infowindow = new google.maps.InfoWindow({
         content: contentString,

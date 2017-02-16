@@ -15,7 +15,7 @@
   };
   TownHall.isCurrentContext = false;
   TownHall.isMap = false;
-  TownHall.zipQuery
+  TownHall.zipQuery;
 
   TownHall.timeZones = {
     PST : 'America/Los_Angeles',
@@ -54,6 +54,20 @@
     firebasedb.ref('/townHalls/' + key).set(this);
   };
 
+  TownHall.saveZipLookup = function (zip) {
+    firebase.database().ref('/zipZeroResults/' + zip).once('value').then(function(snapshot){
+      console.log(zip);
+      if (snapshot.exists()) {
+        newVal = snapshot.val() + 1;
+        console.log('new val', newVal);
+      }
+      else {
+        newVal = 1;
+      }
+      return firebase.database().ref('/zipZeroResults/' + zip).set(newVal);
+    });
+  };
+
 
   // DATA PROCESSING BEFORE WRITE
   // check if there is a time zone, if not, looks up on google
@@ -62,11 +76,11 @@
     if (!tz) {
       var time = Date.now();
       var loc = this.lat+','+this.lng;
-      url = 'https://maps.googleapis.com/maps/api/timezone/json?location='+loc+'&timestamp=1331766000&key=AIzaSyBlmL9awpTV6AQKQJOmOuUlH1APXWmCHLQ'
+      url = 'https://maps.googleapis.com/maps/api/timezone/json?location='+loc+'&timestamp=1331766000&key=AIzaSyBlmL9awpTV6AQKQJOmOuUlH1APXWmCHLQ';
       $.get(url, function (response){
         this.zoneString = response.timeZoneId;
         return this;
-      })
+      });
     }
     else {
       this.zoneString = tz;
@@ -75,13 +89,13 @@
   };
 
   TownHall.prototype.findLinks = function() {
-    $reg_exUrl = /(https?:\/\/[^\s]+)/g
+    $reg_exUrl = /(https?:\/\/[^\s]+)/g;
    // make the urls hyper links
-   if (this.Notes && this.Notes.length > 0) {
-     var withAnchors = this.Notes.replace($reg_exUrl, '<a href="$1" target="_blank">Link</a>');
-     this.Notes = '<p>' + withAnchors + '</p>'
-   }
-  }
+    if (this.Notes && this.Notes.length > 0) {
+      var withAnchors = this.Notes.replace($reg_exUrl, '<a href="$1" target="_blank">Link</a>');
+      this.Notes = '<p>' + withAnchors + '</p>';
+    }
+  };
 
   // converts time to 24hour time
   TownHall.toTwentyFour = function (time) {
@@ -90,7 +104,7 @@
     if (ampm ==='PM') {
       var hour = hourmin.split(':')[0];
       hour = Number(hour) +12;
-      hourmin = hour + ':' + hourmin.split(':')[1]
+      hourmin = hour + ':' + hourmin.split(':')[1];
     }
     return hourmin + ':' + '00';
   };
@@ -144,14 +158,14 @@
   TownHall.sortDate = function(data) {
     return data.sort(function(a, b ){
       return new Date(a.dateString) - new Date(b.dateString);
-    })
+    });
   };
 
   // filters by a value in a column
   TownHall.filterByCol = function(filterCol, filterID, data) {
     return data.filter(function(ele){
       return ele[filterCol] === filterID;
-    })
+    });
   };
 
   // Filters by a query in a column
@@ -174,7 +188,7 @@
       $results.empty();
       var $text = $('<h4>');
       $text.text('That is not a real zip code');
-      $results.append($text)
+      $results.append($text);
     });
   };
 
@@ -222,7 +236,7 @@
               lng : newTownHall.lng,
               formatted_address : newTownHall.address
             }
-          )
+          );
         },
         error: function(e){
           console.log('error', e);
@@ -244,7 +258,7 @@
     //   newTownHall.formatDateTime();
     //   TownHall.allTownHalls.push(newTownHall);
     // }).catch(function(error){
-      newTownHall.getLatandLog(address, key);
+    newTownHall.getLatandLog(address, key);
       // console.log('not in database', addresskey, error);
     // });
   };
@@ -285,7 +299,7 @@
       firebase.database().ref('/townHalls/').remove();
       TownHall.allTownHalls.forEach(function(event){
         event.writetoFB();
-      })
+      });
     };
   };
 
@@ -298,23 +312,23 @@
         rowObj[googlekeys[k]] = row[k];
       }
       // checks if data is complete
-        if (row.length >= 12) {
+      if (row.length >= 12) {
           // if full address use that for location
-          if (rowObj.streetAddress.length>2) {
-            rowObj.geoCodeFirebase(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip);
-          }
-          // Otherwise, geocode on Home state
-          else {
-            rowObj.noLoc = true;
-            rowObj.geoCodeFirebase(rowObj.State);
-          }
+        if (rowObj.streetAddress.length>2) {
+          rowObj.geoCodeFirebase(rowObj.streetAddress + ' ' + rowObj.City + ' ' +rowObj.StateAb + ' ' + rowObj.Zip);
         }
-        // If incomplete store to seperate table
+          // Otherwise, geocode on Home state
         else {
-          var newTownHall = firebasedb.ref('/townHallsErrors/').push();
-          newTownHall.set(rowObj);
+          rowObj.noLoc = true;
+          rowObj.geoCodeFirebase(rowObj.State);
         }
       }
+        // If incomplete store to seperate table
+      else {
+        var newTownHall = firebasedb.ref('/townHallsErrors/').push();
+        newTownHall.set(rowObj);
+      }
+    }
   };
 
   // TownHall.fetchAll();

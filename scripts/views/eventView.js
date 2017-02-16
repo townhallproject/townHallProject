@@ -43,7 +43,7 @@
 
   // reset the home page to originial view
   eventHandler.resetHome = function () {
-    $('[data-toggle="popover"]').popover('hide')
+    $('[data-toggle="popover"]').popover('hide');
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
@@ -67,11 +67,11 @@
     $table.empty();
     TownHall.allTownHalls.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
-    })
+    });
     $('[data-toggle="popover"]').popover({
       container: 'body',
       html:true
-    })
+    });
     $('[data-toggle="popover"]').on('click', function (e) {
       $('[data-toggle="popover"]').not(this).popover('hide');
     });
@@ -80,14 +80,14 @@
   // Renders one panel, assumes data processing has happened
   eventHandler.renderPanels = function(event, $parent) {
     var $panel = $(event.toHtml($('#event-template')));
-      $panel.children('.panel').addClass(event.Party);
-      $panel.appendTo($parent);
+    $panel.children('.panel').addClass(event.Party);
+    $panel.appendTo($parent);
   };
 
   eventHandler.renderTableWithArray = function (array, $table) {
     array.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
-    })
+    });
     $('[data-toggle="popover"]').popover({
       container: 'body',
       html:true
@@ -95,14 +95,14 @@
     $('[data-toggle="popover"]').on('click', function (e) {
       $('[data-toggle="popover"]').not(this).popover('hide');
     });
-  }
+  };
 
   // render table row
   eventHandler.renderTable = function (townhall, $tableid) {
-      townhall.formatDateTime();
-      townhall.dist = Math.round(townhall.dist/1609.344);
-      townhall.addressLink = "https://www.google.com/maps?q=" + escape(townhall.address);
-      $($tableid).append(townhall.toHtml($('#table-template')));
+    townhall.formatDateTime();
+    townhall.dist = Math.round(townhall.dist/1609.344);
+    townhall.addressLink = 'https://www.google.com/maps?q=' + escape(townhall.address);
+    $($tableid).append(townhall.toHtml($('#table-template')));
   };
 
   // takes the current set of data in the table and sorts by date
@@ -113,7 +113,7 @@
     TownHall.currentContext = TownHall.sortDate(filtereddata);
     $table = $('#all-events-table');
     $table.empty();
-    eventHandler.renderTableWithArray(TownHall.currentContext, $table )
+    eventHandler.renderTableWithArray(TownHall.currentContext, $table );
   };
 
   // filters the table on click
@@ -123,13 +123,13 @@
     $('#resetTable').show();
     var filterID = this.id;
     var filterCol = $(this).attr('data-filter');
-    var inputs = $('input[data-filter]')
+    var inputs = $('input[data-filter]');
     $table.empty();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     var data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
     if (filterID === 'All') {
       TownHall.filterIds[filterCol] = '';
-      eventHandler.renderTableWithArray(data, $table )
+      eventHandler.renderTableWithArray(data, $table );
       // data.forEach(function(ele){
       //   eventHandler.renderTable(ele, $table);
       // })
@@ -141,7 +141,7 @@
           data = TownHall.filterByCol(key, TownHall.filterIds[key], data);
         }
       });
-      eventHandler.renderTableWithArray(data, $table )
+      eventHandler.renderTableWithArray(data, $table );
     }
   };
 
@@ -172,7 +172,7 @@
     TownHall.filteredResults = [];
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     eventHandler.renderTableWithArray(data, $table);
-  }
+  };
 
 
   // renders results of search
@@ -188,6 +188,7 @@
     $('#button-to-form').removeClass('hidden');
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
+    var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
     $parent.empty();
@@ -210,22 +211,23 @@
       eventHandler.renderTableWithArray(events, $table);
       $text.text('No events within 50 miles of your zip, the closest one is ' + townHall.dist + ' miles away.');
       $results.append($text);
+      TownHall.saveZipLookup($zip);
       eventHandler.renderPanels(townHall, $parent);
     } else {
       TownHall.currentContext = nearest;
       TownHall.isCurrentContext = true;
       recenterMap(nearest, zipQuery);
       if (nearest.length ===1) {
-        $text.text('There is ' + nearest.length + ' upcoming events within 50 miles of you.')
+        $text.text('There is ' + nearest.length + ' upcoming events within 50 miles of you.');
       }
       else {
-        $text.text('There are ' + nearest.length + ' upcoming events within 50 miles of you.')
+        $text.text('There are ' + nearest.length + ' upcoming events within 50 miles of you.');
       }
       $results.append($text);
       eventHandler.renderTableWithArray(nearest, $table);
       nearest.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
-      })
+      });
     }
     addtocalendar.load();
   };
@@ -248,31 +250,31 @@
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show');
     }
-    else  {
+    else{
       TownHall.isMap = true;
     }
     $('nav').on('click', 'a', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
       if (hashid === '#home' && TownHall.isMap === false) {
-        history.replaceState({}, document.title, ".");
+        history.replaceState({}, document.title, '.');
         setTimeout( function(){
           onResizeMap();
           if (location.pathname ='/') {
-              eventHandler.resetHome()
-              TownHall.isMap = true;
+            eventHandler.resetHome();
+            TownHall.isMap = true;
           }
         }, 50);
-       }
-       else if (hashid === '#home' && TownHall.isMap === true) {
-         console.log('going home and map');
-         history.replaceState({}, document.title, ".");
-         eventHandler.resetHome()
-       }
+      }
+      else if (hashid === '#home' && TownHall.isMap === true) {
+        console.log('going home and map');
+        history.replaceState({}, document.title, '.');
+        eventHandler.resetHome();
+      }
       else {
-        location.hash = this.getAttribute('href')
+        location.hash = this.getAttribute('href');
       }
       $('[data-toggle="popover"]').popover('hide');
-    })
+    });
   });
 
 
