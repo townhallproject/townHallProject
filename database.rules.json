@@ -31,6 +31,15 @@
        ".write": "false",
        ".validate": "newData.hasChildren(['Member','Party','State','District','meetingType','Date','Time','timeZone','Location','streetAddress','City','StateAb','Zip'])"
      }
-    }
-  }
+   },
+   "zipZeroResults" : {
+         ".read": "false",
+    	 		".write": "true",
+        	"$zip" : {
+           ".read": "false",
+    	 			".write": "true",
+       	 	  ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000"
+        }
+    	}
+   }
 }
