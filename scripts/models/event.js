@@ -103,7 +103,7 @@
       this.dateValid = true;
       var month = this.dateObj.getMonth() + 1;
       var month = month.toString().length === 1 ? (0 + month.toString()) :month.toString();
-      var day = this.dateObj.getDay() + 1;
+      var day = this.dateObj.getDate();
       var day  = day.toString().length === 1 ? (0 + day.toString()) :day.toString();
       var yearMonthDay = this.dateObj.getFullYear() + '-' + month + '-'+day ;
       this.timeStart24 = TownHall.toTwentyFour(this.Time);
