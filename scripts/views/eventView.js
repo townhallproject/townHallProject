@@ -203,7 +203,7 @@
       return acc;
     },[]);
     $('#map').appendTo('.map-small');
-    var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> '
+    var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a class="text-white" href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> '
     if (nearest.length === 0) {
       var townHall = events[0];
       var townHalls = [townHall];
