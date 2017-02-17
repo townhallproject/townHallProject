@@ -195,7 +195,7 @@
     var $table = $('#all-events-table');
     var $text = $('<h4>');
     $table.empty();
-    maxDist = 80467.2;
+    maxDist = 120701;
     var nearest = events.reduce(function(acc, cur){
       if (cur.dist < maxDist) {
         acc.push(cur);
@@ -203,12 +203,13 @@
       return acc;
     },[]);
     $('#map').appendTo('.map-small');
+    var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> '
     if (nearest.length === 0) {
       var townHall = events[0];
       var townHalls = [townHall];
       recenterMap(townHalls, zipQuery);
       eventHandler.renderTableWithArray(events, $table);
-      $text.text('No events within 50 miles of your zip, the closest one is ' + townHall.dist + ' miles away.');
+      $text.html('There are no events within 75 miles of your zip, the closest one is ' + townHall.dist + ' miles away. <br>' + info);
       $results.append($text);
       TownHall.saveZipLookup($zip);
       eventHandler.renderPanels(townHall, $parent);
@@ -217,10 +218,10 @@
       TownHall.isCurrentContext = true;
       recenterMap(nearest, zipQuery);
       if (nearest.length ===1) {
-        $text.text('There is ' + nearest.length + ' upcoming events within 50 miles of you.');
+        $text.html('There is ' + nearest.length + ' upcoming events within 75 miles of you. <br>' + info);
       }
       else {
-        $text.text('There are ' + nearest.length + ' upcoming events within 50 miles of you.');
+        $text.html('There are ' + nearest.length + ' upcoming events within 75 miles of you. <br>' +info);
       }
       $results.append($text);
       eventHandler.renderTableWithArray(nearest, $table);
