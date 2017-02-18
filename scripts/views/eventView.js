@@ -246,7 +246,7 @@
     $('#resetTable').on('click', eventHandler.resetTable);
     $('#resetTable').hide();
     filterSelector.on('click', 'a', eventHandler.filterTable);
-    filterSelector.keyup(eventHandler.filterTableByInput);
+    filterSelector.change(eventHandler.filterTableByInput);
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show');
     }
