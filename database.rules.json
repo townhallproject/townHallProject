@@ -28,10 +28,24 @@
     "townHalls" : {
       "$townHallID": {
         ".read": "true",
-       ".write": "false",
-       ".validate": "newData.hasChildren(['Member','Party','State','District','meetingType','Date','Time','timeZone','Location','streetAddress','City','StateAb','Zip'])"
+        ".write": "auth.uid ==='ymUFf85w5CZRty5kO2yYO88H9Ef1'",
+       ".validate": "newData.hasChildren(['Member','Party','State','District','meetingType','Date','Time','timeZone','Location','streetAddress','City','StateAb'])"
      }
    },
+   "townHallsErrors" : {
+     "$townHallID": {
+       ".read": "true",
+       ".write": "auth.uid ==='ymUFf85w5CZRty5kO2yYO88H9Ef1'",
+      ".validate": "newData.hasChildren(['Member','Party','State'])"
+    }
+  },
+  "geolocate" : {
+    "$townHallID": {
+      ".read": "true",
+      ".write": "auth.uid ==='ymUFf85w5CZRty5kO2yYO88H9Ef1'",
+     ".validate": "newData.hasChildren(['formatted_address','lat','lng'])"
+   }
+ },
    "zipZeroResults" : {
          ".read": "false",
     	 		".write": "true",
