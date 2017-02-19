@@ -283,6 +283,11 @@
     $('body').on('click', '.popover .popover-title a.close', function(e) {
       $('[data-toggle="popover"]').popover('hide');
     });
+
+    // Fix popover bug in bootstrap 3 https://github.com/twbs/bootstrap/issues/16732
+    $('body').on('hidden.bs.popover', function (e) {
+        $(e.target).data("bs.popover").inState.click = false;
+    });
   }
 
   module.eventHandler = eventHandler;
