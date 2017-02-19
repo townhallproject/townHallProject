@@ -233,9 +233,11 @@
   };
 
 
-  // url hash for direct links to subtabs
-  // slightly hacky routing
   $(document).ready(function(){
+    init();
+  });
+
+  function init() {
     var filterSelector = $('.filter');
     $('[data-toggle="popover"]').popover({html:true});
     $('#button-to-form').hide();
@@ -247,6 +249,9 @@
     $('#resetTable').hide();
     filterSelector.on('click', 'a', eventHandler.filterTable);
     filterSelector.change(eventHandler.filterTableByInput);
+
+    // url hash for direct links to subtabs
+    // slightly hacky routing
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show');
     }
@@ -275,8 +280,8 @@
       }
       $('[data-toggle="popover"]').popover('hide');
     });
-  });
 
+  }
 
   module.eventHandler = eventHandler;
 })(window);
