@@ -72,9 +72,6 @@
       container: 'body',
       html:true
     });
-    $('[data-toggle="popover"]').on('click', function (e) {
-      $('[data-toggle="popover"]').not(this).popover('hide');
-    });
   };
 
   // Renders one panel, assumes data processing has happened
@@ -91,9 +88,6 @@
     $('[data-toggle="popover"]').popover({
       container: 'body',
       html:true
-    });
-    $('[data-toggle="popover"]').on('click', function (e) {
-      $('[data-toggle="popover"]').not(this).popover('hide');
     });
   };
 
@@ -281,6 +275,10 @@
       $('[data-toggle="popover"]').popover('hide');
     });
 
+    // Only show one popover at a time
+    $('#all-events-table').on('click', 'tr[data-toggle="popover"]', function(e) {
+      $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
+    });
   }
 
   module.eventHandler = eventHandler;
