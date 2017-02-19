@@ -407,9 +407,6 @@
       TownHall.allTownHalls.push(ele);
       $('#all-events-table').append(ele.toHtml($('#table-template')));
       $("[data-toggle='popover']").popover({html:true});
-      $('#'+ele.rowid).on('click', function (e) {
-        $("[data-toggle='popover']").not(this).popover('hide');
-      });
       var coords = [ele.lng, ele.lat];
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars
