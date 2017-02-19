@@ -279,6 +279,10 @@
     $('#all-events-table').on('click', 'tr[data-toggle="popover"]', function(e) {
       $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
     });
+
+    $('body').on('click', '.popover .popover-title a.close', function(e) {
+      $('[data-toggle="popover"]').popover('hide');
+    });
   }
 
   module.eventHandler = eventHandler;
