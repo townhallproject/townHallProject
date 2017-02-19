@@ -2,10 +2,15 @@
 (function closure(firebase) {
   var map;
   var google;
+  var infowindow;
 
 //draws map
   window.initMap = function initMap() {
     google = window.google;
+
+    // Initalize reusable infowindow
+    infowindow = new google.maps.InfoWindow({maxWidth: 200});
+
     var styleArray =[
       {
         'featureType': 'administrative.locality',
@@ -410,10 +415,6 @@
       // eslint-disable-next-line no-unused-vars
       ele.addressLink = 'https://www.google.com/maps?q=' + escape(ele.address);
       var contentString = ele.toHtml('#marker-template');
-      var infowindow = new google.maps.InfoWindow({
-        content: contentString,
-        maxWidth: 200
-      });
       var marker = new google.maps.Marker({
         strokeColor: '#FF0000',
         strokeOpacity: 0.8,
@@ -427,6 +428,7 @@
       });
       marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
       marker.addListener('click', function() {
+        infowindow.setContent(contentString);
         infowindow.open(map, marker);
       });
     });
