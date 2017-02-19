@@ -51,9 +51,10 @@
       ga('send', 'pageview');
     </script>
     <script id="table-template" type="text/x-handlebars-template">
-      <tr class= 'event-row'
-       data-Main_State-filter={{State}} data-Member-filter ={{Member}}
-       id = "{{rowid}}" data-container="body" data-animation="true" data-html="true" data-toggle="popover" data-placement="top" title="Notes" data-content="{{Notes}}" >
+      <tr id="{{rowid}}" class= 'event-row' data-Main_State-filter={{State}} data-Member-filter={{Member}}
+        data-container="body" data-animation="true" data-html="true" data-toggle="popover" data-placement="top"
+        title="Notes <a href='javascript:void(0)' class='close'>×</a>"
+        data-content="{{#if Notes}}{{Notes}}{{/if}}{{#unless Notes}}There are no notes for this event.{{/unless}}">
         <td class='member'>
           {{Member}}
         </td>

@@ -72,9 +72,6 @@
       container: 'body',
       html:true
     });
-    $('[data-toggle="popover"]').on('click', function (e) {
-      $('[data-toggle="popover"]').not(this).popover('hide');
-    });
   };
 
   // Renders one panel, assumes data processing has happened
@@ -91,9 +88,6 @@
     $('[data-toggle="popover"]').popover({
       container: 'body',
       html:true
-    });
-    $('[data-toggle="popover"]').on('click', function (e) {
-      $('[data-toggle="popover"]').not(this).popover('hide');
     });
   };
 
@@ -233,9 +227,11 @@
   };
 
 
-  // url hash for direct links to subtabs
-  // slightly hacky routing
   $(document).ready(function(){
+    init();
+  });
+
+  function init() {
     var filterSelector = $('.filter');
     $('[data-toggle="popover"]').popover({html:true});
     $('#button-to-form').hide();
@@ -247,6 +243,9 @@
     $('#resetTable').hide();
     filterSelector.on('click', 'a', eventHandler.filterTable);
     filterSelector.change(eventHandler.filterTableByInput);
+
+    // url hash for direct links to subtabs
+    // slightly hacky routing
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show');
     }
@@ -275,8 +274,21 @@
       }
       $('[data-toggle="popover"]').popover('hide');
     });
-  });
 
+    // Only show one popover at a time
+    $('#all-events-table').on('click', 'tr[data-toggle="popover"]', function(e) {
+      $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
+    });
+
+    $('body').on('click', '.popover .popover-title a.close', function(e) {
+      $('[data-toggle="popover"]').popover('hide');
+    });
+
+    // Fix popover bug in bootstrap 3 https://github.com/twbs/bootstrap/issues/16732
+    $('body').on('hidden.bs.popover', function (e) {
+        $(e.target).data("bs.popover").inState.click = false;
+    });
+  }
 
   module.eventHandler = eventHandler;
 })(window);
