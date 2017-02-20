@@ -400,7 +400,8 @@
 // renders tables
 // TODO: sperate out into more concise functions
   window.readData = function (){
-    firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
+    var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('State');
+    townHallsFB.on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
       var id = ele.Member+ele.Date;
       ele.rowid = id.replace(/[\W]/g, '');
