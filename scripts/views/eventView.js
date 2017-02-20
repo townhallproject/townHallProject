@@ -143,16 +143,19 @@
     $('#resetTable').show();
     $table = $('#all-events-table');
     var query = $(this).val();
+    console.log('typeed!', query);
     var filterCol = $(this).attr('data-filter');
     $table.empty();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    var data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
+    // var data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
     Object.keys(TownHall.filterIds).forEach(function(key) {
       if (TownHall.filterIds[key]) {
         data = TownHall.filterByCol(key, TownHall.filterIds[key], data);
       }
     });
+    
     TownHall.filteredResults = TownHall.filterColumnByQuery(filterCol, query, data);
+    console.log(TownHall.filteredResults.length);
     eventHandler.renderTableWithArray(TownHall.filteredResults, $table);
   };
 
@@ -242,7 +245,7 @@
     $('#resetTable').on('click', eventHandler.resetTable);
     $('#resetTable').hide();
     filterSelector.on('click', 'a', eventHandler.filterTable);
-    filterSelector.change(eventHandler.filterTableByInput);
+    filterSelector.on('input', eventHandler.filterTableByInput);
 
     // url hash for direct links to subtabs
     // slightly hacky routing
