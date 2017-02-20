@@ -375,7 +375,7 @@
       new google.maps.LatLng(49.38, -66.94)
     );
     map.fitBounds(bounds);
-    google.maps.event.addDomListener(window, 'resize', onResizeMap)
+    google.maps.event.addDomListener(window, 'resize', onResizeMap);
   };
 
   window.onResizeMap = function onResizeMap() {
@@ -423,7 +423,7 @@
 // Adds all events into main data array
 // Adds all events as markers
 // renders tables
-// TODO: sperate out into more concise functions
+// TODO: seperate out into more concise functions
   window.readData = function (){
     firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
@@ -433,7 +433,7 @@
       TownHall.allTownHalls.push(ele);
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars
-      ele.addressLink = "https://www.google.com/maps?q=" + escape(ele.address);
+      ele.addressLink = 'https://www.google.com/maps?q=' + escape(ele.address);
       var contentString = ele.toHtml('#marker-template');
       var infowindow = new google.maps.InfoWindow({
         content: contentString,

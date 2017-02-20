@@ -1,0 +1,29 @@
+
+{
+   "settings": {
+     "ecmascript": 5
+  },
+  "ecmaFeatures": {
+    "modules": true
+  },
+  "env": {
+    "browser": true,
+    "jquery": true,
+    "node": true
+  },
+  "rules": {
+    "semi": 1,
+    "strict": 0,
+    "indent": [2, 2],
+    "eqeqeq": 1,
+    "quotes": [1, "single"],
+    "no-multi-spaces": [1, {
+      "exceptions": {
+        "VariableDeclarator": true,
+        "FunctionExpression": true
+      }
+    }],
+    "key-spacing": [0, {"align": "value"}],
+    "no-underscore-dangle": 0
+  }
+}
