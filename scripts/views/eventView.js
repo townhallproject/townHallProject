@@ -144,20 +144,20 @@
     $('#button-to-form').removeClass('hidden');
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
+    maxDist = 120701;
+    eventHandler.resultsRouting(maxDist, events,zipQuery);
+    addtocalendar.load();
+  };
+
+  eventHandler.resultsRouting = function (maxDist, events, zipQuery){
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
     $parent.empty();
     $results.empty();
     var $table = $('#all-events-table');
-    var $text = $('<h4>');
     $table.empty();
-    maxDist = 120701;
-    eventHandler.resultsRouting(maxDist, events);
-    addtocalendar.load();
-  };
-
-  eventHandler.resultsRouting = function (maxDist, events){
+    var $text = $('<h4>');
     var nearest = events.reduce(function(acc, cur){
       if (cur.dist < maxDist) {
         acc.push(cur);
