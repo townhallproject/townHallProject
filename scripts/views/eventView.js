@@ -5,32 +5,6 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
-  // creates new TownHall object from form
-  eventHandler.save = function (e) {
-    e.preventDefault();
-    var newTownHall = new TownHall( $('#save-event input').get().reduce(function(newObj, cur){
-      newObj[cur.id] = $(cur).val();
-      return newObj;
-    }, {})
-  );
-    newTownHall.getLatandLog(newTownHall.address);
-  };
-
-
-// Given a new event, creates TownHall Object and encodes with lat and lng based on address from google docs
-  eventHandler.saveSimple = function (newevent) {
-    var newTownHall = new TownHall(newevent);
-    newTownHall.getLatandLog(newTownHall.streetNumber + newTownHall.streetName +newTownHall.Zip);
-  };
-
-  // given an event and a current key, update that event.
-  eventHandler.update = function (newevent , key) {
-    var newTownHall = new TownHall(newevent);
-    var address = newTownHall.streetNumber +' '+ newTownHall.streetName +' '+ newTownHall.City + ' ' + newTownHall.Zip;
-    console.log(address);
-    newTownHall.getLatandLog(address, key);
-  };
-
   // Renders the page in response to lookup
   eventHandler.lookup = function (e) {
     e.preventDefault();
@@ -38,7 +12,6 @@
     if (zip) {
       TownHall.lookupZip($('#look-up input').val());
     }
-
   };
 
   // reset the home page to originial view
@@ -65,19 +38,13 @@
     $results.empty();
     $table = $('#all-events-table');
     $table.empty();
-    TownHall.allTownHalls.forEach(function(ele){
-      eventHandler.renderTable(ele, $table);
-    });
-    $('[data-toggle="popover"]').popover({
-      container: 'body',
-      html:true
-    });
+    eventHandler.renderTableWithArray(TownHall.allTownHalls, $table);
   };
 
   // Renders one panel, assumes data processing has happened
   eventHandler.renderPanels = function(event, $parent) {
     var $panel = $(event.toHtml($('#event-template')));
-    $panel.children('.panel').addClass(event.Party);
+    $panel.children('.panel').addClass(event.Party.slice(0,3));
     $panel.appendTo($parent);
   };
 
@@ -123,9 +90,6 @@
     if (filterID === 'All') {
       TownHall.filterIds[filterCol] = '';
       eventHandler.renderTableWithArray(data, $table );
-      // data.forEach(function(ele){
-      //   eventHandler.renderTable(ele, $table);
-      // })
     }
     else {
       TownHall.filterIds[filterCol] = filterID;
@@ -153,7 +117,7 @@
         data = TownHall.filterByCol(key, TownHall.filterIds[key], data);
       }
     });
-    
+
     TownHall.filteredResults = TownHall.filterColumnByQuery(filterCol, query, data);
     console.log(TownHall.filteredResults.length);
     eventHandler.renderTableWithArray(TownHall.filteredResults, $table);
@@ -170,7 +134,6 @@
     eventHandler.renderTableWithArray(data, $table);
   };
 
-
   // renders results of search
   eventHandler.render = function (events, zipQuery) {
     $('[data-toggle="popover"]').popover('hide');
@@ -184,15 +147,20 @@
     $('#button-to-form').removeClass('hidden');
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
+    maxDist = 120701;
+    eventHandler.resultsRouting(maxDist, events,zipQuery);
+    addtocalendar.load();
+  };
+
+  eventHandler.resultsRouting = function (maxDist, events, zipQuery){
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
     $parent.empty();
     $results.empty();
     var $table = $('#all-events-table');
-    var $text = $('<h4>');
     $table.empty();
-    maxDist = 120701;
+    var $text = $('<h4>');
     var nearest = events.reduce(function(acc, cur){
       if (cur.dist < maxDist) {
         acc.push(cur);
@@ -200,7 +168,8 @@
       return acc;
     },[]);
     $('#map').appendTo('.map-small');
-    var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a class="text-white" href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> '
+    var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a class="text-white" href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> ';
+    // TODO: return rep's info
     if (nearest.length === 0) {
       var townHall = events[0];
       var townHalls = [townHall];
@@ -210,7 +179,8 @@
       $results.append($text);
       TownHall.saveZipLookup($zip);
       eventHandler.renderPanels(townHall, $parent);
-    } else {
+    }
+    else{
       TownHall.currentContext = nearest;
       TownHall.isCurrentContext = true;
       recenterMap(nearest, zipQuery);
@@ -226,9 +196,7 @@
         eventHandler.renderPanels(ele, $parent);
       });
     }
-    addtocalendar.load();
   };
-
 
   $(document).ready(function(){
     init();
@@ -289,7 +257,7 @@
 
     // Fix popover bug in bootstrap 3 https://github.com/twbs/bootstrap/issues/16732
     $('body').on('hidden.bs.popover', function (e) {
-        $(e.target).data("bs.popover").inState.click = false;
+      $(e.target).data('bs.popover').inState.click = false;
     });
   }
 
