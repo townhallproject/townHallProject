@@ -38,7 +38,6 @@
     if (zip) {
       TownHall.lookupZip($('#look-up input').val());
     }
-
   };
 
   // reset the home page to originial view
@@ -77,7 +76,7 @@
   // Renders one panel, assumes data processing has happened
   eventHandler.renderPanels = function(event, $parent) {
     var $panel = $(event.toHtml($('#event-template')));
-    $panel.children('.panel').addClass(event.Party);
+    $panel.children('.panel').addClass(event.Party.slice(0,3));
     $panel.appendTo($parent);
   };
 
