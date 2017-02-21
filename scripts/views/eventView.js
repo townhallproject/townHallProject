@@ -118,7 +118,6 @@
     });
 
     TownHall.filteredResults = TownHall.filterColumnByQuery(filterCol, query, data);
-    console.log(TownHall.filteredResults.length);
     eventHandler.renderTableWithArray(TownHall.filteredResults, $table);
   };
 
