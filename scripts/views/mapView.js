@@ -402,11 +402,10 @@
     var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('State');
     townHallsFB.on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
-      var id = ele.Member+ele.Date;
-      ele.rowid = id.replace(/[\W]/g, '');
+      ele.rowid = ele.eventId;
       TownHall.allTownHalls.push(ele);
       $('#all-events-table').append(ele.toHtml($('#table-template')));
-      $("[data-toggle='popover']").popover({html:true});
+      $('#'+ele.rowid).popover({html:true});
       var coords = [ele.lng, ele.lat];
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars
