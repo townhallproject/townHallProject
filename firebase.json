@@ -14,7 +14,10 @@
       "data.js",
       "styles/bootstrap.css",
       "styles/bootstrap.map",
-      ".DS_Store"
+      ".DS_Store",
+      "**/node_modules/**",
+      "**/bower_components/**",
+      "/scripts/.eslint.rc"
     ]
   }
 }

@@ -76,7 +76,6 @@
   color: @brand-secondary-dark;
 }
 
-@border-radius-base:        0px;
 @link-color:                        @brand-secondary;
 @component-active-bg:               @brand-secondary;
 @nav-tabs-active-link-hover-color:  @brand-primary;
@@ -91,7 +90,6 @@
 // Basics of a navbar
 @navbar-height:                    60px;
 @navbar-margin-bottom:             @line-height-computed;
-@navbar-border-radius:             0px;
 @navbar-padding-horizontal:        floor((@grid-gutter-width / 2));
 @navbar-padding-vertical:          ((@navbar-height - @line-height-computed) / 2);
 @navbar-collapse-max-height:       340px;
@@ -104,10 +102,13 @@
 @navbar-default-link-color:                lighten(@brand-info, 10%);
 @navbar-default-link-hover-color:          @brand-primary;
 @navbar-default-link-hover-bg:             transparent;
-@navbar-default-link-active-color:         @brand-primary;
+@navbar-default-link-active-color:         @brand-success;
 @navbar-default-link-active-bg:            #ffffff;
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
+@navbar-border-radius:                     none;
+
+
 .navbar-brand img{
   width: 125px;
 }
@@ -121,8 +122,13 @@
 }
 
 .navbar-right .btn {
-  border: solid @brand-info 2px;
   font-size: 20px;
+}
+
+.navbar-right .social-icons{
+  padding-right: 0px;
+  padding-left: 5px;
+  padding-top: 15px;
 }
 
 .navbar .dropdown-menu{
@@ -179,6 +185,11 @@ header{
   padding: 20px;
 }
 
+#disclaimer{
+  margin-top: 20px;
+  border-top: 1px solid @brand-gray;
+}
+
 .footer {
   color: white;
   position: absolute;
@@ -218,6 +229,8 @@ article{
     border: 1px solid rgb(186,186,186);
     border-radius: 2px;
     box-shadow: 0 0 5px #AAA;
+    right:0;
+    left: auto;
 }
 
 .atcb-item-link {
@@ -230,7 +243,7 @@ article{
 }
 
 .addtocalendar{
-  margin: 10px;
+  margin: 0px;
 }
 
 //panels
@@ -256,17 +269,29 @@ article{
   // border-image-repeat: initial;
 }
 
-.Democratic .panel-heading{
+.panel-heading small{
+  color: #ccc;
+}
+
+.panel address{
+  margin-bottom: 0;
+}
+
+.list-group-item:last-of-type{
+   border-bottom: none;
+ }
+
+.Dem .panel-heading{
   color: white;
   background-color: #3facef;
 }
 
-.Republican .panel-heading{
+.Rep .panel-heading{
   color: white;
   background-color: @brand-secondary;
 }
 
-.Independent .panel-heading{
+.Ind .panel-heading{
   color: white;
   background-color: darken(#705f8c, 20%);
 }
@@ -284,9 +309,11 @@ article{
 .table .meetingType{
   min-width: 180px;
 }
+
 .table .time{
   min-width: 120px;
 }
+
 .table .party{
   min-width: 120px;
 }
@@ -306,6 +333,7 @@ article{
   margin-bottom: 10px;
   border:none;
 }
+
 #can-form-area-stay-up-to-date-on-our-work input{
   color: @brand-text;
 }
@@ -338,6 +366,11 @@ article{
   border: white solid 2px;
   background-color:white;
   color: @brand-primary;
+}
+
+#donate-button{
+  text-align: left;
+  border: none;
 }
 
 .btn-secondary{
@@ -375,6 +408,21 @@ article{
   // width: 100%;
 }
 
+#mapEmbed {
+  height: 528px;
+  // width: 100%;
+}
+#mapEmbedContainer{
+  position: relative;
+}
+
+#logoOverlay{
+  position: absolute;
+  left: 30px;
+  top: 10px;
+  width: 175px;
+}
+
 .forms{
   width: 80%;
   margin: auto;
@@ -393,6 +441,17 @@ article{
 #textresults h4 {
   margin-bottom: 0px;
   padding: 10px;
+}
+
+.popover {
+  min-width: 200px;
+  .popover-title {
+    font-weight: 700;
+    .close {
+      bottom: 4px;
+      position: relative;
+    }
+  }
 }
 
 // google forms
@@ -417,6 +476,7 @@ article{
   padding-top: 40px;
 
 }
+
 #hand-raised{
   background-image: url('/Images/handraised.jpg');
   -webkit-background-size: cover;
@@ -446,8 +506,15 @@ article{
   #map {
     height: 25em;
     border-top: solid @brand-primary 2px;
-
-    // width: 100%;
+  }
+  .nearest-with-results{
+    height: inherit;
+  }
+  .panel{
+    min-height: 500px;
+  }
+  .header-with-results .container{
+    width: 100%;
   }
 }
 
@@ -463,11 +530,17 @@ article{
     padding-bottom: 2871px;
     // margin-bottom: 43%;
   }
+  .panel{
+    min-height: none;
+  }
+
   .map-small #map {
     display:none;
     // height: 25em;
     // border-top: solid @brand-primary 2px;
     // width: 100%;
   }
-
+  .calendarButton{
+    display: none;
+  }
 }

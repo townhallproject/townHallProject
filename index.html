@@ -13,7 +13,7 @@
 
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="Town Hall Project">
-    <meta itemprop="description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
+    <meta itemprop="description" content="Town Hall Project is a progressive, volunteer-powered initiative working to
     identify and promote upcoming Congressional forums nationwide.">
     <meta itemprop="image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_horizontal_facebook.png">
 
@@ -21,7 +21,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@townhallproject">
     <meta name="twitter:title" content="Town Hall Project">
-    <meta name="twitter:description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
+    <meta name="twitter:description" content="Town Hall Project is a progressive, volunteer-powered initiative working to
     identify and promote upcoming Congressional forums nationwide.">
     <meta name="twitter:creator" content="@townhallproject">
     <!-- Twitter summary card must be at least 120px x 120px -->
@@ -33,7 +33,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://townhallproject-86312.firebaseapp.com/" />
     <meta property="og:image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_horizontal_facebook.png">
-    <meta property="og:description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
+    <meta property="og:description" content="Town Hall Project is a progressive, volunteer-powered initiative working to
     identify and promote upcoming Congressional forums nationwide.">
     <meta property="og:site_name" content="Town Hall Project" />
     <link href='https://actionnetwork.org/css/style-embed-whitelabel.css' rel='stylesheet' type='text/css' />
@@ -42,10 +42,19 @@
     <link href="https://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,900" rel="stylesheet">
     <link rel="stylesheet" href="/styles/css/bootstrap.min.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-92247600-1', 'auto');
+      ga('send', 'pageview');
+    </script>
     <script id="table-template" type="text/x-handlebars-template">
-      <tr class= 'event-row'
-       data-Main_State-filter={{State}} data-Member-filter ={{Member}}
-       id = "{{rowid}}" data-container="body" data-animation="true" data-html="true" data-toggle="popover" data-placement="top" title="Notes" data-content="{{Notes}}" >
+      <tr id="{{rowid}}" class= 'event-row' data-Main_State-filter={{State}} data-Member-filter={{Member}}
+        data-container="body" data-animation="true" data-html="true" data-toggle="popover" data-placement="top"
+        title="Notes <a href='javascript:void(0)' class='close'>×</a>"
+        data-content="{{#if Notes}}{{Notes}}{{/if}}{{#unless Notes}}There are no notes for this event.{{/unless}}">
         <td class='member'>
           {{Member}}
         </td>
@@ -73,7 +82,6 @@
         <td>
           {{address}}
         </td>
-
       </tr>
     </script>
     <script id="marker-template" type="text/x-handlebars-template">
@@ -83,18 +91,17 @@
         <span>{{Time}}</span> on <span>{{Date}}</span> at <a href={{addressLink}} target="_blank">{{address}}</a></span></li>
     </script>
     <script id="event-template" type="text/x-handlebars-template">
-      <div class="col-md-12">
+      <div class="col-md-12 col-sm-6">
         <div class="panel panel-secondary">
           <div class="panel-heading">
             <div class="row">
-              <div class="col-md-6 col-xs-12">
+              <div class="col-xs-6">
                 <p>{{meetingType}}</p>
-                <h3>{{Member}} ({{Party}}, {{District}})</h3>
               </div>
               {{#if dateValid}}
-              <div class="col-md-6 col-xs-12 ">
-                <span class="addtocalendar  pull-right">
-                  <a class="atcb-link btn btn-white btn-lg">Add to Calendar <i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
+              <div class="col-xs-6 ">
+                <span class="addtocalendar pull-right">
+                  <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
                   <var class="atc_event">
                     <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
                       <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
@@ -107,6 +114,11 @@
                 </span>
               </div>
             {{/if}}
+            </div>
+            <div class="row">
+              <div class = col-xs-12>
+              <h3>{{Member}} <small>({{Party}}, {{District}})</small></h3>
+            </div>
             </div>
           </div>
           <div class="panel-body">
@@ -139,20 +151,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-            <a data-toggle="tab" href="#home" class="navbar-brand" id="brand-icon"><img src="/Images/THP_logo_horizontal_simple.png" alt=""></a>
+            <a data-toggle="tab" href="#home" class="navbar-brand hash-link" id="brand-icon"><img src="/Images/THP_logo_horizontal_simple.png" alt=""></a>
         </div>
-        <div class="collapse navbar-collapse " id="main-nav">
+        <div class="collapse navbar-collapse" id="main-nav">
           <ul class="nav navbar-nav navbar-left" roll="tablists">
             <li></li>
-            <li><a data-toggle="tab" href="#submit"><strong>Submit an Event</strong></a></li>
-            <li><a  data-toggle="tab" href="#about"><strong>About</strong></a></li>
-            <li><a href="#join" data-toggle="tab"><strong>Join Us</strong></a></li>
+            <li><a class="hash-link" data-toggle="tab" href="#submit">Submit an Event</a></li>
+            <li><a class="hash-link"  data-toggle="tab" href="#about">About</a></li>
+            <li><a class="hash-link" href="#join" data-toggle="tab">Join Us</a></li>
 
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="https://twitter.com/townhallproject" ><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a></li>
-            <li><a href="https://www.facebook.com/TownHallProject/" ><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a></li>
-            <li><a href="mailto:townhallproject2018@gmail.com" class="text-white"><i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i></a></li>
+            <li><a href="https://www.crowdpac.com/campaigns/183381/town-hall-project" class="btn" id="donate-button" role="button" target="_blank">Donate</a></li>
+            <li><a class="social-icons" href="https://twitter.com/townhallproject" ><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a></li>
+            <li><a class="social-icons" href="https://www.facebook.com/TownHallProject/" ><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a></li>
+            <li><a class="social-icons" href="mailto:townhallproject2018@gmail.com" class="text-white"><i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i></a></li>
          </ul>
         </div>
       </div>
@@ -409,10 +422,17 @@
             </article>
             <article class="row text-center">
               <h3>Get connected locally!</h3>
-              <p><a href="mailto:townhalproject2018@gmail.com">Email us </a>and one of our organizers will connect you with groups in your area.</p>
+              <p><a href="mailto:townhallproject2018@gmail.com">Email us </a>and one of our organizers will connect you with groups in your area.</p>
             </article>
               <div class="col-sm-4">
               </div>
+          </section>
+          <section class="container">
+            <div class="row">
+              <div class="col-sm-12" id="disclaimer">
+                <small>The information available on or from this website is compiled by Town Hall Project volunteers and provided for general informational purposes only. While all efforts are made to verify accuracy of events, event details can change at short notice and are not guaranteed to be complete or up-to-date. Please contact your representative’s office to confirm. Town Hall Project shall not be liable for any special or consequential damages that result from the direct or indirect use of, or the inability to use, the information on this site.</small>
+              </div>
+            </div>
           </section>
         </div>
         <div role="tabpanel" class="tab-pane " id="join">
@@ -447,8 +467,7 @@
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
     <script src="/vendor/scripts/tether.js"></script>
-
-    <script src="/node_modules/handlebars/dist/handlebars.js"></script>
+    <script src="/vendor/scripts/handlebars-v4.0.5.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
 
     <script src='https://actionnetwork.org/widgets/v2/form/stay-up-to-date-on-our-work?format=js&source=widget'></script>

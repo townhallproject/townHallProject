@@ -5,32 +5,6 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
-  // creates new TownHall object from form
-  eventHandler.save = function (e) {
-    e.preventDefault();
-    var newTownHall = new TownHall( $('#save-event input').get().reduce(function(newObj, cur){
-      newObj[cur.id] = $(cur).val();
-      return newObj;
-    }, {})
-  );
-    newTownHall.getLatandLog(newTownHall.address);
-  };
-
-
-// Given a new event, creates TownHall Object and encodes with lat and lng based on address from google docs
-  eventHandler.saveSimple = function (newevent) {
-    var newTownHall = new TownHall(newevent);
-    newTownHall.getLatandLog(newTownHall.streetNumber + newTownHall.streetName +newTownHall.Zip);
-  };
-
-  // given an event and a current key, update that event.
-  eventHandler.update = function (newevent , key) {
-    var newTownHall = new TownHall(newevent);
-    var address = newTownHall.streetNumber +' '+ newTownHall.streetName +' '+ newTownHall.City + ' ' + newTownHall.Zip;
-    console.log(address);
-    newTownHall.getLatandLog(address, key);
-  };
-
   // Renders the page in response to lookup
   eventHandler.lookup = function (e) {
     e.preventDefault();
@@ -38,12 +12,11 @@
     if (zip) {
       TownHall.lookupZip($('#look-up input').val());
     }
-
   };
 
   // reset the home page to originial view
   eventHandler.resetHome = function () {
-    $('[data-toggle="popover"]').popover('hide')
+    $('[data-toggle="popover"]').popover('hide');
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
@@ -65,44 +38,31 @@
     $results.empty();
     $table = $('#all-events-table');
     $table.empty();
-    TownHall.allTownHalls.forEach(function(ele){
-      eventHandler.renderTable(ele, $table);
-    })
-    $('[data-toggle="popover"]').popover({
-      container: 'body',
-      html:true
-    })
-    $('[data-toggle="popover"]').on('click', function (e) {
-      $('[data-toggle="popover"]').not(this).popover('hide');
-    });
+    eventHandler.renderTableWithArray(TownHall.allTownHalls, $table);
   };
 
   // Renders one panel, assumes data processing has happened
   eventHandler.renderPanels = function(event, $parent) {
     var $panel = $(event.toHtml($('#event-template')));
-      $panel.children('.panel').addClass(event.Party);
-      $panel.appendTo($parent);
+    $panel.children('.panel').addClass(event.Party.slice(0,3));
+    $panel.appendTo($parent);
   };
 
   eventHandler.renderTableWithArray = function (array, $table) {
     array.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
-    })
+    });
     $('[data-toggle="popover"]').popover({
       container: 'body',
       html:true
     });
-    $('[data-toggle="popover"]').on('click', function (e) {
-      $('[data-toggle="popover"]').not(this).popover('hide');
-    });
-  }
+  };
 
   // render table row
   eventHandler.renderTable = function (townhall, $tableid) {
-      townhall.formatDateTime();
-      townhall.dist = Math.round(townhall.dist/1609.344);
-      townhall.addressLink = "https://www.google.com/maps?q=" + escape(townhall.address);
-      $($tableid).append(townhall.toHtml($('#table-template')));
+    townhall.dist = Math.round(townhall.dist/1609.344);
+    townhall.addressLink = 'https://www.google.com/maps?q=' + escape(townhall.address);
+    $($tableid).append(townhall.toHtml($('#table-template')));
   };
 
   // takes the current set of data in the table and sorts by date
@@ -113,7 +73,7 @@
     TownHall.currentContext = TownHall.sortDate(filtereddata);
     $table = $('#all-events-table');
     $table.empty();
-    eventHandler.renderTableWithArray(TownHall.currentContext, $table )
+    eventHandler.renderTableWithArray(TownHall.currentContext, $table );
   };
 
   // filters the table on click
@@ -123,16 +83,13 @@
     $('#resetTable').show();
     var filterID = this.id;
     var filterCol = $(this).attr('data-filter');
-    var inputs = $('input[data-filter]')
+    var inputs = $('input[data-filter]');
     $table.empty();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     var data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
     if (filterID === 'All') {
       TownHall.filterIds[filterCol] = '';
-      eventHandler.renderTableWithArray(data, $table )
-      // data.forEach(function(ele){
-      //   eventHandler.renderTable(ele, $table);
-      // })
+      eventHandler.renderTableWithArray(data, $table );
     }
     else {
       TownHall.filterIds[filterCol] = filterID;
@@ -141,7 +98,7 @@
           data = TownHall.filterByCol(key, TownHall.filterIds[key], data);
         }
       });
-      eventHandler.renderTableWithArray(data, $table )
+      eventHandler.renderTableWithArray(data, $table );
     }
   };
 
@@ -172,8 +129,7 @@
     TownHall.filteredResults = [];
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     eventHandler.renderTableWithArray(data, $table);
-  }
-
+  };
 
   // renders results of search
   eventHandler.render = function (events, zipQuery) {
@@ -188,14 +144,20 @@
     $('#button-to-form').removeClass('hidden');
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
+    maxDist = 120701;
+    eventHandler.resultsRouting(maxDist, events,zipQuery);
+    addtocalendar.load();
+  };
+
+  eventHandler.resultsRouting = function (maxDist, events, zipQuery){
+    var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
     $parent.empty();
     $results.empty();
     var $table = $('#all-events-table');
-    var $text = $('<h4>');
     $table.empty();
-    maxDist = 80467.2;
+    var $text = $('<h4>');
     var nearest = events.reduce(function(acc, cur){
       if (cur.dist < maxDist) {
         acc.push(cur);
@@ -203,37 +165,41 @@
       return acc;
     },[]);
     $('#map').appendTo('.map-small');
+    var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a class="text-white" href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> ';
+    // TODO: return rep's info
     if (nearest.length === 0) {
       var townHall = events[0];
       var townHalls = [townHall];
       recenterMap(townHalls, zipQuery);
       eventHandler.renderTableWithArray(events, $table);
-      $text.text('No events within 50 miles of your zip, the closest one is ' + townHall.dist + ' miles away.');
+      $text.html('There are no events within 75 miles of your zip, the closest one is ' + townHall.dist + ' miles away. <br>' + info);
       $results.append($text);
+      TownHall.saveZipLookup($zip);
       eventHandler.renderPanels(townHall, $parent);
-    } else {
+    }
+    else{
       TownHall.currentContext = nearest;
       TownHall.isCurrentContext = true;
       recenterMap(nearest, zipQuery);
       if (nearest.length ===1) {
-        $text.text('There is ' + nearest.length + ' upcoming events within 50 miles of you.')
+        $text.html('There is ' + nearest.length + ' upcoming events within 75 miles of you. <br>' + info);
       }
       else {
-        $text.text('There are ' + nearest.length + ' upcoming events within 50 miles of you.')
+        $text.html('There are ' + nearest.length + ' upcoming events within 75 miles of you. <br>' +info);
       }
       $results.append($text);
       eventHandler.renderTableWithArray(nearest, $table);
       nearest.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
-      })
+      });
     }
-    addtocalendar.load();
   };
 
-
-  // url hash for direct links to subtabs
-  // slightly hacky routing
   $(document).ready(function(){
+    init();
+  });
+
+  function init() {
     var filterSelector = $('.filter');
     $('[data-toggle="popover"]').popover({html:true});
     $('#button-to-form').hide();
@@ -244,37 +210,52 @@
     $('#resetTable').on('click', eventHandler.resetTable);
     $('#resetTable').hide();
     filterSelector.on('click', 'a', eventHandler.filterTable);
-    filterSelector.keyup(eventHandler.filterTableByInput);
+    filterSelector.change(eventHandler.filterTableByInput);
+    // url hash for direct links to subtabs
+    // slightly hacky routing
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show');
     }
-    else  {
+    else{
       TownHall.isMap = true;
     }
-    $('nav').on('click', 'a', function onClickGethref(event) {
+    $('nav').on('click', '.hash-link', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
       if (hashid === '#home' && TownHall.isMap === false) {
-        history.replaceState({}, document.title, ".");
+        history.replaceState({}, document.title, '.');
         setTimeout( function(){
           onResizeMap();
           if (location.pathname ='/') {
-              eventHandler.resetHome()
-              TownHall.isMap = true;
+            eventHandler.resetHome();
+            TownHall.isMap = true;
           }
         }, 50);
-       }
-       else if (hashid === '#home' && TownHall.isMap === true) {
-         console.log('going home and map');
-         history.replaceState({}, document.title, ".");
-         eventHandler.resetHome()
-       }
+      }
+      else if (hashid === '#home' && TownHall.isMap === true) {
+        console.log('going home and map');
+        history.replaceState({}, document.title, '.');
+        eventHandler.resetHome();
+      }
       else {
-        location.hash = this.getAttribute('href')
+        location.hash = this.getAttribute('href');
       }
       $('[data-toggle="popover"]').popover('hide');
-    })
-  });
+    });
 
+    // Only show one popover at a time
+    $('#all-events-table').on('click', 'tr[data-toggle="popover"]', function(e) {
+      $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
+    });
+
+    $('body').on('click', '.popover .popover-title a.close', function(e) {
+      $('[data-toggle="popover"]').popover('hide');
+    });
+
+    // Fix popover bug in bootstrap 3 https://github.com/twbs/bootstrap/issues/16732
+    $('body').on('hidden.bs.popover', function (e) {
+      $(e.target).data('bs.popover').inState.click = false;
+    });
+  }
 
   module.eventHandler = eventHandler;
 })(window);
