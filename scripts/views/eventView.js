@@ -48,6 +48,31 @@
     $panel.appendTo($parent);
   };
 
+  eventHandler.renderRepresentativePanels = function(representativePromise, $parent) {
+    $parent.empty(); // If they search for a new zipcode clear the old info
+    representativePromise.success(function(representatives) {
+      var compiledTemplate = Handlebars.getTemplate('representativePanel');
+      $parent.append('<h2 class="text-primary text-center">Your Representatives</h2>');
+      representatives.results.forEach(function(rep) {
+        switch(rep.party) {
+        case 'R':
+          rep.party = 'Republican';
+          break;
+        case 'D':
+          rep.party = 'Democrat';
+          break;
+        case 'I':
+          rep.party = 'Independent';
+          break;
+        }
+        $parent.append(compiledTemplate(rep));
+      });
+      if (representatives.results.length > 3) {
+        $parent.append('<h4 class="col-md-12">Disclaimer: Your zip code encompasses more than one district. Not all reps listed are yours.</h4>');
+      }
+    });
+  };
+
   eventHandler.renderTableWithArray = function (array, $table) {
     array.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
@@ -132,7 +157,7 @@
   };
 
   // renders results of search
-  eventHandler.render = function (events, zipQuery) {
+  eventHandler.render = function (events, zipQuery, representativePromise) {
     $('[data-toggle="popover"]').popover('hide');
     $('.header-small').removeClass('hidden');
     $('.header-small').fadeIn();
@@ -145,11 +170,11 @@
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
     maxDist = 120701;
-    eventHandler.resultsRouting(maxDist, events,zipQuery);
+    eventHandler.resultsRouting(maxDist, events, zipQuery, representativePromise);
     addtocalendar.load();
   };
 
-  eventHandler.resultsRouting = function (maxDist, events, zipQuery){
+  eventHandler.resultsRouting = function (maxDist, events, zipQuery, representativePromise){
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
@@ -166,7 +191,10 @@
     },[]);
     $('#map').appendTo('.map-small');
     var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a class="text-white" href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> ';
-    // TODO: return rep's info
+
+    // Display a list of reps with contact info
+    eventHandler.renderRepresentativePanels(representativePromise, $('#representativePanels'));
+
     if (nearest.length === 0) {
       var townHall = events[0];
       var townHalls = [townHall];
