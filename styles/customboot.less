@@ -281,19 +281,34 @@ article{
    border-bottom: none;
  }
 
-.Dem .panel-heading{
+.Dem .panel-heading, .Democrat .panel-heading{
   color: white;
   background-color: #3facef;
 }
 
-.Rep .panel-heading{
+.Rep .panel-heading, .Republican .panel-heading{
   color: white;
   background-color: @brand-secondary;
 }
 
-.Ind .panel-heading{
+.Ind .panel-heading, .Independent .panel-heading{
   color: white;
   background-color: darken(#705f8c, 20%);
+}
+
+.panel-representative {
+  .panel-heading {
+    h3 {
+      font-weight: 700;
+    }
+    h3, h4 {
+      letter-spacing: 0.05em;
+    }
+  }
+  label, a {
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
 }
 
 ::-webkit-scrollbar {
