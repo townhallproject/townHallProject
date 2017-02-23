@@ -87,7 +87,8 @@
   eventHandler.renderTable = function (townhall, $tableid) {
     townhall.dist = Math.round(townhall.dist/1609.344);
     townhall.addressLink = 'https://www.google.com/maps?q=' + escape(townhall.address);
-    $($tableid).append(townhall.toHtml($('#table-template')));
+    var compiledTemplate = Handlebars.getTemplate('eventTableRow');
+    $($tableid).append(compiledTemplate(townhall));
   };
 
   // takes the current set of data in the table and sorts by date
