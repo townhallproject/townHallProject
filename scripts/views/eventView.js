@@ -43,7 +43,8 @@
 
   // Renders one panel, assumes data processing has happened
   eventHandler.renderPanels = function(event, $parent) {
-    var $panel = $(event.toHtml($('#event-template')));
+    var compiledTemplate = Handlebars.getTemplate('eventCards');
+    var $panel = $(compiledTemplate(event));
     $panel.children('.panel').addClass(event.Party.slice(0,3));
     $panel.appendTo($parent);
   };
