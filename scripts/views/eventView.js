@@ -66,6 +66,7 @@
           rep.party = 'Independent';
           break;
         }
+        rep.term_end = rep.term_end.substring(0, 4);
         $parent.append(compiledTemplate(rep));
       });
       if (representatives.results.length > 3) {
