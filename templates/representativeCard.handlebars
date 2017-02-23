@@ -1,0 +1,28 @@
+<div class="col-md-4 col-lg-4 col-xl-4">
+  <div class="card card-representative {{party}}">
+    <div class="card-header">
+      <h3>{{title}} {{first_name}} {{last_name}}</h3>
+      <h4>{{party}}</h4>
+    </div>
+    <div class="card-block">
+      <div class="card-text row">
+        <div class="col-xs-7 no-padding p-0">
+          {{#if twitter_id}}<div><a href="//twitter.com/{{twitter_id}}" target="_blank">@{{twitter_id}}</a></div>{{/if}}
+          {{#if phone}}<div><label>Phone:</label> {{phone}}</div>{{/if}}
+          {{#if fax}}<div><label>Fax:</label> {{fax}}</div>{{/if}}
+          {{#if contact_form}}<div><a href="{{contact_form}}" target="_blank">Contact Form</a></div>{{/if}}
+          {{#if facebook_id}}<div><a href="//facebook.com/profile.php?id={{facebook_id}}" target="_blank">Facebook</a></div>{{/if}}
+          {{#if website}}<div><a href="{{website}}" target="_blank">Website</a></div>{{/if}}
+          {{#if oc_email}}<div><a href="mailto:{{oc_email}}">Email</a></div>{{/if}}
+        </div>
+        <div class="col-xs-5 no-padding p-0">
+          <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-200px.jpeg" class="grayscale" />
+        </div>
+        <div class="col-xs-12 no-padding p-0">
+          {{#if term_end}}<div><label>Term Ends:</label> {{term_end}}</div>{{/if}}
+          {{#if office}}<div><label>Office:</label> {{office}}</div>{{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

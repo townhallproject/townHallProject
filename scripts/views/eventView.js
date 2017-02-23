@@ -48,10 +48,10 @@
     $panel.appendTo($parent);
   };
 
-  eventHandler.renderRepresentativePanels = function(representativePromise, $parent) {
+  eventHandler.renderRepresentativeCards = function(representativePromise, $parent) {
     $parent.empty(); // If they search for a new zipcode clear the old info
     representativePromise.success(function(representatives) {
-      var compiledTemplate = Handlebars.getTemplate('representativePanel');
+      var compiledTemplate = Handlebars.getTemplate('representativeCard');
       $parent.append('<h2 class="text-primary text-center">Your Representatives</h2>');
       representatives.results.forEach(function(rep) {
         switch(rep.party) {
@@ -193,7 +193,7 @@
     var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a class="text-white" href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> ';
 
     // Display a list of reps with contact info
-    eventHandler.renderRepresentativePanels(representativePromise, $('#representativePanels'));
+    eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards'));
 
     if (nearest.length === 0) {
       var townHall = events[0];
