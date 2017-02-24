@@ -545,8 +545,7 @@ article{
   }
 }
 
-@media
-only screen and (max-width: 760px),
+@media only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 
 	/* Force table to not be like tables anymore */
@@ -554,23 +553,19 @@ only screen and (max-width: 760px),
 		display: block;
 	}
 
-  	thead th{
-      text-align: center!important;
-      background-color: @brand-success;
-      color: white;
-    }
-    thead th button, thead .btn-group{
-      width: 100%;
-    }
+	thead th{
+    text-align: center!important;
+    background-color: @brand-success;
+    color: white;
+  }
 
-	/* Hide table headers (but not display: none;, for accessibility) */
+  thead th button, thead .btn-group{
+    width: 100%;
+  }
+
 	thead tr .noninteractive{
     display: none;
-		// position: absolute;
-		// top: -9999px;
-		// left: -9999px;
 	}
-
 
 	tr {
     border: 1px solid #ccc;
