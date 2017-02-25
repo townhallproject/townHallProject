@@ -29,10 +29,13 @@
       </div>
     </div>
     <div class="panel-body">
-      <span class="text-success text-center"><h4><span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}, {{timeZone}}</span></h4></span>
+      <span class="text-success text-center"><h4>
+        <span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4></span>
       <ul class="list-group list-group-flush">
+        {{#if Notes}}
         <li class="list-group-item">{{{Notes}}}
         </li>
+        {{/if}}
         <li class="list-group-item">
           <address>
             <strong>{{Location}}</strong></br>

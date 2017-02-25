@@ -195,7 +195,7 @@
       return acc;
     },[]);
     $('#map').appendTo('.map-small');
-    var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a class="text-white" href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> ';
+    var info = '<small class="text-white">This search is by proximity, not congressional district.';
 
     // Display a list of reps with contact info
     eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards section'));
