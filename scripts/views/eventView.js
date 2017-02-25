@@ -20,6 +20,7 @@
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
+    $('#representativeCards').empty();
     $('.form-text-results').removeClass('text-center');
     $('.left-panels').removeClass('left-panels-border');
     $('#nearest').removeClass('nearest-with-results');
