@@ -68,11 +68,9 @@
           rep.party = 'Independent';
           break;
         }
-        var termEnd = new Date (rep.term_end);
-        console.log(termEnd);
-        if (termEnd.getMonth()===0) {
-          rep.electionYear =  new Date('2021-01-03').getFullYear() - 1;
-        }
+        var termEnd = new Date(rep.term_end);
+        // If term expires in janurary then assume the election is in the prior year
+        rep.electionYear = termEnd.getMonth() === 0 ? termEnd.getFullYear() - 1 : termEnd.getFullYear();
         $parent.append(compiledTemplate(rep));
       });
       if (representatives.results.length > 3) {
