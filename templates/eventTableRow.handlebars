@@ -1,30 +1,24 @@
-<div id="{{rowid}}" class= 'event-row' data-Main_State-filter={{State}} data-Member-filter={{Member}}
-  data-container="body" data-animation="true" data-html="true" data-toggle="popover" data-placement="top"
+<li id="{{rowid}}" class="event-row list-group-item " data-Main_State-filter={{State}} data-Member-filter={{Member}}
+  data-container="body" data-animation="true" data-html="true" {{#if Notes}} data-toggle="popover" {{/if}}{{#unless Notes}} data-toggle="" {{/unless}}data-placement="top"
   title="Notes <a href='javascript:void(0)' class='close'>×</a>"
   data-content="{{#if Notes}}{{Notes}}{{/if}}{{#unless Notes}}There are no notes for this event.{{/unless}}">
-  <td class='member'>
+  <span class="member">
+    <h4>
     {{Member}}
-  </td>
-  <td>
-    {{Party}}
-  </td>
-  <td>
-    {{State}}
-  </td>
-  <td>
-    {{District}}
-  </td>
-  <td >
-    {{meetingType}}
-  </td>
-  <ul class="list-inline">
+    <small>({{Party}})  {{State}},   {{District}}
+    </small>
+  </h4>
+ <span class="badge badge-default badge-pill pull-right">  {{meetingType}}</span>
+  </span>
+  <ul class="list-inline list-inline-separated">
     <li>{{Date}}
     </li>
-    <li>{{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}
-    </li>
-    <li>{{Location}}
-    </li>
-    <li>{{address}}
-    </li>
+    {{#if Time}}
+    <li>{{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}  </li>
+    {{/if}}
+    {{#if Location}}
+    <li>{{Location}}</li>
+    {{/if}}
+    <li>{{address}}</li>
   </ul>
-</div>
+</li>

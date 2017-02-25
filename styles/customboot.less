@@ -340,11 +340,31 @@ article{
    display: none;
 }
 
-.list-group-item{
+.list-item-no-border{
   border-right:none;
   border-left:none;
 }
 
+.list-inline-separated {
+  li {
+    // adjust leading spacing for each additional item
+    margin-left: -10px;
+    &:first-child {
+      // no leading spacing for initial item
+      margin-left: 0px;
+    }
+
+    &:after {
+      content: '\2022'; // bullet
+      margin: 0 5px;
+    }
+
+    // no bullet on last
+    &:last-child:after {
+      content: '';
+    }
+  }
+}
 // Table formatting
 .table .meetingType{
   min-width: 180px;
@@ -491,6 +511,10 @@ article{
       position: relative;
     }
   }
+}
+
+li[data-toggle='popover']:hover {
+  background-color: @brand-gray;
 }
 
 // google forms

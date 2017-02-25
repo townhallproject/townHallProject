@@ -405,7 +405,7 @@
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
       var ele = new TownHall (snapshot.val());
       var id = ele.Member+ele.Date;
-      ele.rowid = id.replace(/[\W]/g, '');
+      ele.rowid = ele.eventId;
       TownHall.allTownHalls.push(ele);
       $('#all-events-table').append(tableRowTemplate(ele));
       $("[data-toggle='popover']").popover({html:true});
