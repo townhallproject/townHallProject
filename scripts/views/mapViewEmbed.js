@@ -426,6 +426,7 @@
 // TODO: seperate out into more concise functions
   window.readData = function (){
     firebase.database().ref('/townHalls/').on('child_added', function getSnapShot(snapshot) {
+      var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
       var ele = new TownHall (snapshot.val());
       var id = ele.Member+ele.Date;
       ele.rowid = id.replace(/[\W]/g, '');
@@ -434,7 +435,7 @@
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars
       ele.addressLink = 'https://www.google.com/maps?q=' + escape(ele.address);
-      var contentString = ele.toHtml('#marker-template');
+      var contentString = mapPopoverTemplate(ele);
       var infowindow = new google.maps.InfoWindow({
         content: contentString,
         maxWidth: 200

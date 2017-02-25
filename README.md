@@ -18,7 +18,13 @@ Submit an event for review by researchers
 - When your changes are ready to be merged, open a pull request from your feature branch to the repo's `development` branch.
 - In the comments of your Pull Request, point out which issue you've resolved and how.
 
-## Bootstrap
+## Running Locally
+- `npm i`
+- `firebase serve`
+- Open localhost:5000
+
+#### Style Changes
+- In a second terminal window
+- Run `grunt watch`
 - Make changes to customboot.less
-- Run grunt dist-css
 - New changes will be written to bootstrap.min.css
