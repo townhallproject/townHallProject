@@ -1,438 +1,73 @@
 (function closure(firebase) {
-  var map;
-  var google;
-  var infowindow;
+// Specify Mapbox default access token
+  var accessToken = 'pk.eyJ1IjoiZG1vcmlhcnR5IiwiYSI6ImNpejlid2Y1djAxNWsyeHFwNTVoM2ZibWEifQ.MlGaldJiUQ91EDGdjJxLsA';
 
-//draws map
-  window.initMap = function initMap() {
-    google = window.google;
+  // Specify uploaded Mapbox Studio style URL
+  var styleURL = 'mapbox://styles/dmoriarty/ciyyzloid003n2sq88m2ftdm3';
+  var mapId = 'dmoriarty.cd-114-2015'; // used by the click handler only
 
-    // Initalize reusable infowindow
-    infowindow = new google.maps.InfoWindow({maxWidth: 200});
+  var continentalView = function(w,h) { return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]); };
+  var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
 
-    var styleArray =[
-      {
-        'featureType': 'administrative.locality',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'hue': '#0049ff'
-          },
-          {
-            'saturation': 7
-          },
-          {
-            'lightness': 19
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'administrative.locality',
-        'elementType': 'labels.text',
-        'stylers': [
-          {
-            'visibility': 'simplified'
-          },
-          {
-            'saturation': '-3'
-          },
-          {
-            'color': '#ac7570'
-          }
-        ]
-      },
-      {
-        'featureType': 'administrative.locality',
-        'elementType': 'labels.text.fill',
-        'stylers': [
-          {
-            'color': '#fd7567'
-          }
-        ]
-      },
-      {
-        'featureType': 'landscape',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'hue': '#ff0000'
-          },
-          {
-            'saturation': -100
-          },
-          {
-            'lightness': 100
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'landscape.natural.landcover',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'landscape.natural.landcover',
-        'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'landscape.natural.terrain',
-        'elementType': 'geometry.stroke',
-        'stylers': [
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'poi',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'hue': '#ffffff'
-          },
-          {
-            'saturation': -100
-          },
-          {
-            'lightness': 100
-          },
-          {
-            'visibility': 'off'
-          }
-        ]
-      },
-      {
-        'featureType': 'poi.government',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'poi.school',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'visibility': 'off'
-          }
-        ]
-      },
-      {
-        'featureType': 'poi.school',
-        'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'color': '#f39247'
-          },
-          {
-            'saturation': '0'
-          },
-          {
-            'visibility': 'on'
-          }
-        ]
-      },
-      {
-        'featureType': 'road',
-        'elementType': 'geometry',
-        'stylers': [
-          {
-            'hue': '#ff6f00'
-          },
-          {
-            'saturation': '100'
-          },
-          {
-            'lightness': 31
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'road',
-        'elementType': 'geometry.stroke',
-        'stylers': [
-          {
-            'color': '#ba2317'
-          },
-          {
-            'saturation': '0'
-          },
-          {
-            'lightness': '-17'
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'road',
-        'elementType': 'labels',
-        'stylers': [
-          {
-            'hue': '#008eff'
-          },
-          {
-            'saturation': -93
-          },
-          {
-            'lightness': 31
-          },
-          {
-            'visibility': 'on'
-          }
-        ]
-      },
-      {
-        'featureType': 'road.arterial',
-        'elementType': 'geometry.stroke',
-        'stylers': [
-          {
-            'visibility': 'on'
-          },
-          {
-            'color': '#f3dbc8'
-          },
-          {
-            'saturation': '0'
-          }
-        ]
-      },
-      {
-        'featureType': 'road.arterial',
-        'elementType': 'labels',
-        'stylers': [
-          {
-            'hue': '#bbc0c4'
-          },
-          {
-            'saturation': -93
-          },
-          {
-            'lightness': -2
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'road.arterial',
-        'elementType': 'labels.text',
-        'stylers': [
-          {
-            'visibility': 'off'
-          }
-        ]
-      },
-      {
-        'featureType': 'road.local',
-        'elementType': 'geometry',
-        'stylers': [
-          {
-            'hue': '#007fff'
-          },
-          {
-            'saturation': -90
-          },
-          {
-            'lightness': -8
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'road.local',
-        'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'color': '#ba2317'
-          }
-        ]
-      },
-      {
-        'featureType': 'transit',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'hue': '#e9ebed'
-          },
-          {
-            'saturation': 10
-          },
-          {
-            'lightness': 69
-          },
-          {
-            'visibility': 'on'
-          }
-        ]
-      },
-      {
-        'featureType': 'water',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'hue': '#b6e5fb'
-          },
-          {
-            'saturation': -78
-          },
-          {
-            'lightness': 67
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'water',
-        'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'color': '#b6e5fb'
-          },
-          {
-            'saturation': '-72'
-          },
-          {
-            'lightness': '10'
-          }
-        ]
-      },
-      {
-        'featureType': 'water',
-        'elementType': 'geometry.stroke',
-        'stylers': [
-          {
-            'color': '#6496af'
-          }
-        ]
-      }
-    ];
+  mapboxgl.accessToken = accessToken;
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: styleURL,
+    center: continental.center,
+    zoom: continental.zoom,
+    minZoom: 2.5
+  });
 
-    var options = {
-      zoom: 4,
-      scrollwheel: false,
-      navigationControl: false,
-      mapTypeControl: false,
-      styles: styleArray,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+  map.on('load', function() {
+    // Enable Zoom Controls
+    map.addControl(new mapboxgl.NavigationControl());
 
-    map = new google.maps.Map(document.getElementById('map'), options);
-    var bounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(20, -124.39),
-      new google.maps.LatLng(49.38, -66.94)
-    );
-    map.fitBounds(bounds);
-    google.maps.event.addDomListener(window, 'resize', onResizeMap);
-  };
+    // Disable rotate
+    map.dragRotate.disable();
+    map.touchZoomRotate.disableRotation();
+  });
 
-  window.onResizeMap = function onResizeMap() {
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'address': 'US' }, function onGeocode(results, status) {
-      google.maps.event.trigger(map, 'resize');
-      // map.setCenter(results[0].geometry.location);
-      var resizeBounds = new google.maps.LatLngBounds();
-      var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-      if ( TownHall.zipQuery) {
-        resizeBounds.extend(TownHall.zipQuery);
-      }
-      data.forEach(function(ele){
-        marker = new google.maps.LatLng(ele.lat, ele.lng);
-        resizeBounds.extend(marker);
-      });
-    // map.setCenter(results[0].geometry.location);
-      map.fitBounds(resizeBounds);
-    });
-  };
+  map.on('click', function(e) {
+    var district = null;
 
-  // TODO; Probably redudent with resize map
-  window.recenterMap = function(markers, zipQuery) {
-    google.maps.event.trigger(map, 'resize');
-    var bounds = new google.maps.LatLngBounds();
-    var geocoder = new google.maps.Geocoder();
-    for (var i = 0; i < markers.length; i++) {
-      marker = new google.maps.LatLng(markers[i].lat, markers[i].lng);
-      bounds.extend(marker);
-    }
-      // google.maps.event.trigger(map, 'resize');
-    bounds.extend(zipQuery);
-    map.setCenter(zipQuery);
-    map.fitBounds(bounds);
-      //TODO: add maker for search query, but need to be able to remove it.
-      // var marker = new google.maps.Marker({
-      //   map: map,
-      //   position: zipQuery,
-      //   name: 'zipQuery',
+    if (1) {
+      // The map control provides a client-side-only way to determine what
+      // is under the cursor. We restrict the query to only the layers that
+      // provide congressional district polygons. Note that this only scans
+      // features that are currently shown on the map. So if you've filtered
+      // the districts so only a state or a single district is showing, this
+      // will restrict the query to those districts.
+      var features = map.queryRenderedFeatures(
+        e.point,
+        {
+          layers: ['district_interactive']
+        });
+      if (features.length > 0)
+        // The feature properties come from the original GeoJSON uploaded to Mapbox.
+        district = features[0];
+    } else {
+      // Use the Mapbox tilequery API instead.
       //
-      // })
-  };
-
-// listens for new events
-// Adds all events into main data array
-// Adds all events as markers
-// renders tables
-// TODO: sperate out into more concise functions
-  window.readData = function (){
-    var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('State');
-    townHallsFB.on('child_added', function getSnapShot(snapshot) {
-      var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
-      var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
-      var ele = new TownHall (snapshot.val());
-      var id = ele.Member+ele.Date;
-      ele.rowid = id.replace(/[\W]/g, '');
-      TownHall.allTownHalls.push(ele);
-      $('#all-events-table').append(tableRowTemplate(ele));
-      $("[data-toggle='popover']").popover({html:true});
-      var coords = [ele.lng, ele.lat];
-      var latLng = new google.maps.LatLng(coords[1], coords[0]);
-      // eslint-disable-next-line no-unused-vars
-      ele.addressLink = 'https://www.google.com/maps?q=' + escape(ele.address);
-      var contentString = mapPopoverTemplate(ele);
-      var marker = new google.maps.Marker({
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 0.5,
-        fillColor: '#FF0000',
-        fillOpacity: 0.35,
-        map: map,
-        position: latLng,
-        name: ele.name,
-        time: ele.time
+      // Note that, from the Mapbox API docs:
+      // "Use of this endpoint is rate limited to 600 requests per minute."
+      $.ajax({
+        url: 'https://api.mapbox.com/v4/' + mapId + '/tilequery/' + e.lngLat.lng + ',' + e.lngLat.lat + '.json?radius=0&access_token=' + accessToken,
+        method: 'GET',
+        success: function(resp) {
+          if (resp.type === 'FeatureCollection' && resp.features.length > 0)
+            // resp is always a FeatureCollection, just sanity checking, but it might
+            // be empty. If it's not empty, it will contain a single Feature
+            // (whose geometry is a Polygon) represending the boundaries of a
+            // congressional district. Its properties come from the original
+            // GeoJSON uploaded to Mapbox.
+            district = resp.features[0];
+        }
       });
-      marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
-      marker.addListener('click', function() {
-        infowindow.setContent(contentString);
-        infowindow.open(map, marker);
-      });
-    });
-  };
+    }
 
-  readData();
+    if (district) {
+      console.log('you\'ve gone and clicked a district. Good work!');
+    }    
+  });
 
 }(window.firebase));
