@@ -20,8 +20,9 @@
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
-    $('#representativeCards').empty();
+    $('#representativeCards section').empty();
     $('.form-text-results').removeClass('text-center');
+    $('.header-with-results .results').removeClass('multipleResults');
     $('.left-panels').removeClass('left-panels-border');
     $('#nearest').removeClass('nearest-with-results');
     $('#button-to-form').hide();
@@ -197,9 +198,10 @@
     var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a class="text-white" href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> ';
 
     // Display a list of reps with contact info
-    eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards'));
+    eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards section'));
 
     if (nearest.length === 0) {
+      $('.header-with-results .results').removeClass('multipleResults');
       var townHall = events[0];
       var townHalls = [townHall];
       recenterMap(townHalls, zipQuery);
@@ -213,10 +215,11 @@
       TownHall.currentContext = nearest;
       TownHall.isCurrentContext = true;
       recenterMap(nearest, zipQuery);
-      if (nearest.length ===1) {
+      if (nearest.length === 1) {
+        $('.header-with-results .results').removeClass('multipleResults');
         $text.html('There is ' + nearest.length + ' upcoming events within 75 miles of you. <br>' + info);
-      }
-      else {
+      } else {
+        $('.header-with-results .results').addClass('multipleResults');
         $text.html('There are ' + nearest.length + ' upcoming events within 75 miles of you. <br>' +info);
       }
       $results.append($text);
