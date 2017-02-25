@@ -16,7 +16,7 @@
           {{#if oc_email}}<div><a href="mailto:{{oc_email}}">Email</a></div>{{/if}}
         </div>
         <div class="col-xs-5 no-padding p-0">
-          <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-200px.jpeg" class="grayscale" />
+          <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-200px.jpeg" onerror="$(this).remove()" class="grayscale" />
         </div>
         <div class="col-xs-12 no-padding p-0">
           {{#if term_end}}<div><label>Next Election:</label> {{term_end}}</div>{{/if}}
