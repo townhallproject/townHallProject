@@ -68,7 +68,6 @@
           rep.party = 'Independent';
           break;
         }
-        rep.term_end = rep.term_end.substring(0, 4);
         $parent.append(compiledTemplate(rep));
       });
       if (representatives.results.length > 3) {
@@ -195,7 +194,7 @@
       return acc;
     },[]);
     $('#map').appendTo('.map-small');
-    var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a class="text-white" href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> ';
+    var info = '<small class="text-white">Event results by proximity, not district.<br>*Some zip codes share two districts. Confirm with your state elections department. </small> ';
 
     // Display a list of reps with contact info
     eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards section'));
