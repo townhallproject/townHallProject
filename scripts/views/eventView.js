@@ -110,17 +110,17 @@
     e.preventDefault();
     $table = $('#all-events-table');
     $('#resetTable').show();
-    var filterID = this.id;
+    var filterID = this.id.slice(0,5);
     var filterCol = $(this).attr('data-filter');
     var inputs = $('input[data-filter]');
     $table.empty();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    var data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
     if (filterID === 'All') {
       TownHall.filterIds[filterCol] = '';
-      eventHandler.renderTableWithArray(data, $table );
+      eventHandler.renderTableWithArray(data, $table);
     }
     else {
+      data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
       TownHall.filterIds[filterCol] = filterID;
       Object.keys(TownHall.filterIds).forEach(function(key) {
         if (TownHall.filterIds[key]) {
@@ -139,12 +139,13 @@
     var filterCol = $(this).attr('data-filter');
     $table.empty();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    var data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
+    // var data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
     Object.keys(TownHall.filterIds).forEach(function(key) {
       if (TownHall.filterIds[key]) {
         data = TownHall.filterByCol(key, TownHall.filterIds[key], data);
       }
     });
+
     TownHall.filteredResults = TownHall.filterColumnByQuery(filterCol, query, data);
     eventHandler.renderTableWithArray(TownHall.filteredResults, $table);
   };
@@ -244,7 +245,8 @@
     $('#resetTable').on('click', eventHandler.resetTable);
     $('#resetTable').hide();
     filterSelector.on('click', 'a', eventHandler.filterTable);
-    filterSelector.change(eventHandler.filterTableByInput);
+    filterSelector.on('input', eventHandler.filterTableByInput);
+
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
@@ -290,6 +292,7 @@
       $(e.target).data('bs.popover').inState.click = false;
     });
   }
+
 
   module.eventHandler = eventHandler;
 })(window);

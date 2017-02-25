@@ -67,6 +67,16 @@
     return renderTemplate(this);
   };
 
+  TownHall.selectUnique = function(cat){
+    return TownHall.allTownHalls
+    .map(function(ele){
+      return ele[cat];
+    })
+    .filter(function(element, index, array){
+      return array.indexOf(element) === index;
+    });
+  };
+
   //  Table Sorting Methods
   //takes an array and sorts by date objects
   TownHall.sortDate = function(data) {
@@ -78,7 +88,7 @@
   // filters by a value in a column
   TownHall.filterByCol = function(filterCol, filterID, data) {
     return data.filter(function(ele){
-      return ele[filterCol] === filterID;
+      return ele[filterCol].slice(0,5) === filterID;
     });
   };
 
