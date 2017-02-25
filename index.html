@@ -52,7 +52,7 @@
     </script>
   </head>
   <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default ">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
@@ -166,33 +166,10 @@
                 <thead class='text-info'><button type="" name="" id="resetTable" class="btn btn-secondary btn-xs pull-right">Reset filters</button>
                   <tr>
                     <th class="Member">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <strong>Member</strong>
-                          <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                        </button>
-                        <input data-filter="Member" type="text" class="form-control dropdown-menu filter" placeholder="Search by member">
-                      </div>
+
                     </th>
                     <th class="party">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <strong>Party</strong>
-                          <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                        </button>
-                        <div class="dropdown-menu filter">
-                          <ul class="list-unstyled">
-                            <li><a data-filter="Party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
-                            </li>
-                            <li><a data-filter="Party" id="Republican" class="dropdown-item" href="#">Republican</a>
-                            </li>
-                            <li><a data-filter="Party" id="Independent" class="dropdown-item" href="#">Independent</a>
-                            </li>
-                            <li><a data-filter="Party" id="All" class="dropdown-item" href="#">All</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
+
                     </th>
                     <th>
                       <div class="btn-group">
@@ -261,6 +238,39 @@
               </table>
               <ul id="all-events-table" class="list-group">
                 <li list-group-item-heading>
+                  <nav class="navbar navbar-default ">
+                    <ul class="nav navbar-nav">
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Member <span class="caret"></span>  </a>
+                        <ul class="dropdown-menu">
+                          <li class="downdown-title">Search by member of Congress</li>
+                          <li role="separator" class="divider"></li>
+
+                          <li><input data-filter="Member" type="text" class="form-control dropdown-item filter" placeholder="Search by member">
+                          </li>
+                        </ul>
+                      </li>
+
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li class="downdown-title">Filtery by party</li>
+                          <li role="separator" class="divider"></li>
+
+                          <li><a data-filter="Party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
+                          </li>
+                          <li><a data-filter="Party" id="Republican" class="dropdown-item" href="#">Republican</a>
+                          </li>
+                          <li><a data-filter="Party" id="Independent" class="dropdown-item" href="#">Independent</a>
+                          </li>
+                          <li><a data-filter="Party" id="All" class="dropdown-item" href="#">All</a>
+                          </li>
+                        </ul>
+                      <li>
+
+                    </div>
+
+                  </nav>
                 </li>
               </ul>
             </div>
