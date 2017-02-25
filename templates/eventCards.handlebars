@@ -1,0 +1,48 @@
+<div class="col-md-12 col-sm-6">
+  <div class="panel panel-secondary">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-xs-6">
+          <p>{{meetingType}}</p>
+        </div>
+        {{#if dateValid}}
+        <div class="col-xs-6 ">
+          <span class="addtocalendar pull-right">
+            <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
+            <var class="atc_event">
+              <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
+                <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
+                <var class="atc_timezone">{{zoneString}}</var>
+                <var class="atc_title">{{meetingType}}: {{Member}}</var>
+                <var class="atc_description">{{{Notes}}}</var>
+                <var class="atc_location">{{address}}</var>
+                <var class="atc_organizer">{{Party}}</var>
+              </var>
+          </span>
+        </div>
+      {{/if}}
+      </div>
+      <div class="row">
+        <div class = col-xs-12>
+        <h3>{{Member}} <small>({{Party}}, {{District}})</small></h3>
+      </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <span class="text-success text-center"><h4><span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}, {{timeZone}}</span></h4></span>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{{Notes}}}
+        </li>
+        <li class="list-group-item">
+          <address>
+            <strong>{{Location}}</strong></br>
+            {{streetAddress}}<br>
+            {{City}}, {{StateAb}} {{zip}}<br>
+            <a href={{addressLink}} target="_blank">Directions</a></br>
+            <span class="text-center"><small>{{dist}} miles away from your search</small></span>
+            <address>
+          </li>
+      </ul>
+    </div>
+  </div>
+</div>

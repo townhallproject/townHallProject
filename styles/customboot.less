@@ -76,6 +76,10 @@
   color: @brand-secondary-dark;
 }
 
+.background-gray{
+    background-color: @brand-gray;
+}
+
 @link-color:                        @brand-secondary;
 @component-active-bg:               @brand-secondary;
 @nav-tabs-active-link-hover-color:  @brand-primary;
@@ -281,19 +285,54 @@ article{
    border-bottom: none;
  }
 
-.Dem .panel-heading{
+.Dem .panel-heading, .card-representative.Democrat .card-header{
   color: white;
   background-color: #3facef;
 }
 
-.Rep .panel-heading{
+.Rep .panel-heading, .card-representative.Republican .card-header{
   color: white;
   background-color: @brand-secondary;
 }
 
-.Ind .panel-heading{
+.Ind .panel-heading, .card-representative.Independent .card-header{
   color: white;
   background-color: darken(#705f8c, 20%);
+}
+
+#representativeCards {
+  border-bottom:solid @brand-primary 1px;
+  h2 {
+    margin-top: 1.5em;
+  }
+  /* Remove this when upgrading to bootstrap 4 and we can do proper cards */
+  .card-representative {
+    min-height: 27em;
+  }
+}
+
+.card-representative {
+  /* Can probably remove some of this when migrating to bootstrap 4 */
+  margin-bottom: 2em;
+  background: #fff;
+  .card-header {
+    padding: 0.75em 0 0.75em 1.5em;
+  }
+  .card-block {
+    padding: 1.5em 2.5em 3.5em;
+  }
+
+  h3 {
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  h4 {
+    letter-spacing: 0.05em;
+  }
+  label, a {
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -400,7 +439,18 @@ article{
 
 .header-with-results{
   background-color: @brand-gray;
-  border-bottom:solid @brand-primary 1px;
+  .container.container-fluid > .row{
+    .results.multipleResults{
+      -webkit-box-shadow: 0px 34px 30px -30px rgba(13, 70, 104, 0.75);
+      -moz-box-shadow: 0px 34px 30px -30px rgba(13, 70, 104, 0.75);
+      box-shadow: 0px 34px 30px -30px rgba(13, 70, 104, 0.75);
+
+      /* Ensure drop shadow is directly under last panel */
+      #nearest .col-md-12.col-sm-6:last-of-type .panel{
+        margin-bottom: 0;
+      }
+    }
+  }
 }
 
 #map {
@@ -495,6 +545,9 @@ article{
   height: 45em;
 }
 
+img.grayscale {
+  filter: grayscale(100%);
+}
 
 @media screen and (max-width: 959px){
   form{

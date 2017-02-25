@@ -20,7 +20,9 @@
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
+    $('#representativeCards section').empty();
     $('.form-text-results').removeClass('text-center');
+    $('.header-with-results .results').removeClass('multipleResults');
     $('.left-panels').removeClass('left-panels-border');
     $('#nearest').removeClass('nearest-with-results');
     $('#button-to-form').hide();
@@ -43,9 +45,36 @@
 
   // Renders one panel, assumes data processing has happened
   eventHandler.renderPanels = function(event, $parent) {
-    var $panel = $(event.toHtml($('#event-template')));
+    var compiledTemplate = Handlebars.getTemplate('eventCards');
+    var $panel = $(compiledTemplate(event));
     $panel.children('.panel').addClass(event.Party.slice(0,3));
     $panel.appendTo($parent);
+  };
+
+  eventHandler.renderRepresentativeCards = function(representativePromise, $parent) {
+    $parent.empty(); // If they search for a new zipcode clear the old info
+    representativePromise.success(function(representatives) {
+      var compiledTemplate = Handlebars.getTemplate('representativeCard');
+      $parent.append('<h2 class="text-primary text-center">Your Representatives</h2>');
+      representatives.results.forEach(function(rep) {
+        switch(rep.party) {
+        case 'R':
+          rep.party = 'Republican';
+          break;
+        case 'D':
+          rep.party = 'Democrat';
+          break;
+        case 'I':
+          rep.party = 'Independent';
+          break;
+        }
+        rep.term_end = rep.term_end.substring(0, 4);
+        $parent.append(compiledTemplate(rep));
+      });
+      if (representatives.results.length > 3) {
+        $parent.append('<h4 class="col-md-12">Disclaimer: Your zip code encompasses more than one district. Not all reps listed are yours.</h4>');
+      }
+    });
   };
 
   eventHandler.renderTableWithArray = function (array, $table) {
@@ -62,7 +91,8 @@
   eventHandler.renderTable = function (townhall, $tableid) {
     townhall.dist = Math.round(townhall.dist/1609.344);
     townhall.addressLink = 'https://www.google.com/maps?q=' + escape(townhall.address);
-    $($tableid).append(townhall.toHtml($('#table-template')));
+    var compiledTemplate = Handlebars.getTemplate('eventTableRow');
+    $($tableid).append(compiledTemplate(townhall));
   };
 
   // takes the current set of data in the table and sorts by date
@@ -132,7 +162,7 @@
   };
 
   // renders results of search
-  eventHandler.render = function (events, zipQuery) {
+  eventHandler.render = function (events, zipQuery, representativePromise) {
     $('[data-toggle="popover"]').popover('hide');
     $('.header-small').removeClass('hidden');
     $('.header-small').fadeIn();
@@ -145,11 +175,11 @@
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
     maxDist = 120701;
-    eventHandler.resultsRouting(maxDist, events,zipQuery);
+    eventHandler.resultsRouting(maxDist, events, zipQuery, representativePromise);
     addtocalendar.load();
   };
 
-  eventHandler.resultsRouting = function (maxDist, events, zipQuery){
+  eventHandler.resultsRouting = function (maxDist, events, zipQuery, representativePromise){
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
@@ -166,8 +196,12 @@
     },[]);
     $('#map').appendTo('.map-small');
     var info = '<small class="text-white">This search is by proximity, not congressional district. To find your representatives, go to <a class="text-white" href="http://whoismyrepresentative.com">whoismyrepresentative.com</a>.<br></small> ';
-    // TODO: return rep's info
+
+    // Display a list of reps with contact info
+    eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards section'));
+
     if (nearest.length === 0) {
+      $('.header-with-results .results').removeClass('multipleResults');
       var townHall = events[0];
       var townHalls = [townHall];
       recenterMap(townHalls, zipQuery);
@@ -181,10 +215,11 @@
       TownHall.currentContext = nearest;
       TownHall.isCurrentContext = true;
       recenterMap(nearest, zipQuery);
-      if (nearest.length ===1) {
+      if (nearest.length === 1) {
+        $('.header-with-results .results').removeClass('multipleResults');
         $text.html('There is ' + nearest.length + ' upcoming events within 75 miles of you. <br>' + info);
-      }
-      else {
+      } else {
+        $('.header-with-results .results').addClass('multipleResults');
         $text.html('There are ' + nearest.length + ' upcoming events within 75 miles of you. <br>' +info);
       }
       $results.append($text);
