@@ -25,7 +25,7 @@
     style: styleURL,
     center: continental.center,
     zoom: continental.zoom,
-    minZoom: 2.5
+    minZoom: 3
   });
 
   map.on('load', function() {
@@ -63,7 +63,6 @@
       }
 
       if (feature) {
-        console.log(feature.properties);
         focusMap(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
         highlightDistrict(feature.properties.GEOID);
       } else {
@@ -83,16 +82,22 @@
     };
 
     for (key in data){
+      var iconImage = (data[key].meetingType === 'Teletown Hall' ? 'phone-in' : 'in-person' );
+
       if (data[key].lat) {
         featuresHome.features.push({
           type: 'Feature',
-          properties: {
-            district: data[key].District,
-            icon: 'monument'
-          },
           geometry: {
             type: 'Point',
             coordinates: [data[key].lng, data[key].lat]
+          },
+          properties: {
+            district: data[key].District,
+            icon: iconImage
+          },
+          layout: {
+            'icon-ignore-placement': true,
+            'icon-ignore-placement': true
           }
         });
       }
@@ -100,14 +105,17 @@
 
     map.addLayer({
       'id': 'townhall-points',
-      'type': 'circle',
+      'type': 'symbol',
       'source': {
         'type': 'geojson',
         'data': featuresHome
       },
-      'paint': {
-        'circle-radius': 2.5,
-        'circle-color': '#000000'
+      'layout': {
+        'icon-image': '{icon}',
+        'text-field': '{title}',
+        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+        'text-offset': [0, 0.6],
+        'text-anchor': 'top'
       }
     });
   }
