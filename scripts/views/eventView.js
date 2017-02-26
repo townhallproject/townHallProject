@@ -39,7 +39,7 @@
     $parent.empty();
     $results.empty();
     $table = $('#all-events-table');
-    $table.empty();
+    $('.event-row').remove();
     eventHandler.renderTableWithArray(TownHall.allTownHalls, $table);
   };
 
@@ -95,14 +95,16 @@
   };
 
   // takes the current set of data in the table and sorts by date
-  eventHandler.viewByDate = function (e) {
+  eventHandler.sortTable = function (e) {
     e.preventDefault();
+    var sortOn = $(this).attr('data-filter');
+    console.log(sortOn);
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
-    TownHall.currentContext = TownHall.sortDate(filtereddata);
+    TownHall.currentContext = TownHall.sortTable(filtereddata, sortOn);
     $table = $('#all-events-table');
-    $table.empty();
-    eventHandler.renderTableWithArray(TownHall.currentContext, $table );
+    $('.event-row').remove();
+    eventHandler.renderTableWithArray(TownHall.currentContext, $table);
   };
 
   // filters the table on click
@@ -113,7 +115,7 @@
     var filterID = this.id.slice(0,5);
     var filterCol = $(this).attr('data-filter');
     var inputs = $('input[data-filter]');
-    $table.empty();
+    $('.event-row').remove();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     if (filterID === 'All') {
       TownHall.filterIds[filterCol] = '';
@@ -137,7 +139,7 @@
     $table = $('#all-events-table');
     var query = $(this).val();
     var filterCol = $(this).attr('data-filter');
-    $table.empty();
+    $('.event-row').remove();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     // var data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
     Object.keys(TownHall.filterIds).forEach(function(key) {
@@ -153,13 +155,17 @@
   eventHandler.resetTable = function (e) {
     e.preventDefault();
     $table = $('#all-events-table');
-    $table.empty();
+    $('.event-row').remove();
     $('#resetTable').hide();
     TownHall.filterIds = {};
     TownHall.filteredResults = [];
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     eventHandler.renderTableWithArray(data, $table);
   };
+  // initial state of table
+  eventHandler.filteredTable = function () {
+
+  }
 
   // renders results of search
   eventHandler.render = function (events, zipQuery, representativePromise) {
@@ -186,7 +192,7 @@
     $parent.empty();
     $results.empty();
     var $table = $('#all-events-table');
-    $table.empty();
+    $('.event-row').remove();
     var $text = $('<h4>');
     var nearest = events.reduce(function(acc, cur){
       if (cur.dist < maxDist) {
@@ -196,7 +202,6 @@
     },[]);
     $('#map').appendTo('.map-small');
     var info = '<small class="text-white">Event results by proximity, not district.<br>*Some zip codes share two districts. Confirm with your state elections department. </small> ';
-
     // Display a list of reps with contact info
     eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards section'));
 
@@ -241,7 +246,7 @@
     $('#save-event').on('submit', eventHandler.save);
     $('#look-up').on('submit', eventHandler.lookup);
     $('#view-all').on('click', TownHall.viewAll);
-    $('#sort-date').on('click', eventHandler.viewByDate);
+    $('.sort').on('click', 'a',  eventHandler.sortTable);
     $('#resetTable').on('click', eventHandler.resetTable);
     $('#resetTable').hide();
     filterSelector.on('click', 'a', eventHandler.filterTable);
@@ -255,7 +260,7 @@
     else{
       TownHall.isMap = true;
     }
-    $('nav').on('click', '.hash-link', function onClickGethref(event) {
+    $('.navbar-main').on('click', '.hash-link', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
@@ -279,7 +284,7 @@
     });
 
     // Only show one popover at a time
-    $('#all-events-table').on('click', 'tr[data-toggle="popover"]', function(e) {
+    $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
       $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
     });
 
