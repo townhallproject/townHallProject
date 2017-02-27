@@ -110,6 +110,7 @@
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
+    $(this).parent().addClass('active')
     $table = $('#all-events-table');
     $('#resetTable').show();
     var filterID = this.id.slice(0,5);
@@ -119,6 +120,7 @@
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     if (filterID === 'All') {
       TownHall.filterIds[filterCol] = '';
+      $('.filter li').removeClass('active');
       eventHandler.renderTableWithArray(data, $table);
     }
     else {
@@ -157,15 +159,18 @@
     $table = $('#all-events-table');
     $('.event-row').remove();
     $('#resetTable').hide();
+    $('.filter li').removeClass('active');
     TownHall.filterIds = {};
     TownHall.filteredResults = [];
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     eventHandler.renderTableWithArray(data, $table);
   };
   // initial state of table
-  eventHandler.filteredTable = function () {
+  eventHandler.initialTable = function () {
+    TownHall.filterIds[meetingType] = ['Town Hall', 'Empty Chair Town Hall'];
+    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
 
-  }
+  };
 
   // renders results of search
   eventHandler.render = function (events, zipQuery, representativePromise) {
