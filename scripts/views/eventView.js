@@ -68,10 +68,13 @@
           rep.party = 'Independent';
           break;
         }
+        var termEnd = new Date(rep.term_end);
+        // If term expires in janurary then assume the election is in the prior year
+        rep.electionYear = termEnd.getMonth() === 0 ? termEnd.getFullYear() - 1 : termEnd.getFullYear();
         $parent.append(compiledTemplate(rep));
       });
       if (representatives.results.length > 3) {
-        $parent.append('<h4 class="col-md-12">Disclaimer: Your zip code encompasses more than one district. Not all reps listed are yours.</h4>');
+        $parent.append('<h4 class="col-md-12 text-center">Your zip code encompasses more than one district.<br><small><a href="http://www.house.gov/representatives/find/">Learn More</a></small></h4>');
       }
     });
   };
