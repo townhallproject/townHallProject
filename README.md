@@ -25,6 +25,7 @@ Submit an event for review by researchers
 
 #### Style Changes
 - In a second terminal window
+- `bower i`
 - Run `grunt watch`
 - Make changes to customboot.less
 - New changes will be written to bootstrap.min.css

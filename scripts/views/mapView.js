@@ -26,9 +26,24 @@
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
 
+    makeZoomToNational();
     addClickListener();
     addPopup();
   });
+
+  function makeZoomToNational() {
+    document.querySelector('.mapboxgl-ctrl-compass').remove();
+
+    var iDiv = '<button class="mapboxgl-ctrl-icon mapboxgl-ctrl-usa"><img src="./images/map/usa.svg"></img></button>';
+
+    var uDiv = document.createElement('button');
+    uDiv.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-usa';
+    uDiv.innerHTML = '<span class="usa-icon"></span>';
+    uDiv.addEventListener('click', function(){
+      map.flyTo(continentalView(window.innerWidth/2, window.innerHeight/2));
+    });
+    document.querySelector('.mapboxgl-ctrl-group').appendChild(uDiv);
+  }
 
   // Add click listener to each district. Used for creating the sidebar, drawing a 'selected' state to the district, & zooming in. TODO: Plug into a sidebar to draw up the list of Town Halls.
   function addClickListener() {
