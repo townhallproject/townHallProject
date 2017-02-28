@@ -40,7 +40,7 @@
           <address>
             <strong>{{Location}}</strong></br>
             {{streetAddress}}<br>
-            {{City}}, {{StateAb}} {{zip}}<br>
+            {{#if City}}{{City}}, {{/if}}{{StateAb}} {{zip}}<br>
             <a href={{addressLink}} target="_blank">Directions</a></br>
             <span class="text-center"><small>{{dist}} miles away from your search</small></span>
             <address>

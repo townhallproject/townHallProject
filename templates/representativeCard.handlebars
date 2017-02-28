@@ -19,8 +19,8 @@
           <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-200px.jpeg" onerror="$(this).remove()" class="grayscale" />
         </div>
         <div class="col-xs-12 no-padding p-0">
+          {{#if office}}<div><label>DC Office:</label> {{office}}</div>{{/if}}
           {{#if electionYear}}<div><label>Next election:</label> {{electionYear}}</div>{{/if}}
-          {{#if office}}<div><label>Office:</label> {{office}}</div>{{/if}}
         </div>
       </div>
     </div>

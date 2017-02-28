@@ -28,7 +28,6 @@
     $('#button-to-form').hide();
     $('.spacer').show();
     $('#look-up').appendTo($('.right-panels'));
-    $('#resetTable').hide();
     TownHall.isCurrentContext = false;
     TownHall.currentContext = [];
     TownHall.zipQuery = '';
@@ -40,7 +39,9 @@
     $results.empty();
     $table = $('#all-events-table');
     $('.event-row').remove();
-    eventHandler.renderTableWithArray(TownHall.allTownHalls, $table);
+    TownHall.filterIds['meetingType'] = 'Town ';
+    data = eventHandler.getFilterState(TownHall.allTownHalls);
+    eventHandler.renderTableWithArray(data, $table);
   };
 
   // Renders one panel, assumes data processing has happened
@@ -116,8 +117,8 @@
   eventHandler.sortTable = function (e) {
     e.preventDefault();
     var sortOn = $(this).attr('data-filter');
-    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
+    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
+    var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults : data;
     TownHall.currentContext = TownHall.sortTable(filtereddata, sortOn);
     $table = $('#all-events-table');
     $('.event-row').remove();
@@ -137,12 +138,12 @@
     var filterCol = $this.attr('data-filter');
     var inputs = $('input[data-filter]');
     $('.event-row').remove();
-    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
     if (filterID === 'All') {
       TownHall.filterIds[filterCol] = '';
     }
     else {
-      data = TownHall.filteredResults.length > 0 ? TownHall.filteredResults:data;
+      data = TownHall.filteredResults.length > 0 ? TownHall.filteredResults : data;
       TownHall.filterIds[filterCol] = filterID;
     }
     data = eventHandler.getFilterState(data);
@@ -215,6 +216,7 @@
     var $results = $('#textresults');
     $parent.empty();
     $results.empty();
+    $('#resetTable').hide();
     var $table = $('#all-events-table');
     $('.event-row').remove();
     var $text = $('<h4>');
