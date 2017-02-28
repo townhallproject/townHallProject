@@ -1,13 +1,5 @@
 (function closure(firebase) {
 
-  window.readData = function (){
-    var townHallsFB = firebase.database().ref('/townHalls/').once('value').then(function(snapshot){
-      var ele = new TownHall (snapshot.val());
-      filterMap(ele);
-      makePointLayer(ele);
-    });
-  };
-
   // Specify Mapbox default access token
   var accessToken = 'pk.eyJ1IjoiZG1vcmlhcnR5IiwiYSI6ImNpejlid2Y1djAxNWsyeHFwNTVoM2ZibWEifQ.MlGaldJiUQ91EDGdjJxLsA';
 
@@ -82,7 +74,13 @@
     };
 
     for (key in data){
-      var iconImage = (data[key].meetingType === 'Teletown Hall' ? 'phone-in' : 'in-person' );
+      var type = data[key].meetingType;
+
+      if (type === 'Teletown Hall' || type === 'Tele-town Hall'){
+        var iconKey = 'phone-in';
+      } else {
+        var iconKey = 'in-person';
+      }
 
       if (data[key].lat) {
         featuresHome.features.push({
@@ -93,12 +91,8 @@
           },
           properties: {
             district: data[key].District,
-            icon: iconImage
+            icon: iconKey
           },
-          layout: {
-            'icon-ignore-placement': true,
-            'icon-ignore-placement': true
-          }
         });
       }
     }
@@ -112,10 +106,9 @@
       },
       'layout': {
         'icon-image': '{icon}',
-        'text-field': '{title}',
         'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-        'text-offset': [0, 0.6],
-        'text-anchor': 'top'
+        'icon-ignore-placement': true,
+        'icon-ignore-placement': true
       }
     });
   }
@@ -206,6 +199,29 @@
     map.setFilter('selected-fill', filter);
     map.setFilter('selected-border', filter);
   }
+
+  // Make the Table below the map
+  function makeTable(data) {
+    var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
+    for (key in data){
+      var ele = data[key];
+      if(ele.Member){
+        var id = ele.Member+ele.Date;
+        ele.rowid = id.replace(/[\W]/g, '');
+        TownHall.allTownHalls.push(ele);
+        $('#all-events-table').append(tableRowTemplate(ele));
+      }
+    }
+  }
+
+  window.readData = function (){
+    var townHallsFB = firebase.database().ref('/townHalls/').once('value').then(function(snapshot){
+      var ele = new TownHall (snapshot.val());
+      filterMap(ele);
+      makePointLayer(ele);
+      makeTable(ele);
+    });
+  };
 
   readData();
 
