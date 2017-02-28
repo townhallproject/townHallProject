@@ -1,435 +1,225 @@
 (function closure(firebase) {
-  var map;
-  var google;
-  var infowindow;
 
-//draws map
-  window.initMap = function initMap() {
-    google = window.google;
+  // Specify Mapbox default access token
+  var accessToken = 'pk.eyJ1IjoiZG1vcmlhcnR5IiwiYSI6ImNpejlid2Y1djAxNWsyeHFwNTVoM2ZibWEifQ.MlGaldJiUQ91EDGdjJxLsA';
 
-    // Initalize reusable infowindow
-    infowindow = new google.maps.InfoWindow({maxWidth: 200});
+  // Specify uploaded Mapbox Studio style URL
+  var styleURL = 'mapbox://styles/dmoriarty/cizljl81e000x2rqk280evaee';
+  var mapId = 'dmoriarty.cd-114-2015'; // used by the click handler only
 
-    var styleArray =[
-      {
-        'featureType': 'administrative.locality',
-        'elementType': 'all',
-        'stylers': [
+  // Define an intial view for the US
+  var continentalView = function(w,h) { return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]); };
+  var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
+
+  mapboxgl.accessToken = accessToken;
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: styleURL,
+    center: continental.center,
+    zoom: continental.zoom,
+    minZoom: 3
+  });
+
+  map.on('load', function() {
+    map.addControl(new mapboxgl.NavigationControl());
+    map.scrollZoom.disable();
+    map.dragRotate.disable();
+    map.touchZoomRotate.disableRotation();
+
+    addClickListener();
+    addPopup();
+  });
+
+  // Add click listener to each district. Used for creating the sidebar, drawing a 'selected' state to the district, & zooming in. TODO: Plug into a sidebar to draw up the list of Town Halls.
+  function addClickListener() {
+    map.on('click', function(e) {
+      var feature = null;
+
+      if (1) {
+        var features = map.queryRenderedFeatures(
+          e.point,
           {
-            'hue': '#0049ff'
-          },
-          {
-            'saturation': 7
-          },
-          {
-            'lightness': 19
-          },
-          {
-            'visibility': 'simplified'
+            layers: ['district_interactive']
+          });
+        if (features.length > 0)
+          feature = features[0];
+      } else {
+        $.ajax({
+          url: 'https://api.mapbox.com/v4/' + mapId + '/tilequery/' + e.lngLat.lng + ',' + e.lngLat.lat + '.json?radius=0&access_token=' + accessToken,
+          method: 'GET',
+          success: function(resp) {
+            if (resp.type === 'FeatureCollection' && resp.features.length > 0)
+              feature = resp.features[0];
           }
-        ]
-      },
-      {
-        'featureType': 'administrative.locality',
-        'elementType': 'labels.text',
-        'stylers': [
-          {
-            'visibility': 'simplified'
-          },
-          {
-            'saturation': '-3'
-          },
-          {
-            'color': '#ac7570'
-          }
-        ]
-      },
-      {
-        'featureType': 'administrative.locality',
-        'elementType': 'labels.text.fill',
-        'stylers': [
-          {
-            'color': '#fd7567'
-          }
-        ]
-      },
-      {
-        'featureType': 'landscape',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'hue': '#ff0000'
-          },
-          {
-            'saturation': -100
-          },
-          {
-            'lightness': 100
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'landscape.natural.landcover',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'landscape.natural.landcover',
-        'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'landscape.natural.terrain',
-        'elementType': 'geometry.stroke',
-        'stylers': [
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'poi',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'hue': '#ffffff'
-          },
-          {
-            'saturation': -100
-          },
-          {
-            'lightness': 100
-          },
-          {
-            'visibility': 'off'
-          }
-        ]
-      },
-      {
-        'featureType': 'poi.government',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'poi.school',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'visibility': 'off'
-          }
-        ]
-      },
-      {
-        'featureType': 'poi.school',
-        'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'color': '#f39247'
-          },
-          {
-            'saturation': '0'
-          },
-          {
-            'visibility': 'on'
-          }
-        ]
-      },
-      {
-        'featureType': 'road',
-        'elementType': 'geometry',
-        'stylers': [
-          {
-            'hue': '#ff6f00'
-          },
-          {
-            'saturation': '100'
-          },
-          {
-            'lightness': 31
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'road',
-        'elementType': 'geometry.stroke',
-        'stylers': [
-          {
-            'color': '#ba2317'
-          },
-          {
-            'saturation': '0'
-          },
-          {
-            'lightness': '-17'
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'road',
-        'elementType': 'labels',
-        'stylers': [
-          {
-            'hue': '#008eff'
-          },
-          {
-            'saturation': -93
-          },
-          {
-            'lightness': 31
-          },
-          {
-            'visibility': 'on'
-          }
-        ]
-      },
-      {
-        'featureType': 'road.arterial',
-        'elementType': 'geometry.stroke',
-        'stylers': [
-          {
-            'visibility': 'on'
-          },
-          {
-            'color': '#f3dbc8'
-          },
-          {
-            'saturation': '0'
-          }
-        ]
-      },
-      {
-        'featureType': 'road.arterial',
-        'elementType': 'labels',
-        'stylers': [
-          {
-            'hue': '#bbc0c4'
-          },
-          {
-            'saturation': -93
-          },
-          {
-            'lightness': -2
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'road.arterial',
-        'elementType': 'labels.text',
-        'stylers': [
-          {
-            'visibility': 'off'
-          }
-        ]
-      },
-      {
-        'featureType': 'road.local',
-        'elementType': 'geometry',
-        'stylers': [
-          {
-            'hue': '#007fff'
-          },
-          {
-            'saturation': -90
-          },
-          {
-            'lightness': -8
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'road.local',
-        'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'color': '#ba2317'
-          }
-        ]
-      },
-      {
-        'featureType': 'transit',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'hue': '#e9ebed'
-          },
-          {
-            'saturation': 10
-          },
-          {
-            'lightness': 69
-          },
-          {
-            'visibility': 'on'
-          }
-        ]
-      },
-      {
-        'featureType': 'water',
-        'elementType': 'all',
-        'stylers': [
-          {
-            'hue': '#b6e5fb'
-          },
-          {
-            'saturation': -78
-          },
-          {
-            'lightness': 67
-          },
-          {
-            'visibility': 'simplified'
-          }
-        ]
-      },
-      {
-        'featureType': 'water',
-        'elementType': 'geometry.fill',
-        'stylers': [
-          {
-            'color': '#b6e5fb'
-          },
-          {
-            'saturation': '-72'
-          },
-          {
-            'lightness': '10'
-          }
-        ]
-      },
-      {
-        'featureType': 'water',
-        'elementType': 'geometry.stroke',
-        'stylers': [
-          {
-            'color': '#6496af'
-          }
-        ]
+        });
       }
-    ];
 
-    var options = {
-      zoom: 4,
-      scrollwheel: false,
-      navigationControl: false,
-      mapTypeControl: false,
-      styles: styleArray,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      if (feature) {
+        focusMap(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
+        highlightDistrict(feature.properties.GEOID);
+      } else {
+        if (visibility === 'visible') {
+          map.setLayoutProperty('selected-fill', 'visibility', 'none');
+          map.setLayoutProperty('selected-border', 'visibility', 'none');
+        }
+      }
+    });
+  }
+
+  // Creates the point layer. TODO: Replace circle feature type with icons
+  function makePointLayer (data) {
+    var featuresHome = {
+      type: 'FeatureCollection',
+      features: []
     };
 
-    map = new google.maps.Map(document.getElementById('map'), options);
-    var bounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(20, -124.39),
-      new google.maps.LatLng(49.38, -66.94)
-    );
-    map.fitBounds(bounds);
-    google.maps.event.addDomListener(window, 'resize', onResizeMap);
-  };
+    for (key in data){
+      var type = data[key].meetingType;
 
-  window.onResizeMap = function onResizeMap() {
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'address': 'US' }, function onGeocode(results, status) {
-      google.maps.event.trigger(map, 'resize');
-      // map.setCenter(results[0].geometry.location);
-      var resizeBounds = new google.maps.LatLngBounds();
-      var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-      if ( TownHall.zipQuery) {
-        resizeBounds.extend(TownHall.zipQuery);
+      if (type === 'Teletown Hall' || type === 'Tele-town Hall'){
+        var iconKey = 'phone-in';
+      } else {
+        var iconKey = 'in-person';
       }
-      data.forEach(function(ele){
-        marker = new google.maps.LatLng(ele.lat, ele.lng);
-        resizeBounds.extend(marker);
-      });
-    // map.setCenter(results[0].geometry.location);
-      map.fitBounds(resizeBounds);
-    });
-  };
 
-  // TODO; Probably redudent with resize map
-  window.recenterMap = function(markers, zipQuery) {
-    google.maps.event.trigger(map, 'resize');
-    var bounds = new google.maps.LatLngBounds();
-    var geocoder = new google.maps.Geocoder();
-    for (var i = 0; i < markers.length; i++) {
-      marker = new google.maps.LatLng(markers[i].lat, markers[i].lng);
-      bounds.extend(marker);
+      if (data[key].lat) {
+        featuresHome.features.push({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [data[key].lng, data[key].lat]
+          },
+          properties: {
+            district: data[key].District,
+            icon: iconKey
+          },
+        });
+      }
     }
-      // google.maps.event.trigger(map, 'resize');
-    bounds.extend(zipQuery);
-    map.setCenter(zipQuery);
-    map.fitBounds(bounds);
-      //TODO: add maker for search query, but need to be able to remove it.
-      // var marker = new google.maps.Marker({
-      //   map: map,
-      //   position: zipQuery,
-      //   name: 'zipQuery',
-      //
-      // })
-  };
 
-// listens for new events
-// Adds all events into main data array
-// Adds all events as markers
-// renders tables
-// TODO: sperate out into more concise functions
+    map.addLayer({
+      'id': 'townhall-points',
+      'type': 'symbol',
+      'source': {
+        'type': 'geojson',
+        'data': featuresHome
+      },
+      'layout': {
+        'icon-image': '{icon}',
+        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+        'icon-ignore-placement': true,
+        'icon-ignore-placement': true
+      }
+    });
+  }
+
+  // Adds a Popup listener to the point layer. TODO: Determine content for the popup.
+  function addPopup () {
+    var popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false
+    });
+
+    map.on('mousemove', function(e) {
+      var features = map.queryRenderedFeatures(e.point, { layers: ['townhall-points'] });
+      // Change the cursor style as a UI indicator.
+      map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+
+      if (!features.length) {
+        popup.remove();
+        return;
+      }
+
+      var feature = features[0];
+
+      // Populate the popup and set its coordinates
+      // based on the feature found.
+      popup.setLngLat(feature.geometry.coordinates)
+          .setHTML(feature.properties.district)
+          .addTo(map);
+    });
+  }
+
+  // Does the initial filter for the map to determine which districts have Town Halls. TODO: Add in a data-driven style for the district layer that does a different fill if it's a local represenative vs. a Senator
+  function filterMap (townHallData) {
+    var filter = ['any'];
+
+    for (key in townHallData){
+      district = townHallData[key].District;
+      if (district === 'Senate' && townHallData[key].State) {
+        filter.push(['==', 'NAME', townHallData[key].State]);
+      } else if (district) {
+        var districtId = district.substring(3,5);
+        var getFIPS;
+
+        if (districtId.length === 1){
+          districtId = '0' + districtId;
+        }
+
+        stateData.forEach(function(n){
+          if (n.Name === townHallData[key].State) {
+            getFIPS = n.FIPS;
+          }
+        });
+
+        var geoid = getFIPS + districtId;
+
+        filter.push(['==', 'GEOID', geoid]);
+      }
+    }
+
+    map.setFilter('district_fill', filter);
+    map.setFilter('district_glow', filter);
+  }
+
+  // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
+  function focusMap(stateAbbr, districtCode) {
+    var height = window.innerHeight,
+      width = window.innerWidth,
+      districtAbbr = districtCode ? districtCode : '';
+
+    var view = geoViewport.viewport(bboxes[stateAbbr + districtAbbr], [width/2, height/2]);
+    view.zoom = view.zoom - 0.5;
+    map.flyTo(view);
+  }
+
+  // Handles the highlight for districts when clicked on. 
+  function highlightDistrict (geoid) {
+    var visibility = map.getLayoutProperty('selected-fill', 'visibility');
+    // If there are no selections, turn dem layers on
+    if (visibility === 'none') {
+      map.setLayoutProperty('selected-fill', 'visibility', 'visible');
+      map.setLayoutProperty('selected-border', 'visibility', 'visible');
+    }
+
+    // Filter for which district has been selected
+    var filter = ['all', ['==', 'GEOID', geoid]];
+
+    // Set that layer filter to the selected
+    map.setFilter('selected-fill', filter);
+    map.setFilter('selected-border', filter);
+  }
+
+  // Make the Table below the map
+  function makeTable(data) {
+    var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
+    for (key in data){
+      var ele = data[key];
+      if(ele.Member){
+        var id = ele.Member+ele.Date;
+        ele.rowid = id.replace(/[\W]/g, '');
+        TownHall.allTownHalls.push(ele);
+        $('#all-events-table').append(tableRowTemplate(ele));
+      }
+    }
+  }
+
   window.readData = function (){
-    var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('State');
-    townHallsFB.on('child_added', function getSnapShot(snapshot) {
-      var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
-      var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
+    var townHallsFB = firebase.database().ref('/townHalls/').once('value').then(function(snapshot){
       var ele = new TownHall (snapshot.val());
-      var id = ele.Member+ele.Date;
-      ele.rowid = id.replace(/[\W]/g, '');
-      TownHall.allTownHalls.push(ele);
-      $('#all-events-table').append(tableRowTemplate(ele));
-      $("[data-toggle='popover']").popover({html:true});
-      var coords = [ele.lng, ele.lat];
-      var latLng = new google.maps.LatLng(coords[1], coords[0]);
-      // eslint-disable-next-line no-unused-vars
-      ele.addressLink = 'https://www.google.com/maps?q=' + escape(ele.address);
-      var contentString = mapPopoverTemplate(ele);
-      var marker = new google.maps.Marker({
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 0.5,
-        fillColor: '#FF0000',
-        fillOpacity: 0.35,
-        map: map,
-        position: latLng,
-        name: ele.name,
-        time: ele.time
-      });
-      marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
-      marker.addListener('click', function() {
-        infowindow.setContent(contentString);
-        infowindow.open(map, marker);
-      });
+      filterMap(ele);
+      makePointLayer(ele);
+      makeTable(ele);
     });
   };
 
