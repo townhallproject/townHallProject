@@ -392,7 +392,7 @@
       //
       // })
   };
-  
+
 // listens for new events
 // Adds all events into main data array
 // Adds all events as markers
@@ -405,7 +405,7 @@
       var ele = new TownHall (snapshot.val());
       ele.rowid = ele.eventId;
       TownHall.allTownHalls.push(ele);
-      $('#all-events-table').append(tableRowTemplate(ele));
+      eventHandler.initialTable(ele);
       $('#'+ele.rowid).popover({html:true});
       var coords = [ele.lng, ele.lat];
       var latLng = new google.maps.LatLng(coords[1], coords[0]);

@@ -398,6 +398,10 @@ article{
   padding: 6px;
 }
 
+#filter-info li{
+  margin: 20px;
+}
+
 // Results
 .input-md, .input-lg{
   background-color: @brand-secondary;
@@ -626,48 +630,5 @@ img.grayscale {
   }
   .calendarButton{
     display: none;
-  }
-}
-
-@media only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
-
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr {
-		display: block;
-	}
-
-	thead th{
-    text-align: center!important;
-    background-color: @brand-success;
-    color: white;
-  }
-
-  thead th button, thead .btn-group{
-    width: 100%;
-  }
-
-	thead tr .noninteractive{
-    display: none;
-	}
-
-	tr {
-    border: 1px solid #ccc;
-    padding-top: 10px;
-    padding-bottom: 10px;
-   }
-
-	td {
-		/* Behave  like a "row" */
-    padding: 0!important;
-		border: none!important;
-    border-top: none;
-		position: relative;
-    text-align: center;
-	}
-
-  tr .member{
-    text-transform: uppercase;
-    font-weight: 600;
   }
 }
