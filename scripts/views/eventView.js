@@ -113,14 +113,12 @@
   eventHandler.sortTable = function (e) {
     e.preventDefault();
     var sortOn = $(this).attr('data-filter');
-    console.log(sortOn);
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults: data;
     TownHall.currentContext = TownHall.sortTable(filtereddata, sortOn);
     $table = $('#all-events-table');
     $('.event-row').remove();
     data = eventHandler.getFilterState(data);
-    console.log(TownHall.filterIds);
     eventHandler.renderTableWithArray(data, $table);
   };
 
@@ -145,7 +143,6 @@
       TownHall.filterIds[filterCol] = filterID;
     }
     data = eventHandler.getFilterState(data);
-    console.log(TownHall.filterIds);
     eventHandler.renderTableWithArray(data, $table);
   };
 
