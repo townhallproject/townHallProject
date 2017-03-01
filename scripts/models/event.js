@@ -82,12 +82,16 @@
   TownHall.sortTable = function(data, sortOn) {
     return data.sort(function(a, b){
       // case insensitive
-      if (!parseInt(b[sortOn])) {
-        return a[sortOn].toLowerCase().localeCompare(b[sortOn].toLowerCase());
+      console.log(b[sortOn], parseInt(b[sortOn]));
+      if (a[sortOn] && b[sortOn]) {
+        if (parseInt(b[sortOn])) {
+          return a[sortOn] - b[sortOn];
+        }
+        else {
+          return a[sortOn].toLowerCase().localeCompare(b[sortOn].toLowerCase());
+        }
       }
-      else {
-        return a[sortOn] - b[sortOn];
-      }
+      
     });
   };
 
