@@ -104,8 +104,7 @@
   // Filters by a query in a column
   TownHall.filterColumnByQuery = function(filterCol, query, data) {
     return data.filter(function(element) {
-      console.log('filtering: ', filterCol, 'looking for: ', query);
-      return element[filterCol].indexOf(query) !== -1;
+      return element[filterCol].toLowerCase().indexOf(query.toLowerCase()) !== -1;
     });
   };
 
