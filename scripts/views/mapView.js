@@ -403,7 +403,6 @@
       var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
       var ele = new TownHall (snapshot.val());
-      ele.rowid = ele.eventId;
       TownHall.allTownHalls.push(ele);
       eventHandler.initialTable(ele);
       $('#'+ele.rowid).popover({html:true});
