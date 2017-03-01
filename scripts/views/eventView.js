@@ -227,7 +227,7 @@
       return acc;
     },[]);
     $('#map').appendTo('.map-small');
-    var info = '<small class="text-white">Event results by proximity, not district.<br>*Some zip codes share two districts. Confirm with your state elections department. </small> ';
+    var info = '<small class="text-white">Event results by proximity, not district.</small> ';
     // Display a list of reps with contact info
     eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards section'));
 
