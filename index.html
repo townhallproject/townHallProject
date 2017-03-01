@@ -40,6 +40,8 @@
     <link href='https://actionnetwork.org/css/style-embed-whitelabel.css' rel='stylesheet' type='text/css' />
     <script src="https://use.fontawesome.com/316bfde8e8.js"></script>
     <link href="https://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/styles/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/styles/jquery-ui.structure.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,900" rel="stylesheet">
     <link rel="stylesheet" href="/styles/css/bootstrap.min.css">
     <script>
@@ -52,7 +54,7 @@
     </script>
   </head>
   <body>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-main">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
@@ -137,7 +139,7 @@
            </section>
         </div>
         <!-- Cards showing representatives and their contact info -->
-        <div class="background-gray" id="representativeCards">
+        <div id="representativeCards">
           <section class="container container-fluid"></section>
         </div>
         <section class="scroll-to-form text-center">
@@ -156,110 +158,87 @@
                   <li><span class="text-secondary">Town Hall</span><span> - A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents</span></li>
                   <li><span class="text-secondary">Office Hours </span><span> - Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend	</span></li>
                   <li><span class="text-secondary">Ticketed Event</span><span> - Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
-                  <li><span class="text-secondary">TeleTown Hall Meeting </span><span>	- A town Hall conducted by conference call.</span></li>
+                  <li><span class="text-secondary">TeleTown Hall Meeting </span><span>	- A town hall conducted by conference call.</span></li>
+                  <li><span class="text-secondary">DC Event</span><span>	- Event held in the MOC's DC Office.</span></li>
                   <li><span class="text-secondary">Coffee</span><span> - Usually a small regular meeting with constituents in Washington D.C. while Congress is in session.</span></li>
                 </ul>
               </small>
           </div>
-              <div class="">
-              <table class="table table-hover table-striped" id="complete">
-                <thead class='text-info'><button type="" name="" id="resetTable" class="btn btn-secondary btn-xs pull-right">Reset filters</button>
-                  <tr>
-                    <th class="Member">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <strong>Member</strong>
-                          <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                        </button>
-                        <input data-filter="Member" type="text" class="form-control dropdown-menu filter" placeholder="Search by member">
-                      </div>
-                    </th>
-                    <th class="party">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <strong>Party</strong>
-                          <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                        </button>
-                        <div class="dropdown-menu filter">
-                          <ul class="list-unstyled">
-                            <li><a data-filter="Party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
-                            </li>
-                            <li><a data-filter="Party" id="Republican" class="dropdown-item" href="#">Republican</a>
-                            </li>
-                            <li><a data-filter="Party" id="Independent" class="dropdown-item" href="#">Independent</a>
-                            </li>
-                            <li><a data-filter="Party" id="All" class="dropdown-item" href="#">All</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </th>
-                    <th>
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <strong>Home State</strong>
-                          <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                        </button>
-                          <input data-filter="State" type="text" class="form-control dropdown-menu filter" placeholder="Search by state">
-                      </div>
-                    </th>
-                    <th class="noninteractive">
-                      <div class="noninteractive-header">
-                        District
-                      </div>
-                    </th>
-                    <th class="meetingType">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <strong>Meeting Type</strong>
-                          <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                        </button>
-                        <div class="dropdown-menu filter">
-                          <ul class="list-unstyled">
-                            <li><a data-filter="meetingType" id="Town Hall" class="dropdown-item" href="#">Town Hall</a>
-                            </li>
-                            <li><a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a>
-                            </li>
-                            <li><a data-filter="meetingType" id="Ticketed Event" class="dropdown-item" href="#">Ticketed Event</a>
-                            </li>
-                            <li><a data-filter="meetingType" id="Tele-Town Hall" class="dropdown-item" href="#">Tele-Town Hall</a>
-                            </li>
-                            <li><a data-filter="meetingType" id="All" class="dropdown-item" href="#">All</a>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </th>
-                    <th>
-                      <button id="sort-date" class="btn btn-white dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false">
-                        <strong>Date</strong>
-                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                      </button>
-                    </th>
-                    <th class="time noninteractive">
-                      <div class="noninteractive-header">
-                        Time
-                      </div>
-                    </th>
-                    <th class="noninteractive">
-                      <div class="noninteractive-header">
-                        Location
-                      </div>
-                    </th>
-                    <th class="noninteractive">
-                      <div class="noninteractive-header">
-                        Address
-                      </div>
-                    </th>
-
-                  </tr>
-                </thead>
-                <tbody id="all-events-table">
-                  <p class = 'errors hidden'>Nothing matches your filters</p>
-                </tbody>
-              </table>
-            </div>
-          </section>
+          <div>
+            <ul id="all-events-table" class="list-group">
+              <li class="list-group-item list-group-heading">
+                <nav class="navbar navbar-default navbar-static-top ">
+                  <ul class="nav navbar-nav navbar-left" id="filter-info">
+                    <li><button type="" name="" id="resetTable" class="btn btn-secondary btn-xs">Reset filters</button></li>
+                    <li><span id="current-state" data-current=0 data-total=0></span></li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Member <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li class="downdown-title">Search by member of Congress</li>
+                        <li role="separator" class="divider"></li>
+                        <li><input data-filter="Member" type="text" class="form-control dropdown-item filter" placeholder="Search by member"> </li>
+                      </ul>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party <span class="caret"></span></a>
+                      <ul class="dropdown-menu filter">
+                        <li class="downdown-title">Filtery by party</li>
+                        <li role="separator" class="divider"></li>
+                        <li><a data-filter="Party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
+                        </li>
+                        <li><a data-filter="Party" id="Republican" class="dropdown-item" href="#">Republican</a>
+                        </li>
+                        <li><a data-filter="Party" id="Independent" class="dropdown-item" href="#">Independent</a>
+                        </li>
+                        <li><a data-filter="Party" id="All" class="dropdown-item" href="#">All</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">State <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li class="downdown-title">Search by State</li>
+                        <li role="separator" class="divider"></li>
+                        <li><input data-filter="State" type="text" class="form-control dropdown-item filter" placeholder="Search by state"></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Event Type <span class="caret"></span></a>
+                      <ul class="dropdown-menu filter">
+                        <li class="downdown-title">Filter by Event Type</li>
+                        <li role="separator" class="divider"></li>
+                        <li class="active"><a data-filter="meetingType" id="Town Hall" class="dropdown-item active" href="#">Town Hall</a>
+                        </li>
+                        <li><a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a>
+                        </li>
+                        <li><a data-filter="meetingType" id="Ticketed Event" class="dropdown-item" href="#">Ticketed Event</a>
+                        </li>
+                        <li><a data-filter="meetingType" id="Tele-Town Hall" class="dropdown-item" href="#">Tele-Town Hall</a>
+                        </li>
+                        <li class=""><a data-filter="meetingType" id="Empty Chair Town Hall" class="dropdown-item " href="#">Empty Chair Town Hall</a>
+                        </li>
+                        <li><a data-filter="meetingType" id="All" class="dropdown-item" href="#">All</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort <span class="caret"></span></a>
+                      <ul class="dropdown-menu sort">
+                        <li class="downdown-title">Sort Table</li>
+                        <li role="separator" class="divider"></li>
+                        <li><a data-filter="dateObj" id="byDate" class="dropdown-item" href="#">By Date</a>
+                        </li>
+                        <li><a data-filter="State" id="byState" class="dropdown-item" href="#">By State</a>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </nav>
+              </li> <!-- end header-->
+            </ul><!--end table-->
+          </div>
+        </section>
       </div>
       <div role="tabpanel" class="tab-pane " id="submit">
         <div class='embed-container'>
@@ -379,6 +358,7 @@
     </footer>
     <!-- Vendor Files -->
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
+    <script src="/vendor/scripts/jquery-ui.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
     <script src="/vendor/scripts/tether.js"></script>
     <script src="/vendor/scripts/handlebars-v4.0.5.js"></script>

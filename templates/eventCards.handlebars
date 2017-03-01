@@ -29,15 +29,18 @@
       </div>
     </div>
     <div class="panel-body">
-      <span class="text-success text-center"><h4><span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}, {{timeZone}}</span></h4></span>
+      <span class="text-success text-center"><h4>
+        <span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4></span>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{{Notes}}}
+        {{#if Notes}}
+        <li class="list-group-item list-item-no-border">{{{Notes}}}
         </li>
+        {{/if}}
         <li class="list-group-item">
           <address>
             <strong>{{Location}}</strong></br>
             {{streetAddress}}<br>
-            {{City}}, {{StateAb}} {{zip}}<br>
+            {{#if City}}{{City}}, {{/if}}{{StateAb}} {{zip}}<br>
             <a href={{addressLink}} target="_blank">Directions</a></br>
             <span class="text-center"><small>{{dist}} miles away from your search</small></span>
             <address>

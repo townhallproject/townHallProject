@@ -397,18 +397,15 @@
 // Adds all events into main data array
 // Adds all events as markers
 // renders tables
-// TODO: sperate out into more concise functions
   window.readData = function (){
     var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('State');
     townHallsFB.on('child_added', function getSnapShot(snapshot) {
       var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
       var ele = new TownHall (snapshot.val());
-      var id = ele.Member+ele.Date;
-      ele.rowid = id.replace(/[\W]/g, '');
       TownHall.allTownHalls.push(ele);
-      $('#all-events-table').append(tableRowTemplate(ele));
-      $("[data-toggle='popover']").popover({html:true});
+      eventHandler.initialTable(ele);
+      $('#'+ele.rowid).popover({html:true});
       var coords = [ele.lng, ele.lat];
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars
