@@ -227,7 +227,7 @@
       return acc;
     },[]);
     $('#map').appendTo('.map-small');
-    var info = '<small class="text-white">Event results by proximity, not district.</small> ';
+    var info = '<small class="text-white">Event results by proximity, not by district.</small> ';
     // Display a list of reps with contact info
     eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards section'));
 
