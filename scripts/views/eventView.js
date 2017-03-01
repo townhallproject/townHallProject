@@ -322,7 +322,7 @@
       $(e.target).data('bs.popover').inState.click = false;
     });
   }
-
+  window.onBeforeunload=null
 
   module.eventHandler = eventHandler;
 })(window);

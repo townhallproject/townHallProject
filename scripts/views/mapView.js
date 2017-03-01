@@ -405,7 +405,10 @@
       var ele = new TownHall (snapshot.val());
       TownHall.allTownHalls.push(ele);
       eventHandler.initialTable(ele);
-      $('#'+ele.rowid).popover({html:true});
+      $('[data-toggle="popover"]').popover({
+        container: 'body',
+        html:true
+      });
       var coords = [ele.lng, ele.lat];
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars
