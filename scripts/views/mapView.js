@@ -1,52 +1,60 @@
 (function closure(firebase) {
 
-  // Specify Mapbox default access token
-  var accessToken = 'pk.eyJ1IjoiZG1vcmlhcnR5IiwiYSI6ImNpejlid2Y1djAxNWsyeHFwNTVoM2ZibWEifQ.MlGaldJiUQ91EDGdjJxLsA';
-
-  // Specify uploaded Mapbox Studio style URL
-  var styleURL = 'mapbox://styles/dmoriarty/cizljl81e000x2rqk280evaee';
-  var mapId = 'dmoriarty.cd-114-2015'; // used by the click handler only
-
+  var eventHandler = {};
+  var townhallData;
+  var map;
+  
   // Define an intial view for the US
   var continentalView = function(w,h) { return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]); };
   var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
 
-  mapboxgl.accessToken = accessToken;
-  var map = new mapboxgl.Map({
-    container: 'map',
-    style: styleURL,
-    center: continental.center,
-    zoom: continental.zoom,
-    minZoom: 3
-  });
+  function setMap(){
+    // Specify Mapbox default access token
+    var accessToken = 'pk.eyJ1IjoiZG1vcmlhcnR5IiwiYSI6ImNpejlid2Y1djAxNWsyeHFwNTVoM2ZibWEifQ.MlGaldJiUQ91EDGdjJxLsA';
 
-  map.on('load', function() {
+    // Specify uploaded Mapbox Studio style URL
+    var styleURL = 'mapbox://styles/dmoriarty/cizljl81e000x2rqk280evaee';
+    var mapId = 'dmoriarty.cd-114-2015'; // used by the click handler only
+
+    mapboxgl.accessToken = accessToken;
+    map = new mapboxgl.Map({
+      container: 'map',
+      style: styleURL,
+      center: continental.center,
+      zoom: continental.zoom,
+      minZoom: 3
+    });
+
+    // Set Mapbox map controls
     map.addControl(new mapboxgl.NavigationControl());
     map.scrollZoom.disable();
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
 
-    makeZoomToNational();
-    addClickListener();
-    addPopup();
-  });
+    map.on('load', function() {
+      makeZoomToNationalButton();
+      addDistrictListener();
+      addPopups();
+    });
+  }
 
-  function makeZoomToNational() {
+  // Creates the button in our zoom controls to go to the national view
+  function makeZoomToNationalButton() {
     document.querySelector('.mapboxgl-ctrl-compass').remove();
 
-    var iDiv = '<button class="mapboxgl-ctrl-icon mapboxgl-ctrl-usa"><img src="./images/map/usa.svg"></img></button>';
+    var usaButton = document.createElement('button');
 
-    var uDiv = document.createElement('button');
-    uDiv.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-usa';
-    uDiv.innerHTML = '<span class="usa-icon"></span>';
-    uDiv.addEventListener('click', function(){
+    usaButton.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-usa';
+    usaButton.innerHTML = '<span class="usa-icon"></span>';
+    usaButton.addEventListener('click', function(){
       map.flyTo(continentalView(window.innerWidth/2, window.innerHeight/2));
     });
-    document.querySelector('.mapboxgl-ctrl-group').appendChild(uDiv);
+
+    document.querySelector('.mapboxgl-ctrl-group').appendChild(usaButton);
   }
 
   // Add click listener to each district. Used for creating the sidebar, drawing a 'selected' state to the district, & zooming in. TODO: Plug into a sidebar to draw up the list of Town Halls.
-  function addClickListener() {
+  function addDistrictListener() {
     map.on('click', function(e) {
       var feature = null;
 
@@ -72,6 +80,7 @@
       if (feature) {
         focusMap(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
         highlightDistrict(feature.properties.GEOID);
+        makeSidebar(feature.properties.ABR, feature.properties.GEOID.substring(2,4))
       } else {
         if (visibility === 'visible') {
           map.setLayoutProperty('selected-fill', 'visibility', 'none');
@@ -80,6 +89,18 @@
       }
     });
   }
+
+  // Fetch data from Firebase, run map filter & point layers
+  function readData () {
+    var townHallsFB = firebase.database().ref('/townHalls/').once('value').then(function(snapshot){
+      var ele = new TownHall (snapshot.val());
+      townhallData = ele
+
+      filterMap(ele);
+      makePointLayer(ele);
+      makeTable(ele);
+    });
+  };
 
   // Creates the point layer. TODO: Replace circle feature type with icons
   function makePointLayer (data) {
@@ -129,7 +150,7 @@
   }
 
   // Adds a Popup listener to the point layer. TODO: Determine content for the popup.
-  function addPopup () {
+  function addPopups () {
     var popup = new mapboxgl.Popup({
       closeButton: false,
       closeOnClick: false
@@ -188,7 +209,7 @@
   }
 
   // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
-  function focusMap(stateAbbr, districtCode) {
+  function focusMap (stateAbbr, districtCode) {
     var height = window.innerHeight,
       width = window.innerWidth,
       districtAbbr = districtCode ? districtCode : '';
@@ -216,7 +237,7 @@
   }
 
   // Make the Table below the map
-  function makeTable(data) {
+  function makeTable (data) {
     var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
     for (key in data){
       var ele = data[key];
@@ -229,15 +250,92 @@
     }
   }
 
-  window.readData = function (){
-    var townHallsFB = firebase.database().ref('/townHalls/').once('value').then(function(snapshot){
-      var ele = new TownHall (snapshot.val());
-      filterMap(ele);
-      makePointLayer(ele);
-      makeTable(ele);
-    });
+  // Assign Zip Lookup function to Search field
+  function sidebarEvents () {
+    $('#look-up').on('submit', eventHandler.lookup);
+  }
+
+  // Zip Code Lookup!
+  eventHandler.lookup = function (e) {
+    e.preventDefault();
+    var zip = $('#look-up input').val();
+    if (zip) {
+      var validDistricts = [];
+      var callbackTrigger = 0;
+      var thisState;
+
+      zipLookup.forEach(function(n){
+        if (n.zip === zip) {
+          focusMap(n.abr, n.dis);
+          thisState = n.abr;
+          validDistricts.push(n.dis);
+        // Fall back on first four strings if exact zip match doesn't exist
+        } else if (n.zip.substring(0,4) === zip.substring(0,4)) {
+          focusMap(n.abr, n.dis);
+          thisState = n.abr;
+          validDistricts.push(n.dis);
+        }
+
+        callbackTrigger++;
+        if(callbackTrigger === zipLookup.length){
+          makeSidebar(thisState, validDistricts);
+        }
+      });
+    }
   };
 
-  readData();
+  // Match the looked up zip code to district #
+  function matchSelectionToZip (state, districts) {
+    var fetchedData = []
+
+    for (key in townhallData){
+      if (townhallData[key].StateAb === state) {
+        if (townhallData[key].District === 'Senate') {
+          fetchedData.push(townhallData[key])
+        } else {
+          if(districts.constructor === Array) {
+            districts.forEach((d) => {
+              let districtMatcher = state + '-' + d
+              if (townhallData[key].District === districtMatcher) {
+                fetchedData.push(townhallData[key])
+              }
+            })   
+          } else {
+            let districtMatcher = state + '-' + districts
+            if (townhallData[key].District === districtMatcher) {
+              fetchedData.push(townhallData[key])
+            }
+          }
+        }
+      }
+    }
+
+    return fetchedData
+  }
+
+  // Create a sidebar and load it with Town Hall event cards.
+  function makeSidebar (state, districts) {
+    var districtMatcher = state + '-' + districts;
+    let selectedData = matchSelectionToZip(state, districts)
+    var districtCard = Handlebars.getTemplate('eventCards');
+
+    $('.nearest-with-results').empty()
+
+    selectedData.forEach((d) => {
+      $('.nearest-with-results').append(districtCard(d))
+    });
+
+    $('.map-container-large').addClass('hidden')
+    $('.map-container-split').removeClass('hidden')
+    $('#map').prependTo('.map-fixing')
+
+    map.resize();
+  }
+
+  $(document).ready(function(){
+    setMap();
+    readData();
+    sidebarEvents();
+  });
 
 }(window.firebase));
