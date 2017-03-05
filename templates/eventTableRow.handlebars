@@ -1,32 +1,26 @@
-<tr id="{{rowid}}" class= 'event-row' data-Main_State-filter={{State}} data-Member-filter={{Member}}
-  data-container="body" data-animation="true" data-html="true" data-toggle="popover" data-placement="top"
-  title="Notes <a href='javascript:void(0)' class='close'>×</a>"
+<li id="{{eventId}}" class="event-row list-group-item " data-Main_State-filter={{State}} data-Member-filter={{Member}}
+  data-container="body" data-animation="true" data-html="true" {{#if Notes}} data-toggle="popover"   title="Notes <a href='javascript:void(0)' class='close'>×</a>"
+  {{/if}}{{#unless Notes}} data-toggle="" {{/unless}}data-placement="top"
   data-content="{{#if Notes}}{{Notes}}{{/if}}{{#unless Notes}}There are no notes for this event.{{/unless}}">
-  <td class='member'>
+  <span class="member">
+    <h4>
     {{Member}}
-  </td>
-  <td>
-    {{Party}}
-  </td>
-  <td>
-    {{State}}
-  </td>
-  <td>
-    {{District}}
-  </td>
-  <td >
-    {{meetingType}}
-  </td>
-  <td>
-    {{Date}}
-  </td>
-  <td>
-    {{Time}}, {{timeZone}}
-  </td>
-  <td>
-    {{Location}}
-  </td>
-  <td>
-    {{address}}
-  </td>
-</tr>
+    <small>({{Party}})  {{State}},   {{District}}
+    </small>
+  </h4>
+ <span class="badge badge-default badge-pill pull-right">  {{meetingType}}</span>
+  </span>
+  <ul class="list-inline list-inline-separated">
+    {{#if Date}}
+    <li>{{Date}}
+    </li>
+    {{/if}}
+    {{#if Time}}
+    <li>{{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}  </li>
+    {{/if}}
+    {{#if Location}}
+    <li>{{Location}}</li>
+    {{/if}}
+    <li>{{address}}</li>
+  </ul>
+</li>

@@ -137,6 +137,7 @@
 
 .navbar .dropdown-menu{
   min-width: 256px;
+  padding: 10px;
 }
 
 //## Define colors for form feedback states and, by default, alerts.
@@ -199,7 +200,7 @@ header{
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 160px;
+  height: 12em;
   background-color: @brand-info;
   padding: 40px;
 }
@@ -223,9 +224,7 @@ article{
   margin-top:10px;
 }
 
-.dropdown-menu{
-  padding-left:20px;
-}
+
 
 // add to cal styles
 .atcb-list {
@@ -281,8 +280,17 @@ article{
   margin-bottom: 0;
 }
 
-.list-group-item:last-of-type{
-   border-bottom: none;
+
+ .list-group-heading{
+   padding-bottom: 0;
+   padding-left: 0;
+   padding-right: 0;
+   .navbar-right {
+      margin-right: 0;
+   }
+   .navbar-nav{
+     margin-left: 0;
+   }
  }
 
 .Dem .panel-heading, .card-representative.Democrat .card-header{
@@ -340,11 +348,35 @@ article{
    display: none;
 }
 
-.list-group-item{
+.list-item-no-border{
   border-right:none;
   border-left:none;
 }
 
+.list-item-no-border:last-of-type{
+   border-bottom: none;
+ }
+
+.list-inline-separated {
+  li {
+    // adjust leading spacing for each additional item
+    margin-left: -10px;
+    &:first-child {
+      // no leading spacing for initial item
+      margin-left: 0px;
+    }
+
+    &:after {
+      content: '\2022'; // bullet
+      margin: 0 5px;
+    }
+
+    // no bullet on last
+    &:last-child:after {
+      content: '';
+    }
+  }
+}
 // Table formatting
 .table .meetingType{
   min-width: 180px;
@@ -364,6 +396,10 @@ article{
 
 .noninteractive-header {
   padding: 6px;
+}
+
+#filter-info li{
+  margin: 20px;
 }
 
 // Results
@@ -415,7 +451,6 @@ article{
 
 .btn-secondary{
   color: white;
-  // border: white solid 2px;
   background-color: @brand-secondary;
 }
 
@@ -432,10 +467,7 @@ article{
 }
 
 .nearest-with-results{
-  // background-color: #cee3ea;
   height: 528px;
-  // border-left: 1px solid rgb(186, 188, 193);
-  // border-right: 1px solid #c0c4d0;
 }
 
 .header-with-results{
@@ -444,12 +476,10 @@ article{
 
 #map {
   height: 528px;
-  // width: 100%;
 }
 
 #mapEmbed {
   height: 528px;
-  // width: 100%;
 }
 #mapEmbedContainer{
   position: relative;
@@ -466,6 +496,12 @@ article{
   width: 80%;
   margin: auto;
   padding: 20px;
+}
+
+.ui-menu{
+  background-color: white;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
 .page{
@@ -491,6 +527,10 @@ article{
       position: relative;
     }
   }
+}
+
+li[data-toggle='popover']:hover {
+  background-color: @brand-gray;
 }
 
 // google forms
@@ -570,7 +610,6 @@ img.grayscale {
   }
   .embed-container{
     padding-bottom: 2871px;
-    // margin-bottom: 43%;
   }
   .panel{
     min-height: none;
@@ -578,55 +617,9 @@ img.grayscale {
 
   .map-small #map {
     display:none;
-    // height: 25em;
-    // border-top: solid @brand-primary 2px;
-    // width: 100%;
   }
   .calendarButton{
     display: none;
-  }
-}
-
-@media only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
-
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr {
-		display: block;
-	}
-
-	thead th{
-    text-align: center!important;
-    background-color: @brand-success;
-    color: white;
-  }
-
-  thead th button, thead .btn-group{
-    width: 100%;
-  }
-
-	thead tr .noninteractive{
-    display: none;
-	}
-
-	tr {
-    border: 1px solid #ccc;
-    padding-top: 10px;
-    padding-bottom: 10px;
-   }
-
-	td {
-		/* Behave  like a "row" */
-    padding: 0!important;
-		border: none!important;
-    border-top: none;
-		position: relative;
-    text-align: center;
-	}
-
-  tr .member{
-    text-transform: uppercase;
-    font-weight: 600;
   }
 }
 
@@ -639,4 +632,3 @@ img.grayscale {
   background-repeat: no-repeat;
   display: inline-block;
 }
-

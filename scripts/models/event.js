@@ -67,25 +67,44 @@
     return renderTemplate(this);
   };
 
+  TownHall.selectUnique = function(cat){
+    return TownHall.allTownHalls
+    .map(function(ele){
+      return ele[cat];
+    })
+    .filter(function(element, index, array){
+      return array.indexOf(element) === index;
+    });
+  };
+
   //  Table Sorting Methods
-  //takes an array and sorts by date objects
-  TownHall.sortDate = function(data) {
-    return data.sort(function(a, b ){
-      return new Date(a.dateString) - new Date(b.dateString);
+  //takes an array and sorts by sort on query
+  TownHall.sortTable = function(data, sortOn) {
+    return data.sort(function(a, b){
+      // case insensitive
+      if (a[sortOn] && b[sortOn]) {
+        if (parseInt(b[sortOn])) {
+          return a[sortOn] - b[sortOn];
+        }
+        else {
+          return a[sortOn].toLowerCase().localeCompare(b[sortOn].toLowerCase());
+        }
+      }
+
     });
   };
 
   // filters by a value in a column
   TownHall.filterByCol = function(filterCol, filterID, data) {
     return data.filter(function(ele){
-      return ele[filterCol] === filterID;
+      return ele[filterCol].slice(0,5) === filterID;
     });
   };
 
   // Filters by a query in a column
   TownHall.filterColumnByQuery = function(filterCol, query, data) {
     return data.filter(function(element) {
-      return element[filterCol].indexOf(query) !== -1;
+      return element[filterCol].toLowerCase().indexOf(query.toLowerCase()) !== -1;
     });
   };
 
