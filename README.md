@@ -20,6 +20,7 @@ Submit an event for review by researchers
 
 ## Running Locally
 - `npm i`
+- `bower i`
 - `firebase serve`
 - Open localhost:5000
 
