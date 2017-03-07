@@ -7,6 +7,9 @@ The Town Hall Project offers our town hall event list to everyone, across the en
 
 This movement is diverse, open source, and powered by citizens. We are proud to be a part of it.
 
+## Using our data:
+The published event list on our site is open for citizens, activists, and researchers to use. We ask that those re-posting or re-publishing events attribute Town Hall Project and provide a link to townhallproject.com. Use of our REST API is available to partners on a case-by-case basis—to discuss please email info@townhallproject.com
+
 ## User Features:
 - Look up by location
 - Filter/sort by other features (date/rep is going to be present or not)
