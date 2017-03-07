@@ -91,6 +91,8 @@
       container: 'body',
       html:true
     });
+    /*eslint-env es6*/
+    /*eslint quotes: ["error", "single", { "allowTemplateLiterals": true }]*/
     $currentState.text(`Viewing ${cur} of ${total} total events`);
   };
 
@@ -322,7 +324,7 @@
       $(e.target).data('bs.popover').inState.click = false;
     });
   }
-  window.onBeforeunload=null
+  window.onBeforeunload=null;
 
   module.eventHandler = eventHandler;
 })(window);
