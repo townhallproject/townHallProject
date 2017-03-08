@@ -309,7 +309,7 @@
     });
 
     // Only show one popover at a time
-    $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
+    $('#all-events-table').on('click', '[data-toggle="popover"]', function(e) {
       $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
     });
 
@@ -322,7 +322,7 @@
       $(e.target).data('bs.popover').inState.click = false;
     });
   }
-  window.onBeforeunload=null
+  window.onBeforeunload=null;
 
   module.eventHandler = eventHandler;
 })(window);
