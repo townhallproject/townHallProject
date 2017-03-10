@@ -64,6 +64,7 @@
 @brand-success: #3facef;
 @brand-info: #132149;
 @brand-secondary-dark : darken(@brand-secondary, 20%);
+@brand-white: #ffffff;
 .text-white{
   color: white;
 }
@@ -634,5 +635,19 @@ img.grayscale {
   }
   .calendarButton{
     display: none;
+  }
+  .card.card-representative {
+    h3 {
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    .card-block {
+      padding: 1.25em 2em 2em;
+      font-size: 1.25em;
+      .social-icons {
+        padding-top: 1.5em;
+        text-align: center;
+      }
+    }
   }
 }
