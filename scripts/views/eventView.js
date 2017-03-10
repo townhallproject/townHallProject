@@ -311,7 +311,7 @@
     });
 
     // Only show one popover at a time
-    $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
+    $('#all-events-table').on('click', '[data-toggle="popover"]', function(e) {
       $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
     });
 

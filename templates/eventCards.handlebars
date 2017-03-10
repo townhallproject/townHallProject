@@ -30,13 +30,20 @@
     </div>
     <div class="panel-body">
       <span class="text-success text-center"><h4>
+        {{#if eventName}}
+        <strong>{{eventName}}</strong></br>
+        {{/if}}
         <span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4></span>
       <ul class="list-group list-group-flush">
         {{#if Notes}}
         <li class="list-group-item list-item-no-border">{{{Notes}}}
         </li>
         {{/if}}
-        <li class="list-group-item">
+        {{#if RSVP}}
+        <li class="list-group-item list-item-no-border">{{{RSVP}}}
+        </li>
+        {{/if}}
+        <li class="list-group-item list-item-no-border">
           <address>
             <strong>{{Location}}</strong></br>
             {{streetAddress}}<br>
