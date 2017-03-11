@@ -200,7 +200,7 @@
                       <ul class="dropdown-menu">
                         <li class="downdown-title">Search by State</li>
                         <li role="separator" class="divider"></li>
-                        <li><input data-filter="State" type="text" class="form-control dropdown-item filter" placeholder="Search by state"></li>
+                        <li><input id="stateTypeahead" type="text" class="form-control dropdown-item filter" data-provide="typeahead" placeholder="Search by state" data-filter="State" autocomplete="off"></li>
                       </ul>
                     </li>
                     <li class="dropdown">
@@ -355,6 +355,7 @@
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/jquery-ui.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
+    <script src="/vendor/scripts/bootstrap3-typeahead.min.js"></script>
     <script src="/vendor/scripts/tether.js"></script>
     <script src="/vendor/scripts/handlebars-v4.0.5.js"></script>
     <script src="templates.js"></script>
