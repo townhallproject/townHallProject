@@ -158,6 +158,16 @@
     }
   }
 
+  TownHall.removeFilter = function(filter, value) {
+    var index = TownHall.filters[filter].indexOf(value);
+    if (index !== -1) {
+      TownHall.filters[filter].splice(index, 1);
+    }
+    if (TownHall.filters[filter].length === 0) {
+      delete TownHall.filters[filter];
+    }
+  }
+
   // TownHall.fetchAll();
   module.TownHall = TownHall;
 })(window);

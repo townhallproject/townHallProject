@@ -125,6 +125,13 @@
     TownHall.addFilter(filterName, value);
   }
 
+  eventHandler.removeFilter = function() {
+    var $button = $(this);
+    TownHall.removeFilter($button.attr('data-filter'), $button.attr('data-value'));
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
+    $button.remove();
+  }
+
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
@@ -269,6 +276,7 @@
     $('#resetTable').on('click', eventHandler.resetTable);
     filterSelector.on('click', 'a', eventHandler.filterTable);
     filterSelector.on('input', eventHandler.filterTableByInput);
+    $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
 
     // url hash for direct links to subtabs
     // slightly hacky routing
