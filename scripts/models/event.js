@@ -10,12 +10,6 @@
   TownHall.filters = {}
   TownHall.sortOn = 'State';
   TownHall.filteredResults = [];
-  TownHall.filterIds = {
-    meetingType:'',
-    Party:'',
-    State:''
-  };
-
   TownHall.isCurrentContext = false;
   TownHall.isMap = false;
   TownHall.zipQuery;

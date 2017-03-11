@@ -139,21 +139,11 @@
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
-    $this = $(this);
-    $this.parent().addClass('active');
-    $this.parent().siblings().removeClass('active');
     var filter = this.getAttribute('data-filter');
     eventHandler.addFilter(filter, this.id);
 
     var filterID = this.id.slice(0,5);
-    var filterCol = $this.attr('data-filter');
     var inputs = $('input[data-filter]');
-    if (filterID === 'All') {
-      TownHall.filterIds[filterCol] = '';
-    }
-    else {
-      TownHall.filterIds[filterCol] = filterID;
-    }
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
