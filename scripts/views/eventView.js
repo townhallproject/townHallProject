@@ -121,8 +121,16 @@
     eventHandler.renderTableWithArray(data);
   };
 
-  eventHandler.addFilter = function(filterName, value) {
-    TownHall.addFilter(filterName, value);
+  eventHandler.addFilter = function(filter, value) {
+    // Avoid duplicates
+    if (TownHall.filters.hasOwnProperty(filter) && TownHall.filters[filter].indexOf(value) !== -1) {
+      return;
+    }
+
+    TownHall.addFilter(filter, value);
+    var button = '<li><button class="btn btn-secondary btn-xs" ' +
+                 'data-filter="' + filter + '" data-value="' + value + '" >' + value + ' x</button></li>'
+    $('#filter-info').append(button);
   }
 
   eventHandler.removeFilter = function() {
@@ -140,9 +148,6 @@
     $this.parent().siblings().removeClass('active');
     var filter = this.getAttribute('data-filter');
     eventHandler.addFilter(filter, this.id);
-    var button = '<li><button class="btn btn-secondary btn-xs" ' +
-                 'data-filter="' + filter + '" data-value="' + this.id + '" >' + this.id + ' x</button></li>'
-    $('#filter-info').append(button);
 
     var filterID = this.id.slice(0,5);
     var filterCol = $this.attr('data-filter');
