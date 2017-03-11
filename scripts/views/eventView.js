@@ -38,8 +38,7 @@
     $parent.empty();
     $results.empty();
     TownHall.filterIds['meetingType'] = 'Town ';
-    data = eventHandler.getFilterState();
-    eventHandler.renderTableWithArray(data);
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
   // Renders one panel, assumes data processing has happened
@@ -117,8 +116,7 @@
     var sortOn = $(this).attr('data-filter');
     var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults : data;
     TownHall.currentContext = TownHall.sortTable(filtereddata, sortOn);
-    data = eventHandler.getFilterState();
-    eventHandler.renderTableWithArray(data);
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
   eventHandler.addFilter = function(filter, value) {
@@ -158,8 +156,7 @@
     else {
       TownHall.filterIds[filterCol] = filterID;
     }
-    data = eventHandler.getFilterState();
-    eventHandler.renderTableWithArray(data);
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
   eventHandler.filterTableByInput = function(e) {
