@@ -37,7 +37,8 @@
     var $results = $('#textresults');
     $parent.empty();
     $results.empty();
-    TownHall.filterIds['meetingType'] = 'Town ';
+    eventHandler.addFilter('meetingType', 'Town Hall');
+    TownHall.sortOn = 'State';
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
@@ -167,7 +168,6 @@
 
   // initial state of table
   eventHandler.initialTable = function (townhall) {
-    TownHall.filterIds['meetingType'] = 'Town ';
     $currentState = $('#current-state');
     var total = parseInt($currentState.attr('data-total')) + 1;
     var cur = parseInt($currentState.attr('data-current'));
@@ -263,6 +263,7 @@
     filterSelector.on('click', 'a', eventHandler.filterTable);
     filterSelector.on('input', eventHandler.filterTableByInput);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
+    eventHandler.addFilter('meetingType', 'Town Hall');
 
     // url hash for direct links to subtabs
     // slightly hacky routing

@@ -7,18 +7,20 @@
   //Global data stete
   TownHall.allTownHalls = [];
   TownHall.currentContext = [];
+  TownHall.filters = {}
+  TownHall.sortOn = 'State';
   TownHall.filteredResults = [];
   TownHall.filterIds = {
     meetingType:'',
     Party:'',
     State:''
   };
-  TownHall.filters = {};
-  TownHall.sortOn = 'State';
+
   TownHall.isCurrentContext = false;
   TownHall.isMap = false;
   TownHall.zipQuery;
 
+  // Lookup dictionaries
   TownHall.timeZones = {
     PST : 'America/Los_Angeles',
     MST : 'America/Denver',
