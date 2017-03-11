@@ -14,6 +14,7 @@
     State:''
   };
   TownHall.filters = {};
+  TownHall.sortOn = 'State';
   TownHall.isCurrentContext = false;
   TownHall.isMap = false;
   TownHall.zipQuery;
@@ -78,21 +79,16 @@
     });
   };
 
-  //  Table Sorting Methods
-  //takes an array and sorts by sort on query
-  TownHall.sortTable = function(data, sortOn) {
-    return data.sort(function(a, b){
-      // case insensitive
-      if (a[sortOn] && b[sortOn]) {
-        if (parseInt(b[sortOn])) {
-          return a[sortOn] - b[sortOn];
-        }
-        else {
-          return a[sortOn].toLowerCase().localeCompare(b[sortOn].toLowerCase());
-        }
+  // Takes an array and sorts by sortOn field
+  TownHall.sortFunction = function(a, b) {
+    if (a[TownHall.sortOn] && b[TownHall.sortOn]) {
+      if (parseInt(b[TownHall.sortOn])) {
+        return a[TownHall.sortOn] - b[TownHall.sortOn];
       }
-
-    });
+      else {
+        return a[TownHall.sortOn].toLowerCase().localeCompare(b[TownHall.sortOn].toLowerCase());
+      }
+    }
   };
 
   // filters by a value in a column
@@ -113,7 +109,7 @@
           return filter.slice(0, 5) === townhall[key].slice(0, 5);
         })
       })
-    }, data);
+    }, data).sort(TownHall.sortFunction);
   }
 
   // Filters by a query in a column

@@ -110,12 +110,9 @@
     return TownHall.getFilteredResults(data);
   };
 
-  // takes the current set of data in the table and sorts by selection
   eventHandler.sortTable = function (e) {
     e.preventDefault();
-    var sortOn = $(this).attr('data-filter');
-    var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults : data;
-    TownHall.currentContext = TownHall.sortTable(filtereddata, sortOn);
+    TownHall.sortOn = $(this).attr('data-filter');
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
