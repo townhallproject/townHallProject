@@ -147,15 +147,6 @@
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
-  eventHandler.filterTableByInput = function(e) {
-    e.preventDefault();
-    var query = $(this).val();
-    var filterCol = $(this).attr('data-filter');
-    data = eventHandler.getFilterState();
-    TownHall.filteredResults = TownHall.filterColumnByQuery(filterCol, query, data);
-    eventHandler.renderTableWithArray(TownHall.filteredResults);
-  };
-
   // initial state of table
   eventHandler.initialTable = function (townhall) {
     $currentState = $('#current-state');
@@ -238,20 +229,33 @@
     }
   };
 
+  function setupTypeaheads() {
+    var typeaheadConfig = {
+      fitToElement: true,
+      delay: 250,
+      highlighter: function(item) { return item; }, // Kill ugly highlight
+      updater: function(selection) {
+        eventHandler.addFilter(this.$element.attr('data-filter'), selection);
+        eventHandler.renderTableWithArray(eventHandler.getFilterState());
+      }
+    }
+
+    $("#stateTypeahead").typeahead($.extend({source: states}, typeaheadConfig));
+  }
+
   $(document).ready(function(){
     init();
   });
 
   function init() {
-    var filterSelector = $('.filter');
     $('[data-toggle="popover"]').popover({html:true});
     $('#button-to-form').hide();
     $('#save-event').on('submit', eventHandler.save);
     $('#look-up').on('submit', eventHandler.lookup);
     $('#view-all').on('click', TownHall.viewAll);
     $('.sort').on('click', 'a', eventHandler.sortTable);
-    filterSelector.on('click', 'a', eventHandler.filterTable);
-    filterSelector.on('input', eventHandler.filterTableByInput);
+    setupTypeaheads();
+    $('.filter').on('click', 'a', eventHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
     eventHandler.addFilter('meetingType', 'Town Hall');
 
@@ -303,7 +307,66 @@
       $(e.target).data('bs.popover').inState.click = false;
     });
   }
+
   window.onBeforeunload=null;
 
   module.eventHandler = eventHandler;
+
+  var states = [
+    "Alaska",
+    "Alabama",
+    "Arkansas",
+    "American Samoa",
+    "Arizona",
+    "California",
+    "Colorado",
+    "Connecticut",
+    "District of Columbia",
+    "Delaware",
+    "Florida",
+    "Georgia",
+    "Guam",
+    "Hawaii",
+    "Iowa",
+    "Idaho",
+    "Illinois",
+    "Indiana",
+    "Kansas",
+    "Kentucky",
+    "Louisiana",
+    "Massachusetts",
+    "Maryland",
+    "Maine",
+    "Michigan",
+    "Minnesota",
+    "Missouri",
+    "Mississippi",
+    "Montana",
+    "North Carolina",
+    "North Dakota",
+    "Nebraska",
+    "New Hampshire",
+    "New Jersey",
+    "New Mexico",
+    "Nevada",
+    "New York",
+    "Ohio",
+    "Oklahoma",
+    "Oregon",
+    "Pennsylvania",
+    "Puerto Rico",
+    "Rhode Island",
+    "South Carolina",
+    "South Dakota",
+    "Tennessee",
+    "Texas",
+    "Utah",
+    "Virginia",
+    "Virgin Islands",
+    "Vermont",
+    "Washington",
+    "Wisconsin",
+    "West Virginia",
+    "Wyoming"
+  ]
 })(window);

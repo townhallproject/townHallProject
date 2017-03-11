@@ -87,13 +87,6 @@
     }
   };
 
-  // filters by a value in a column
-  TownHall.filterByCol = function(filterCol, filterID, data) {
-    return data.filter(function(ele){
-      return ele[filterCol].slice(0,5) === filterID;
-    });
-  };
-
   TownHall.getFilteredResults = function(data) {
     // Itterate through all active filters, and pull out any townhalls that match them
     // At least one attribute from within each filter group must match
