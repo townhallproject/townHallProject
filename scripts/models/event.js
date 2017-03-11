@@ -102,6 +102,20 @@
     });
   };
 
+  TownHall.getFilteredResults = function(data) {
+    // Itterate through all active filters, and pull out any townhalls that match them
+    // At least one attribute from within each filter group must match
+    return TownHall.filteredResults = Object.keys(TownHall.filters).reduce(function(filteredData, key) {
+      return filteredData.filter(function(townhall) {
+        // Currently some of the parties are listed as "Democrat" and some are listed as "Democratic", etc
+        // TODO:  once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
+        return TownHall.filters[key].some(function(filter) {
+          return filter.slice(0, 5) === townhall[key].slice(0, 5);
+        })
+      })
+    }, data);
+  }
+
   // Filters by a query in a column
   TownHall.filterColumnByQuery = function(filterCol, query, data) {
     return data.filter(function(element) {
