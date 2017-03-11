@@ -13,6 +13,7 @@
     Party:'',
     State:''
   };
+  TownHall.filters = {};
   TownHall.isCurrentContext = false;
   TownHall.isMap = false;
   TownHall.zipQuery;
@@ -148,6 +149,14 @@
       return sorted;
     });
   };
+
+  TownHall.addFilter = function(filter, value) {
+    if (!TownHall.filters.hasOwnProperty(filter)) {
+      TownHall.filters[filter] = [value];
+    } else {
+      TownHall.filters[filter].push(value);
+    }
+  }
 
   // TownHall.fetchAll();
   module.TownHall = TownHall;
