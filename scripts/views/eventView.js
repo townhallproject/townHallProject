@@ -138,7 +138,6 @@
     $this = $(this);
     $this.parent().addClass('active');
     $this.parent().siblings().removeClass('active');
-    $('#resetTable').show();
     var filter = this.getAttribute('data-filter');
     eventHandler.addFilter(filter, this.id);
     var button = '<li><button class="btn btn-secondary btn-xs" ' +
@@ -160,20 +159,10 @@
 
   eventHandler.filterTableByInput = function(e) {
     e.preventDefault();
-    $('#resetTable').show();
     var query = $(this).val();
     var filterCol = $(this).attr('data-filter');
     data = eventHandler.getFilterState();
     TownHall.filteredResults = TownHall.filterColumnByQuery(filterCol, query, data);
-  };
-
-  eventHandler.resetTable = function (e) {
-    e.preventDefault();
-    $('#resetTable').hide();
-    $('.filter li').removeClass('active');
-    TownHall.filterIds = {};
-    TownHall.filteredResults = [];
-    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     eventHandler.renderTableWithArray(TownHall.filteredResults);
   };
 
@@ -217,7 +206,6 @@
     var $results = $('#textresults');
     $parent.empty();
     $results.empty();
-    $('#resetTable').hide();
     $('.event-row').remove();
     var $text = $('<h4>');
     var nearest = events.reduce(function(acc, cur){
@@ -273,7 +261,6 @@
     $('#look-up').on('submit', eventHandler.lookup);
     $('#view-all').on('click', TownHall.viewAll);
     $('.sort').on('click', 'a', eventHandler.sortTable);
-    $('#resetTable').on('click', eventHandler.resetTable);
     filterSelector.on('click', 'a', eventHandler.filterTable);
     filterSelector.on('input', eventHandler.filterTableByInput);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
