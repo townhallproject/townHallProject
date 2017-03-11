@@ -548,6 +548,16 @@ li[data-toggle='popover']:hover {
   background-color: @brand-gray;
 }
 
+.typeahead.dropdown-menu {
+  /* Line up typeahead menu with popover */
+  margin-left: -10px;
+  li {
+    a.dropdown-item {
+      padding: 3px 12px;
+    }
+  }
+}
+
 // google forms
 .embed-container {
   position: relative;
