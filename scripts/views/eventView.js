@@ -37,11 +37,9 @@
     var $results = $('#textresults');
     $parent.empty();
     $results.empty();
-    $table = $('#all-events-table');
-    $('.event-row').remove();
     TownHall.filterIds['meetingType'] = 'Town ';
     data = eventHandler.getFilterState(TownHall.allTownHalls);
-    eventHandler.renderTableWithArray(data, $table);
+    eventHandler.renderTableWithArray(data);
   };
 
   // Renders one panel, assumes data processing has happened
@@ -80,7 +78,9 @@
     });
   };
 
-  eventHandler.renderTableWithArray = function (array, $table) {
+  eventHandler.renderTableWithArray = function (array) {
+    $('.event-row').remove();
+    $table = $('#all-events-table');
     $currentState = $('#current-state');
     var total = parseInt($currentState.attr('data-total'));
     var cur = array.length;
@@ -122,10 +122,8 @@
     var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
     var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults : data;
     TownHall.currentContext = TownHall.sortTable(filtereddata, sortOn);
-    $table = $('#all-events-table');
-    $('.event-row').remove();
     data = eventHandler.getFilterState(data);
-    eventHandler.renderTableWithArray(data, $table);
+    eventHandler.renderTableWithArray(data);
   };
 
   // filters the table on click
@@ -134,12 +132,10 @@
     $this = $(this);
     $this.parent().addClass('active');
     $this.parent().siblings().removeClass('active');
-    $table = $('#all-events-table');
     $('#resetTable').show();
     var filterID = this.id.slice(0,5);
     var filterCol = $this.attr('data-filter');
     var inputs = $('input[data-filter]');
-    $('.event-row').remove();
     var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
     if (filterID === 'All') {
       TownHall.filterIds[filterCol] = '';
@@ -149,33 +145,28 @@
       TownHall.filterIds[filterCol] = filterID;
     }
     data = eventHandler.getFilterState(data);
-    eventHandler.renderTableWithArray(data, $table);
+    eventHandler.renderTableWithArray(data);
   };
 
   eventHandler.filterTableByInput = function(e) {
     e.preventDefault();
     $('#resetTable').show();
-    $table = $('#all-events-table');
     var query = $(this).val();
     var filterCol = $(this).attr('data-filter');
-    $('.event-row').remove();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     // var data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
     data = eventHandler.getFilterState(data);
     TownHall.filteredResults = TownHall.filterColumnByQuery(filterCol, query, data);
-    eventHandler.renderTableWithArray(TownHall.filteredResults, $table);
   };
 
   eventHandler.resetTable = function (e) {
     e.preventDefault();
-    $table = $('#all-events-table');
-    $('.event-row').remove();
     $('#resetTable').hide();
     $('.filter li').removeClass('active');
     TownHall.filterIds = {};
     TownHall.filteredResults = [];
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    eventHandler.renderTableWithArray(data, $table);
+    eventHandler.renderTableWithArray(TownHall.filteredResults);
   };
 
   // initial state of table
@@ -219,7 +210,6 @@
     $parent.empty();
     $results.empty();
     $('#resetTable').hide();
-    var $table = $('#all-events-table');
     $('.event-row').remove();
     var $text = $('<h4>');
     var nearest = events.reduce(function(acc, cur){
@@ -238,7 +228,7 @@
       var townHall = events[0];
       var townHalls = [townHall];
       recenterMap(townHalls, zipQuery);
-      eventHandler.renderTableWithArray(events, $table);
+      eventHandler.renderTableWithArray(events);
       $text.html('There are no events within 75 miles of your zip, the closest one is ' + townHall.dist + ' miles away. <br>' + info);
       $results.append($text);
       TownHall.saveZipLookup($zip);
@@ -256,7 +246,7 @@
         $text.html('There are ' + nearest.length + ' upcoming events within 75 miles of you. <br>' +info);
       }
       $results.append($text);
-      eventHandler.renderTableWithArray(nearest, $table);
+      eventHandler.renderTableWithArray(nearest);
       nearest.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       });
