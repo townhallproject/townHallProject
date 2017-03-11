@@ -38,7 +38,7 @@
     $parent.empty();
     $results.empty();
     TownHall.filterIds['meetingType'] = 'Town ';
-    data = eventHandler.getFilterState(TownHall.allTownHalls);
+    data = eventHandler.getFilterState();
     eventHandler.renderTableWithArray(data);
   };
 
@@ -106,23 +106,18 @@
     $($tableid).append(compiledTemplate(townhall));
   };
 
-  eventHandler.getFilterState = function (data) {
-    Object.keys(TownHall.filterIds).forEach(function(key) {
-      if (TownHall.filterIds[key]) {
-        data = TownHall.filterByCol(key, TownHall.filterIds[key], data);
-      }
-    });
-    return data;
+  eventHandler.getFilterState = function () {
+    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
+    return TownHall.getFilteredResults(data);
   };
 
   // takes the current set of data in the table and sorts by selection
   eventHandler.sortTable = function (e) {
     e.preventDefault();
     var sortOn = $(this).attr('data-filter');
-    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
     var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults : data;
     TownHall.currentContext = TownHall.sortTable(filtereddata, sortOn);
-    data = eventHandler.getFilterState(data);
+    data = eventHandler.getFilterState();
     eventHandler.renderTableWithArray(data);
   };
 
@@ -136,15 +131,13 @@
     var filterID = this.id.slice(0,5);
     var filterCol = $this.attr('data-filter');
     var inputs = $('input[data-filter]');
-    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
     if (filterID === 'All') {
       TownHall.filterIds[filterCol] = '';
     }
     else {
-      data = TownHall.filteredResults.length > 0 ? TownHall.filteredResults : data;
       TownHall.filterIds[filterCol] = filterID;
     }
-    data = eventHandler.getFilterState(data);
+    data = eventHandler.getFilterState();
     eventHandler.renderTableWithArray(data);
   };
 
@@ -153,9 +146,7 @@
     $('#resetTable').show();
     var query = $(this).val();
     var filterCol = $(this).attr('data-filter');
-    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    // var data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
-    data = eventHandler.getFilterState(data);
+    data = eventHandler.getFilterState();
     TownHall.filteredResults = TownHall.filterColumnByQuery(filterCol, query, data);
   };
 
