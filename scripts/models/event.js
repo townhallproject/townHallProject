@@ -159,6 +159,12 @@
     }
   }
 
+  TownHall.resetFilters = function() {
+    Object.keys(TownHall.filters).forEach(function(key) {
+      delete TownHall.filters[key];
+    });
+  }
+
   TownHall.addFilterIndexes = function(townhall) {
     if (TownHall.allStates.indexOf(townhall.State) === -1) {
       TownHall.allStates.push(townhall.State);

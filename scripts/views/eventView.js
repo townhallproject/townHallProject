@@ -37,7 +37,7 @@
     var $results = $('#textresults');
     $parent.empty();
     $results.empty();
-    eventHandler.addFilter('meetingType', 'Town Hall');
+    eventHandler.resetFilters();
     TownHall.sortOn = 'State';
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
@@ -136,6 +136,11 @@
     $button.parent().remove();
   }
 
+  eventHandler.resetFilters = function() {
+    TownHall.resetFilters();
+    $('#filter-info li button').parent().remove();
+    eventHandler.addFilter('meetingType', 'Town Hall');
+  }
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
@@ -258,7 +263,7 @@
     setupTypeaheads();
     $('.filter').on('click', 'a', eventHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
-    eventHandler.addFilter('meetingType', 'Town Hall');
+    eventHandler.resetFilters();
 
     // url hash for direct links to subtabs
     // slightly hacky routing
