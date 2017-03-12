@@ -67,7 +67,7 @@
     return renderTemplate(this);
   };
 
-  // Takes an array and sorts by sortOn field
+  // Takes an array of TownHalls and sorts by sortOn field
   TownHall.sortFunction = function(a, b) {
     if (a[TownHall.sortOn] && b[TownHall.sortOn]) {
       if (parseInt(b[TownHall.sortOn])) {
@@ -80,25 +80,18 @@
   };
 
   TownHall.getFilteredResults = function(data) {
-    // Itterate through all active filters, and pull out any townhalls that match them
+    // Itterate through all active filters and pull out any townhalls that match them
     // At least one attribute from within each filter group must match
     return TownHall.filteredResults = Object.keys(TownHall.filters).reduce(function(filteredData, key) {
       return filteredData.filter(function(townhall) {
-        // Currently some of the parties are listed as "Democrat" and some are listed as "Democratic", etc
-        // TODO:  once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
+        // Currently some of the data is inconsistent.  Some parties are listed as "Democrat" and some are listed as "Democratic", etc
+        // TODO:  Once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
         return TownHall.filters[key].some(function(filter) {
           return filter.slice(0, 8) === townhall[key].slice(0, 8);
         })
       })
     }, data).sort(TownHall.sortFunction);
   }
-
-  // Filters by a query in a column
-  TownHall.filterColumnByQuery = function(filterCol, query, data) {
-    return data.filter(function(element) {
-      return element[filterCol].toLowerCase().indexOf(query.toLowerCase()) !== -1;
-    });
-  };
 
   // METHODS IN RESPONSE TO lookup
   // Converts zip to lat lng google obj
