@@ -133,7 +133,7 @@
     var $button = $(this);
     TownHall.removeFilter($button.attr('data-filter'), $button.attr('data-value'));
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
-    $button.remove();
+    $button.parent().remove();
   }
 
   // filters the table on click
