@@ -404,6 +404,7 @@
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
       var ele = new TownHall (snapshot.val());
       TownHall.allTownHalls.push(ele);
+      TownHall.addFilterIndexes(ele);
       eventHandler.initialTable(ele);
       $('[data-toggle="popover"]').popover({
         container: 'body',

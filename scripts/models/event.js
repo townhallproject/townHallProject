@@ -6,6 +6,8 @@
   }
   //Global data stete
   TownHall.allTownHalls = [];
+  TownHall.allMoCs = [];
+  TownHall.allStates = [];
   TownHall.currentContext = [];
   TownHall.filters = {}
   TownHall.sortOn = 'State';
@@ -65,16 +67,6 @@
     return renderTemplate(this);
   };
 
-  TownHall.selectUnique = function(cat){
-    return TownHall.allTownHalls
-    .map(function(ele){
-      return ele[cat];
-    })
-    .filter(function(element, index, array){
-      return array.indexOf(element) === index;
-    });
-  };
-
   // Takes an array and sorts by sortOn field
   TownHall.sortFunction = function(a, b) {
     if (a[TownHall.sortOn] && b[TownHall.sortOn]) {
@@ -95,7 +87,7 @@
         // Currently some of the parties are listed as "Democrat" and some are listed as "Democratic", etc
         // TODO:  once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
         return TownHall.filters[key].some(function(filter) {
-          return filter.slice(0, 5) === townhall[key].slice(0, 5);
+          return filter.slice(0, 8) === townhall[key].slice(0, 8);
         })
       })
     }, data).sort(TownHall.sortFunction);
@@ -167,6 +159,14 @@
     }
   }
 
-  // TownHall.fetchAll();
+  TownHall.addFilterIndexes = function(townhall) {
+    if (TownHall.allStates.indexOf(townhall.State) === -1) {
+      TownHall.allStates.push(townhall.State);
+    }
+    if (TownHall.allMoCs.indexOf(townhall.Member) === -1) {
+      TownHall.allMoCs.push(townhall.Member);
+    }
+  }
+
   module.TownHall = TownHall;
 })(window);
