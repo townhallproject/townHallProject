@@ -354,21 +354,20 @@
 
   window.onResizeMap = function onResizeMap() {
     var geocoder = new google.maps.Geocoder();
-      // google.maps.event.trigger(map, 'resize');
     var resizeBounds = new google.maps.LatLngBounds();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    console.log(TownHall.isCurrentContext);
     if ( TownHall.zipQuery) {
       resizeBounds.extend(TownHall.zipQuery);
     }
     data.forEach(function(ele){
       if (ele.lat && ele.lng) {
         marker = new google.maps.LatLng(ele.lat, ele.lng);
-        console.log('data');
         resizeBounds.extend(marker);
+      } else {
+        // console.log(ele.eventId);
       }
     });
-    console.log(map.getZoom())
+    google.maps.event.trigger(map, 'resize');
     map.fitBounds(resizeBounds);
   };
 
