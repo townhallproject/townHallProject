@@ -368,7 +368,6 @@
         resizeBounds.extend(marker);
       }
     });
-    console.log(map.getZoom())
     map.fitBounds(resizeBounds);
   };
 
