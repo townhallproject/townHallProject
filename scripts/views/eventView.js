@@ -287,12 +287,12 @@
     else{
       TownHall.isMap = true;
     }
+
     $('.navbar-main').on('click', '.hash-link', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
         setTimeout( function(){
-          onResizeMap();
           if (location.pathname ='/') {
             eventHandler.resetHome();
             TownHall.isMap = true;
@@ -302,10 +302,13 @@
       else if (hashid === '#home' && TownHall.isMap === true) {
         console.log('going home and map');
         history.replaceState({}, document.title, '.');
-        eventHandler.resetHome();
+        $('ul .hash-link').parent().removeClass('active');
+        setTimeout( function(){
+          eventHandler.resetHome();
+        }, 0);
       }
       else {
-        location.hash = this.getAttribute('href');
+        location.hash = hashid;
       }
       $('[data-toggle="popover"]').popover('hide');
     });
