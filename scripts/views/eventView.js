@@ -124,8 +124,11 @@
     }
 
     TownHall.addFilter(filter, value);
+
     var button = '<li><button class="btn btn-secondary btn-xs" ' +
-                 'data-filter="' + filter + '" data-value="' + value + '" >' + value + ' &#128937;</button></li>'
+                 'data-filter="' + filter + '" data-value="' + value + '" >' +
+                    value + '<i class="fa fa-times" aria-hidden="true"></i>' +
+                  '</button></li>'
     $('#filter-info').append(button);
   }
 
