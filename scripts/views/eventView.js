@@ -11,6 +11,7 @@
     var zip = $('#look-up input').val();
     if (zip) {
       TownHall.lookupZip($('#look-up input').val());
+      eventHandler.resetFilters();
     }
   };
 
@@ -38,6 +39,7 @@
     $parent.empty();
     $results.empty();
     eventHandler.resetFilters();
+    eventHandler.addFilter('meetingType', 'Town Hall');
     TownHall.sortOn = 'State';
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
@@ -142,7 +144,6 @@
   eventHandler.resetFilters = function() {
     TownHall.resetFilters();
     $('#filter-info li button').parent().remove();
-    eventHandler.addFilter('meetingType', 'Town Hall');
   }
   // filters the table on click
   eventHandler.filterTable = function (e) {
@@ -267,6 +268,7 @@
     $('.filter').on('click', 'a', eventHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
     eventHandler.resetFilters();
+    eventHandler.addFilter('meetingType', 'Town Hall');
 
     // url hash for direct links to subtabs
     // slightly hacky routing
