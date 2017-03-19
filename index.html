@@ -169,7 +169,6 @@
               <li class="list-group-item list-group-heading">
                 <nav class="navbar navbar-default navbar-static-top ">
                   <ul class="nav navbar-nav navbar-left" id="filter-info">
-                    <li><button type="" name="" id="resetTable" class="btn btn-secondary btn-xs">Reset filters</button></li>
                     <li><span id="current-state" data-current=0 data-total=0></span></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
@@ -178,7 +177,7 @@
                       <ul class="dropdown-menu">
                         <li class="downdown-title">Search by member of Congress</li>
                         <li role="separator" class="divider"></li>
-                        <li><input data-filter="Member" type="text" class="form-control dropdown-item filter" placeholder="Search by member"> </li>
+                        <li><input id="memberTypeahead" type="text" class="form-control dropdown-item filter" data-provide="typeahead" placeholder="Search by member" data-filter="Member" autocomplete="off"></li>
                       </ul>
                     </li>
                     <li class="dropdown">
@@ -186,14 +185,9 @@
                       <ul class="dropdown-menu filter">
                         <li class="downdown-title">Filtery by party</li>
                         <li role="separator" class="divider"></li>
-                        <li><a data-filter="Party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
-                        </li>
-                        <li><a data-filter="Party" id="Republican" class="dropdown-item" href="#">Republican</a>
-                        </li>
+                        <li><a data-filter="Party" id="Democratic" class="dropdown-item" href="#">Democratic</a></li>
+                        <li><a data-filter="Party" id="Republican" class="dropdown-item" href="#">Republican</a></li>
                         <li><a data-filter="Party" id="Independent" class="dropdown-item" href="#">Independent</a>
-                        </li>
-                        <li><a data-filter="Party" id="All" class="dropdown-item" href="#">All</a>
-                        </li>
                       </ul>
                     </li>
                     <li class="dropdown">
@@ -201,7 +195,7 @@
                       <ul class="dropdown-menu">
                         <li class="downdown-title">Search by State</li>
                         <li role="separator" class="divider"></li>
-                        <li><input data-filter="State" type="text" class="form-control dropdown-item filter" placeholder="Search by state"></li>
+                        <li><input id="stateTypeahead" type="text" class="form-control dropdown-item filter" data-provide="typeahead" placeholder="Search by state" data-filter="State" autocomplete="off"></li>
                       </ul>
                     </li>
                     <li class="dropdown">
@@ -209,17 +203,11 @@
                       <ul class="dropdown-menu filter">
                         <li class="downdown-title">Filter by Event Type</li>
                         <li role="separator" class="divider"></li>
-                        <li class="active"><a data-filter="meetingType" id="Town Hall" class="dropdown-item active" href="#">Town Hall</a>
-                        </li>
-                        <li><a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a>
-                        </li>
-                        <li><a data-filter="meetingType" id="Ticketed Event" class="dropdown-item" href="#">Ticketed Event</a>
-                        </li>
-                        <li><a data-filter="meetingType" id="Tele-Town Hall" class="dropdown-item" href="#">Tele-Town Hall</a>
-                        </li>
-                        <li class=""><a data-filter="meetingType" id="Empty Chair Town Hall" class="dropdown-item " href="#">Empty Chair Town Hall</a>
-                        </li>
-                        <li><a data-filter="meetingType" id="All" class="dropdown-item" href="#">All</a></li>
+                        <li><a data-filter="meetingType" id="Town Hall" class="dropdown-item" href="#">Town Hall</a></li>
+                        <li><a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a></li>
+                        <li><a data-filter="meetingType" id="Ticketed Event" class="dropdown-item" href="#">Ticketed Event</a></li>
+                        <li><a data-filter="meetingType" id="Tele-Town Hall" class="dropdown-item" href="#">Tele-Town Hall</a></li>
+                        <li><a data-filter="meetingType" id="Empty Chair Town Hall" class="dropdown-item" href="#">Empty Chair Town Hall</a></li>
                       </ul>
                     </li>
                     <li class="dropdown">
@@ -227,10 +215,8 @@
                       <ul class="dropdown-menu sort">
                         <li class="downdown-title">Sort Table</li>
                         <li role="separator" class="divider"></li>
-                        <li><a data-filter="dateObj" id="byDate" class="dropdown-item" href="#">By Date</a>
-                        </li>
-                        <li><a data-filter="State" id="byState" class="dropdown-item" href="#">By State</a>
-                        </li>
+                        <li><a data-filter="dateObj" id="byDate" class="dropdown-item" href="#">By Date</a></li>
+                        <li><a data-filter="State" id="byState" class="dropdown-item" href="#">By State</a></li>
                       </ul>
                     </li>
                   </ul>
@@ -356,6 +342,7 @@
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/jquery-ui.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
+    <script src="/vendor/scripts/bootstrap3-typeahead.min.js"></script>
     <script src="/vendor/scripts/tether.js"></script>
     <script src="/vendor/scripts/handlebars-v4.0.5.js"></script>
     <script src="templates.js"></script>
@@ -374,6 +361,6 @@
     <script src="/scripts/models/event.js"></script>
     <script src="/scripts/views/mapView.js"></script>
     <script src="/scripts/views/eventView.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbJaVRRwYGGqYY1y6C53dnMG8ruONFJ90&callback=initMap&libraries=visualization,geometry"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMap&libraries=visualization,geometry"></script>
   </body>
 </html>

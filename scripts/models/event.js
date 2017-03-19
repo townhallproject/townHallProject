@@ -6,17 +6,17 @@
   }
   //Global data stete
   TownHall.allTownHalls = [];
+  TownHall.allMoCs = [];
+  TownHall.allStates = [];
   TownHall.currentContext = [];
+  TownHall.filters = {}
+  TownHall.sortOn = 'State';
   TownHall.filteredResults = [];
-  TownHall.filterIds = {
-    meetingType:'',
-    Party:'',
-    State:''
-  };
   TownHall.isCurrentContext = false;
   TownHall.isMap = false;
   TownHall.zipQuery;
 
+  // Lookup dictionaries
   TownHall.timeZones = {
     PST : 'America/Los_Angeles',
     MST : 'America/Denver',
@@ -67,46 +67,31 @@
     return renderTemplate(this);
   };
 
-  TownHall.selectUnique = function(cat){
-    return TownHall.allTownHalls
-    .map(function(ele){
-      return ele[cat];
-    })
-    .filter(function(element, index, array){
-      return array.indexOf(element) === index;
-    });
-  };
-
-  //  Table Sorting Methods
-  //takes an array and sorts by sort on query
-  TownHall.sortTable = function(data, sortOn) {
-    return data.sort(function(a, b){
-      // case insensitive
-      if (a[sortOn] && b[sortOn]) {
-        if (parseInt(b[sortOn])) {
-          return a[sortOn] - b[sortOn];
-        }
-        else {
-          return a[sortOn].toLowerCase().localeCompare(b[sortOn].toLowerCase());
-        }
+  // Takes an array of TownHalls and sorts by sortOn field
+  TownHall.sortFunction = function(a, b) {
+    if (a[TownHall.sortOn] && b[TownHall.sortOn]) {
+      if (parseInt(b[TownHall.sortOn])) {
+        return a[TownHall.sortOn] - b[TownHall.sortOn];
       }
-
-    });
+      else {
+        return a[TownHall.sortOn].toLowerCase().localeCompare(b[TownHall.sortOn].toLowerCase());
+      }
+    }
   };
 
-  // filters by a value in a column
-  TownHall.filterByCol = function(filterCol, filterID, data) {
-    return data.filter(function(ele){
-      return ele[filterCol].slice(0,5) === filterID;
-    });
-  };
-
-  // Filters by a query in a column
-  TownHall.filterColumnByQuery = function(filterCol, query, data) {
-    return data.filter(function(element) {
-      return element[filterCol].toLowerCase().indexOf(query.toLowerCase()) !== -1;
-    });
-  };
+  TownHall.getFilteredResults = function(data) {
+    // Itterate through all active filters and pull out any townhalls that match them
+    // At least one attribute from within each filter group must match
+    return TownHall.filteredResults = Object.keys(TownHall.filters).reduce(function(filteredData, key) {
+      return filteredData.filter(function(townhall) {
+        // Currently some of the data is inconsistent.  Some parties are listed as "Democrat" and some are listed as "Democratic", etc
+        // TODO:  Once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
+        return TownHall.filters[key].some(function(filter) {
+          return filter.slice(0, 8) === townhall[key].slice(0, 8);
+        })
+      })
+    }, data).sort(TownHall.sortFunction);
+  }
 
   // METHODS IN RESPONSE TO lookup
   // Converts zip to lat lng google obj
@@ -149,6 +134,38 @@
     });
   };
 
-  // TownHall.fetchAll();
+  TownHall.addFilter = function(filter, value) {
+    if (!TownHall.filters.hasOwnProperty(filter)) {
+      TownHall.filters[filter] = [value];
+    } else {
+      TownHall.filters[filter].push(value);
+    }
+  }
+
+  TownHall.removeFilter = function(filter, value) {
+    var index = TownHall.filters[filter].indexOf(value);
+    if (index !== -1) {
+      TownHall.filters[filter].splice(index, 1);
+    }
+    if (TownHall.filters[filter].length === 0) {
+      delete TownHall.filters[filter];
+    }
+  }
+
+  TownHall.resetFilters = function() {
+    Object.keys(TownHall.filters).forEach(function(key) {
+      delete TownHall.filters[key];
+    });
+  }
+
+  TownHall.addFilterIndexes = function(townhall) {
+    if (TownHall.allStates.indexOf(townhall.State) === -1) {
+      TownHall.allStates.push(townhall.State);
+    }
+    if (TownHall.allMoCs.indexOf(townhall.Member) === -1) {
+      TownHall.allMoCs.push(townhall.Member);
+    }
+  }
+
   module.TownHall = TownHall;
 })(window);
