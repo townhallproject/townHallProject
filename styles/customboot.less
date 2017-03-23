@@ -64,6 +64,7 @@
 @brand-success: #3facef;
 @brand-info: #132149;
 @brand-secondary-dark : darken(@brand-secondary, 20%);
+@brand-white: #ffffff;
 .text-white{
   color: white;
 }
@@ -129,7 +130,7 @@
   font-size: 20px;
 }
 
-.navbar-right .social-icons{
+.navbar-right .social-icons {
   padding-right: 0px;
   padding-left: 5px;
   padding-top: 15px;
@@ -216,6 +217,7 @@ input{
 .spacer{
   margin-top: 120px;
 }
+
 #can_embed_form{
   padding:20px;
 }
@@ -224,7 +226,14 @@ article{
   margin-top:10px;
 }
 
-
+// icons
+a.social-icon {
+  text-decoration: none;
+  color: @brand-primary;
+  &:hover {
+    color: @brand-success;
+  }
+}
 
 // add to cal styles
 .atcb-list {
@@ -312,11 +321,11 @@ article{
   background-color: #f4f4f4;
   border-bottom:solid @brand-primary 1px;
   h2 {
-    margin-top: 1.5em;
+    margin-top: 1em;
   }
   /* Remove this when upgrading to bootstrap 4 and we can do proper cards */
   .card-representative {
-    min-height: 27em;
+    min-height: 17em;
   }
 }
 
@@ -325,10 +334,16 @@ article{
   margin-bottom: 2em;
   background: #fff;
   .card-header {
-    padding: 0.75em 0 0.75em 1.5em;
+    padding: 0 15px;
+    h3 {
+      margin-top: 10px;
+    }
   }
   .card-block {
-    padding: 1.5em 2.5em 3.5em;
+    padding: 1.25em 2.5em 3em;
+    a.social-icon {
+      font-size: 1.25em;
+    }
   }
 
   h3 {
@@ -398,8 +413,20 @@ article{
   padding: 6px;
 }
 
-#filter-info li{
-  margin: 20px;
+#filter-info {
+  max-width: 50%;
+  margin: 20px 0 0px 20px;
+  li {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    button:hover {
+      color: #fff;
+    }
+    button i.fa-times {
+      margin-left: 0.5em;
+      font-size: 0.8em;
+    }
+  }
 }
 
 // Results
@@ -533,6 +560,16 @@ li[data-toggle='popover']:hover {
   background-color: @brand-gray;
 }
 
+.typeahead.dropdown-menu {
+  /* Line up typeahead menu with popover */
+  margin-left: -10px;
+  li {
+    a.dropdown-item {
+      padding: 3px 12px;
+    }
+  }
+}
+
 // google forms
 .embed-container {
   position: relative;
@@ -620,6 +657,20 @@ img.grayscale {
   }
   .calendarButton{
     display: none;
+  }
+  .card.card-representative {
+    h3 {
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    .card-block {
+      padding: 1.25em 2em 2em;
+      font-size: 1.25em;
+      .social-icons {
+        padding-top: 1.5em;
+        text-align: center;
+      }
+    }
   }
 }
 

@@ -169,7 +169,6 @@
               <li class="list-group-item list-group-heading">
                 <nav class="navbar navbar-default navbar-static-top ">
                   <ul class="nav navbar-nav navbar-left" id="filter-info">
-                    <li><button type="" name="" id="resetTable" class="btn btn-secondary btn-xs">Reset filters</button></li>
                     <li><span id="current-state" data-current=0 data-total=0></span></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
@@ -178,7 +177,7 @@
                       <ul class="dropdown-menu">
                         <li class="downdown-title">Search by member of Congress</li>
                         <li role="separator" class="divider"></li>
-                        <li><input data-filter="Member" type="text" class="form-control dropdown-item filter" placeholder="Search by member"> </li>
+                        <li><input id="memberTypeahead" type="text" class="form-control dropdown-item filter" data-provide="typeahead" placeholder="Search by member" data-filter="Member" autocomplete="off"></li>
                       </ul>
                     </li>
                     <li class="dropdown">
@@ -186,14 +185,9 @@
                       <ul class="dropdown-menu filter">
                         <li class="downdown-title">Filtery by party</li>
                         <li role="separator" class="divider"></li>
-                        <li><a data-filter="Party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
-                        </li>
-                        <li><a data-filter="Party" id="Republican" class="dropdown-item" href="#">Republican</a>
-                        </li>
+                        <li><a data-filter="Party" id="Democratic" class="dropdown-item" href="#">Democratic</a></li>
+                        <li><a data-filter="Party" id="Republican" class="dropdown-item" href="#">Republican</a></li>
                         <li><a data-filter="Party" id="Independent" class="dropdown-item" href="#">Independent</a>
-                        </li>
-                        <li><a data-filter="Party" id="All" class="dropdown-item" href="#">All</a>
-                        </li>
                       </ul>
                     </li>
                     <li class="dropdown">
@@ -201,7 +195,7 @@
                       <ul class="dropdown-menu">
                         <li class="downdown-title">Search by State</li>
                         <li role="separator" class="divider"></li>
-                        <li><input data-filter="State" type="text" class="form-control dropdown-item filter" placeholder="Search by state"></li>
+                        <li><input id="stateTypeahead" type="text" class="form-control dropdown-item filter" data-provide="typeahead" placeholder="Search by state" data-filter="State" autocomplete="off"></li>
                       </ul>
                     </li>
                     <li class="dropdown">
@@ -209,17 +203,11 @@
                       <ul class="dropdown-menu filter">
                         <li class="downdown-title">Filter by Event Type</li>
                         <li role="separator" class="divider"></li>
-                        <li class="active"><a data-filter="meetingType" id="Town Hall" class="dropdown-item active" href="#">Town Hall</a>
-                        </li>
-                        <li><a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a>
-                        </li>
-                        <li><a data-filter="meetingType" id="Ticketed Event" class="dropdown-item" href="#">Ticketed Event</a>
-                        </li>
-                        <li><a data-filter="meetingType" id="Tele-Town Hall" class="dropdown-item" href="#">Tele-Town Hall</a>
-                        </li>
-                        <li class=""><a data-filter="meetingType" id="Empty Chair Town Hall" class="dropdown-item " href="#">Empty Chair Town Hall</a>
-                        </li>
-                        <li><a data-filter="meetingType" id="All" class="dropdown-item" href="#">All</a></li>
+                        <li><a data-filter="meetingType" id="Town Hall" class="dropdown-item" href="#">Town Hall</a></li>
+                        <li><a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a></li>
+                        <li><a data-filter="meetingType" id="Ticketed Event" class="dropdown-item" href="#">Ticketed Event</a></li>
+                        <li><a data-filter="meetingType" id="Tele-Town Hall" class="dropdown-item" href="#">Tele-Town Hall</a></li>
+                        <li><a data-filter="meetingType" id="Empty Chair Town Hall" class="dropdown-item" href="#">Empty Chair Town Hall</a></li>
                       </ul>
                     </li>
                     <li class="dropdown">
@@ -227,10 +215,8 @@
                       <ul class="dropdown-menu sort">
                         <li class="downdown-title">Sort Table</li>
                         <li role="separator" class="divider"></li>
-                        <li><a data-filter="dateObj" id="byDate" class="dropdown-item" href="#">By Date</a>
-                        </li>
-                        <li><a data-filter="State" id="byState" class="dropdown-item" href="#">By State</a>
-                        </li>
+                        <li><a data-filter="dateObj" id="byDate" class="dropdown-item" href="#">By Date</a></li>
+                        <li><a data-filter="State" id="byState" class="dropdown-item" href="#">By State</a></li>
                       </ul>
                     </li>
                   </ul>
@@ -257,11 +243,8 @@
         <section class="container">
             <article class="center-block about">
               <h2 class="text-secondary-dark">About The Town Hall Project</h2>
-              <p>We are a volunteer-powered, grassroots effort that empowers constituents across the country to have face-to-face conversations with their elected representatives. We are campaign veterans and first time volunteers. We come from a diversity of backgrounds and live across the country. We share progressive values and believe strongly in civic engagement. We research every district and state for public events with Members of Congress. Then we share our findings far and wide to promote participation in the democratic process and make it as accessible as possible for everyone. We have a team of organizers that works with local groups on the ground to coordinate efforts and encourage citizens to amplify their voices.
-              </p>
-              <p>The Town Hall Project offers our town hall event list to everyone, across the entire political spectrum. Our founders are dedicated to progressive values and actively encourage progressive allies to use our town hall data, but we are independent of any political party or organization.
-              </p>
-              <p>This movement is diverse, open source, and powered by citizens. We are proud to be a part of it. </p>
+              <p class="lead">Town Hall Project empowers constituents across the country to have face-to-face conversations with their elected representatives. We are campaign veterans and first time volunteers. We come from a diversity of backgrounds and live across the country. We share progressive values and believe strongly in civic engagement. We research every district and state for public events with members of Congress. Then we share our findings to promote participation in the democratic process.</p>
+              <p class="lead">This movement is diverse, open source, and powered by citizens. We are proud to be a part of it.</p>
               <p class="text-primary"><strong>Show Up. Speak Out.</strong></p>
             </article>
             <article class="row">
@@ -359,6 +342,7 @@
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/jquery-ui.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
+    <script src="/vendor/scripts/bootstrap3-typeahead.min.js"></script>
     <script src="/vendor/scripts/tether.js"></script>
     <script src="/vendor/scripts/handlebars-v4.0.5.js"></script>
     <script src="/vendor/scripts/mapbox-gl-v0.32.1.js"></script>

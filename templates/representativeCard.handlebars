@@ -1,26 +1,48 @@
 <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
   <div class="card card-representative {{party}}">
     <div class="card-header">
-      <h3>{{title}} {{first_name}} {{last_name}}</h3>
-      <h4>{{party}}</h4>
+      <div class="row">
+        <div class="col-xs-4 col-sm-3 no-padding p-0">
+          <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-100px.jpeg" onerror="$(this).remove()" class="grayscale" />
+        </div>
+        <div class="col-xs-8 col-sm-9">
+          <h3>{{title}} {{first_name}} {{last_name}}</h3>
+          <h4>{{party}}</h4>
+        </div>
+      </div>
     </div>
     <div class="card-block">
       <div class="card-text row">
-        <div class="col-xs-7 no-padding p-0">
-          {{#if twitter_id}}<div><a href="//twitter.com/{{twitter_id}}" target="_blank">@{{twitter_id}}</a></div>{{/if}}
+        <div class="col-xs-12 col-sm-6 no-padding p-0">
+          {{#if electionYear}}<div><label>Next election:</label> {{electionYear}}</div>{{/if}}
           {{#if phone}}<div><label>Phone:</label> {{phone}}</div>{{/if}}
           {{#if fax}}<div><label>Fax:</label> {{fax}}</div>{{/if}}
-          {{#if contact_form}}<div><a href="{{contact_form}}" target="_blank">Contact Form</a></div>{{/if}}
-          {{#if facebook_id}}<div><a href="//facebook.com/profile.php?id={{facebook_id}}" target="_blank">Facebook</a></div>{{/if}}
-          {{#if website}}<div><a href="{{website}}" target="_blank">Website</a></div>{{/if}}
-          {{#if oc_email}}<div><a href="mailto:{{oc_email}}">Email</a></div>{{/if}}
         </div>
-        <div class="col-xs-5 no-padding p-0">
-          <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-200px.jpeg" onerror="$(this).remove()" class="grayscale" />
-        </div>
-        <div class="col-xs-12 no-padding p-0">
-          {{#if office}}<div><label>DC Office:</label> {{office}}</div>{{/if}}
-          {{#if electionYear}}<div><label>Next election:</label> {{electionYear}}</div>{{/if}}
+        <div class="social-icons col-xs-12 col-sm-6 no-padding p-0 text-right">
+          {{#if twitter_id}}
+            <a href="//twitter.com/{{twitter_id}}" class="social-icon" target="_blank">
+              <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+            </a>
+          {{/if}}
+          {{#if facebook_id}}
+            <a href="//facebook.com/{{facebook_id}}" class="social-icon" target="_blank">
+              <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+            </a>
+          {{/if}}
+          {{#if oc_email}}
+            <a href="mailto:{{oc_email}}" class="social-icon">
+              <i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+            </a>
+          {{/if}}
+          {{#if contact_form}}
+            <a href="{{contact_form}}" class="social-icon" target="_blank">
+              <i class="fa fa fa-external-link-square fa-2x" aria-hidden="true"></i>
+            </a>
+          {{else if website}}
+            <a href="{{website}}" class="social-icon" target="_blank">
+              <i class="fa fa fa-external-link-square fa-2x" aria-hidden="true"></i>
+            </a>
+          {{/if}}
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@
     var zip = $('#look-up input').val();
     if (zip) {
       TownHall.lookupZip($('#look-up input').val());
+      eventHandler.resetFilters();
     }
   };
 
@@ -37,11 +38,10 @@
     var $results = $('#textresults');
     $parent.empty();
     $results.empty();
-    $table = $('#all-events-table');
-    $('.event-row').remove();
-    TownHall.filterIds['meetingType'] = 'Town ';
-    data = eventHandler.getFilterState(TownHall.allTownHalls);
-    eventHandler.renderTableWithArray(data, $table);
+    eventHandler.resetFilters();
+    eventHandler.addFilter('meetingType', 'Town Hall');
+    TownHall.sortOn = 'State';
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
   // Renders one panel, assumes data processing has happened
@@ -80,7 +80,9 @@
     });
   };
 
-  eventHandler.renderTableWithArray = function (array, $table) {
+  eventHandler.renderTableWithArray = function (array) {
+    $('.event-row').remove();
+    $table = $('#all-events-table');
     $currentState = $('#current-state');
     var total = parseInt($currentState.attr('data-total'));
     var cur = array.length;
@@ -91,6 +93,8 @@
       container: 'body',
       html:true
     });
+    /*eslint-env es6*/
+    /*eslint quotes: ["error", "single", { "allowTemplateLiterals": true }]*/
     $currentState.text(`Viewing ${cur} of ${total} total events`);
   };
 
@@ -104,81 +108,56 @@
     $($tableid).append(compiledTemplate(townhall));
   };
 
-  eventHandler.getFilterState = function (data) {
-    Object.keys(TownHall.filterIds).forEach(function(key) {
-      if (TownHall.filterIds[key]) {
-        data = TownHall.filterByCol(key, TownHall.filterIds[key], data);
-      }
-    });
-    return data;
+  eventHandler.getFilterState = function () {
+    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
+    return TownHall.getFilteredResults(data);
   };
 
-  // takes the current set of data in the table and sorts by selection
   eventHandler.sortTable = function (e) {
     e.preventDefault();
-    var sortOn = $(this).attr('data-filter');
-    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
-    var filtereddata = TownHall.filteredResults.length > 0 ? TownHall.filteredResults : data;
-    TownHall.currentContext = TownHall.sortTable(filtereddata, sortOn);
-    $table = $('#all-events-table');
-    $('.event-row').remove();
-    data = eventHandler.getFilterState(data);
-    eventHandler.renderTableWithArray(data, $table);
+    TownHall.sortOn = $(this).attr('data-filter');
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
+  eventHandler.addFilter = function(filter, value) {
+    // Avoid duplicates
+    if (TownHall.filters.hasOwnProperty(filter) && TownHall.filters[filter].indexOf(value) !== -1) {
+      return;
+    }
+
+    TownHall.addFilter(filter, value);
+
+    var button = '<li><button class="btn btn-secondary btn-xs" ' +
+                 'data-filter="' + filter + '" data-value="' + value + '" >' +
+                    value + '<i class="fa fa-times" aria-hidden="true"></i>' +
+                  '</button></li>'
+    $('#filter-info').append(button);
+  }
+
+  eventHandler.removeFilter = function() {
+    var $button = $(this);
+    TownHall.removeFilter($button.attr('data-filter'), $button.attr('data-value'));
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
+    $button.parent().remove();
+  }
+
+  eventHandler.resetFilters = function() {
+    TownHall.resetFilters();
+    $('#filter-info li button').parent().remove();
+  }
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
-    $this = $(this);
-    $this.parent().addClass('active');
-    $this.parent().siblings().removeClass('active');
-    $table = $('#all-events-table');
-    $('#resetTable').show();
+    var filter = this.getAttribute('data-filter');
+    eventHandler.addFilter(filter, this.id);
+
     var filterID = this.id.slice(0,5);
-    var filterCol = $this.attr('data-filter');
     var inputs = $('input[data-filter]');
-    $('.event-row').remove();
-    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
-    if (filterID === 'All') {
-      TownHall.filterIds[filterCol] = '';
-    }
-    else {
-      data = TownHall.filteredResults.length > 0 ? TownHall.filteredResults : data;
-      TownHall.filterIds[filterCol] = filterID;
-    }
-    data = eventHandler.getFilterState(data);
-    eventHandler.renderTableWithArray(data, $table);
-  };
-
-  eventHandler.filterTableByInput = function(e) {
-    e.preventDefault();
-    $('#resetTable').show();
-    $table = $('#all-events-table');
-    var query = $(this).val();
-    var filterCol = $(this).attr('data-filter');
-    $('.event-row').remove();
-    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    // var data = TownHall.filteredResults.length>0 ? TownHall.filteredResults:data;
-    data = eventHandler.getFilterState(data);
-    TownHall.filteredResults = TownHall.filterColumnByQuery(filterCol, query, data);
-    eventHandler.renderTableWithArray(TownHall.filteredResults, $table);
-  };
-
-  eventHandler.resetTable = function (e) {
-    e.preventDefault();
-    $table = $('#all-events-table');
-    $('.event-row').remove();
-    $('#resetTable').hide();
-    $('.filter li').removeClass('active');
-    TownHall.filterIds = {};
-    TownHall.filteredResults = [];
-    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    eventHandler.renderTableWithArray(data, $table);
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
   // initial state of table
   eventHandler.initialTable = function (townhall) {
-    TownHall.filterIds['meetingType'] = 'Town ';
     $currentState = $('#current-state');
     var total = parseInt($currentState.attr('data-total')) + 1;
     var cur = parseInt($currentState.attr('data-current'));
@@ -216,8 +195,6 @@
     var $results = $('#textresults');
     $parent.empty();
     $results.empty();
-    $('#resetTable').hide();
-    var $table = $('#all-events-table');
     $('.event-row').remove();
     var $text = $('<h4>');
     var nearest = events.reduce(function(acc, cur){
@@ -236,7 +213,7 @@
       var townHall = events[0];
       var townHalls = [townHall];
       recenterMap(townHalls, zipQuery);
-      eventHandler.renderTableWithArray(events, $table);
+      eventHandler.renderTableWithArray(events);
       $text.html('There are no events within 75 miles of your zip, the closest one is ' + townHall.dist + ' miles away. <br>' + info);
       $results.append($text);
       TownHall.saveZipLookup($zip);
@@ -254,28 +231,44 @@
         $text.html('There are ' + nearest.length + ' upcoming events within 75 miles of you. <br>' +info);
       }
       $results.append($text);
-      eventHandler.renderTableWithArray(nearest, $table);
+      eventHandler.renderTableWithArray(nearest);
       nearest.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       });
     }
   };
 
+  function setupTypeaheads() {
+    var typeaheadConfig = {
+      fitToElement: true,
+      delay: 250,
+      highlighter: function(item) { return item; }, // Kill ugly highlight
+      updater: function(selection) {
+        eventHandler.addFilter(this.$element.attr('data-filter'), selection);
+        eventHandler.renderTableWithArray(eventHandler.getFilterState());
+      }
+    }
+
+    $("#stateTypeahead").typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
+    $("#memberTypeahead").typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
+  }
+
   $(document).ready(function(){
     init();
   });
 
   function init() {
-    var filterSelector = $('.filter');
     $('[data-toggle="popover"]').popover({html:true});
     $('#button-to-form').hide();
     $('#save-event').on('submit', eventHandler.save);
     $('#look-up').on('submit', eventHandler.lookup);
     $('#view-all').on('click', TownHall.viewAll);
     $('.sort').on('click', 'a', eventHandler.sortTable);
-    $('#resetTable').on('click', eventHandler.resetTable);
-    filterSelector.on('click', 'a', eventHandler.filterTable);
-    filterSelector.on('input', eventHandler.filterTableByInput);
+    setupTypeaheads();
+    $('.filter').on('click', 'a', eventHandler.filterTable);
+    $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
+    eventHandler.resetFilters();
+    eventHandler.addFilter('meetingType', 'Town Hall');
 
     // url hash for direct links to subtabs
     // slightly hacky routing
@@ -285,12 +278,12 @@
     else{
       TownHall.isMap = true;
     }
+
     $('.navbar-main').on('click', '.hash-link', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
         setTimeout( function(){
-          onResizeMap();
           if (location.pathname ='/') {
             eventHandler.resetHome();
             TownHall.isMap = true;
@@ -300,10 +293,13 @@
       else if (hashid === '#home' && TownHall.isMap === true) {
         console.log('going home and map');
         history.replaceState({}, document.title, '.');
-        eventHandler.resetHome();
+        $('ul .hash-link').parent().removeClass('active');
+        setTimeout( function(){
+          eventHandler.resetHome();
+        }, 0);
       }
       else {
-        location.hash = this.getAttribute('href');
+        location.hash = hashid;
       }
       $('[data-toggle="popover"]').popover('hide');
     });
@@ -322,7 +318,8 @@
       $(e.target).data('bs.popover').inState.click = false;
     });
   }
-  window.onBeforeunload=null
+
+  window.onBeforeunload=null;
 
   module.eventHandler = eventHandler;
 })(window);
