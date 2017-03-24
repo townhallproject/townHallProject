@@ -43,6 +43,7 @@
     <link href="/vendor/styles/jquery-ui.min.css" rel="stylesheet" type="text/css">
     <link href="/vendor/styles/jquery-ui.structure.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,900" rel="stylesheet">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="/styles/css/bootstrap.min.css">
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -126,15 +127,14 @@
           </div>
         </div>
         <div class="header-with-results map-container-split hidden">
-          <div class="container container-fluid">
-            <div class="row">
-              <div class="col-md-6">
-                <section class="results multipleResults">
-                  <div id="nearest" class="flexcroll nearest-with-results"></div>
-                </section>
-              </div>
-              <div class="col-md-6 map-small map-fixing">
-              </div>
+          <div class="row">
+            <div class="col-md-6">
+              <section class="results multipleResults">
+                <div class="kill-results">X</div>
+                <div id="nearest" class="flexcroll nearest-with-results"></div>
+              </section>
+            </div>
+            <div class="col-md-6 map-small map-fixing">
             </div>
           </div>
         </div>
@@ -350,7 +350,6 @@
     <script src="/data/states.js"></script>
     <script src="/data/bboxes.js"></script>
     <script src="/data/zipLookup.js"></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' />
 
     <script src="templates.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>

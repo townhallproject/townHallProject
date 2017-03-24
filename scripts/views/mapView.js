@@ -47,6 +47,7 @@
     usaButton.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-usa';
     usaButton.innerHTML = '<span class="usa-icon"></span>';
     usaButton.addEventListener('click', function(){
+      killSidebar();
       map.flyTo(continentalView(window.innerWidth/2, window.innerHeight/2));
     });
 
@@ -82,6 +83,7 @@
         highlightDistrict(feature.properties.GEOID);
         makeSidebar(feature.properties.ABR, feature.properties.GEOID.substring(2,4))
       } else {
+        var visibility = map.getLayoutProperty('selected-fill', 'visibility');
         if (visibility === 'visible') {
           map.setLayoutProperty('selected-fill', 'visibility', 'none');
           map.setLayoutProperty('selected-border', 'visibility', 'none');
@@ -144,7 +146,15 @@
         'icon-image': '{icon}',
         'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
         'icon-ignore-placement': true,
-        'icon-ignore-placement': true
+        'icon-ignore-placement': true,
+        'icon-offset': {
+          'base': 1,
+          'stops': [
+              [0, [0, -15]],
+              [10, [0, -10]],
+              [12, [0, 0]]
+          ]
+        }
       }
     });
   }
@@ -178,13 +188,30 @@
 
   // Does the initial filter for the map to determine which districts have Town Halls. TODO: Add in a data-driven style for the district layer that does a different fill if it's a local represenative vs. a Senator
   function filterMap (townHallData) {
-    var filter = ['any'];
+    var filterDistrict = ['any'];
+    var includedStates = ['in', 'NAME'];
 
+    // Fetch states with senators in em'
     for (key in townHallData){
-      district = townHallData[key].District;
-      if (district === 'Senate' && townHallData[key].State) {
-        filter.push(['==', 'NAME', townHallData[key].State]);
-      } else if (district) {
+      k = townHallData[key]
+
+      if (k.StateAb === 'AZ') {
+        console.log(k)
+      }
+
+      if (k.District == 'Senate' && k.State && k.City !== 'Washington') {
+        includedStates.push(k.State)
+      }
+    }
+
+    var filterSenate = ['all', includedStates];
+
+    // Fetch districts w/ town halls occuring
+    for (key in townHallData){
+      k = townHallData[key]
+      district = k.District;
+
+      if (district && district !== 'Senate' && k.City !== 'Washington') {
         var districtId = district.substring(3,5);
         var getFIPS;
 
@@ -193,19 +220,28 @@
         }
 
         stateData.forEach(function(n){
-          if (n.Name === townHallData[key].State) {
+          if (n.Name === k.State) {
             getFIPS = n.FIPS;
           }
         });
 
         var geoid = getFIPS + districtId;
 
-        filter.push(['==', 'GEOID', geoid]);
+        filterSenate.push(['!=', 'GEOID', geoid]);
+        filterDistrict.push(['==', 'GEOID', geoid]);
       }
     }
 
-    map.setFilter('district_fill', filter);
-    map.setFilter('district_glow', filter);
+    // Apply the filters to each of these layers
+    toggleFilters(['senate_glow', 'senate_fill'], filterSenate);
+    toggleFilters(['district_glow', 'district_fill'], filterDistrict);
+  }
+
+  function toggleFilters (layers, filter) {
+    layers.forEach(function (layer) {
+      map.setFilter(layer, filter);
+      map.setLayoutProperty(layer, 'visibility', 'visible');
+    })
   }
 
   // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
@@ -255,6 +291,14 @@
     $('#look-up').on('submit', eventHandler.lookup);
   }
 
+  function killSidebar () {
+      $('.header-with-results').addClass('hidden')
+      $('.map-container-large').removeClass('hidden')
+      $('.map-container-split').addClass('hidden')
+      $('#map').prependTo('.map-large')
+      map.resize();
+  }
+
   // Zip Code Lookup!
   eventHandler.lookup = function (e) {
     e.preventDefault();
@@ -289,21 +333,22 @@
     var fetchedData = []
 
     for (key in townhallData){
-      if (townhallData[key].StateAb === state) {
-        if (townhallData[key].District === 'Senate') {
-          fetchedData.push(townhallData[key])
+      var k = townhallData[key];
+      if (k.StateAb === state) {
+        if (k.District === 'Senate') {
+          fetchedData.push(k)
         } else {
           if(districts.constructor === Array) {
             districts.forEach((d) => {
               let districtMatcher = state + '-' + d
-              if (townhallData[key].District === districtMatcher) {
-                fetchedData.push(townhallData[key])
+              if (k.District === districtMatcher) {
+                fetchedData.push(k)
               }
             })   
           } else {
             let districtMatcher = state + '-' + districts
-            if (townhallData[key].District === districtMatcher) {
-              fetchedData.push(townhallData[key])
+            if (k.District === districtMatcher) {
+              fetchedData.push(k)
             }
           }
         }
@@ -336,6 +381,7 @@
     setMap();
     readData();
     sidebarEvents();
+    $('.kill-results').on('click', killSidebar());
   });
 
 }(window.firebase));
