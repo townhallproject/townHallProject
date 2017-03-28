@@ -13,7 +13,6 @@
           {{#if contact_form}}<div><a href="{{contact_form}}" target="_blank">Contact Form</a></div>{{/if}}
           {{#if facebook_id}}<div><a href="//facebook.com/profile.php?id={{facebook_id}}" target="_blank">Facebook</a></div>{{/if}}
           {{#if website}}<div><a href="{{website}}" target="_blank">Website</a></div>{{/if}}
-          {{#if oc_email}}<div><a href="mailto:{{oc_email}}">Email</a></div>{{/if}}
         </div>
         <div class="col-xs-5 no-padding p-0">
           <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-200px.jpeg" onerror="$(this).remove()" class="grayscale" />
@@ -21,6 +20,7 @@
         <div class="col-xs-12 no-padding p-0">
           {{#if term_end}}<div><label>Next Election:</label> {{term_end}}</div>{{/if}}
           {{#if office}}<div><label>Office:</label> {{office}}</div>{{/if}}
+		  {{#if oc_email}}<div><label>Email:</label> {{oc_email}}</div>{{/if}}
         </div>
       </div>
     </div>
