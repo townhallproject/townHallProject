@@ -12,15 +12,19 @@
     if (zip && zip.length === 5) {
       repZip = zip;
     } else if (zip && zip.length > 5) {
-      plusFour = zip.match(/[+-\s]\d{4}/g);
-      four = plusFour[0].match(/\d{4}/g);
       zip = zip.match(/\d{5}/g)[0];
+      plusFour = zip.match(/[+-\s]\d{4}/g);
+      if (plusFour) {
+        // for use if we use an API that takes plus four zips
+        four = plusFour[0].match(/\d{4}/g);
+      }
       repZip = zip;
     }
     TownHall.lookupZip(zip)
     .then(function(sorted){
       eventHandler.resetFilters();
       eventHandler.render(sorted, TownHall.zipQuery);
+      eventHandler.renderRepresentativeCards(TownHall.lookupReps(repZip), $('#representativeCards section'));
     })
     .catch(function(error){
       var $results = $('#textresults');
@@ -29,7 +33,6 @@
       $text.text('That is not a real zip code');
       $results.append($text);
     });
-    eventHandler.renderRepresentativeCards(TownHall.lookupReps(repZip), $('#representativeCards section'));
   };
 
   // reset the home page to originial view
