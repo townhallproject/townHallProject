@@ -16,7 +16,7 @@
     "strict": 0,
     "indent": [2, 2],
     "eqeqeq": 1,
-    "quotes": [1, "single"],
+    "quotes":  ["error", "single", { "avoidEscape": true }],
     "no-multi-spaces": [1, {
       "exceptions": {
         "VariableDeclarator": true,

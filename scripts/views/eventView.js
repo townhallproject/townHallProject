@@ -9,10 +9,27 @@
   eventHandler.lookup = function (e) {
     e.preventDefault();
     var zip = $('#look-up input').val();
-    if (zip) {
-      TownHall.lookupZip($('#look-up input').val());
-      eventHandler.resetFilters();
+    if (zip && zip.length === 5) {
+      repZip = zip;
+    } else if (zip && zip.length > 5) {
+      plusFour = zip.match(/[+-\s]\d{4}/g);
+      four = plusFour[0].match(/\d{4}/g);
+      zip = zip.match(/\d{5}/g)[0];
+      repZip = zip;
     }
+    TownHall.lookupZip(zip)
+    .then(function(sorted){
+      eventHandler.resetFilters();
+      eventHandler.render(sorted, TownHall.zipQuery);
+    })
+    .catch(function(error){
+      var $results = $('#textresults');
+      $results.empty();
+      var $text = $('<h4>');
+      $text.text('That is not a real zip code');
+      $results.append($text);
+    });
+    eventHandler.renderRepresentativeCards(TownHall.lookupReps(repZip), $('#representativeCards section'));
   };
 
   // reset the home page to originial view
@@ -130,21 +147,21 @@
     var button = '<li><button class="btn btn-secondary btn-xs" ' +
                  'data-filter="' + filter + '" data-value="' + value + '" >' +
                     value + '<i class="fa fa-times" aria-hidden="true"></i>' +
-                  '</button></li>'
+                  '</button></li>';
     $('#filter-info').append(button);
-  }
+  };
 
   eventHandler.removeFilter = function() {
     var $button = $(this);
     TownHall.removeFilter($button.attr('data-filter'), $button.attr('data-value'));
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
     $button.parent().remove();
-  }
+  };
 
   eventHandler.resetFilters = function() {
     TownHall.resetFilters();
     $('#filter-info li button').parent().remove();
-  }
+  };
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
@@ -172,7 +189,7 @@
   };
 
   // renders results of search
-  eventHandler.render = function (events, zipQuery, representativePromise) {
+  eventHandler.render = function (events, zipQuery) {
     $('[data-toggle="popover"]').popover('hide');
     $('.header-small').removeClass('hidden');
     $('.header-small').fadeIn();
@@ -185,11 +202,11 @@
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
     maxDist = 120701;
-    eventHandler.resultsRouting(maxDist, events, zipQuery, representativePromise);
+    eventHandler.resultsRouting(maxDist, events, zipQuery);
     addtocalendar.load();
   };
 
-  eventHandler.resultsRouting = function (maxDist, events, zipQuery, representativePromise){
+  eventHandler.resultsRouting = function (maxDist, events, zipQuery){
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
@@ -206,7 +223,6 @@
     $('#map').appendTo('.map-small');
     var info = '<small class="text-white">Event results by proximity, not by district.</small> ';
     // Display a list of reps with contact info
-    eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards section'));
 
     if (nearest.length === 0) {
       $('.header-with-results .results').removeClass('multipleResults');
@@ -247,7 +263,7 @@
         eventHandler.addFilter(this.$element.attr('data-filter'), selection);
         eventHandler.renderTableWithArray(eventHandler.getFilterState());
       }
-    }
+    };
 
     $("#stateTypeahead").typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
     $("#memberTypeahead").typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
