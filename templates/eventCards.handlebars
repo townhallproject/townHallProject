@@ -5,7 +5,7 @@
         <div class="col-xs-6">
           <p>{{meetingType}}</p>
         </div>
-        {{#if dateValid}}
+        {{#if zoneString}}
         <div class="col-xs-6 ">
           <span class="addtocalendar pull-right">
             <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
@@ -29,15 +29,35 @@
       </div>
     </div>
     <div class="panel-body">
-      <span class="text-success text-center"><h4><span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}, {{timeZone}}</span></h4></span>
+      {{#if eventName}}
+      <h3 class="text-success text-center">{{eventName}}</h3>
+      {{/if}}
+      <span class="text-success text-center"><h4>
+        <span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4></span>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{{Notes}}}
+        {{#if Notes}}
+        <li class="list-group-item list-item-no-border">{{{Notes}}}
         </li>
+        {{/if}}
+        {{#if phoneNumber}}
+        <li class="list-group-item list-item-no-border"> Call in number: {{phoneNumber}}
+        </li>
+        {{/if}}
+        {{#if link}}
+        <li class="list-group-item list-item-no-border">
+          <a href="{{link}}">{{#if linkName}}linkName{{/if}}{{#unless linkName}}Find out more{{/unless}}</a>
+        </li>
+        {{/if}}
+        {{#if RSVP}}
+        <li class="list-group-item list-item-no-border">
+          <a href="{{RSVP}}">{{rsvpName}}</a>
+        </li>
+        {{/if}}
         <li class="list-group-item">
           <address>
             <strong>{{Location}}</strong></br>
             {{streetAddress}}<br>
-            {{City}}, {{StateAb}} {{zip}}<br>
+            {{#if City}}{{City}}, {{/if}}{{StateAb}} {{zip}}<br>
             <a href={{addressLink}} target="_blank">Directions</a></br>
             <span class="text-center"><small>{{dist}} miles away from your search</small></span>
             <address>
