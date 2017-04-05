@@ -1,52 +1,69 @@
 {
   "rules": {
-     ".read": "true",
      ".write": "false",
-    "publicInfo" : {
-        ".read": "true",
-        ".write": "true",
-          "$campagin_id": {
-          	"$user": {
-              ".validate": "newData.hasChildren(['name', 'zip', 'lat', 'long'])",
-              "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 20"
-                     },
-              "long": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 15"
-                     },
-              "lat": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 15"
-                     },
-              "$other": { ".validate": false },
-            	"zip": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 6"
-                     }
-            }
-      },
-        "events" : {
-           ".read": "true",
-     			".write": "auth !=null"
-        }
-
-    },
-    "townHalls" : {
+     "townHalls" : {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$townHallID": {
         ".read": "true",
-        ".write": "auth.uid ==='ymUFf85w5CZRty5kO2yYO88H9Ef1'",
-       ".validate": "newData.hasChildren(['Member','Party','State','District','meetingType','Date','Time','timeZone','Location','streetAddress','City','StateAb'])"
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true "
+        }
+     },
+  	"townHallIds" : {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      "$townHallID": {
+       ".validate": "newData.hasChildren(['eventId','lastUpdated'])"
      }
    },
+    "townHallsOld" : {
+      ".read": "true",
+      "$townHallID": {
+         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+     }
+   },
+    "UserSubmission" : {
+      ".read": "true",
+      ".write": "auth.uid !== null",
+      "$townHallID": {
+       ".validate": "newData.hasChildren(['Member','eventId'])"
+     }
+   },
+  	"MOCs" : {
+      ".read": "true",
+      "$mocKey": {
+        "currentEvents" : {
+          ".write": "auth.uid !== null"
+        }
+     }
+   },
+    "zips": {
+      ".read": "true"
+
+    },
    "townHallsErrors" : {
      "$townHallID": {
        ".read": "true",
-       ".write": "auth.uid ==='ymUFf85w5CZRty5kO2yYO88H9Ef1'",
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       ".validate": "newData.hasChildren(['Member','Party','State'])"
     }
   },
   "geolocate" : {
-    "$townHallID": {
-      ".read": "true",
-      ".write": "auth.uid ==='ymUFf85w5CZRty5kO2yYO88H9Ef1'",
-     ".validate": "newData.hasChildren(['formatted_address','lat','lng'])"
-   }
+    ".read": "true",
+    "state": {
+      "$state": {
+            ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+    	 ".validate": "newData.hasChildren(['lat','lng'])"
+      	}
+   		},
+     "street": {
+       "$street":{
+          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+   	  		".validate": "newData.hasChildren(['lat','lng'])"
+       }
+   	}
  },
-   "zipZeroResults" : {
+	"zipZeroResults" : {
          ".read": "false",
     	 		".write": "true",
         	"$zip" : {
@@ -54,6 +71,12 @@
     	 			".write": "true",
        	 	  ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000"
         }
-    	}
-   }
+    	},
+  "users": {
+      "$user_id": {
+        ".read": "$user_id === auth.uid",
+        ".write": "$user_id === auth.uid"
+      }
+    }
+  }
 }
