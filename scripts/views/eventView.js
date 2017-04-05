@@ -12,27 +12,36 @@
     if (zip && zip.length === 5) {
       repZip = zip;
     } else if (zip && zip.length > 5) {
-      zip = zip.match(/\d{5}/g)[0];
-      plusFour = zip.match(/[+-\s]\d{4}/g);
+      zipFive = zip.match(/\d{5}/g);
+      zip = zipFive? zipFive[0] : null;
+      plusFour = zip ? zip.match(/[+-\s]\d{4}/g) : null;
       if (plusFour) {
         // for use if we use an API that takes plus four zips
         four = plusFour[0].match(/\d{4}/g);
       }
       repZip = zip;
     }
-    TownHall.lookupZip(zip)
-    .then(function(sorted){
-      eventHandler.resetFilters();
-      eventHandler.render(sorted, TownHall.zipQuery);
-      eventHandler.renderRepresentativeCards(TownHall.lookupReps(repZip), $('#representativeCards section'));
-    })
-    .catch(function(error){
-      var $results = $('#textresults');
-      $results.empty();
-      var $text = $('<h4>');
-      $text.text('That is not a real zip code');
-      $results.append($text);
-    });
+    if (zip) {
+      TownHall.lookupZip(zip)
+      .then(function(sorted){
+        eventHandler.resetFilters();
+        eventHandler.render(sorted, TownHall.zipQuery);
+        eventHandler.renderRepresentativeCards(TownHall.lookupReps(repZip), $('#representativeCards section'));
+      })
+      .catch(function(error){
+        eventHandler.zipErrorResponse();
+      });
+    } else {
+      eventHandler.zipErrorResponse();
+    }
+  };
+
+  eventHandler.zipErrorResponse = function() {
+    var $results = $('#textresults');
+    $results.empty();
+    var $text = $('<h4>');
+    $text.text('That is not a real zip code');
+    $results.append($text);
   };
 
   // reset the home page to originial view
