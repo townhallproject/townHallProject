@@ -1,79 +1,78 @@
 {
   "rules": {
-    ".write": "false",
-    "townHalls": {
+     ".write": "false",
+     "townHalls" : {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$townHallID": {
         ".read": "true",
-        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
-      }
-    },
-    "zips" : {
-      ".read": "true"
-    },
-    "townHallIds": {
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true "
+        }
+     },
+  	"townHallIds" : {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$townHallID": {
-        ".validate": "newData.hasChildren(['eventId','lastUpdated'])"
-      }
-    },
-    "townHallsOld": {
+       ".validate": "newData.hasChildren(['eventId','lastUpdated'])"
+     }
+   },
+    "townHallsOld" : {
       ".read": "true",
       "$townHallID": {
-        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
-      }
-    },
-    "UserSubmission": {
+         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+     }
+   },
+    "UserSubmission" : {
       ".read": "true",
       ".write": "auth.uid !== null",
       "$townHallID": {
-        ".validate": "newData.hasChildren(['Member','eventId'])"
-      }
-    },
-    "MOCs": {
-     ".read": "true",
+       ".validate": "newData.hasChildren(['Member','eventId'])"
+     }
+   },
+  	"MOCs" : {
+      ".read": "true",
       "$mocKey": {
-        "currentEvents": {
+        "currentEvents" : {
           ".write": "auth.uid !== null"
         }
-      }
+     }
+   },
+    "zips": {
+      ".read": "true"
+
     },
-    "townHallsErrors": {
-      "$townHallID": {
-        ".read": "true",
+   "townHallsErrors" : {
+     "$townHallID": {
+       ".read": "true",
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-        ".validate": "newData.hasChildren(['Member','Party','State'])"
-      }
-    },
-    "geolocate": {
-      "state": {
-        "$state" : {
-            ".read": "true",
-            ".write": "auth.uid !== null",
-            ".validate": "newData.hasChildren(['lat','lng'])"
+      ".validate": "newData.hasChildren(['Member','Party','State'])"
+    }
+  },
+  "geolocate" : {
+    ".read": "true",
+    "state": {
+      "$state": {
+            ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+    	 ".validate": "newData.hasChildren(['lat','lng'])"
+      	}
+   		},
+     "street": {
+       "$street":{
+          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+   	  		".validate": "newData.hasChildren(['lat','lng'])"
+       }
+   	}
+ },
+	"zipZeroResults" : {
+         ".read": "false",
+    	 		".write": "true",
+        	"$zip" : {
+           ".read": "false",
+    	 			".write": "true",
+       	 	  ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000"
         }
-      },
-      "street": {
-          "$address": {
-            ".read": "true",
-            ".write": "auth.uid !== null",
-             ".validate": "newData.hasChildren(['lat','lng'])"
-          }
-      }
-    },
-    "zipZeroResults": {
-      ".read": "false",
-      ".write": "true",
-      "$zip": {
-        ".read": "false",
-        ".write": "true",
-        ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000"
-      }
-    },
-    "users": {
-      ".read": "false",
+    	},
+  "users": {
       "$user_id": {
         ".read": "$user_id === auth.uid",
         ".write": "$user_id === auth.uid"

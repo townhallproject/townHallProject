@@ -18,9 +18,17 @@
     {{#if Time}}
     <li>{{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}  </li>
     {{/if}}
+    {{#if eventName}}
+    <li>{{eventName}}</li>
+    {{/if}}
     {{#if Location}}
     <li>{{Location}}</li>
     {{/if}}
+    {{#if phoneNumber}}
+    <li>{{phoneNumber}}</li>
+    {{/if}}
+    {{#if address}}
     <li>{{address}}</li>
+    {{/if}}
   </ul>
 </li>
