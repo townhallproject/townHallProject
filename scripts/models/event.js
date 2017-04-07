@@ -9,7 +9,7 @@
   TownHall.allMoCs = [];
   TownHall.allStates = [];
   TownHall.currentContext = [];
-  TownHall.filters = {}
+  TownHall.filters = {};
   TownHall.sortOn = 'State';
   TownHall.filteredResults = [];
   TownHall.isCurrentContext = false;
@@ -88,10 +88,10 @@
         // TODO:  Once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
         return TownHall.filters[key].some(function(filter) {
           return filter.slice(0, 8) === townhall[key].slice(0, 8);
-        })
-      })
+        });
+      });
     }, data).sort(TownHall.sortFunction);
-  }
+  };
 
   // METHODS IN RESPONSE TO lookup
   // Converts zip to lat lng google obj
@@ -140,7 +140,7 @@
     } else {
       TownHall.filters[filter].push(value);
     }
-  }
+  };
 
   TownHall.removeFilter = function(filter, value) {
     var index = TownHall.filters[filter].indexOf(value);
@@ -150,13 +150,13 @@
     if (TownHall.filters[filter].length === 0) {
       delete TownHall.filters[filter];
     }
-  }
+  };
 
   TownHall.resetFilters = function() {
     Object.keys(TownHall.filters).forEach(function(key) {
       delete TownHall.filters[key];
     });
-  }
+  };
 
   TownHall.addFilterIndexes = function(townhall) {
     if (TownHall.allStates.indexOf(townhall.State) === -1) {
@@ -165,7 +165,7 @@
     if (TownHall.allMoCs.indexOf(townhall.Member) === -1) {
       TownHall.allMoCs.push(townhall.Member);
     }
-  }
+  };
 
   module.TownHall = TownHall;
 })(window);
