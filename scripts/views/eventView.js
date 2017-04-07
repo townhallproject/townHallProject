@@ -309,6 +309,13 @@
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
 
+    // Perform zip search on load
+    var zipcode = getUrlParameter('zipcode');
+    if (zipcode) {
+      $('#look-up input').val(zipcode);
+      eventHandler.lookup(document.createEvent('Event'));
+    }
+
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
