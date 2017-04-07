@@ -9,26 +9,18 @@
   eventHandler.lookup = function (e) {
     e.preventDefault();
     var zip = $('#look-up input').val();
-    if (zip && zip.length === 5) {
-      repZip = zip;
-    } else if (zip && zip.length > 5) {
-      zipFive = zip.match(/\d{5}/g);
-      zip = zipFive? zipFive[0] : null;
-      plusFour = zip ? zip.match(/[+-\s]\d{4}/g) : null;
-      if (plusFour) {
-        // for use if we use an API that takes plus four zips
-        four = plusFour[0].match(/\d{4}/g);
-      }
-      repZip = zip;
-    }
-    if (zip) {
-      TownHall.lookupZip(zip)
+    regEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
+    var zipCheck = zip.match(regEx);
+    if (zipCheck) {
+      var zipLookup = zip.split('-')[0];
+      TownHall.lookupZip(zipLookup)
       .then(function(sorted){
         eventHandler.resetFilters();
         eventHandler.render(sorted, TownHall.zipQuery);
-        eventHandler.renderRepresentativeCards(TownHall.lookupReps(repZip), $('#representativeCards section'));
+        eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipLookup), $('#representativeCards section'));
       })
       .catch(function(error){
+        console.log(error);
         eventHandler.zipErrorResponse();
       });
     } else {
@@ -80,7 +72,7 @@
     $panel.children('.panel').addClass(event.Party.slice(0,3));
     $panel.appendTo($parent);
   };
-  
+
   // Display a list of reps with contact info
   eventHandler.renderRepresentativeCards = function(representativePromise, $parent) {
     $parent.empty(); // If they search for a new zipcode clear the old info
@@ -276,8 +268,8 @@
       }
     };
 
-    $("#stateTypeahead").typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
-    $("#memberTypeahead").typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
+    $('#stateTypeahead').typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
+    $('#memberTypeahead').typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
   }
 
   $(document).ready(function(){
