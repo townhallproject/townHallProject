@@ -104,7 +104,7 @@
     });
   };
 
-  // Creates the point layer. TODO: Replace circle feature type with icons
+  // Creates the point layer.
   function makePointLayer (data) {
     var featuresHome = {
       type: 'FeatureCollection',
@@ -177,6 +177,8 @@
       }
 
       var feature = features[0];
+
+      console.log(feature.properties)
 
       // Populate the popup and set its coordinates
       // based on the feature found.
@@ -291,14 +293,6 @@
     $('#look-up').on('submit', eventHandler.lookup);
   }
 
-  function killSidebar () {
-      $('.header-with-results').addClass('hidden')
-      $('.map-container-large').removeClass('hidden')
-      $('.map-container-split').addClass('hidden')
-      $('#map').prependTo('.map-large')
-      map.resize();
-  }
-
   // Zip Code Lookup!
   eventHandler.lookup = function (e) {
     e.preventDefault();
@@ -373,15 +367,25 @@
     $('.map-container-large').addClass('hidden')
     $('.map-container-split').removeClass('hidden')
     $('#map').prependTo('.map-fixing')
-
     map.resize();
+  }
+
+  function killSidebar () {
+      console.log('woof')
+      $('.header-with-results').addClass('hidden')
+      $('.map-container-large').removeClass('hidden')
+      $('.map-container-split').addClass('hidden')
+      $('#map').prependTo('.map-large')
+      map.resize();
   }
 
   $(document).ready(function(){
     setMap();
     readData();
     sidebarEvents();
-    $('.kill-results').on('click', killSidebar());
+    $('.kill-results').on('click', () => {
+      killSidebar();
+    });
   });
 
 }(window.firebase));
