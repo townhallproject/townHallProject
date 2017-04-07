@@ -23,6 +23,7 @@
       var zipLookup = zip.split('-')[0];
       TownHall.lookupZip(zipLookup)
       .then(function(sorted){
+        setUrlParameter('zipcode', zip);
         eventHandler.resetFilters();
         eventHandler.render(sorted, TownHall.zipQuery);
         eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipLookup), $('#representativeCards section'));
