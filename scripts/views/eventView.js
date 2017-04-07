@@ -80,7 +80,8 @@
     $panel.children('.panel').addClass(event.Party.slice(0,3));
     $panel.appendTo($parent);
   };
-
+  
+  // Display a list of reps with contact info
   eventHandler.renderRepresentativeCards = function(representativePromise, $parent) {
     $parent.empty(); // If they search for a new zipcode clear the old info
     representativePromise.success(function(representatives) {
@@ -234,7 +235,6 @@
     },[]);
     $('#map').appendTo('.map-small');
     var info = '<small class="text-white">Event results by proximity, not by district.</small> ';
-    // Display a list of reps with contact info
 
     if (nearest.length === 0) {
       $('.header-with-results .results').removeClass('multipleResults');
