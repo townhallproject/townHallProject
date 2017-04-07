@@ -5942,6 +5942,10 @@ li[data-toggle='popover']:hover {
 .typeahead.dropdown-menu li a.dropdown-item {
   padding: 3px 12px;
 }
+.event-row .notes {
+  margin-top: 10px;
+  font-style: italic;
+}
 .embed-container {
   position: relative;
   padding-bottom: 1056px;

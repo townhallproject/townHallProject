@@ -1,4 +1,5 @@
 <li id="{{eventId}}" class="event-row list-group-item" data-Main_State-filter="{{State}}" data-Member-filter="{{Member}}"
+  data-toggle="collapse" data-target="#notes-{{eventId}}" title="Click to toggle notes">
   data-container="body" data-animation="true" data-html="true"
   {{#if Notes}}data-toggle="popover" title="Notes <a href='javascript:void(0)' class='close'>×</a>"
   {{/if}}
@@ -33,4 +34,5 @@
     <li>{{address}}</li>
     {{/if}}
   </ul>
+  <div id="notes-{{eventId}}" class="collapse notes">{{#if Notes}}{{{Notes}}}{{/if}}{{#unless Notes}}There are no notes for this event.{{/unless}}</div>
 </li>
