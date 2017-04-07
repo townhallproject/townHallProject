@@ -2,11 +2,27 @@
   "rules": {
      ".write": "false",
      "townHalls" : {
+      ".indexOn": "lastUpdated",
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$townHallID": {
         ".read": "true",
-        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true "
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true",
+      	"lastUpdated": {
+            ".indexOn": ".value"
+      		}
+        }
+     },
+      "capEvents" : {
+      ".indexOn": "lastUpdated",
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      "$townHallID": {
+        ".read": "true",
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true",
+      	"lastUpdated": {
+            ".indexOn": ".value"
+      		}
         }
      },
   	"townHallIds" : {
@@ -32,6 +48,7 @@
   	"MOCs" : {
       ".read": "true",
       "$mocKey": {
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
         "currentEvents" : {
           ".write": "auth.uid !== null"
         }
