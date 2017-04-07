@@ -9,39 +9,10 @@
   eventHandler.lookup = function (e) {
     e.preventDefault();
     var zip = $('#look-up input').val();
-    if (zip && zip.length === 5) {
-      repZip = zip;
-    } else if (zip && zip.length > 5) {
-      zipFive = zip.match(/\d{5}/g);
-      zip = zipFive? zipFive[0] : null;
-      plusFour = zip ? zip.match(/[+-\s]\d{4}/g) : null;
-      if (plusFour) {
-        // for use if we use an API that takes plus four zips
-        four = plusFour[0].match(/\d{4}/g);
-      }
-      repZip = zip;
-    }
     if (zip) {
-      TownHall.lookupZip(zip)
-      .then(function(sorted){
-        eventHandler.resetFilters();
-        eventHandler.render(sorted, TownHall.zipQuery);
-        eventHandler.renderRepresentativeCards(TownHall.lookupReps(repZip), $('#representativeCards section'));
-      })
-      .catch(function(error){
-        eventHandler.zipErrorResponse();
-      });
-    } else {
-      eventHandler.zipErrorResponse();
+      TownHall.lookupZip($('#look-up input').val());
+      eventHandler.resetFilters();
     }
-  };
-
-  eventHandler.zipErrorResponse = function() {
-    var $results = $('#textresults');
-    $results.empty();
-    var $text = $('<h4>');
-    $text.text('That is not a real zip code');
-    $results.append($text);
   };
 
   // reset the home page to originial view
@@ -201,7 +172,7 @@
   };
 
   // renders results of search
-  eventHandler.render = function (events, zipQuery) {
+  eventHandler.render = function (events, zipQuery, representativePromise) {
     $('[data-toggle="popover"]').popover('hide');
     $('.header-small').removeClass('hidden');
     $('.header-small').fadeIn();
@@ -214,11 +185,11 @@
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
     maxDist = 120701;
-    eventHandler.resultsRouting(maxDist, events, zipQuery);
+    eventHandler.resultsRouting(maxDist, events, zipQuery, representativePromise);
     addtocalendar.load();
   };
 
-  eventHandler.resultsRouting = function (maxDist, events, zipQuery){
+  eventHandler.resultsRouting = function (maxDist, events, zipQuery, representativePromise){
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
@@ -235,6 +206,7 @@
     $('#map').appendTo('.map-small');
     var info = '<small class="text-white">Event results by proximity, not by district.</small> ';
     // Display a list of reps with contact info
+    eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards section'));
 
     if (nearest.length === 0) {
       $('.header-with-results .results').removeClass('multipleResults');
