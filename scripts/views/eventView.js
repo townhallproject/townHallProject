@@ -271,6 +271,25 @@
     $('#memberTypeahead').typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
   }
 
+  function getUrlParameter(param) {
+    var value = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
+    if (value.length > 0) {
+      return value[0].split('=')[1];
+    }
+    return false;
+  }
+
+  function setUrlParameter(param, value) {
+    var search = document.location.search;
+    search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
+    if (search.indexOf('?') === -1) {
+      search += '?';
+    }
+    search += param + '=' + value;
+
+    window.history.replaceState('', '', document.location.origin + '/' + search);
+  }
+
   $(document).ready(function(){
     init();
   });
