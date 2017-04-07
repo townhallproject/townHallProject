@@ -273,9 +273,9 @@
   }
 
   function getUrlParameter(param) {
-    var value = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
-    if (value.length > 0) {
-      return value[0].split('=')[1];
+    var query = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
+    if (query) {
+      return query[0].split('=')[1];
     }
     return false;
   }
