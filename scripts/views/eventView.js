@@ -264,6 +264,7 @@
     $('#view-all').on('click', TownHall.viewAll);
     $('.sort').on('click', 'a', eventHandler.sortTable);
     setupTypeaheads();
+
     $('.filter').on('click', 'a', eventHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
     eventHandler.resetFilters();
@@ -278,7 +279,7 @@
       TownHall.isMap = true;
     }
 
-    $('.navbar-main').on('click', '.hash-link', function onClickGethref(event) {
+    $('.hash-link').on('click', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
@@ -316,6 +317,10 @@
     $('body').on('hidden.bs.popover', function (e) {
       $(e.target).data('bs.popover').inState.click = false;
     });
+    $('.privacy-policy-button').on('click', function(e){
+      $('#privacy-policy-link').click();
+      $('html,body').scrollTop(0);
+    })
   }
 
   window.onBeforeunload=null;
