@@ -5,6 +5,14 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
+  eventHandler.zipErrorResponse = function() {
+    var $results = $('#textresults');
+    $results.empty();
+    var $text = $('<h4>');
+    $text.text('That is not a real zip code');
+    $results.append($text);
+  };
+
   // Renders the page in response to lookup
   eventHandler.lookup = function (e) {
     e.preventDefault();
@@ -20,7 +28,6 @@
         eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipLookup), $('#representativeCards section'));
       })
       .catch(function(error){
-        console.log(error);
         eventHandler.zipErrorResponse();
       });
     } else {
@@ -186,7 +193,7 @@
   };
 
   // renders results of search
-  eventHandler.render = function (events, zipQuery, representativePromise) {
+  eventHandler.render = function (events, zipQuery) {
     $('[data-toggle="popover"]').popover('hide');
     $('.header-small').removeClass('hidden');
     $('.header-small').fadeIn();
@@ -199,11 +206,11 @@
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
     maxDist = 120701;
-    eventHandler.resultsRouting(maxDist, events, zipQuery, representativePromise);
+    eventHandler.resultsRouting(maxDist, events, zipQuery);
     addtocalendar.load();
   };
 
-  eventHandler.resultsRouting = function (maxDist, events, zipQuery, representativePromise){
+  eventHandler.resultsRouting = function (maxDist, events, zipQuery){
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
@@ -332,7 +339,7 @@
     $('.privacy-policy-button').on('click', function(e){
       $('#privacy-policy-link').click();
       $('html,body').scrollTop(0);
-    })
+    });
   }
 
   window.onBeforeunload=null;
