@@ -9,9 +9,22 @@
   eventHandler.lookup = function (e) {
     e.preventDefault();
     var zip = $('#look-up input').val();
-    if (zip) {
-      TownHall.lookupZip($('#look-up input').val());
-      eventHandler.resetFilters();
+    regEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
+    var zipCheck = zip.match(regEx);
+    if (zipCheck) {
+      var zipLookup = zip.split('-')[0];
+      TownHall.lookupZip(zipLookup)
+      .then(function(sorted){
+        eventHandler.resetFilters();
+        eventHandler.render(sorted, TownHall.zipQuery);
+        eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipLookup), $('#representativeCards section'));
+      })
+      .catch(function(error){
+        console.log(error);
+        eventHandler.zipErrorResponse();
+      });
+    } else {
+      eventHandler.zipErrorResponse();
     }
   };
 
@@ -52,6 +65,7 @@
     $panel.appendTo($parent);
   };
 
+  // Display a list of reps with contact info
   eventHandler.renderRepresentativeCards = function(representativePromise, $parent) {
     $parent.empty(); // If they search for a new zipcode clear the old info
     representativePromise.success(function(representatives) {
@@ -205,8 +219,6 @@
     },[]);
     $('#map').appendTo('.map-small');
     var info = '<small class="text-white">Event results by proximity, not by district.</small> ';
-    // Display a list of reps with contact info
-    eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards section'));
 
     if (nearest.length === 0) {
       $('.header-with-results .results').removeClass('multipleResults');
@@ -248,8 +260,8 @@
       }
     };
 
-    $("#stateTypeahead").typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
-    $("#memberTypeahead").typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
+    $('#stateTypeahead').typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
+    $('#memberTypeahead').typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
   }
 
   $(document).ready(function(){
