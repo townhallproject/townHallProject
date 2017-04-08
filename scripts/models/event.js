@@ -9,7 +9,7 @@
   TownHall.allMoCs = [];
   TownHall.allStates = [];
   TownHall.currentContext = [];
-  TownHall.filters = {};
+  TownHall.filters = {}
   TownHall.sortOn = 'State';
   TownHall.filteredResults = [];
   TownHall.isCurrentContext = false;
@@ -88,36 +88,34 @@
         // TODO:  Once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
         return TownHall.filters[key].some(function(filter) {
           return filter.slice(0, 8) === townhall[key].slice(0, 8);
-        });
-      });
+        })
+      })
     }, data).sort(TownHall.sortFunction);
-  };
+  }
 
   // METHODS IN RESPONSE TO lookup
   // Converts zip to lat lng google obj
   TownHall.lookupZip = function (zip) {
-    return new Promise(function (resolve, reject) {
-      firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
-        if (snapshot.exists()) {
-          var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
-          TownHall.zipQuery = zipQueryLoc;
-          TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
-            resolve (sorted);
-          });
-        } else {
-          reject ('That is not a real zip code');
-        }
+    return firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
+      var representativePromise = $.ajax({
+        url: 'https://congress.api.sunlightfoundation.com/legislators/locate?zip=' + zip,
+        dataType: 'jsonp'
       });
+      var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
+      TownHall.zipQuery = zipQueryLoc;
+      TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
+        eventHandler.render(sorted, zipQueryLoc, representativePromise);
+      });
+    }).catch(function(error){
+      var $results = $('#textresults');
+      console.log(error);
+      $results.empty();
+      var $text = $('<h4>');
+      $text.text('That is not a real zip code');
+      $results.append($text);
     });
   };
 
-  TownHall.lookupReps = function (zip) {
-    var representativePromise = $.ajax({
-      url: 'https://congress.api.sunlightfoundation.com/legislators/locate?zip=' + zip,
-      dataType: 'jsonp'
-    });
-    return representativePromise;
-  };
   // given a zip, returns sorted array of events
   TownHall.returnNearest = function (zipQueryLoc) {
     var locations = [];
@@ -142,7 +140,7 @@
     } else {
       TownHall.filters[filter].push(value);
     }
-  };
+  }
 
   TownHall.removeFilter = function(filter, value) {
     var index = TownHall.filters[filter].indexOf(value);
@@ -152,13 +150,13 @@
     if (TownHall.filters[filter].length === 0) {
       delete TownHall.filters[filter];
     }
-  };
+  }
 
   TownHall.resetFilters = function() {
     Object.keys(TownHall.filters).forEach(function(key) {
       delete TownHall.filters[key];
     });
-  };
+  }
 
   TownHall.addFilterIndexes = function(townhall) {
     if (TownHall.allStates.indexOf(townhall.State) === -1) {
@@ -167,7 +165,7 @@
     if (TownHall.allMoCs.indexOf(townhall.Member) === -1) {
       TownHall.allMoCs.push(townhall.Member);
     }
-  };
+  }
 
   module.TownHall = TownHall;
 })(window);

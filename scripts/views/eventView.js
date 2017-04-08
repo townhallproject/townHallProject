@@ -28,14 +28,6 @@
     }
   };
 
-  eventHandler.zipErrorResponse = function() {
-    var $results = $('#textresults');
-    $results.empty();
-    var $text = $('<h4>');
-    $text.text('That is not a real zip code');
-    $results.append($text);
-  };
-
   // reset the home page to originial view
   eventHandler.resetHome = function () {
     $('[data-toggle="popover"]').popover('hide');
@@ -194,7 +186,7 @@
   };
 
   // renders results of search
-  eventHandler.render = function (events, zipQuery) {
+  eventHandler.render = function (events, zipQuery, representativePromise) {
     $('[data-toggle="popover"]').popover('hide');
     $('.header-small').removeClass('hidden');
     $('.header-small').fadeIn();
@@ -207,11 +199,11 @@
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
     maxDist = 120701;
-    eventHandler.resultsRouting(maxDist, events, zipQuery);
+    eventHandler.resultsRouting(maxDist, events, zipQuery, representativePromise);
     addtocalendar.load();
   };
 
-  eventHandler.resultsRouting = function (maxDist, events, zipQuery){
+  eventHandler.resultsRouting = function (maxDist, events, zipQuery, representativePromise){
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
@@ -284,6 +276,7 @@
     $('#view-all').on('click', TownHall.viewAll);
     $('.sort').on('click', 'a', eventHandler.sortTable);
     setupTypeaheads();
+
     $('.filter').on('click', 'a', eventHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
     eventHandler.resetFilters();
@@ -298,7 +291,7 @@
       TownHall.isMap = true;
     }
 
-    $('.navbar-main').on('click', '.hash-link', function onClickGethref(event) {
+    $('.hash-link').on('click', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
@@ -336,6 +329,10 @@
     $('body').on('hidden.bs.popover', function (e) {
       $(e.target).data('bs.popover').inState.click = false;
     });
+    $('.privacy-policy-button').on('click', function(e){
+      $('#privacy-policy-link').click();
+      $('html,body').scrollTop(0);
+    })
   }
 
   window.onBeforeunload=null;
