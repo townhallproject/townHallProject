@@ -96,24 +96,27 @@
   // METHODS IN RESPONSE TO lookup
   // Converts zip to lat lng google obj
   TownHall.lookupZip = function (zip) {
-    return firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
-      var representativePromise = $.ajax({
-        url: 'https://congress.api.sunlightfoundation.com/legislators/locate?zip=' + zip,
-        dataType: 'jsonp'
+    return new Promise(function (resolve, reject) {
+      firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
+        if (snapshot.exists()) {
+          var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
+          TownHall.zipQuery = zipQueryLoc;
+          TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
+            resolve (sorted);
+          });
+        } else {
+          reject ('That is not a real zip code');
+        }
       });
-      var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
-      TownHall.zipQuery = zipQueryLoc;
-      TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
-        eventHandler.render(sorted, zipQueryLoc, representativePromise);
-      });
-    }).catch(function(error){
-      var $results = $('#textresults');
-      console.log(error);
-      $results.empty();
-      var $text = $('<h4>');
-      $text.text('That is not a real zip code');
-      $results.append($text);
     });
+  };
+
+  TownHall.lookupReps = function (zip) {
+    var representativePromise = $.ajax({
+      url: 'https://congress.api.sunlightfoundation.com/legislators/locate?zip=' + zip,
+      dataType: 'jsonp'
+    });
+    return representativePromise;
   };
 
   // given a zip, returns sorted array of events
