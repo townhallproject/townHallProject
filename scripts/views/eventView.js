@@ -319,8 +319,8 @@
     });
     $('.privacy-policy-button').on('click', function(e){
       $('#privacy-policy-link').click();
-      $('html,body').scrollTop(0);
-    })
+      $('html, body').scrollTop(0);
+    });
   }
 
   window.onBeforeunload=null;

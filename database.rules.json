@@ -56,7 +56,6 @@
    },
     "zips": {
       ".read": "true"
-
     },
    "townHallsErrors" : {
      "$townHallID": {
@@ -69,7 +68,7 @@
     ".read": "true",
     "state": {
       "$state": {
-            ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
     	 ".validate": "newData.hasChildren(['lat','lng'])"
       	}
    		},
