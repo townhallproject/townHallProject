@@ -353,8 +353,9 @@
 
           // If only one district is selected, match it up from that
           } else {
-            var districtMatcher = state + '-' + districts
-            if (k.District === districtMatcher) {
+            var districtNumber = parseInt(k.District.substring(3))
+
+            if (districtNumber === parseInt(districts)) {
               fetchedData.push(k)
             }
           }
