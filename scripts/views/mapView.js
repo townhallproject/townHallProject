@@ -129,6 +129,7 @@
           },
           properties: {
             district: data[key].District,
+            member: data[key].Member,
             icon: iconKey
           },
         });
@@ -177,11 +178,16 @@
       }
 
       var feature = features[0];
+      var popupDistrict = '';
+
+      if (feature.properties.district && feature.properties.district !== 'Senate') {
+        popupDistrict = ', District ' + (feature.properties.district).substring(3)
+      }
 
       // Populate the popup and set its coordinates
       // based on the feature found.
       popup.setLngLat(feature.geometry.coordinates)
-          .setHTML(feature.properties.district)
+          .setHTML('<b>' + feature.properties.member + '</b>' + popupDistrict)
           .addTo(map);
     });
   }
