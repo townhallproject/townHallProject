@@ -5,13 +5,33 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
+  eventHandler.zipErrorResponse = function() {
+    var $results = $('#textresults');
+    $results.empty();
+    var $text = $('<h4>');
+    $text.text('That is not a real zip code');
+    $results.append($text);
+  };
+
   // Renders the page in response to lookup
   eventHandler.lookup = function (e) {
     e.preventDefault();
-    var zip = $('#look-up input').val();
-    if (zip) {
-      TownHall.lookupZip($('#look-up input').val());
-      eventHandler.resetFilters();
+    var zip = $('#look-up input').val().trim();
+    regEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
+    var zipCheck = zip.match(regEx);
+    if (zipCheck) {
+      var zipLookup = zip.split('-')[0];
+      TownHall.lookupZip(zipLookup)
+      .then(function(sorted){
+        eventHandler.resetFilters();
+        eventHandler.render(sorted, TownHall.zipQuery);
+        eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipLookup), $('#representativeCards section'));
+      })
+      .catch(function(error){
+        eventHandler.zipErrorResponse();
+      });
+    } else {
+      eventHandler.zipErrorResponse();
     }
   };
 
@@ -52,6 +72,7 @@
     $panel.appendTo($parent);
   };
 
+  // Display a list of reps with contact info
   eventHandler.renderRepresentativeCards = function(representativePromise, $parent) {
     $parent.empty(); // If they search for a new zipcode clear the old info
     representativePromise.success(function(representatives) {
@@ -130,21 +151,21 @@
     var button = '<li><button class="btn btn-secondary btn-xs" ' +
                  'data-filter="' + filter + '" data-value="' + value + '" >' +
                     value + '<i class="fa fa-times" aria-hidden="true"></i>' +
-                  '</button></li>'
+                  '</button></li>';
     $('#filter-info').append(button);
-  }
+  };
 
   eventHandler.removeFilter = function() {
     var $button = $(this);
     TownHall.removeFilter($button.attr('data-filter'), $button.attr('data-value'));
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
     $button.parent().remove();
-  }
+  };
 
   eventHandler.resetFilters = function() {
     TownHall.resetFilters();
     $('#filter-info li button').parent().remove();
-  }
+  };
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
@@ -172,7 +193,7 @@
   };
 
   // renders results of search
-  eventHandler.render = function (events, zipQuery, representativePromise) {
+  eventHandler.render = function (events, zipQuery) {
     $('[data-toggle="popover"]').popover('hide');
     $('.header-small').removeClass('hidden');
     $('.header-small').fadeIn();
@@ -185,11 +206,11 @@
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
     maxDist = 120701;
-    eventHandler.resultsRouting(maxDist, events, zipQuery, representativePromise);
+    eventHandler.resultsRouting(maxDist, events, zipQuery);
     addtocalendar.load();
   };
 
-  eventHandler.resultsRouting = function (maxDist, events, zipQuery, representativePromise){
+  eventHandler.resultsRouting = function (maxDist, events, zipQuery){
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
@@ -205,8 +226,6 @@
     },[]);
     $('#map').appendTo('.map-small');
     var info = '<small class="text-white">Event results by proximity, not by district.</small> ';
-    // Display a list of reps with contact info
-    eventHandler.renderRepresentativeCards(representativePromise, $('#representativeCards section'));
 
     if (nearest.length === 0) {
       $('.header-with-results .results').removeClass('multipleResults');
@@ -216,7 +235,6 @@
       eventHandler.renderTableWithArray(events);
       $text.html('There are no events within 75 miles of your zip, the closest one is ' + townHall.dist + ' miles away. <br>' + info);
       $results.append($text);
-      TownHall.saveZipLookup($zip);
       eventHandler.renderPanels(townHall, $parent);
     }
     else{
@@ -247,10 +265,10 @@
         eventHandler.addFilter(this.$element.attr('data-filter'), selection);
         eventHandler.renderTableWithArray(eventHandler.getFilterState());
       }
-    }
+    };
 
-    $("#stateTypeahead").typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
-    $("#memberTypeahead").typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
+    $('#stateTypeahead').typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
+    $('#memberTypeahead').typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
   }
 
   $(document).ready(function(){
@@ -265,6 +283,7 @@
     $('#view-all').on('click', TownHall.viewAll);
     $('.sort').on('click', 'a', eventHandler.sortTable);
     setupTypeaheads();
+
     $('.filter').on('click', 'a', eventHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
     eventHandler.resetFilters();
@@ -279,7 +298,7 @@
       TownHall.isMap = true;
     }
 
-    $('.navbar-main').on('click', '.hash-link', function onClickGethref(event) {
+    $('.hash-link').on('click', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
@@ -316,6 +335,10 @@
     // Fix popover bug in bootstrap 3 https://github.com/twbs/bootstrap/issues/16732
     $('body').on('hidden.bs.popover', function (e) {
       $(e.target).data('bs.popover').inState.click = false;
+    });
+    $('.privacy-policy-button').on('click', function(e){
+      $('#privacy-policy-link').click();
+      $('html,body').scrollTop(0);
     });
   }
 

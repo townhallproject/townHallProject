@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/meganrm/townhallproject.git"
+    "url": "git+https://github.com/townhallproject/townHallProject.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://meganrm/townhallproject.git/issues"
+    "url": "https://townhallproject/townHallProject.git/issues"
   },
   "homepage": "https:/meganrm/townhallproject.git#readme",
   "dependencies": {
