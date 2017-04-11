@@ -13,7 +13,7 @@
     var accessToken = 'pk.eyJ1IjoiZG1vcmlhcnR5IiwiYSI6ImNpejlid2Y1djAxNWsyeHFwNTVoM2ZibWEifQ.MlGaldJiUQ91EDGdjJxLsA';
 
     // Specify uploaded Mapbox Studio style URL
-    var styleURL = 'mapbox://styles/dmoriarty/cizljl81e000x2rqk280evaee';
+    var styleURL = 'mapbox://styles/dmoriarty/cj18brxs7002q2sptb60i1zfc';
     var mapId = 'dmoriarty.cd-114-2015'; // used by the click handler only
 
     mapboxgl.accessToken = accessToken;
@@ -178,8 +178,6 @@
 
       var feature = features[0];
 
-      console.log(feature.properties)
-
       // Populate the popup and set its coordinates
       // based on the feature found.
       popup.setLngLat(feature.geometry.coordinates)
@@ -196,10 +194,6 @@
     // Fetch states with senators in em'
     for (key in townHallData){
       k = townHallData[key]
-
-      if (k.StateAb === 'AZ') {
-        console.log(k)
-      }
 
       if (k.District == 'Senate' && k.State && k.City !== 'Washington') {
         includedStates.push(k.State)
@@ -235,15 +229,13 @@
     }
 
     // Apply the filters to each of these layers
-    toggleFilters(['senate_glow', 'senate_fill'], filterSenate);
-    toggleFilters(['district_glow', 'district_fill'], filterDistrict);
+    toggleFilters('senate_fill', filterSenate);
+    toggleFilters('district_fill', filterDistrict);
   }
 
-  function toggleFilters (layers, filter) {
-    layers.forEach(function (layer) {
-      map.setFilter(layer, filter);
-      map.setLayoutProperty(layer, 'visibility', 'visible');
-    })
+  function toggleFilters (layer, filter) {
+    map.setFilter(layer, filter);
+    map.setLayoutProperty(layer, 'visibility', 'visible');
   }
 
   // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
@@ -301,14 +293,18 @@
       var validDistricts = [];
       var callbackTrigger = 0;
       var thisState;
+      var stateCode;
 
       zipLookup.forEach(function(n){
-        if (n.zip === zip) {
-          focusMap(n.abr, n.dis);
-          thisState = n.abr;
-          validDistricts.push(n.dis);
-        // Fall back on first four strings if exact zip match doesn't exist
-        } else if (n.zip.substring(0,4) === zip.substring(0,4)) {
+        if (n.zip === zip || n.zip.substring(0,4) == zip.substring(0,4)) {
+          stateData.forEach(function(l){
+            if (l.USPS === n.abr) {
+              stateCode = l.FIPS;
+            }
+          });
+          var geoid = stateCode + n.dis;
+
+          highlightDistrict(geoid)
           focusMap(n.abr, n.dis);
           thisState = n.abr;
           validDistricts.push(n.dis);
@@ -325,22 +321,39 @@
   // Match the looked up zip code to district #
   function matchSelectionToZip (state, districts) {
     var fetchedData = []
+    var stateName;
 
+    // Fetch full state name
+    stateData.forEach(function(n){
+      if (n.USPS === state) {
+        stateName = n.Name;
+      }
+    });
+
+    // Filter through the town halls
     for (key in townhallData){
       var k = townhallData[key];
-      if (k.StateAb === state) {
+
+      // Filter townhalls for ones within this state
+      if (k.State === stateName) {
+
+        // If this townhall is a Senate race, automatically add it
         if (k.District === 'Senate') {
           fetchedData.push(k)
         } else {
+
+          // Otherwise, check to see if there are multiple districts captured. (In the case of looking up via zip code)
           if(districts.constructor === Array) {
             districts.forEach((d) => {
-              let districtMatcher = state + '-' + d
+              var districtMatcher = state + '-' + d
               if (k.District === districtMatcher) {
                 fetchedData.push(k)
               }
-            })   
+            })
+
+          // If only one district is selected, match it up from that
           } else {
-            let districtMatcher = state + '-' + districts
+            var districtMatcher = state + '-' + districts
             if (k.District === districtMatcher) {
               fetchedData.push(k)
             }
@@ -355,7 +368,7 @@
   // Create a sidebar and load it with Town Hall event cards.
   function makeSidebar (state, districts) {
     var districtMatcher = state + '-' + districts;
-    let selectedData = matchSelectionToZip(state, districts)
+    var selectedData = matchSelectionToZip(state, districts)
     var districtCard = Handlebars.getTemplate('eventCards');
 
     $('.nearest-with-results').empty()
@@ -371,12 +384,11 @@
   }
 
   function killSidebar () {
-      console.log('woof')
-      $('.header-with-results').addClass('hidden')
-      $('.map-container-large').removeClass('hidden')
-      $('.map-container-split').addClass('hidden')
-      $('#map').prependTo('.map-large')
-      map.resize();
+    $('.header-with-results').addClass('hidden')
+    $('.map-container-large').removeClass('hidden')
+    $('.map-container-split').addClass('hidden')
+    $('#map').prependTo('.map-large')
+    map.resize();
   }
 
   $(document).ready(function(){
