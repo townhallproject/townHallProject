@@ -16,7 +16,7 @@
   // Renders the page in response to lookup
   eventHandler.lookup = function (e) {
     e.preventDefault();
-    var zip = $('#look-up input').val();
+    var zip = $('#look-up input').val().trim();
     regEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
     var zipCheck = zip.match(regEx);
     if (zipCheck) {
