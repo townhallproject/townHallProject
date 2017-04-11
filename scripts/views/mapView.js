@@ -114,7 +114,7 @@
     for (key in data){
       var type = data[key].meetingType;
 
-      if (type === 'Teletown Hall' || type === 'Tele-town Hall'){
+      if (type === 'Teletown Hall' || type === 'Tele-Town Hall'){
         var iconKey = 'phone-in';
       } else {
         var iconKey = 'in-person';
