@@ -5,11 +5,11 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
-  eventHandler.zipErrorResponse = function() {
+  eventHandler.zipErrorResponse = function(errorMessage) {
     var $results = $('#textresults');
     $results.empty();
     var $text = $('<h4>');
-    $text.text('That is not a real zip code');
+    $text.text(errorMessage);
     $results.append($text);
   };
 
@@ -28,10 +28,10 @@
         eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipLookup), $('#representativeCards section'));
       })
       .catch(function(error){
-        eventHandler.zipErrorResponse();
+        eventHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.');
       });
     } else {
-      eventHandler.zipErrorResponse();
+      eventHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
     }
   };
 
