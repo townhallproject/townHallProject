@@ -281,8 +281,9 @@
   }
 
   function setUrlParameter(param, value) {
-    var search = document.location.search;
-    search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
+    // Get query params, and remove the matching param if it exists
+    var search = document.location.search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
+    // If there are no query params then we need to add the ? back
     if (search.indexOf('?') === -1) {
       search += '?';
     }
