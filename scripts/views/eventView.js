@@ -23,6 +23,7 @@
       var zipLookup = zip.split('-')[0];
       TownHall.lookupZip(zipLookup)
       .then(function(sorted){
+        setUrlParameter('zipcode', zip);
         eventHandler.resetFilters();
         eventHandler.render(sorted, TownHall.zipQuery);
         eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipLookup), $('#representativeCards section'));
@@ -271,6 +272,26 @@
     $('#memberTypeahead').typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
   }
 
+  function getUrlParameter(param) {
+    var query = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
+    if (query) {
+      return query[0].split('=')[1];
+    }
+    return false;
+  }
+
+  function setUrlParameter(param, value) {
+    // Get query params, and remove the matching param if it exists
+    var search = document.location.search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
+    // If there are no query params then we need to add the ? back
+    if (search.indexOf('?') === -1) {
+      search += '?';
+    }
+    search += param + '=' + value;
+
+    window.history.replaceState('', '', document.location.origin + '/' + search);
+  }
+
   $(document).ready(function(){
     init();
   });
@@ -288,6 +309,13 @@
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
+
+    // Perform zip search on load
+    var zipcode = getUrlParameter('zipcode');
+    if (zipcode) {
+      $('#look-up input').val(zipcode);
+      eventHandler.lookup(document.createEvent('Event'));
+    }
 
     // url hash for direct links to subtabs
     // slightly hacky routing
