@@ -27,8 +27,8 @@ The published event list on our site is open for citizens, activists, and resear
 ## Running Locally
 - `npm i`
 - `bower i`
-- `firebase serve`
-- Open localhost:5000
+- `node server.js`
+- Open localhost:3000
 
 #### Style Changes
 - In a second terminal window
