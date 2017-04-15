@@ -156,13 +156,11 @@
     }
   };
 
+  //gets rid of whole filter category and removes the associated buttons
   eventHandler.removeFilterCategory = function(category) {
     delete TownHall.filters[category];
-    console.log($('button[data-filter="' + category + ']"'));
     $('button[data-filter="' + category + '"]').remove();
-    // TownHall.removeFilter($button.attr('data-filter'), $button.attr('data-value'));
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
-    // $button.parent().remove();
   };
 
   eventHandler.removeFilter = function() {
