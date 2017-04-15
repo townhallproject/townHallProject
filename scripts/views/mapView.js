@@ -354,21 +354,21 @@
 
   window.onResizeMap = function onResizeMap() {
     var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'address': 'US' }, function onGeocode(results, status) {
-      google.maps.event.trigger(map, 'resize');
-      // map.setCenter(results[0].geometry.location);
-      var resizeBounds = new google.maps.LatLngBounds();
-      var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-      if ( TownHall.zipQuery) {
-        resizeBounds.extend(TownHall.zipQuery);
-      }
-      data.forEach(function(ele){
+    var resizeBounds = new google.maps.LatLngBounds();
+    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+    if ( TownHall.zipQuery) {
+      resizeBounds.extend(TownHall.zipQuery);
+    }
+    data.forEach(function(ele){
+      if (ele.lat && ele.lng) {
         marker = new google.maps.LatLng(ele.lat, ele.lng);
         resizeBounds.extend(marker);
-      });
-    // map.setCenter(results[0].geometry.location);
-      map.fitBounds(resizeBounds);
+      } else {
+        // console.log(ele.eventId);
+      }
     });
+    google.maps.event.trigger(map, 'resize');
+    map.fitBounds(resizeBounds);
   };
 
   // TODO; Probably redudent with resize map
@@ -397,18 +397,19 @@
 // Adds all events into main data array
 // Adds all events as markers
 // renders tables
-// TODO: sperate out into more concise functions
   window.readData = function (){
     var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('State');
     townHallsFB.on('child_added', function getSnapShot(snapshot) {
       var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
       var ele = new TownHall (snapshot.val());
-      var id = ele.Member+ele.Date;
-      ele.rowid = id.replace(/[\W]/g, '');
       TownHall.allTownHalls.push(ele);
-      $('#all-events-table').append(tableRowTemplate(ele));
-      $("[data-toggle='popover']").popover({html:true});
+      TownHall.addFilterIndexes(ele);
+      eventHandler.initialTable(ele);
+      $('[data-toggle="popover"]').popover({
+        container: 'body',
+        html:true
+      });
       var coords = [ele.lng, ele.lat];
       var latLng = new google.maps.LatLng(coords[1], coords[0]);
       // eslint-disable-next-line no-unused-vars

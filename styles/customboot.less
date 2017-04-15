@@ -64,6 +64,7 @@
 @brand-success: #3facef;
 @brand-info: #132149;
 @brand-secondary-dark : darken(@brand-secondary, 20%);
+@brand-white: #ffffff;
 .text-white{
   color: white;
 }
@@ -129,7 +130,7 @@
   font-size: 20px;
 }
 
-.navbar-right .social-icons{
+.navbar-right .social-icons {
   padding-right: 0px;
   padding-left: 5px;
   padding-top: 15px;
@@ -137,6 +138,7 @@
 
 .navbar .dropdown-menu{
   min-width: 256px;
+  padding: 10px;
 }
 
 //## Define colors for form feedback states and, by default, alerts.
@@ -189,6 +191,10 @@ header{
   padding: 20px;
 }
 
+.margin-bottom{
+  margin-bottom: 1em;
+}
+
 #disclaimer{
   margin-top: 20px;
   border-top: 1px solid @brand-gray;
@@ -199,7 +205,7 @@ header{
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 160px;
+  height: 12em;
   background-color: @brand-info;
   padding: 40px;
 }
@@ -215,6 +221,7 @@ input{
 .spacer{
   margin-top: 120px;
 }
+
 #can_embed_form{
   padding:20px;
 }
@@ -223,8 +230,13 @@ article{
   margin-top:10px;
 }
 
-.dropdown-menu{
-  padding-left:20px;
+// icons
+a.social-icon {
+  text-decoration: none;
+  color: @brand-primary;
+  &:hover {
+    color: @brand-success;
+  }
 }
 
 // add to cal styles
@@ -281,8 +293,17 @@ article{
   margin-bottom: 0;
 }
 
-.list-group-item:last-of-type{
-   border-bottom: none;
+
+ .list-group-heading{
+   padding-bottom: 0;
+   padding-left: 0;
+   padding-right: 0;
+   .navbar-right {
+      margin-right: 0;
+   }
+   .navbar-nav{
+     margin-left: 0;
+   }
  }
 
 .Dem .panel-heading, .card-representative.Democrat .card-header{
@@ -301,13 +322,14 @@ article{
 }
 
 #representativeCards {
+  background-color: #f4f4f4;
   border-bottom:solid @brand-primary 1px;
   h2 {
-    margin-top: 1.5em;
+    margin-top: 1em;
   }
   /* Remove this when upgrading to bootstrap 4 and we can do proper cards */
   .card-representative {
-    min-height: 27em;
+    min-height: 17em;
   }
 }
 
@@ -316,10 +338,16 @@ article{
   margin-bottom: 2em;
   background: #fff;
   .card-header {
-    padding: 0.75em 0 0.75em 1.5em;
+    padding: 0 15px;
+    h3 {
+      margin-top: 10px;
+    }
   }
   .card-block {
-    padding: 1.5em 2.5em 3.5em;
+    padding: 1.25em 2.5em 3em;
+    a.social-icon {
+      font-size: 1.25em;
+    }
   }
 
   h3 {
@@ -339,11 +367,35 @@ article{
    display: none;
 }
 
-.list-group-item{
+.list-item-no-border{
   border-right:none;
   border-left:none;
 }
 
+.list-item-no-border:last-of-type{
+   border-bottom: none;
+ }
+
+.list-inline-separated {
+  li {
+    // adjust leading spacing for each additional item
+    margin-left: -10px;
+    &:first-child {
+      // no leading spacing for initial item
+      margin-left: 0px;
+    }
+
+    &:after {
+      content: '\2022'; // bullet
+      margin: 0 5px;
+    }
+
+    // no bullet on last
+    &:last-child:after {
+      content: '';
+    }
+  }
+}
 // Table formatting
 .table .meetingType{
   min-width: 180px;
@@ -363,6 +415,22 @@ article{
 
 .noninteractive-header {
   padding: 6px;
+}
+
+#filter-info {
+  max-width: 50%;
+  margin: 20px 0 0px 20px;
+  li {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    button:hover {
+      color: #fff;
+    }
+    button i.fa-times {
+      margin-left: 0.5em;
+      font-size: 0.8em;
+    }
+  }
 }
 
 // Results
@@ -414,7 +482,6 @@ article{
 
 .btn-secondary{
   color: white;
-  // border: white solid 2px;
   background-color: @brand-secondary;
 }
 
@@ -431,36 +498,19 @@ article{
 }
 
 .nearest-with-results{
-  // background-color: #cee3ea;
   height: 528px;
-  // border-left: 1px solid rgb(186, 188, 193);
-  // border-right: 1px solid #c0c4d0;
 }
 
 .header-with-results{
   background-color: @brand-gray;
-  .container.container-fluid > .row{
-    .results.multipleResults{
-      -webkit-box-shadow: 0px 34px 30px -30px rgba(13, 70, 104, 0.75);
-      -moz-box-shadow: 0px 34px 30px -30px rgba(13, 70, 104, 0.75);
-      box-shadow: 0px 34px 30px -30px rgba(13, 70, 104, 0.75);
-
-      /* Ensure drop shadow is directly under last panel */
-      #nearest .col-md-12.col-sm-6:last-of-type .panel{
-        margin-bottom: 0;
-      }
-    }
-  }
 }
 
 #map {
   height: 528px;
-  // width: 100%;
 }
 
 #mapEmbed {
   height: 528px;
-  // width: 100%;
 }
 #mapEmbedContainer{
   position: relative;
@@ -477,6 +527,12 @@ article{
   width: 80%;
   margin: auto;
   padding: 20px;
+}
+
+.ui-menu{
+  background-color: white;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
 .page{
@@ -504,6 +560,20 @@ article{
   }
 }
 
+li[data-toggle='popover']:hover {
+  background-color: @brand-gray;
+}
+
+.typeahead.dropdown-menu {
+  /* Line up typeahead menu with popover */
+  margin-left: -10px;
+  li {
+    a.dropdown-item {
+      padding: 3px 12px;
+    }
+  }
+}
+
 // google forms
 .embed-container {
   position: relative;
@@ -511,6 +581,11 @@ article{
   height: 0;
   overflow: hidden;
 }
+
+.contact-embed-container{
+  padding-bottom: 1204px;
+}
+
   .embed-container iframe,
   .embed-container object,
   .embed-container embed {
@@ -543,6 +618,13 @@ article{
   -o-background-size: cover;
   background-size: cover;
   height: 45em;
+  position: relative;
+}
+
+.photo-credit{
+  position: absolute;
+  right: 20px;
+  bottom: 127px;
 }
 
 img.grayscale {
@@ -579,9 +661,8 @@ img.grayscale {
   .page{
     margin-bottom: 200px;
   }
-  .embed-container{
-    padding-bottom: 2871px;
-    // margin-bottom: 43%;
+  .submit-embed-container{
+    padding-bottom: 1247px;
   }
   .panel{
     min-height: none;
@@ -589,11 +670,22 @@ img.grayscale {
 
   .map-small #map {
     display:none;
-    // height: 25em;
-    // border-top: solid @brand-primary 2px;
-    // width: 100%;
   }
   .calendarButton{
     display: none;
+  }
+  .card.card-representative {
+    h3 {
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    .card-block {
+      padding: 1.25em 2em 2em;
+      font-size: 1.25em;
+      .social-icons {
+        padding-top: 1.5em;
+        text-align: center;
+      }
+    }
   }
 }
