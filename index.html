@@ -77,7 +77,7 @@
             <li><a href="https://secure.actblue.com/contribute/page/townhallproject" class="btn" id="donate-button" role="button" target="_blank">Donate</a></li>
             <li><a class="social-icons" href="https://twitter.com/townhallproject" target="_blank"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a></li>
             <li><a class="social-icons" href="https://www.facebook.com/TownHallProject/" target="_blank"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a></li>
-            <li><a class="social-icons" href="mailto:info@townhallproject.com" class="text-white"><i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i></a></li>
+            <li><a data-toggle="tab" class="social-icons hash-link text-white" href="#contact"><i class="fa fa-envelope-square fa-2x"></i></a></li>
          </ul>
         </div>
       </div>
@@ -160,7 +160,6 @@
                   <li><span class="text-secondary">Ticketed Event</span><span> - Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
                   <li><span class="text-secondary">TeleTown Hall Meeting </span><span>	- A town hall conducted by conference call.</span></li>
                   <li><span class="text-secondary">DC Event</span><span>	- Event held in the MOC's DC Office.</span></li>
-                  <li><span class="text-secondary">Coffee</span><span> - Usually a small regular meeting with constituents in Washington D.C. while Congress is in session.</span></li>
                 </ul>
               </small>
           </div>
@@ -226,9 +225,15 @@
           </div>
         </section>
       </div>
-      <div role="tabpanel" class="tab-pane " id="submit">
-        <div class='embed-container'>
-          <iframe src='https://docs.google.com/forms/d/e/1FAIpQLSfvIJikraQCZcqUpYfDZHC7KvxDUp4zcfzlLQ7RoaDQcBZUbQ/viewform?c=0&w=1' style=" border-width:0 " width="800" height="600" frameborder="0" ></iframe></div>
+      <div role="tabpanel" class="tab-pane" id="submit">
+        <div class='embed-container submit-embed-container'>
+          <iframe src='https://docs.google.com/forms/d/e/1FAIpQLSfvIJikraQCZcqUpYfDZHC7KvxDUp4zcfzlLQ7RoaDQcBZUbQ/viewform?c=0&w=1' style=" border-width:0 " width="800" height="600" frameborder="0" ></iframe>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="contact">
+        <div class='embed-container contact-embed-container'>
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSffVaop5xVSxXFrRtAZsxMDqkvucAplMdC9-CPHiTXxPKQV0g/viewform?embedded=true" width="800" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+        </div>
       </div>
       <div role="tabpanel" class="tab-pane page" id="about">
         <header>
@@ -310,7 +315,7 @@
             </article>
             <article class="row text-center">
               <h3>Get connected locally!</h3>
-              <p><a href="mailto:info@townhallproject.com">Email us </a>and one of our organizers will connect you with groups in your area.</p>
+              <p><a data-toggle="tab" class="hash-link" href="#contact">Contact us </a>and one of our organizers will connect you with groups in your area.</p>
               <a class="privacy-policy-button" data-toggle="tab" href="#privacy-policy">Privacy Policy</a>
             </article>
               <div class="col-sm-4">
@@ -336,7 +341,11 @@
             <div id='can-form-area-stay-up-to-date-on-our-work'  class=" col-md-6 col-md-offset-3"></div>
           </section>
           <div class="banner" id="cover">
-        </div>
+            <div class="photo-credit pull-right text-white">
+              <small>Photo credit: Trang Dang</small>
+            </div>
+          </div>
+
       </div>
       <div role="tabpanel" class="tab-pane " id="privacy-policy">
         <header class="margin-bottom">
@@ -371,7 +380,7 @@
                   <li>	in connection with, or during negotiations of, any merger, reorganization, acquisition, asset sale, financing or lending transaction or in any other situation where personal information may be disclosed or transferred as one of the assets of Town Hall Project.</li>
                 </ul>
                 <p>We are not responsible for the actions of any service providers or other third parties, nor are we responsible for any additional information you provide directly to any third parties, and we encourage you to become familiar with their privacy practices before disclosing information directly to any such parties. Nothing herein restricts the sharing of aggregated or anonymized information, which may be shared with third parties without your consent.</p>
-                <p>Town Hall Project is volunteer driven and your experience is important to us. If you have any questions or concerns, please feel free to reach us at .<a href="mailto:info@townhallproject.com">info@townhallproject.com</a>.</p>
+                <p>Town Hall Project is volunteer driven and your experience is important to us. If you have any questions or concerns, please feel free to <a data-toggle="tab" class="hash-link" href="#contact">contact us</a>.</p>
               </div>
           </section>
         <div class="banner" id="cover">
@@ -380,14 +389,13 @@
     <footer class="footer">
       <div class="container text-center">
         <ul class="list-unstyled">
-          <li><a href="mailto:info@townhallproject.com" class="text-white"><i class="fa fa-envelope-square fa-3x" aria-hidden="true"></i></a>
+          <li><a data-toggle="tab" class="hash-link text-white" href="#contact"><i class="fa fa-envelope-square fa-3x"></i></a>
             <a href="https://twitter.com/townhallproject" class="text-white" target="_blank"><i class="fa fa-twitter-square fa-3x" aria-hidden="true"></i></a>
             <a href="https://www.facebook.com/TownHallProject/" class="text-white" target="_blank"><i class="fa fa-facebook-square fa-3x" aria-hidden="true"></i></a>
           </li>
           <li><small>Compiled by Town Hall Project volunteers. All efforts are made to verify accuracy of events.</small></li>
           <li><small>Event details can change at short notice, please contact your representative to confirm.</small></li>
           <li><a class="privacy-policy-button" data-toggle="tab" href="#privacy-policy">Privacy Policy</a></li>
-          <li><small><a href="mailto:techsupport@townhallproject.com">Report site issues to techsupport@townhallproject.com</a></small></li>
         </ul>
       </div>
     </footer>

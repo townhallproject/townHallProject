@@ -5,33 +5,34 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
-  eventHandler.zipErrorResponse = function() {
+  eventHandler.zipErrorResponse = function(errorMessage) {
     var $results = $('#textresults');
     $results.empty();
     var $text = $('<h4>');
-    $text.text('That is not a real zip code');
+    $text.text(errorMessage);
     $results.append($text);
   };
 
   // Renders the page in response to lookup
   eventHandler.lookup = function (e) {
     e.preventDefault();
-    var zip = $('#look-up input').val();
+    var zip = $('#look-up input').val().trim();
     regEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
     var zipCheck = zip.match(regEx);
     if (zipCheck) {
       var zipLookup = zip.split('-')[0];
       TownHall.lookupZip(zipLookup)
       .then(function(sorted){
+        setUrlParameter('zipcode', zip);
         eventHandler.resetFilters();
         eventHandler.render(sorted, TownHall.zipQuery);
         eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipLookup), $('#representativeCards section'));
       })
       .catch(function(error){
-        eventHandler.zipErrorResponse();
+        eventHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.');
       });
     } else {
-      eventHandler.zipErrorResponse();
+      eventHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
     }
   };
 
@@ -114,9 +115,7 @@
       container: 'body',
       html:true
     });
-    /*eslint-env es6*/
-    /*eslint quotes: ["error", "single", { "allowTemplateLiterals": true }]*/
-    $currentState.text(`Viewing ${cur} of ${total} total events`);
+    $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
   };
 
   // render table row
@@ -189,7 +188,7 @@
       eventHandler.renderTable(townhall, $table);
       $currentState.attr('data-current', cur);
     }
-    $currentState.text(`Viewing ${cur} of ${total} total events`);
+    $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
   };
 
   // renders results of search
@@ -271,6 +270,26 @@
     $('#memberTypeahead').typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
   }
 
+  function getUrlParameter(param) {
+    var query = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
+    if (query) {
+      return query[0].split('=')[1];
+    }
+    return false;
+  }
+
+  function setUrlParameter(param, value) {
+    // Get query params, and remove the matching param if it exists
+    var search = document.location.search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
+    // If there are no query params then we need to add the ? back
+    if (search.indexOf('?') === -1) {
+      search += '?';
+    }
+    search += param + '=' + value;
+
+    window.history.replaceState('', '', document.location.origin + '/' + search);
+  }
+
   $(document).ready(function(){
     init();
   });
@@ -289,17 +308,25 @@
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
 
+    // Perform zip search on load
+    var zipcode = getUrlParameter('zipcode');
+    if (zipcode) {
+      $('#look-up input').val(zipcode);
+      eventHandler.lookup(document.createEvent('Event'));
+    }
+
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show');
-    }
-    else{
+    } else {
       TownHall.isMap = true;
     }
 
     $('.hash-link').on('click', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
+      $('ul .hash-link').parent().removeClass('active');
+
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
         setTimeout( function(){
@@ -308,18 +335,16 @@
             TownHall.isMap = true;
           }
         }, 50);
-      }
-      else if (hashid === '#home' && TownHall.isMap === true) {
-        console.log('going home and map');
+      } else if (hashid === '#home' && TownHall.isMap === true) {
         history.replaceState({}, document.title, '.');
-        $('ul .hash-link').parent().removeClass('active');
         setTimeout( function(){
           eventHandler.resetHome();
         }, 0);
-      }
-      else {
+      } else {
         location.hash = hashid;
       }
+
+      $('html, body').scrollTop(0);
       $('[data-toggle="popover"]').popover('hide');
     });
 
