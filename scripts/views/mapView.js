@@ -201,7 +201,7 @@
     for (key in townHallData){
       k = townHallData[key]
 
-      if (k.District == 'Senate' && k.State && k.City !== 'Washington') {
+      if (k.District == 'Senate' && k.State) {
         includedStates.push(k.State)
       }
     }
@@ -211,6 +211,7 @@
     // Fetch districts w/ town halls occuring
     for (key in townHallData){
       k = townHallData[key]
+
       district = k.District;
 
       if (district && district !== 'Senate' && k.City !== 'Washington') {
@@ -229,7 +230,6 @@
 
         var geoid = getFIPS + districtId;
 
-        filterSenate.push(['!=', 'GEOID', geoid]);
         filterDistrict.push(['==', 'GEOID', geoid]);
       }
     }
@@ -257,19 +257,22 @@
 
   // Handles the highlight for districts when clicked on. 
   function highlightDistrict (geoid) {
-    var visibility = map.getLayoutProperty('selected-fill', 'visibility');
-    // If there are no selections, turn dem layers on
-    if (visibility === 'none') {
-      map.setLayoutProperty('selected-fill', 'visibility', 'visible');
-      map.setLayoutProperty('selected-border', 'visibility', 'visible');
+    var filter;
+
+    // Filter for which district has been selected.
+    if(typeof geoid == 'object') {
+      filter = ['any'];
+
+      geoid.forEach(function(i){
+        filter.push(['==', 'GEOID', i])
+      })
+    } else {
+      filter = ['all', ['==', 'GEOID', geoid]];
     }
 
-    // Filter for which district has been selected
-    var filter = ['all', ['==', 'GEOID', geoid]];
-
     // Set that layer filter to the selected
-    map.setFilter('selected-fill', filter);
-    map.setFilter('selected-border', filter);
+    toggleFilters('selected-fill', filter);
+    toggleFilters('selected-border', filter);
   }
 
   // Make the Table below the map
@@ -297,6 +300,7 @@
     var zip = $('#look-up input').val();
     if (zip) {
       var validDistricts = [];
+      var validSelections = [];
       var callbackTrigger = 0;
       var thisState;
       var stateCode;
@@ -310,14 +314,15 @@
           });
           var geoid = stateCode + n.dis;
 
-          highlightDistrict(geoid)
           focusMap(n.abr, n.dis);
           thisState = n.abr;
           validDistricts.push(n.dis);
+          validSelections.push(geoid);
         }
 
         callbackTrigger++;
         if(callbackTrigger === zipLookup.length){
+          highlightDistrict(validSelections)
           makeSidebar(thisState, validDistricts);
         }
       });
@@ -351,8 +356,10 @@
           // Otherwise, check to see if there are multiple districts captured. (In the case of looking up via zip code)
           if(districts.constructor === Array) {
             districts.forEach((d) => {
-              var districtMatcher = state + '-' + d
-              if (k.District === districtMatcher) {
+              var districtMatcher = state + '-' + parseInt(d)
+              var dataMatcher = k.District.substring(0,3) + k.District.substring(3)
+
+              if (districtMatcher === dataMatcher) {
                 fetchedData.push(k)
               }
             })
@@ -374,6 +381,7 @@
 
   // Create a sidebar and load it with Town Hall event cards.
   function makeSidebar (state, districts) {
+
     var districtMatcher = state + '-' + districts;
     var selectedData = matchSelectionToZip(state, districts)
     var districtCard = Handlebars.getTemplate('eventCards');
@@ -381,6 +389,7 @@
     $('.nearest-with-results').empty()
 
     selectedData.forEach((d) => {
+      d.partyShorten = d.Party.slice(0,3)
       $('.nearest-with-results').append(districtCard(d))
     });
 
