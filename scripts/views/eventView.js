@@ -319,13 +319,14 @@
     // slightly hacky routing
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show');
-    }
-    else{
+    } else {
       TownHall.isMap = true;
     }
 
     $('.hash-link').on('click', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
+      $('ul .hash-link').parent().removeClass('active');
+
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
         setTimeout( function(){
@@ -334,18 +335,16 @@
             TownHall.isMap = true;
           }
         }, 50);
-      }
-      else if (hashid === '#home' && TownHall.isMap === true) {
-        console.log('going home and map');
+      } else if (hashid === '#home' && TownHall.isMap === true) {
         history.replaceState({}, document.title, '.');
-        $('ul .hash-link').parent().removeClass('active');
         setTimeout( function(){
           eventHandler.resetHome();
         }, 0);
-      }
-      else {
+      } else {
         location.hash = hashid;
       }
+
+      $('html, body').scrollTop(0);
       $('[data-toggle="popover"]').popover('hide');
     });
 
