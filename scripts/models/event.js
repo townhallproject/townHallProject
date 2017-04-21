@@ -155,6 +155,10 @@
     }
   };
 
+  TownHall.removeFilterCategory = function(category) {
+    delete TownHall.filters[category];
+  };
+
   TownHall.resetFilters = function() {
     Object.keys(TownHall.filters).forEach(function(key) {
       delete TownHall.filters[key];

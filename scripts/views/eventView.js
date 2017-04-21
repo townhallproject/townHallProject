@@ -158,7 +158,7 @@
 
   //gets rid of whole filter category and removes the associated buttons
   eventHandler.removeFilterCategory = function(category) {
-    delete TownHall.filters[category];
+    TownHall.removeFilterCategory(category);
     $('button[data-filter="' + category + '"]').remove();
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
