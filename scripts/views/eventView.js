@@ -264,6 +264,11 @@
     }
   };
 
+  eventHandler.populateEventModal = function(townhall) {
+    var compiledTemplate = Handlebars.getTemplate('eventModal');
+    $('.event-modal .modal-content').html(compiledTemplate(townhall));
+  };
+
   function setupTypeaheads() {
     var typeaheadConfig = {
       fitToElement: true,
