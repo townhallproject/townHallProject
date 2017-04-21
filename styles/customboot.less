@@ -574,9 +574,17 @@ li[data-toggle='popover']:hover {
   }
 }
 
-.event-row .notes {
-  margin-top: 10px;
-  font-style: italic;
+.event-row {
+  &:hover {
+    background-color: @brand-gray;
+  }
+  &.has-notes {
+    cursor: pointer;
+  }
+  .notes {
+    margin-top: 10px;
+    font-style: italic;
+  }
 }
 
 // google forms
