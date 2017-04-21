@@ -2,16 +2,16 @@
  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <div class="modal-title">
     {{#if eventName}}
-      <h3 class="text-success text-center">{{eventName}}</h3>
+      <h3 class="text-center">{{eventName}}</h3>
     {{/if}}
     {{#unless eventName}}
-      <h3 class="text-success text-center">{{meetingType}}</h3>
+      <h3 class="text-center">{{meetingType}}</h3>
     {{/unless}}
-    <span class="text-success text-center">
+    <span class="text-center">
       <h4>
-        <span class>{{Date}}</span>
-        <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span>
+        {{Date}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span>
       </h4>
+      {{#if Location}}<h4>{{Location}}</h4>{{/if}}
     </span>
   </div>
 </div>
@@ -52,22 +52,15 @@
   </p>
   {{#ifCond address 'regexTest' '[0-9]{5}' }}
     <p>
-      <address>
-        <strong>{{Location}}</strong>
-        {{#if address}}
-          {{address}}<br>
-        {{/if}}
-        {{#unless address}}
-          {{streetAddress}} {{#if City}}{{City}}, {{/if}} {{StateAb}} {{zip}}
-        {{/unless}}
-      </address>
-      <iframe
-        width="600"
-        height="450"
-        frameborder="0" style="border:0"
-        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBUitUmeKdvpM4zub1V3o9zBypCZxqaiZI
-            &q={{addressQuery address}}" allowfullscreen>
-      </iframe>
+      <div class="map">
+        <iframe
+          width="600"
+          height="450"
+          frameborder="0" style="border:0"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBUitUmeKdvpM4zub1V3o9zBypCZxqaiZI
+              &q={{addressQuery address}}" allowfullscreen>
+        </iframe>
+      </div>
     </p>
   {{/ifCond}}
 </div>
