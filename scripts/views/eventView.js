@@ -143,15 +143,24 @@
     // Avoid duplicates
     if (TownHall.filters.hasOwnProperty(filter) && TownHall.filters[filter].indexOf(value) !== -1) {
       return;
+    } else if (value === 'All') {
+      eventHandler.removeFilterCategory(filter);
+    } else {
+      TownHall.addFilter(filter, value);
+
+      var button = '<li><button class="btn btn-secondary btn-xs" ' +
+                   'data-filter="' + filter + '" data-value="' + value + '" >' +
+                      value + '<i class="fa fa-times" aria-hidden="true"></i>' +
+                    '</button></li>';
+      $('#filter-info').append(button);
     }
+  };
 
-    TownHall.addFilter(filter, value);
-
-    var button = '<li><button class="btn btn-secondary btn-xs" ' +
-                 'data-filter="' + filter + '" data-value="' + value + '" >' +
-                    value + '<i class="fa fa-times" aria-hidden="true"></i>' +
-                  '</button></li>';
-    $('#filter-info').append(button);
+  //gets rid of whole filter category and removes the associated buttons
+  eventHandler.removeFilterCategory = function(category) {
+    TownHall.removeFilterCategory(category);
+    $('button[data-filter="' + category + '"]').remove();
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
   eventHandler.removeFilter = function() {
