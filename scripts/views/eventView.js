@@ -312,8 +312,10 @@
     var eventId = getUrlParameter('eventId');
     if (eventId) {
       firebase.database().ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
-        eventHandler.populateEventModal(snapshot.val());
-        $('.event-modal').modal('show');
+        if (snapshot.val()) {
+          eventHandler.populateEventModal(snapshot.val());
+          $('.event-modal').modal('show');
+        }
       });
     }
   }
