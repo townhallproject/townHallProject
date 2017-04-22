@@ -8,33 +8,33 @@
       <h3 class="text-center">{{meetingType}}</h3>
     {{/unless}}
     <span class="text-center">
-      <h4>
-        {{Date}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span>
-      </h4>
+      <h4 class="hidden-xs">{{Date}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4>
+      <h4 class="visible-xs-block">{{#shortDateTime this}}{{/shortDateTime}}</h4>
       {{#if Location}}<h4>{{Location}}</h4>{{/if}}
     </span>
   </div>
 </div>
 <div class="modal-body">
-  <h3>
-    {{Member}}<small> ({{Party}}) {{State}}, {{District}}</small>
-
-    <span class="addtocalendar pull-right">
-      <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
-      <var class="atc_event">
-        <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
-          <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
-          <var class="atc_timezone">{{zoneString}}</var>
-          <var class="atc_title">{{meetingType}}: {{Member}}</var>
-          <var class="atc_description">{{{Notes}}}</var>
-          <var class="atc_location">{{address}}</var>
-          <var class="atc_organizer">{{Party}}</var>
+  <div class="row">
+    <h3 class="col-xs-10 col-md-9">{{Member}} <small> ({{Party}}) {{State}}, {{District}}</small></h3>
+    <h3 class="col-xs-2 col-md-3">
+      <span class="addtocalendar pull-right">
+        <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
+        <var class="atc_event">
+          <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
+            <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
+            <var class="atc_timezone">{{zoneString}}</var>
+            <var class="atc_title">{{meetingType}}: {{Member}}</var>
+            <var class="atc_description">{{{Notes}}}</var>
+            <var class="atc_location">{{address}}</var>
+            <var class="atc_organizer">{{Party}}</var>
+          </var>
         </var>
-      </var>
-    </span>
+      </span>
+    </div>
   </h3>
   {{#if Notes}}
-    <p>{{{Notes}}}</[div]>
+    <p>{{{Notes}}}</p>
   {{/if}}
   <p>
     {{#if phoneNumber}}
@@ -57,7 +57,7 @@
           width="600"
           height="450"
           frameborder="0" style="border:0"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBUitUmeKdvpM4zub1V3o9zBypCZxqaiZI
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM
               &q={{addressQuery address}}" allowfullscreen>
         </iframe>
       </div>

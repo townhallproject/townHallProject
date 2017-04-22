@@ -174,6 +174,7 @@
     TownHall.resetFilters();
     $('#filter-info li button').parent().remove();
   };
+
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
@@ -268,6 +269,7 @@
     var compiledTemplate = Handlebars.getTemplate('eventModal');
     $('.event-modal .modal-content').html(compiledTemplate(townhall));
     setUrlParameter('eventId', townhall.eventId);
+    addtocalendar.load();
   };
 
   function setupTypeaheads() {
@@ -306,8 +308,8 @@
     // Add the query param if we have a value
     if (value !== false) {
       search += param + '=' + value;
-    // Else if we're removing the query param check to see if all query params are gone
-    } else if (search.slice(-1) === '?') {
+    } else {
+      // Remove trailing ? or &
       search = search.slice(0, -1);
     }
 
