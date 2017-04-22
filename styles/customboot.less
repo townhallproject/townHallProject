@@ -574,6 +574,19 @@ li[data-toggle='popover']:hover {
   }
 }
 
+.event-row {
+  &.has-notes {
+    cursor: pointer;
+    &:hover {
+      background-color: @brand-gray;
+    }
+  }
+  .notes {
+    margin-top: 10px;
+    font-style: italic;
+  }
+}
+
 // google forms
 .embed-container {
   position: relative;
