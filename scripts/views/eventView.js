@@ -299,10 +299,16 @@
     // If there are no query params then we need to add the ? back
     if (search.indexOf('?') === -1) {
       search += '?';
+    } else {
+      search += '&';
     }
-    // Don't add query param if the value is false
+
+    // Add the query param if we have a value
     if (value !== false) {
       search += param + '=' + value;
+    // Else if we're removing the query param check to see if all query params are gone
+    } else if (search.slice(-1) === '?') {
+      search = search.slice(0, -1);
     }
 
     window.history.replaceState('', '', document.location.origin + '/' + search);
