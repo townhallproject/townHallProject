@@ -61,6 +61,7 @@
     $results.empty();
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
+    eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
     TownHall.sortOn = 'Date';
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
@@ -174,6 +175,7 @@
     TownHall.resetFilters();
     $('#filter-info li button').parent().remove();
   };
+
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
@@ -192,7 +194,8 @@
     var cur = parseInt($currentState.attr('data-current'));
     $currentState.attr('data-total', total);
     $table = $('#all-events-table');
-    if (townhall.meetingType === 'Town Hall') {
+
+    if (townhall.meetingType === 'Town Hall' || townhall.meetingType === 'Empty Chair Town Hall') {
       cur ++;
       eventHandler.renderTable(townhall, $table);
       $currentState.attr('data-current', cur);
@@ -316,6 +319,7 @@
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
+    eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
 
     // Perform zip search on load
     var zipcode = getUrlParameter('zipcode');
