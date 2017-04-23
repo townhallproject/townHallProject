@@ -61,7 +61,7 @@
     $results.empty();
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
-    TownHall.sortOn = 'State';
+    TownHall.sortOn = 'Date';
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 

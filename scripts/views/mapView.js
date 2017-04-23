@@ -398,7 +398,7 @@
 // Adds all events as markers
 // renders tables
   window.readData = function (){
-    var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('State');
+    var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('dateObj');
     townHallsFB.on('child_added', function getSnapShot(snapshot) {
       var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
