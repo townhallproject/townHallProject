@@ -174,6 +174,7 @@
     TownHall.resetFilters();
     $('#filter-info li button').parent().remove();
   };
+
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
@@ -264,6 +265,13 @@
     }
   };
 
+  eventHandler.populateEventModal = function(townhall) {
+    var compiledTemplate = Handlebars.getTemplate('eventModal');
+    $('.event-modal .modal-content').html(compiledTemplate(townhall));
+    setUrlParameter('eventId', townhall.eventId);
+    addtocalendar.load();
+  };
+
   function setupTypeaheads() {
     var typeaheadConfig = {
       fitToElement: true,
@@ -293,10 +301,31 @@
     // If there are no query params then we need to add the ? back
     if (search.indexOf('?') === -1) {
       search += '?';
+    } else {
+      search += '&';
     }
-    search += param + '=' + value;
+
+    // Add the query param if we have a value
+    if (value !== false) {
+      search += param + '=' + value;
+    } else {
+      // Remove trailing ? or &
+      search = search.slice(0, -1);
+    }
 
     window.history.replaceState('', '', document.location.origin + '/' + search);
+  }
+
+  function checkEventParam() {
+    var eventId = getUrlParameter('eventId');
+    if (eventId) {
+      firebase.database().ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
+        if (snapshot.val()) {
+          eventHandler.populateEventModal(snapshot.val());
+          $('.event-modal').modal('show');
+        }
+      });
+    }
   }
 
   $(document).ready(function(){
@@ -304,6 +333,7 @@
   });
 
   function init() {
+    checkEventParam();
     $('[data-toggle="popover"]').popover({html:true});
     $('#button-to-form').hide();
     $('#save-event').on('submit', eventHandler.save);
@@ -355,6 +385,11 @@
 
       $('html, body').scrollTop(0);
       $('[data-toggle="popover"]').popover('hide');
+    });
+
+    // Remove query param when closing modal
+    $('.event-modal').on('hide.bs.modal', function (e) {
+      setUrlParameter('eventId', false);
     });
 
     // Only show one popover at a time
