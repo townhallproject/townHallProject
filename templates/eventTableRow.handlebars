@@ -13,10 +13,16 @@
     <span class="badge badge-default badge-pill pull-right">  {{meetingType}}</span>
   </span>
   <ul class="list-inline list-inline-separated">
-    {{#if Date}}
-    <li>{{Date}}
-    </li>
+    {{#if repeatingEvent}}
+      <li>{{repeatingEvent}}
+      </li>
     {{/if}}
+    {{#unless repeatingEvent}}
+      {{#if Date}}
+        <li>{{Date}}
+        </li>
+      {{/if}}
+    {{/unless}}
     {{#if Time}}
     <li>{{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}  </li>
     {{/if}}
