@@ -587,6 +587,37 @@ li[data-toggle='popover']:hover {
   }
 }
 
+.event-modal {
+  .modal-header .modal-title {
+    color: @brand-primary;
+    h3 {
+      letter-spacing: .05em;
+      font-weight: 700;
+    }
+  }
+  .modal-body {
+    padding: 0.5em 2em 1.5em 2em;
+    h3 {
+      small {
+        display: inline-block;
+      }
+    }
+    .map {
+      position: relative;
+      padding-bottom: 40%; // This is the aspect ratio
+      height: 0;
+      overflow: hidden;
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
+  }
+}
+
 // google forms
 .embed-container {
   position: relative;

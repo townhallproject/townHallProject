@@ -34,8 +34,12 @@
    },
     "townHallsOld" : {
       ".read": "true",
+      ".indexOn": "dateObj",
       "$townHallID": {
-         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      	 "dateObj": {
+            ".indexOn": ".value"
+      		}
      }
    },
     "UserSubmission" : {
@@ -45,13 +49,28 @@
        ".validate": "newData.hasChildren(['Member','eventId'])"
      }
    },
-  	"MOCs" : {
+    "MOCs" : {
       ".read": "true",
       "$mocKey": {
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
         "currentEvents" : {
           ".write": "auth.uid !== null"
         }
+     }
+   },
+  	"mocData" : {
+      ".read": "true",
+      "$mocKey": {
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        "currentEvents" : {
+          ".write": "auth.uid !== null"
+        }
+     }
+   },
+    "mocID" : {
+      ".read": "true",
+      "$mocKey": {
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
      }
    },
     "zips": {
