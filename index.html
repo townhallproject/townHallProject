@@ -86,7 +86,7 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane page active" id="home">
         <header class="site-header clearfix">
-           <section class=" container container-fluid">
+           <section class="container container-fluid">
              <div class="row">
                <div class="col-md-6 left-panels">
                   <div  class=" text-left site-header clearfix displayoff ">
@@ -100,14 +100,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 right-panels">
-                  <div class="spacer">
-                  </div>
-                  <form id="look-up" class="form-inline text-center" action="index.html" method="post">
+                <div class="col-md-4 right-panels">
+                  <div class="spacer"></div>
+                  <form id="look-up" class="text-center" action="index.html" method="post">
                     <div class="form-group text-center">
-                      <label  for="zip"></label>
-                      <input class="form-control input-lg " type="zip" name="" value="" placeholder="Zip Code">
-                      <button type="submit" name="button" class="btn btn-primary btn-lg">Find A Town Hall</button>
+                      <label for="zip"></label>
+                      <input class="form-control input-lg" type="zip" name="" value="" placeholder="Enter your Zip Code">
+                      <button type="submit" name="button" class="btn btn-primary btn-lg">Find Town Halls</button>
                       <div id="selection-results" class="text-center ">
                         <h4 class="selection-results_content"></h4>
                       </div>
@@ -187,7 +186,56 @@
             </p>
         </section>
         <a name="events-table" id="events-table"></a>
-        <section class=" container container-fluid">
+
+        <section class="background-dark">
+          <div class="container container-fluid">
+            <h2 class="text-center">Sign up for info on events in your area</h2>
+            <form>
+              <div class="row">
+                <div class="col-xs-12 col-sm-6 col-lg-3">
+                  <input type="text" class="form-control input-lg" placeholder="First Name">
+                </div>
+                <div class="col-xs-12 col-sm-6 col-lg-3">
+                  <input type="text" class="form-control input-lg" placeholder="Last Name">
+                </div>
+                <div class="col-xs-12 col-sm-6 col-lg-3">
+                  <input type="email" class="form-control input-lg" placeholder="Email">
+                </div>
+                <div class="col-xs-12 col-sm-6 col-lg-3">
+                  <input type="text" class="form-control input-lg" placeholder="zipcode">
+                </div>
+                <div class="col-xs-12 col-sm-6 col-lg-3">
+                  District
+                </div>
+                <div class="col-xs-12 col-sm-6 col-lg-3">
+                  <button type="submit" name="button" class="btn btn-primary btn-lg">Sign up</button>
+                </div>
+<!--               <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputFile">File input</label>
+                <input type="file" id="exampleInputFile">
+                <p class="help-block">Example block-level help text here.</p>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"> Check me out
+                </label>
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+ -->            </form>
+          </div>
+        </section>
+
+
+
+        <section class="container container-fluid">
           <h2 class="text-primary table-title text-center">Upcoming Events</h2>
           <div class="row">
               <small>
