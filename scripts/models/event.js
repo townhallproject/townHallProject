@@ -96,6 +96,7 @@
   // METHODS IN RESPONSE TO lookup
   // Converts zip to lat lng google obj
   TownHall.lookupZip = function (zip) {
+    var geocoder = new google.maps.Geocoder();
     return new Promise(function (resolve, reject) {
       firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
         // if (snapshot.exists()) {
@@ -105,17 +106,16 @@
           TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
             resolve (sorted);
           });
-        } else {
+        } {
           console.log(zip);
-          google.maps.Geocoder.request({address: zip}, function(results, status) {
+          geocoder.request({address: zip}, function(results, status) {
             if (status === 'OK') {
-              
+              console.log(results); //TODO CWS
             } else {
+              console.log(status); //TODO CWS
               reject ('That is not a real zip code');
             }
           });
-          //TODO CWS: Lookup here?
-
         }
       });
     });
