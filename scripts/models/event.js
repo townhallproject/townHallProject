@@ -98,14 +98,24 @@
   TownHall.lookupZip = function (zip) {
     return new Promise(function (resolve, reject) {
       firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
-        if (snapshot.exists()) {
+        // if (snapshot.exists()) {
+        if (false) { //TODO CWS
           var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
           TownHall.zipQuery = zipQueryLoc;
           TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
             resolve (sorted);
           });
         } else {
-          reject ('That is not a real zip code');
+          console.log(zip);
+          google.maps.Geocoder.request({address: zip}, function(results, status) {
+            if (status === 'OK') {
+              
+            } else {
+              reject ('That is not a real zip code');
+            }
+          });
+          //TODO CWS: Lookup here?
+
         }
       });
     });
