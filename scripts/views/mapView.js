@@ -1,6 +1,5 @@
 (function closure(firebase) {
 
-  var eventHandler = {};
   var townhallData;
   var map;
 

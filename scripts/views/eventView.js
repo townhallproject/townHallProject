@@ -35,6 +35,7 @@
       eventHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
     }
   };
+  
 
   // reset the home page to originial view
   eventHandler.resetHome = function () {
