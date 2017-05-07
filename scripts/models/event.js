@@ -99,20 +99,21 @@
     var geocoder = new google.maps.Geocoder();
     return new Promise(function (resolve, reject) {
       firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
-        // if (snapshot.exists()) {
-        if (false) { //TODO CWS
+        if (snapshot.exists()) {
           var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
           TownHall.zipQuery = zipQueryLoc;
           TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
             resolve (sorted);
           });
-        } {
-          console.log(zip);
-          geocoder.request({address: zip}, function(results, status) {
+        } else {
+          geocoder.geocode({componentRestrictions: {country: 'US', postalCode: zip}}, function(results, status) { //TODO CWS: also maybe try without the address and just use address restrictions
             if (status === 'OK') {
-              console.log(results); //TODO CWS
+              firebasedb.ref('/zips/' + zip).set({
+                LAT: results[0].geometry.location.lat().toString(),
+                LNG: results[0].geometry.location.lng().toString(),
+                ZIP: zip
+              });
             } else {
-              console.log(status); //TODO CWS
               reject ('That is not a real zip code');
             }
           });
