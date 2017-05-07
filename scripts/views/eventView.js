@@ -14,28 +14,56 @@
   };
 
   // Renders the page in response to lookup
+  // eventHandler.lookup = function (e) {
+  //   e.preventDefault();
+  //   var zip = $('#look-up input').val().trim();
+  //   regEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
+  //   var zipCheck = zip.match(regEx);
+  //   if (zipCheck) {
+  //     var zipLookup = zip.split('-')[0];
+  //
+  // };
+  // Zip Code Lookup!
   eventHandler.lookup = function (e) {
     e.preventDefault();
     var zip = $('#look-up input').val().trim();
     regEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
     var zipCheck = zip.match(regEx);
     if (zipCheck) {
-      var zipLookup = zip.split('-')[0];
-      TownHall.lookupZip(zipLookup)
-      .then(function(sorted){
-        setUrlParameter('zipcode', zip);
-        eventHandler.resetFilters();
-        eventHandler.render(sorted, TownHall.zipQuery);
-        eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipLookup), $('#representativeCards section'));
-      })
-      .catch(function(error){
-        eventHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.');
-      });
-    } else {
-      eventHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
+      var zipClean = zip.split('-')[0];
+      var validDistricts = [];
+      var validSelections = [];
+      var callbackTrigger = 0;
+      var thisState;
+      var stateCode;
+      TownHall.lookupZip(zipClean)
+        .then(function(zipToDistrict){
+          setUrlParameter('zipcode', zipClean);
+          eventHandler.resetFilters();
+          // eventHandler.render(sorted, TownHall.zipQuery);
+          eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipClean), $('#representativeCards section'));
+          zipToDistrict.forEach(function(ele){
+            var stateDate = stateData.filter(function(state){
+              return state.USPS === ele.abr
+            });
+            stateCode = stateDate[0].FIPS;
+            var geoid = stateCode + ele.dis;
+            mapView.focusMap(ele.abr, ele.dis);
+            thisState = ele.abr;
+            validDistricts.push(ele.dis);
+            validSelections.push(geoid);
+          })
+
+          mapView.highlightDistrict(validSelections);
+          mapView.makeSidebar(thisState, validDistricts);
+        })
+        .catch(function(error){
+          eventHandler.zipErrorResponse(error, 'That zip code is not in our database, if you think this is an error please email us.');
+        });
+      } else {
+        eventHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
+      }
     }
-  };
-  
 
   // reset the home page to originial view
   eventHandler.resetHome = function () {

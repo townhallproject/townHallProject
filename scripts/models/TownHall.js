@@ -97,13 +97,19 @@
   // Converts zip to lat lng google obj
   TownHall.lookupZip = function (zip) {
     return new Promise(function (resolve, reject) {
-      firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
+      firebasedb.ref('/zipToDistrict/' + zip).once('value').then(function(snapshot) {
+        console.log(zip);
         if (snapshot.exists()) {
-          var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
-          TownHall.zipQuery = zipQueryLoc;
-          TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
-            resolve (sorted);
-          });
+          var districts = []
+          snapshot.forEach(function(ele){
+            districts.push(ele.val())
+          })
+          resolve(districts);
+          // var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
+          // TownHall.zipQuery = zipQueryLoc;
+          // TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
+          //   resolve (sorted);
+          // });
         } else {
           reject ('That is not a real zip code');
         }

@@ -1,8 +1,8 @@
-(function closure(firebase) {
+(function closure(module) {
 
   var townhallData;
   var map;
-
+  var mapView = {}
   // Define an intial view for the US
   var continentalView = function(w,h) { return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]); };
   var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
@@ -78,9 +78,9 @@
       }
 
       if (feature) {
-        focusMap(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
-        highlightDistrict(feature.properties.GEOID);
-        makeSidebar(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
+        mapView.focusMap(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
+        mapView.highlightDistrict(feature.properties.GEOID);
+        mapView.makeSidebar(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
       } else {
         var visibility = map.getLayoutProperty('selected-fill', 'visibility');
         if (visibility === 'visible') {
@@ -244,7 +244,7 @@
   }
 
   // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
-  function focusMap (stateAbbr, districtCode) {
+  mapView.focusMap = function focusMap (stateAbbr, districtCode) {
     var height = window.innerHeight,
       width = window.innerWidth,
       districtAbbr = districtCode ? districtCode : '';
@@ -255,7 +255,7 @@
   }
 
   // Handles the highlight for districts when clicked on.
-  function highlightDistrict (geoid) {
+  mapView.highlightDistrict = function highlightDistrict (geoid) {
     var filter;
 
     // Filter for which district has been selected.
@@ -293,40 +293,6 @@
     $('#look-up').on('submit', eventHandler.lookup);
   }
 
-  // Zip Code Lookup!
-  eventHandler.lookup = function (e) {
-    e.preventDefault();
-    var zip = $('#look-up input').val();
-    if (zip) {
-      var validDistricts = [];
-      var validSelections = [];
-      var callbackTrigger = 0;
-      var thisState;
-      var stateCode;
-
-      zipLookup.forEach(function(n){
-        if (n.zip === zip || n.zip.substring(0,4) === zip.substring(0,4)) {
-          stateData.forEach(function(l){
-            if (l.USPS === n.abr) {
-              stateCode = l.FIPS;
-            }
-          });
-          var geoid = stateCode + n.dis;
-
-          focusMap(n.abr, n.dis);
-          thisState = n.abr;
-          validDistricts.push(n.dis);
-          validSelections.push(geoid);
-        }
-
-        callbackTrigger++;
-        if(callbackTrigger === zipLookup.length){
-          highlightDistrict(validSelections);
-          makeSidebar(thisState, validDistricts);
-        }
-      });
-    }
-  };
 // listens for new events
 // Adds all events into main data array
 // Adds all events as markers
@@ -417,7 +383,7 @@
   }
 
   // Create a sidebar and load it with Town Hall event cards.
-  function makeSidebar (state, districts) {
+  mapView.makeSidebar = function makeSidebar (state, districts) {
 
     var districtMatcher = state + '-' + districts;
     var selectedData = matchSelectionToZip(state, districts);
@@ -436,7 +402,7 @@
     map.resize();
   }
 
-  function killSidebar () {
+  mapView.killSidebar = function killSidebar () {
     $('.header-with-results').addClass('hidden');
     $('.map-container-large').removeClass('hidden');
     $('.map-container-split').addClass('hidden');
@@ -453,4 +419,6 @@
     });
   });
 
-}(window.firebase));
+  module.mapView = mapView;
+
+}(window));
