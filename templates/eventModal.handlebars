@@ -1,0 +1,66 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <div class="modal-title">
+    {{#if eventName}}
+      <h3 class="text-center">{{eventName}}</h3>
+    {{/if}}
+    {{#unless eventName}}
+      <h3 class="text-center">{{meetingType}}</h3>
+    {{/unless}}
+    <span class="text-center">
+      <h4 class="hidden-xs">{{Date}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4>
+      <h4 class="visible-xs-block">{{#shortDateTime this}}{{/shortDateTime}}</h4>
+      {{#if Location}}<h4>{{Location}}</h4>{{/if}}
+    </span>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <h3 class="col-xs-10 col-md-9">{{Member}} <small> ({{Party}}) {{State}}, {{District}}</small></h3>
+    <h3 class="col-xs-2 col-md-3">
+      <span class="addtocalendar pull-right">
+        <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
+        <var class="atc_event">
+          <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
+            <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
+            <var class="atc_timezone">{{zoneString}}</var>
+            <var class="atc_title">{{meetingType}}: {{Member}}</var>
+            <var class="atc_description">{{{Notes}}}</var>
+            <var class="atc_location">{{address}}</var>
+            <var class="atc_organizer">{{Party}}</var>
+          </var>
+        </var>
+      </span>
+    </div>
+  </h3>
+  {{#if Notes}}
+    <p>{{{Notes}}}</p>
+  {{/if}}
+  <p>
+    {{#if phoneNumber}}
+      <div> Call in number: {{phoneNumber}}</div>
+    {{/if}}
+    {{#if link}}
+      <div><a href="{{link}}" target="_blank">
+        {{#if linkName}}{{linkName}}{{/if}}
+        {{#unless linkName}}Find out more{{/unless}}
+      </a></div>
+    {{/if}}
+    {{#if RSVP}}
+      <div><a href="{{RSVP}}" target="_blank">{{rsvpName}}</a></div>
+    {{/if}}
+  </p>
+  {{#ifCond address 'regexTest' '[0-9]{5}' }}
+    <p>
+      <div class="map">
+        <iframe
+          width="600"
+          height="450"
+          frameborder="0" style="border:0"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM
+              &q={{addressQuery address}}" allowfullscreen>
+        </iframe>
+      </div>
+    </p>
+  {{/ifCond}}
+</div>

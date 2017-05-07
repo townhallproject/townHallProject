@@ -124,7 +124,7 @@
     var locations = [];
     return firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
       snapshot.forEach(function(ele){
-        if (ele.val().StateAb !== 'DC') {
+        if (ele.val().meetingType !== 'DC Event' && ele.val().meetingType !== 'Coffee') {
           locations.push(new TownHall(ele.val()));
         }
       });
@@ -153,6 +153,10 @@
     if (TownHall.filters[filter].length === 0) {
       delete TownHall.filters[filter];
     }
+  };
+
+  TownHall.removeFilterCategory = function(category) {
+    delete TownHall.filters[category];
   };
 
   TownHall.resetFilters = function() {

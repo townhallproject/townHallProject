@@ -3,7 +3,7 @@
   var eventHandler = {};
   var townhallData;
   var map;
-  
+
   // Define an intial view for the US
   var continentalView = function(w,h) { return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]); };
   var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
@@ -81,7 +81,7 @@
       if (feature) {
         focusMap(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
         highlightDistrict(feature.properties.GEOID);
-        makeSidebar(feature.properties.ABR, feature.properties.GEOID.substring(2,4))
+        makeSidebar(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
       } else {
         var visibility = map.getLayoutProperty('selected-fill', 'visibility');
         if (visibility === 'visible') {
@@ -96,7 +96,7 @@
   function readData () {
     var townHallsFB = firebase.database().ref('/townHalls/').once('value').then(function(snapshot){
       var ele = new TownHall (snapshot.val());
-      townhallData = ele
+      townhallData = ele;
 
       filterMap(ele);
       makePointLayer(ele);
@@ -181,7 +181,7 @@
       var popupDistrict = '';
 
       if (feature.properties.district && feature.properties.district !== 'Senate') {
-        popupDistrict = ', District ' + (feature.properties.district).substring(3)
+        popupDistrict = ', District ' + (feature.properties.district).substring(3);
       }
 
       // Populate the popup and set its coordinates
@@ -199,10 +199,10 @@
 
     // Fetch states with senators in em'
     for (key in townHallData){
-      k = townHallData[key]
+      k = townHallData[key];
 
-      if (k.District == 'Senate' && k.State) {
-        includedStates.push(k.State)
+      if (k.District === 'Senate' && k.State) {
+        includedStates.push(k.State);
       }
     }
 
@@ -210,7 +210,7 @@
 
     // Fetch districts w/ town halls occuring
     for (key in townHallData){
-      k = townHallData[key]
+      k = townHallData[key];
 
       district = k.District;
 
@@ -255,17 +255,17 @@
     map.flyTo(view);
   }
 
-  // Handles the highlight for districts when clicked on. 
+  // Handles the highlight for districts when clicked on.
   function highlightDistrict (geoid) {
     var filter;
 
     // Filter for which district has been selected.
-    if(typeof geoid == 'object') {
+    if(typeof geoid === 'object') {
       filter = ['any'];
 
       geoid.forEach(function(i){
-        filter.push(['==', 'GEOID', i])
-      })
+        filter.push(['==', 'GEOID', i]);
+      });
     } else {
       filter = ['all', ['==', 'GEOID', geoid]];
     }
@@ -306,7 +306,7 @@
       var stateCode;
 
       zipLookup.forEach(function(n){
-        if (n.zip === zip || n.zip.substring(0,4) == zip.substring(0,4)) {
+        if (n.zip === zip || n.zip.substring(0,4) === zip.substring(0,4)) {
           stateData.forEach(function(l){
             if (l.USPS === n.abr) {
               stateCode = l.FIPS;
@@ -322,16 +322,54 @@
 
         callbackTrigger++;
         if(callbackTrigger === zipLookup.length){
-          highlightDistrict(validSelections)
+          highlightDistrict(validSelections);
           makeSidebar(thisState, validDistricts);
         }
       });
     }
   };
+// listens for new events
+// Adds all events into main data array
+// Adds all events as markers
+// renders tables
+  // window.readData = function (){
+  //   var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('dateObj');
+  //   townHallsFB.on('child_added', function getSnapShot(snapshot) {
+  //     var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
+  //     var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
+  //     var ele = new TownHall (snapshot.val());
+  //     TownHall.allTownHalls.push(ele);
+  //     TownHall.addFilterIndexes(ele);
+  //     eventHandler.initialTable(ele);
+  //     $('[data-toggle="popover"]').popover({
+  //       container: 'body',
+  //       html:true
+  //     });
+  //     var coords = [ele.lng, ele.lat];
+  //     var latLng = new google.maps.LatLng(coords[1], coords[0]);
+  //     // eslint-disable-next-line no-unused-vars
+  //     ele.addressLink = 'https://www.google.com/maps?q=' + escape(ele.address);
+  //     var contentString = mapPopoverTemplate(ele);
+  //     var marker = new google.maps.Marker({
+  //       strokeColor: '#FF0000',
+  //       strokeOpacity: 0.8,
+  //       strokeWeight: 0.5,
+  //       fillColor: '#FF0000',
+  //       fillOpacity: 0.35,
+  //       map: map,
+  //       position: latLng,
+  //       name: ele.name,
+  //       time: ele.time
+  //     });
+  //     marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
+  //     marker.addListener('click', function() {
+  //       infowindow.setContent(contentString);
+  //       infowindow.open(map, marker);
+
 
   // Match the looked up zip code to district #
   function matchSelectionToZip (state, districts) {
-    var fetchedData = []
+    var fetchedData = [];
     var stateName;
 
     // Fetch full state name
@@ -350,60 +388,60 @@
 
         // If this townhall is a Senate race, automatically add it
         if (k.District === 'Senate') {
-          fetchedData.push(k)
+          fetchedData.push(k);
         } else {
 
           // Otherwise, check to see if there are multiple districts captured. (In the case of looking up via zip code)
           if(districts.constructor === Array) {
-            districts.forEach((d) => {
-              var districtMatcher = state + '-' + parseInt(d)
-              var dataMatcher = k.District.substring(0,3) + k.District.substring(3)
+            districts.forEach(function(d) {
+              var districtMatcher = state + '-' + parseInt(d);
+              var dataMatcher = k.District.substring(0,3) + k.District.substring(3);
 
               if (districtMatcher === dataMatcher) {
-                fetchedData.push(k)
+                fetchedData.push(k);
               }
-            })
+            });
 
           // If only one district is selected, match it up from that
           } else {
-            var districtNumber = parseInt(k.District.substring(3))
+            var districtNumber = parseInt(k.District.substring(3));
 
             if (districtNumber === parseInt(districts)) {
-              fetchedData.push(k)
+              fetchedData.push(k);
             }
           }
         }
       }
     }
 
-    return fetchedData
+    return fetchedData;
   }
 
   // Create a sidebar and load it with Town Hall event cards.
   function makeSidebar (state, districts) {
 
     var districtMatcher = state + '-' + districts;
-    var selectedData = matchSelectionToZip(state, districts)
+    var selectedData = matchSelectionToZip(state, districts);
     var districtCard = Handlebars.getTemplate('eventCards');
 
-    $('.nearest-with-results').empty()
+    $('.nearest-with-results').empty();
 
-    selectedData.forEach((d) => {
-      d.partyShorten = d.Party.slice(0,3)
-      $('.nearest-with-results').append(districtCard(d))
+    selectedData.forEach(function(d) {
+      d.partyShorten = d.Party.slice(0,3);
+      $('.nearest-with-results').append(districtCard(d));
     });
 
-    $('.map-container-large').addClass('hidden')
-    $('.map-container-split').removeClass('hidden')
-    $('#map').prependTo('.map-fixing')
+    $('.map-container-large').addClass('hidden');
+    $('.map-container-split').removeClass('hidden');
+    $('#map').prependTo('.map-fixing');
     map.resize();
   }
 
   function killSidebar () {
-    $('.header-with-results').addClass('hidden')
-    $('.map-container-large').removeClass('hidden')
-    $('.map-container-split').addClass('hidden')
-    $('#map').prependTo('.map-large')
+    $('.header-with-results').addClass('hidden');
+    $('.map-container-large').removeClass('hidden');
+    $('.map-container-split').addClass('hidden');
+    $('#map').prependTo('.map-large');
     map.resize();
   }
 
@@ -411,7 +449,7 @@
     setMap();
     readData();
     sidebarEvents();
-    $('.kill-results').on('click', () => {
+    $('.kill-results').on('click', function() {
       killSidebar();
     });
   });

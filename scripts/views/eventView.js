@@ -5,11 +5,11 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
-  eventHandler.zipErrorResponse = function() {
+  eventHandler.zipErrorResponse = function(errorMessage) {
     var $results = $('#textresults');
     $results.empty();
     var $text = $('<h4>');
-    $text.text('That is not a real zip code');
+    $text.text(errorMessage);
     $results.append($text);
   };
 
@@ -23,15 +23,16 @@
       var zipLookup = zip.split('-')[0];
       TownHall.lookupZip(zipLookup)
       .then(function(sorted){
+        setUrlParameter('zipcode', zip);
         eventHandler.resetFilters();
         eventHandler.render(sorted, TownHall.zipQuery);
         eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipLookup), $('#representativeCards section'));
       })
       .catch(function(error){
-        eventHandler.zipErrorResponse();
+        eventHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.');
       });
     } else {
-      eventHandler.zipErrorResponse();
+      eventHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
     }
   };
 
@@ -60,7 +61,8 @@
     $results.empty();
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
-    TownHall.sortOn = 'State';
+    eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
+    TownHall.sortOn = 'Date';
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
@@ -114,9 +116,7 @@
       container: 'body',
       html:true
     });
-    /*eslint-env es6*/
-    /*eslint quotes: ["error", "single", { "allowTemplateLiterals": true }]*/
-    $currentState.text(`Viewing ${cur} of ${total} total events`);
+    $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
   };
 
   // render table row
@@ -144,15 +144,24 @@
     // Avoid duplicates
     if (TownHall.filters.hasOwnProperty(filter) && TownHall.filters[filter].indexOf(value) !== -1) {
       return;
+    } else if (value === 'All') {
+      eventHandler.removeFilterCategory(filter);
+    } else {
+      TownHall.addFilter(filter, value);
+
+      var button = '<li><button class="btn btn-secondary btn-xs" ' +
+                   'data-filter="' + filter + '" data-value="' + value + '" >' +
+                      value + '<i class="fa fa-times" aria-hidden="true"></i>' +
+                    '</button></li>';
+      $('#filter-info').append(button);
     }
+  };
 
-    TownHall.addFilter(filter, value);
-
-    var button = '<li><button class="btn btn-secondary btn-xs" ' +
-                 'data-filter="' + filter + '" data-value="' + value + '" >' +
-                    value + '<i class="fa fa-times" aria-hidden="true"></i>' +
-                  '</button></li>';
-    $('#filter-info').append(button);
+  //gets rid of whole filter category and removes the associated buttons
+  eventHandler.removeFilterCategory = function(category) {
+    TownHall.removeFilterCategory(category);
+    $('button[data-filter="' + category + '"]').remove();
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
   eventHandler.removeFilter = function() {
@@ -166,6 +175,7 @@
     TownHall.resetFilters();
     $('#filter-info li button').parent().remove();
   };
+
   // filters the table on click
   eventHandler.filterTable = function (e) {
     e.preventDefault();
@@ -184,12 +194,13 @@
     var cur = parseInt($currentState.attr('data-current'));
     $currentState.attr('data-total', total);
     $table = $('#all-events-table');
-    if (townhall.meetingType === 'Town Hall') {
+
+    if (townhall.meetingType === 'Town Hall' || townhall.meetingType === 'Empty Chair Town Hall') {
       cur ++;
       eventHandler.renderTable(townhall, $table);
       $currentState.attr('data-current', cur);
     }
-    $currentState.text(`Viewing ${cur} of ${total} total events`);
+    $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
   };
 
   // renders results of search
@@ -256,6 +267,13 @@
     }
   };
 
+  eventHandler.populateEventModal = function(townhall) {
+    var compiledTemplate = Handlebars.getTemplate('eventModal');
+    $('.event-modal .modal-content').html(compiledTemplate(townhall));
+    setUrlParameter('eventId', townhall.eventId);
+    addtocalendar.load();
+  };
+
   function setupTypeaheads() {
     var typeaheadConfig = {
       fitToElement: true,
@@ -271,11 +289,53 @@
     $('#memberTypeahead').typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
   }
 
+  function getUrlParameter(param) {
+    var query = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
+    if (query) {
+      return query[0].split('=')[1];
+    }
+    return false;
+  }
+
+  function setUrlParameter(param, value) {
+    // Get query params, and remove the matching param if it exists
+    var search = document.location.search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
+    // If there are no query params then we need to add the ? back
+    if (search.indexOf('?') === -1) {
+      search += '?';
+    } else {
+      search += '&';
+    }
+
+    // Add the query param if we have a value
+    if (value !== false) {
+      search += param + '=' + value;
+    } else {
+      // Remove trailing ? or &
+      search = search.slice(0, -1);
+    }
+
+    window.history.replaceState('', '', document.location.origin + '/' + search);
+  }
+
+  function checkEventParam() {
+    var eventId = getUrlParameter('eventId');
+    if (eventId) {
+      firebase.database().ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
+        if (snapshot.val()) {
+          eventHandler.populateEventModal(snapshot.val());
+          $('.event-modal').modal('show');
+        }
+      });
+    }
+  }
+
   $(document).ready(function(){
     init();
   });
 
   function init() {
+    checkEventParam();
     $('[data-toggle="popover"]').popover({html:true});
     $('#button-to-form').hide();
     $('#save-event').on('submit', eventHandler.save);
@@ -288,18 +348,27 @@
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
+    eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
+
+    // Perform zip search on load
+    var zipcode = getUrlParameter('zipcode');
+    if (zipcode) {
+      $('#look-up input').val(zipcode);
+      eventHandler.lookup(document.createEvent('Event'));
+    }
 
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
       $("a[href='" + location.hash + "']").tab('show');
-    }
-    else{
+    } else {
       TownHall.isMap = true;
     }
 
     $('.hash-link').on('click', function onClickGethref(event) {
       var hashid = this.getAttribute('href');
+      $('ul .hash-link').parent().removeClass('active');
+
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
         setTimeout( function(){
@@ -308,19 +377,22 @@
             TownHall.isMap = true;
           }
         }, 50);
-      }
-      else if (hashid === '#home' && TownHall.isMap === true) {
-        console.log('going home and map');
+      } else if (hashid === '#home' && TownHall.isMap === true) {
         history.replaceState({}, document.title, '.');
-        $('ul .hash-link').parent().removeClass('active');
         setTimeout( function(){
           eventHandler.resetHome();
         }, 0);
-      }
-      else {
+      } else {
         location.hash = hashid;
       }
+
+      $('html, body').scrollTop(0);
       $('[data-toggle="popover"]').popover('hide');
+    });
+
+    // Remove query param when closing modal
+    $('.event-modal').on('hide.bs.modal', function (e) {
+      setUrlParameter('eventId', false);
     });
 
     // Only show one popover at a time
