@@ -109,7 +109,7 @@
         if (snapshot.exists()) {
           resolveSorted(snapshot.val().LAT, snapshot.val().LNG, resolve);
         } else {
-          geocoder.geocode({componentRestrictions: {country: 'US', postalCode: zip}}, function(results, status) { //TODO CWS: also maybe try without the address and just use address restrictions
+          geocoder.geocode({componentRestrictions: {country: 'US', postalCode: zip}}, function(results, status) {
             if (status === 'OK') {
               var lat = results[0].geometry.location.lat().toString();
               var lng = results[0].geometry.location.lng().toString();
