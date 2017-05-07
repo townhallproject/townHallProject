@@ -96,16 +96,33 @@
   // METHODS IN RESPONSE TO lookup
   // Converts zip to lat lng google obj
   TownHall.lookupZip = function (zip) {
+    var geocoder = new google.maps.Geocoder();
+    var resolveSorted = function(lat, lng, resolve) {
+      var zipQueryLoc = new google.maps.LatLng(lat, lng);
+      TownHall.zipQuery = zipQueryLoc;
+      TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
+        resolve (sorted);
+      });
+    };
     return new Promise(function (resolve, reject) {
       firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
         if (snapshot.exists()) {
-          var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
-          TownHall.zipQuery = zipQueryLoc;
-          TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
-            resolve (sorted);
-          });
+          resolveSorted(snapshot.val().LAT, snapshot.val().LNG, resolve);
         } else {
-          reject ('That is not a real zip code');
+          geocoder.geocode({componentRestrictions: {country: 'US', postalCode: zip}}, function(results, status) {
+            if (status === 'OK') {
+              var lat = results[0].geometry.location.lat().toString();
+              var lng = results[0].geometry.location.lng().toString();
+              firebasedb.ref('/zips/' + zip).set({
+                LAT: lat,
+                LNG: lng,
+                ZIP: zip
+              });
+              resolveSorted(lat, lng, resolve);
+            } else {
+              reject ('That is not a real zip code');
+            }
+          });
         }
       });
     });
