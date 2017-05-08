@@ -117,9 +117,9 @@
     });
   };
 
-  TownHall.lookupReps = function (zip) {
+  TownHall.lookupReps = function (key, zip) {
     var representativePromise = $.ajax({
-      url: 'https://congress.api.sunlightfoundation.com/legislators/locate?zip=' + zip,
+      url: 'https://congress.api.sunlightfoundation.com/legislators/locate?' + key + '=' + zip,
       dataType: 'jsonp'
     });
     return representativePromise;

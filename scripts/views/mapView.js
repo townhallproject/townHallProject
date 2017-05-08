@@ -35,10 +35,22 @@
       makeZoomToNationalButton();
       addDistrictListener();
       addPopups();
-      addLayer ()
+      addLayer ();
       readData();
+      TownHall.isMap = true;
+      mapView.map = map;
     });
   }
+
+  mapView.resetView = function resetView() {
+    mapView.killSidebar();
+    mapView.map.flyTo(continentalView(window.innerWidth/2, window.innerHeight/2));
+    var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
+    if (visibility === 'visible') {
+      mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
+      mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
+    }
+  };
 
   // Creates the button in our zoom controls to go to the national view
   function makeZoomToNationalButton() {
@@ -48,10 +60,7 @@
 
     usaButton.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-usa';
     usaButton.innerHTML = '<span class="usa-icon"></span>';
-    usaButton.addEventListener('click', function(){
-      killSidebar();
-      map.flyTo(continentalView(window.innerWidth/2, window.innerHeight/2));
-    });
+    usaButton.addEventListener('click', mapView.resetView);
 
     document.querySelector('.mapboxgl-ctrl-group').appendChild(usaButton);
   }
@@ -82,9 +91,8 @@
       }
 
       if (feature) {
+        eventHandler.renderResults(feature.properties.ABR, feature.properties.GEOID.substring(2,4), feature.properties.GEOID);
         mapView.focusMap(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
-        mapView.highlightDistrict(feature.properties.GEOID);
-        mapView.makeSidebar(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
       } else {
         var visibility = map.getLayoutProperty('selected-fill', 'visibility');
         if (visibility === 'visible') {
@@ -257,11 +265,6 @@
     toggleFilters('selected-border', filter);
   }
 
-  // Assign Zip Lookup function to Search field
-  function sidebarEvents () {
-    $('#look-up').on('submit', eventHandler.lookup);
-  }
-
   // Fetch data from Firebase, run map filter & point layers
   function readData () {
     var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('dateObj');
@@ -276,73 +279,17 @@
     });
   };
 
-  // Match the looked up zip code to district #
-  function matchSelectionToZip (state, districts) {
-    var fetchedData = [];
-    var stateName;
-
-    // Fetch full state name
-    stateData.forEach(function(n){
-      if (n.USPS === state) {
-        stateName = n.Name;
-      }
-    });
-
-    // Filter through the town halls
-    TownHall.allTownHalls.forEach(function(townhall){
-      // Filter townhalls for ones within this state
-      if (townhall.State === stateName) {
-
-        // If this townhall is a Senate race, automatically add it
-        if (townhall.District === 'Senate') {
-          fetchedData.push(townhall);
-        } else {
-
-          // Otherwise, check to see if there are multiple districts captured. (In the case of looking up via zip code)
-          if(districts.constructor === Array) {
-            districts.forEach(function(d) {
-              var districtMatcher = state + '-' + parseInt(d);
-              var dataMatcher = k.District.substring(0,3) + k.District.substring(3);
-
-              if (districtMatcher === dataMatcher) {
-                fetchedData.push(townhall);
-              }
-            });
-
-          // If only one district is selected, match it up from that
-          } else {
-            var districtNumber = parseInt(townhall.District.substring(3));
-
-            if (districtNumber === parseInt(districts)) {
-              fetchedData.push(townhall);
-            }
-          }
-        }
-      }
-    })
-
-    return fetchedData;
-  }
-
   // Create a sidebar and load it with Town Hall event cards.
-  mapView.makeSidebar = function makeSidebar (state, districts) {
-
-    var districtMatcher = state + '-' + districts;
-    var selectedData = matchSelectionToZip(state, districts);
+  mapView.makeSidebar = function makeSidebar (selectedData) {
     var districtCard = Handlebars.getTemplate('eventCards');
+      $('.nearest-with-results').empty();
+      $('.map-container-large').addClass('hidden');
+      $('.map-container-split').removeClass('hidden');
+      $('#map').prependTo('.map-fixing');
+      map.resize();
 
-    $('.nearest-with-results').empty();
 
-    selectedData.forEach(function(d) {
-      d.partyShorten = d.Party.slice(0,3);
-      $('.nearest-with-results').append(districtCard(d));
-    });
-
-    $('.map-container-large').addClass('hidden');
-    $('.map-container-split').removeClass('hidden');
-    $('#map').prependTo('.map-fixing');
-    map.resize();
-  }
+  };
 
   mapView.killSidebar = function killSidebar () {
     $('.header-with-results').addClass('hidden');
@@ -354,12 +301,8 @@
 
   $(document).ready(function(){
     setMap();
-    sidebarEvents();
-    $('.kill-results').on('click', function() {
-      killSidebar();
-    });
-  });
 
+  });
   module.mapView = mapView;
 
 }(window));

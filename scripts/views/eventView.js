@@ -5,25 +5,78 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
-  eventHandler.zipErrorResponse = function(errorMessage) {
+  // Match the looked up zip code to district #
+  function matchSelectionToZip (state, districts) {
+    var fetchedData = [];
+    var stateName;
+
+    // Fetch full state name
+    stateData.forEach(function(n){
+      if (n.USPS === state) {
+        stateName = n.Name;
+      }
+    });
+
+    // Filter through the town halls
+    TownHall.allTownHalls.forEach(function(townhall){
+      // Filter townhalls for ones within this state
+      if (townhall.State === stateName && townhall.meetingType !== 'DC Event') {
+
+        // If this townhall is a Senate race, automatically add it
+        if (townhall.District === 'Senate') {
+          fetchedData.push(townhall);
+        } else {
+
+          // Otherwise, check to see if there are multiple districts captured. (In the case of looking up via zip code)
+          if(districts.constructor === Array) {
+            districts.forEach(function(d) {
+              var districtMatcher = state + '-' + parseInt(d);
+              var dataMatcher = townhall.District.substring(0,3) + townhall.District.substring(3);
+
+              if (districtMatcher === dataMatcher) {
+                fetchedData.push(townhall);
+              }
+            });
+
+          // If only one district is selected, match it up from that
+          } else {
+            var districtNumber = parseInt(townhall.District.substring(3));
+
+            if (districtNumber === parseInt(districts)) {
+              fetchedData.push(townhall);
+            }
+          }
+        }
+      }
+    });
+
+    return fetchedData;
+  }
+
+  eventHandler.renderResults = function(thisState, validDistricts, validSelections) {
+    var districtMatcher = thisState + '-' + validDistricts;
+    var selectedData = matchSelectionToZip(thisState, validDistricts);
+    var $zip = $('#look-up input').val();
+    var $parent = $('#nearest');
     var $results = $('#textresults');
+    $parent.empty();
     $results.empty();
-    var $text = $('<h4>');
-    $text.text(errorMessage);
-    $results.append($text);
+    //render table
+    if (selectedData.length > 0) {
+      // set globals for filtering
+      $('#nearest').addClass('nearest-with-results');
+      TownHall.isCurrentContext = true;
+      TownHall.currentContext = selectedData;
+      eventHandler.renderTableWithArray(selectedData);
+      mapView.makeSidebar(selectedData);
+      addtocalendar.load();
+    } else {
+      $text.html('There are no events for this zip');
+      $results.append($text);
+    }
+    mapView.highlightDistrict(validSelections);
   };
 
-  // Renders the page in response to lookup
-  // eventHandler.lookup = function (e) {
-  //   e.preventDefault();
-  //   var zip = $('#look-up input').val().trim();
-  //   regEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
-  //   var zipCheck = zip.match(regEx);
-  //   if (zipCheck) {
-  //     var zipLookup = zip.split('-')[0];
-  //
-  // };
-  // Zip Code Lookup!
   eventHandler.lookup = function (e) {
     e.preventDefault();
     var zip = $('#look-up input').val().trim();
@@ -40,11 +93,9 @@
         .then(function(zipToDistrict){
           setUrlParameter('zipcode', zipClean);
           eventHandler.resetFilters();
-          // eventHandler.render(sorted, TownHall.zipQuery);
-          eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipClean), $('#representativeCards section'));
           zipToDistrict.forEach(function(ele){
             var stateDate = stateData.filter(function(state){
-              return state.USPS === ele.abr
+              return state.USPS === ele.abr;
             });
             stateCode = stateDate[0].FIPS;
             var geoid = stateCode + ele.dis;
@@ -52,22 +103,20 @@
             thisState = ele.abr;
             validDistricts.push(ele.dis);
             validSelections.push(geoid);
-          })
-
-          mapView.highlightDistrict(validSelections);
-          mapView.makeSidebar(thisState, validDistricts);
+          });
+          eventHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
+          eventHandler.renderResults(thisState, validDistricts, validSelections);
         })
         .catch(function(error){
           eventHandler.zipErrorResponse(error, 'That zip code is not in our database, if you think this is an error please email us.');
         });
-      } else {
-        eventHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
-      }
+    } else {
+      eventHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
     }
+  };
 
   // reset the home page to originial view
   eventHandler.resetHome = function () {
-    $('[data-toggle="popover"]').popover('hide');
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
@@ -82,8 +131,7 @@
     TownHall.isCurrentContext = false;
     TownHall.currentContext = [];
     TownHall.zipQuery = '';
-    $('#map').appendTo('.map-large');
-    onResizeMap();
+    mapView.resetView();
     var $parent = $('#nearest');
     var $results = $('#textresults');
     $parent.empty();
@@ -140,10 +188,6 @@
     var cur = array.length;
     array.forEach(function(ele){
       eventHandler.renderTable(ele, $table);
-    });
-    $('[data-toggle="popover"]').popover({
-      container: 'body',
-      html:true
     });
     $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
   };
@@ -234,20 +278,17 @@
 
   // renders results of search
   eventHandler.render = function (events, zipQuery) {
-    $('[data-toggle="popover"]').popover('hide');
     $('.header-small').removeClass('hidden');
     $('.header-small').fadeIn();
     $('.header-large').hide();
     $('.form-text-results').addClass('text-center');
     $('.left-panels').addClass('left-panels-border');
-    $('#nearest').addClass('nearest-with-results');
     $('#look-up').appendTo($('.left-panels'));
     $('#button-to-form').removeClass('hidden');
     $('#button-to-form').fadeIn();
     $('.spacer').hide();
     maxDist = 120701;
     eventHandler.resultsRouting(maxDist, events, zipQuery);
-    addtocalendar.load();
   };
 
   eventHandler.resultsRouting = function (maxDist, events, zipQuery){
@@ -365,7 +406,6 @@
 
   function init() {
     checkEventParam();
-    $('[data-toggle="popover"]').popover({html:true});
     $('#button-to-form').hide();
     $('#save-event').on('submit', eventHandler.save);
     $('#look-up').on('submit', eventHandler.lookup);
@@ -416,7 +456,6 @@
       }
 
       $('html, body').scrollTop(0);
-      $('[data-toggle="popover"]').popover('hide');
     });
 
     // Remove query param when closing modal
@@ -424,19 +463,6 @@
       setUrlParameter('eventId', false);
     });
 
-    // Only show one popover at a time
-    $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
-      $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
-    });
-
-    $('body').on('click', '.popover .popover-title a.close', function(e) {
-      $('[data-toggle="popover"]').popover('hide');
-    });
-
-    // Fix popover bug in bootstrap 3 https://github.com/twbs/bootstrap/issues/16732
-    $('body').on('hidden.bs.popover', function (e) {
-      $(e.target).data('bs.popover').inState.click = false;
-    });
     $('.privacy-policy-button').on('click', function(e){
       $('#privacy-policy-link').click();
       $('html,body').scrollTop(0);
