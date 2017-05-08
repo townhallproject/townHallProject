@@ -287,8 +287,6 @@
       $('.map-container-split').removeClass('hidden');
       $('#map').prependTo('.map-fixing');
       map.resize();
-
-
   };
 
   mapView.killSidebar = function killSidebar () {
