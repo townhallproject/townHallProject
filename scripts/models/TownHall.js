@@ -111,7 +111,7 @@
           //   resolve (sorted);
           // });
         } else {
-          reject ('That is not a real zip code');
+          reject ('That zip code is not in our database, if you think this is an error please email us.');
         }
       });
     });
@@ -141,6 +141,38 @@
       });
       return sorted;
     });
+  };
+
+  // Match the looked up zip code to district #
+  TownHall.matchSelectionToZip = function (state, districts) {
+    var fetchedData = [];
+    var stateName;
+
+    // Fetch full state name
+    stateData.forEach(function(n){
+      if (n.USPS === state) {
+        stateName = n.Name;
+      }
+    });
+
+    fetchedData = TownHall.allTownHalls.filter(function(townhall){
+      return townhall.State === stateName && townhall.meetingType !== 'DC Event';
+    }).reduce(function(acc, curtownhall){
+      if (curtownhall.District === 'Senate') {
+        console.log('senate event');
+        acc.push(curtownhall);
+      } else {
+        districts.forEach(function(d) {
+          var districtMatcher = parseInt(d);
+          var dataMatcher = parseInt(curtownhall.District.split('-')[1]);
+          if (districtMatcher === dataMatcher) {
+            acc.push(curtownhall);
+          }
+        });
+      }
+      return acc;
+    },[]);
+    return fetchedData;
   };
 
   TownHall.addFilter = function(filter, value) {

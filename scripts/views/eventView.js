@@ -5,63 +5,28 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
-  // Match the looked up zip code to district #
-  function matchSelectionToZip (state, districts) {
-    var fetchedData = [];
-    var stateName;
-
-    // Fetch full state name
-    stateData.forEach(function(n){
-      if (n.USPS === state) {
-        stateName = n.Name;
-      }
-    });
-
-    // Filter through the town halls
-    TownHall.allTownHalls.forEach(function(townhall){
-      // Filter townhalls for ones within this state
-      if (townhall.State === stateName && townhall.meetingType !== 'DC Event') {
-
-        // If this townhall is a Senate race, automatically add it
-        if (townhall.District === 'Senate') {
-          fetchedData.push(townhall);
-        } else {
-
-          // Otherwise, check to see if there are multiple districts captured. (In the case of looking up via zip code)
-          if(districts.constructor === Array) {
-            districts.forEach(function(d) {
-              var districtMatcher = state + '-' + parseInt(d);
-              var dataMatcher = townhall.District.substring(0,3) + townhall.District.substring(3);
-
-              if (districtMatcher === dataMatcher) {
-                fetchedData.push(townhall);
-              }
-            });
-
-          // If only one district is selected, match it up from that
-          } else {
-            var districtNumber = parseInt(townhall.District.substring(3));
-
-            if (districtNumber === parseInt(districts)) {
-              fetchedData.push(townhall);
-            }
-          }
-        }
-      }
-    });
-
-    return fetchedData;
-  }
+  eventHandler.zipErrorResponse = function(errorMessage) {
+    var $results = $('#textresults');
+    $results.empty();
+    var $text = $('<h4>');
+    $text.text(errorMessage);
+    $results.append($text);
+  };
 
   eventHandler.renderResults = function(thisState, validDistricts, validSelections) {
     var districtMatcher = thisState + '-' + validDistricts;
-    var selectedData = matchSelectionToZip(thisState, validDistricts);
+    var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $results = $('#textresults');
     $parent.empty();
     $results.empty();
+    var $text = $('<h4>');
     //render table
+    var districtText = ' '
+    validDistricts.forEach(function(district){
+      districtText = districtText + thisState + '-' + district + ' ';
+    });
     if (selectedData.length > 0) {
       // set globals for filtering
       $('#nearest').addClass('nearest-with-results');
@@ -69,9 +34,16 @@
       TownHall.currentContext = selectedData;
       eventHandler.renderTableWithArray(selectedData);
       mapView.makeSidebar(selectedData);
+      var message = 'Showing ' + selectedData.length + ' event(s) for ' + districtText;
+      $text.html(message);
+      $results.append($text);
+
+      selectedData.forEach(function(ele){
+        eventHandler.renderPanels(ele, $parent);
+      });
       addtocalendar.load();
     } else {
-      $text.html('There are no events for this zip');
+      $text.html('There are no events for ' + districtText);
       $results.append($text);
     }
     mapView.highlightDistrict(validSelections);
@@ -90,20 +62,20 @@
       var thisState;
       var stateCode;
       TownHall.lookupZip(zipClean)
-        .then(function(zipToDistrict){
+        .then(function(zipToDistricts){
           setUrlParameter('zipcode', zipClean);
           eventHandler.resetFilters();
-          zipToDistrict.forEach(function(ele){
+          zipToDistricts.forEach(function(district){
             var stateDate = stateData.filter(function(state){
-              return state.USPS === ele.abr;
+              return state.USPS === district.abr;
             });
             stateCode = stateDate[0].FIPS;
-            var geoid = stateCode + ele.dis;
-            mapView.focusMap(ele.abr, ele.dis);
-            thisState = ele.abr;
-            validDistricts.push(ele.dis);
+            var geoid = stateCode + district.dis;
+            thisState = district.abr;
+            validDistricts.push(district.dis);
             validSelections.push(geoid);
           });
+          mapView.focusMap(thisState, validDistricts);
           eventHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
           eventHandler.renderResults(thisState, validDistricts, validSelections);
         })
@@ -344,6 +316,15 @@
     addtocalendar.load();
   };
 
+ // Perform zip search on load
+  eventHandler.zipSearchByParam = function(){
+    var zipcode = getUrlParameter('zipcode');
+    if (zipcode) {
+      $('#look-up input').val(zipcode);
+      eventHandler.lookup(document.createEvent('Event'));
+    }
+  };
+
   function setupTypeaheads() {
     var typeaheadConfig = {
       fitToElement: true,
@@ -418,13 +399,6 @@
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
     eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
-
-    // Perform zip search on load
-    var zipcode = getUrlParameter('zipcode');
-    if (zipcode) {
-      $('#look-up input').val(zipcode);
-      eventHandler.lookup(document.createEvent('Event'));
-    }
 
     // url hash for direct links to subtabs
     // slightly hacky routing

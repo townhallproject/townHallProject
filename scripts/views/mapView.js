@@ -39,6 +39,7 @@
       readData();
       TownHall.isMap = true;
       mapView.map = map;
+      eventHandler.zipSearchByParam();
     });
   }
 
@@ -91,8 +92,8 @@
       }
 
       if (feature) {
-        eventHandler.renderResults(feature.properties.ABR, feature.properties.GEOID.substring(2,4), feature.properties.GEOID);
-        mapView.focusMap(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
+        eventHandler.renderResults(feature.properties.ABR, [feature.properties.GEOID.substring(2,4)], feature.properties.GEOID);
+        mapView.focusMap(feature.properties.ABR, [feature.properties.GEOID.substring(2,4)]);
       } else {
         var visibility = map.getLayoutProperty('selected-fill', 'visibility');
         if (visibility === 'visible') {
@@ -127,6 +128,7 @@
         properties: {
           district: townhall.District,
           member: townhall.Member,
+          meetingType: townhall.meetingType,
           icon: iconKey
         },
       });
@@ -184,7 +186,7 @@
       // Populate the popup and set its coordinates
       // based on the feature found.
       popup.setLngLat(feature.geometry.coordinates)
-          .setHTML('<b>' + feature.properties.member + '</b>' + popupDistrict)
+          .setHTML('<b>' + feature.properties.member + '</b>' + popupDistrict + '<br><span>' + feature.properties.meetingType + '</span>')
           .addTo(map);
     });
   }
@@ -196,7 +198,7 @@
   // TODO: Add in a data-driven style for the district layer that does a different fill if it's a local represenative vs. a Senator
   function filterMap (townHall) {
     // Fetch states with senators in em'
-    if (townHall.District === 'Senate' && townHall.State) {
+    if (townHall.District === 'Senate' && townHall.State && townHall.meetingType !== 'DC Event') {
       includedStates.push(townHall.State);
     }
 
@@ -207,11 +209,19 @@
       district = townHall.District;
 
       if (district && district !== 'Senate' && townHall.City !== 'Washington') {
-        var districtId = district.substring(3,5);
+        var districtId = district.split('-')[1];
         var getFIPS;
+        if (!districtId) {
+          console.log(townHall.eventId, townHall.district);
+          return
+        }
 
         if (districtId.length === 1){
           districtId = '0' + districtId;
+        }
+        if (districtId === '00') {
+          console.log(townHall.district, districtId);
+          districtId = '01'
         }
 
         stateData.forEach(function(n){
@@ -234,16 +244,34 @@
     map.setLayoutProperty(layer, 'visibility', 'visible');
   }
 
+  function masterBoundingBox (stateAbbr, districtCodes) {
+    var masterBB = [0,0,0,0]
+    districtCodes.forEach(function(district) {
+      newBB = bboxes[stateAbbr + district]
+      masterBB[0] = Math.min(masterBB[0], newBB[0]);
+      masterBB[2] = Math.min(masterBB[2], newBB[2]);
+      masterBB[1] = Math.max(masterBB[1], newBB[1]);
+      masterBB[3] = Math.max(masterBB[3], newBB[3]);
+    })
+    return masterBB
+  }
   // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
-  mapView.focusMap = function focusMap (stateAbbr, districtCode) {
+  mapView.focusMap = function focusMap (stateAbbr, districtCodes) {
     var height = window.innerHeight,
       width = window.innerWidth,
-      districtAbbr = districtCode ? districtCode : '';
+      statekey = stateAbbr,
+      bb = bboxes[stateAbbr]
+    if (districtCodes && districtCodes.length ===1) {
+      statekey = statekey + districtCodes[0];
+      bb = bboxes[statekey]
+    } else if (districtCodes && districtCodes.length > 1) {
+      bb = masterBoundingBox(stateAbbr, districtCodes)
+    }
 
-    var view = geoViewport.viewport(bboxes[stateAbbr + districtAbbr], [width/2, height/2]);
+    var view = geoViewport.viewport(bb, [width/2, height/2]);
     view.zoom = view.zoom - 0.5;
     map.flyTo(view);
-  }
+  };
 
   // Handles the highlight for districts when clicked on.
   mapView.highlightDistrict = function highlightDistrict (geoid) {
@@ -263,7 +291,7 @@
     // Set that layer filter to the selected
     toggleFilters('selected-fill', filter);
     toggleFilters('selected-border', filter);
-  }
+  };
 
   // Fetch data from Firebase, run map filter & point layers
   function readData () {
@@ -275,7 +303,7 @@
       filterMap(ele);
       makePointLayer(ele);
       eventHandler.initialTable(ele);
-      map.getSource('townhall-points').setData(featuresHome)
+      map.getSource('townhall-points').setData(featuresHome);
     });
   };
 
