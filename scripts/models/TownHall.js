@@ -159,12 +159,13 @@
       return townhall.State === stateName && townhall.meetingType !== 'DC Event';
     }).reduce(function(acc, curtownhall){
       if (curtownhall.District === 'Senate') {
-        console.log('senate event');
         acc.push(curtownhall);
       } else {
         districts.forEach(function(d) {
           var districtMatcher = parseInt(d);
           var dataMatcher = parseInt(curtownhall.District.split('-')[1]);
+          dataMatcher = dataMatcher === 0 ? 1 : dataMatcher;
+          console.log(districtMatcher, dataMatcher);
           if (districtMatcher === dataMatcher) {
             acc.push(curtownhall);
           }
