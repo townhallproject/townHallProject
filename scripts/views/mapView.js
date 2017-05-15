@@ -91,10 +91,10 @@
             layers: ['district_interactive']
           });
         if (features.length > 0) {
-          console.log(features[0]);
           feature.state = features[0].properties.ABR;
           feature.district = features[0].properties.GEOID.substring(2,4);
           feature.geoID = features[0].properties.GEOID;
+          mapView.districtSelect(feature);
         }
       } else {
         $.ajax({
@@ -105,11 +105,11 @@
               feature.state = resp.features[0].properties.ABR;
               feature.district = resp.features[0].properties.GEOID.substring(2,4);
               feature.geoID = resp.features[0].properties.GEOID;
+              mapView.districtSelect(feature);
             }
           }
         });
       }
-      mapView.districtSelect(feature);
     });
   }
 
@@ -130,7 +130,6 @@
     if (districtId === '00') {
       districtId = '01';
     }
-    console.log(districtId);
     var bb = bboxes[townhall.District.split('-')[0] + districtId];
     townhall.lng = (bb[2] - bb[0])/2 + bb[0];
     townhall.lat = (bb[3] - bb[1])/2 + bb[1];
@@ -168,7 +167,7 @@
         },
       });
     } else {
-      console.log(townhall.eventId, townhall.meetingType, townhall.State);
+      // console.log(townhall.eventId, townhall.meetingType, townhall.State);
     }
   }
 
@@ -278,6 +277,7 @@
     map.setLayoutProperty(layer, 'visibility', 'visible');
   }
 
+  //TODO: add sentate events to a master bounding box so they are in the view
   function masterBoundingBox (stateAbbr, districtCodes) {
     var masterBB = [0,0,0,0];
     districtCodes.forEach(function(district) {
@@ -310,7 +310,6 @@
   // Handles the highlight for districts when clicked on.
   mapView.highlightDistrict = function highlightDistrict (geoid) {
     var filter;
-    console.log(geoid);
     // Filter for which district has been selected.
     if(typeof geoid === 'object') {
       filter = ['any'];
@@ -342,7 +341,6 @@
     // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
       map.getSource('townhall-points').setData(featuresHome);
       eventHandler.zipSearchByParam();
-      //TODO: url param for district based search too.
     });
   };
 

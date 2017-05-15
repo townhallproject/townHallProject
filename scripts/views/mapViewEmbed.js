@@ -2,16 +2,6 @@
 (function closure(firebase) {
   var map;
   var google;
-  function TownHall (opts) {
-    for (var key in opts) {
-      this[key] = opts[key];
-    }
-  }
-
-  TownHall.allTownHalls = [];
-  TownHall.currentContext = [];
-  TownHall.isCurrentContext = false;
-  TownHall.isMap = false;
 
   //Handlebars write
   TownHall.prototype.toHtml= function(templateid){
