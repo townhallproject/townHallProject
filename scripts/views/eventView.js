@@ -23,7 +23,7 @@
     $results.empty();
     var $text = $('<h4>');
     //render table
-    var districtText = ' '
+    var districtText = ' ';
     validDistricts.forEach(function(district){
       districtText = districtText + thisState + '-' + district + ' ';
     });
@@ -63,7 +63,7 @@
       var stateCode;
       TownHall.lookupZip(zipClean)
         .then(function(zipToDistricts){
-          setUrlParameter('zipcode', zipClean);
+          eventHandler.setUrlParameter('zipcode', zipClean);
           eventHandler.resetFilters();
           zipToDistricts.forEach(function(district){
             var stateDate = stateData.filter(function(state){
@@ -312,18 +312,32 @@
   eventHandler.populateEventModal = function(townhall) {
     var compiledTemplate = Handlebars.getTemplate('eventModal');
     $('.event-modal .modal-content').html(compiledTemplate(townhall));
-    setUrlParameter('eventId', townhall.eventId);
+    eventHandler.setUrlParameter('eventId', townhall.eventId);
     addtocalendar.load();
   };
 
  // Perform zip search on load
   eventHandler.zipSearchByParam = function(){
     var zipcode = getUrlParameter('zipcode');
+    var district = getUrlParameter('district');
     if (zipcode) {
       $('#look-up input').val(zipcode);
       eventHandler.lookup(document.createEvent('Event'));
+    } else if (district) {
+      if (district.split('-').length === 3) {
+        //TODO: possible more checks to make sure this is a real district
+        var feature = {
+          state: district.split('-')[0],
+          district:district.split('-')[1],
+          geoID:district.split('-')[2],
+        };
+        mapView.districtSelect(feature);
+      } else {
+        eventHandler.setUrlParameter('district', false);
+      }
     }
   };
+
 
   function setupTypeaheads() {
     var typeaheadConfig = {
@@ -348,7 +362,7 @@
     return false;
   }
 
-  function setUrlParameter(param, value) {
+  eventHandler.setUrlParameter = function(param, value) {
     // Get query params, and remove the matching param if it exists
     var search = document.location.search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
     // If there are no query params then we need to add the ? back
@@ -367,7 +381,7 @@
     }
 
     window.history.replaceState('', '', document.location.origin + '/' + search);
-  }
+  };
 
   function checkEventParam() {
     var eventId = getUrlParameter('eventId');
@@ -434,7 +448,7 @@
 
     // Remove query param when closing modal
     $('.event-modal').on('hide.bs.modal', function (e) {
-      setUrlParameter('eventId', false);
+      eventHandler.setUrlParameter('eventId', false);
     });
 
     $('.privacy-policy-button').on('click', function(e){
