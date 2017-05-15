@@ -76,6 +76,14 @@
     "zips": {
       ".read": "true"
     },
+   "zipToDistrict": {
+      ".read": "true",
+        "$zip":{
+          ".read": "true",
+                    ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+
+        }
+    },
    "townHallsErrors" : {
      "$townHallID": {
        ".read": "true",
