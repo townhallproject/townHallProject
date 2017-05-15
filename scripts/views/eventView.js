@@ -63,6 +63,7 @@
       var stateCode;
       TownHall.lookupZip(zipClean)
         .then(function(zipToDistricts){
+          eventHandler.setUrlParameter('district', false);
           eventHandler.setUrlParameter('zipcode', zipClean);
           eventHandler.resetFilters();
           zipToDistricts.forEach(function(district){

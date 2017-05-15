@@ -69,7 +69,9 @@
     if (feature.state) {
       eventHandler.renderResults(feature.state, [feature.district], feature.geoID);
       mapView.focusMap(feature.state, [feature.district]);
+      eventHandler.setUrlParameter('zipcode', false);
       eventHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
+
     } else {
       var visibility = map.getLayoutProperty('selected-fill', 'visibility');
       if (visibility === 'visible') {

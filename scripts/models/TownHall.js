@@ -40,10 +40,8 @@
 
   TownHall.saveZipLookup = function (zip) {
     firebasedb.ref('/zipZeroResults/' + zip).once('value').then(function(snapshot){
-      console.log(zip);
       if (snapshot.exists()) {
         newVal = snapshot.val() + 1;
-        console.log('new val', newVal);
       }
       else {
         newVal = 1;
@@ -98,12 +96,11 @@
   TownHall.lookupZip = function (zip) {
     return new Promise(function (resolve, reject) {
       firebasedb.ref('/zipToDistrict/' + zip).once('value').then(function(snapshot) {
-        console.log(zip);
         if (snapshot.exists()) {
-          var districts = []
+          var districts = [];
           snapshot.forEach(function(ele){
-            districts.push(ele.val())
-          })
+            districts.push(ele.val());
+          });
           resolve(districts);
           // var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
           // TownHall.zipQuery = zipQueryLoc;
@@ -165,7 +162,6 @@
           var districtMatcher = parseInt(d);
           var dataMatcher = parseInt(curtownhall.District.split('-')[1]);
           dataMatcher = dataMatcher === 0 ? 1 : dataMatcher;
-          console.log(districtMatcher, dataMatcher);
           if (districtMatcher === dataMatcher) {
             acc.push(curtownhall);
           }
