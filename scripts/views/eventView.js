@@ -25,6 +25,20 @@
     validDistricts.forEach(function(district){
       districtText = districtText + thisState + '-' + district + ' ';
     });
+
+    var justSenate = true;
+    selectedData.forEach(function(ele){
+      if(ele.District !== 'Senate') {
+        justSenate = false;
+      }
+    });
+
+    if (justSenate) {
+      mapView.focusMap(thisState);
+    } else {
+      mapView.focusMap(thisState, validDistricts);
+    }
+
     if (selectedData.length > 0) {
       // set globals for filtering
       $('#nearest').addClass('nearest-with-results');

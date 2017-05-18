@@ -74,10 +74,8 @@
   mapView.districtSelect = function(feature) {
     if (feature.state) {
       eventHandler.renderResults(feature.state, [feature.district], feature.geoID);
-      mapView.focusMap(feature.state, [feature.district]);
       eventHandler.setUrlParameter('zipcode', false);
       eventHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
-
     } else {
       var visibility = map.getLayoutProperty('selected-fill', 'visibility');
       if (visibility === 'visible') {
@@ -135,9 +133,7 @@
     if (districtId.length === 1){
       districtId = '0' + districtId;
     }
-    if (districtId === '00') {
-      districtId = '01';
-    }
+
     var bb = bboxes[townhall.District.split('-')[0] + districtId];
     townhall.lng = (bb[2] - bb[0])/2 + bb[0];
     townhall.lat = (bb[3] - bb[1])/2 + bb[1];
@@ -260,9 +256,6 @@
 
       if (districtId.length === 1){
         districtId = '0' + districtId;
-      }
-      if (districtId === '00') {
-        districtId = '01';
       }
 
       stateData.forEach(function(n){
