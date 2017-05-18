@@ -10,11 +10,11 @@
 
   function setMap(){
     // Specify Mapbox default access token
-    var accessToken = 'pk.eyJ1IjoiZG1vcmlhcnR5IiwiYSI6ImNpejlid2Y1djAxNWsyeHFwNTVoM2ZibWEifQ.MlGaldJiUQ91EDGdjJxLsA';
+    var accessToken = 'pk.eyJ1IjoidG93bmhhbGxwcm9qZWN0IiwiYSI6ImNqMnRwOG4wOTAwMnMycG1yMGZudHFxbWsifQ.FXyPo3-AD46IuWjjsGPJ3Q';
 
     // Specify uploaded Mapbox Studio style URL
-    var styleURL = 'mapbox://styles/dmoriarty/cj18brxs7002q2sptb60i1zfc';
-    var mapId = 'dmoriarty.cd-114-2015'; // used by the click handler only
+    var styleURL = 'mapbox://styles/townhallproject/cj2tpe64q000y2spk1wjsrilw';
+    var mapId = 'townhallproject.d46r2w4l'; // used by the click handler only
 
     mapboxgl.accessToken = accessToken;
     map = new mapboxgl.Map({
