@@ -6,9 +6,9 @@
   var eventHandler = {};
 
   eventHandler.zipErrorResponse = function(errorMessage) {
-    var $results = $('#textresults');
+    var $results = $('#selection-results');
     $results.empty();
-    var $text = $('<h4>');
+    var $text = $('.selection-results_content');
     $text.text(errorMessage);
     $results.append($text);
   };
@@ -18,10 +18,8 @@
     var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
-    var $results = $('#textresults');
+    var $text = $('.selection-results_content');
     $parent.empty();
-    $results.empty();
-    var $text = $('<h4>');
     //render table
     var districtText = ' ';
     validDistricts.forEach(function(district){
@@ -36,7 +34,6 @@
       mapView.makeSidebar(selectedData);
       var message = 'Showing ' + selectedData.length + ' event(s) for ' + districtText;
       $text.html(message);
-      $results.append($text);
 
       selectedData.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
@@ -44,7 +41,6 @@
       addtocalendar.load();
     } else {
       $text.html('There are no events for ' + districtText);
-      $results.append($text);
     }
     mapView.highlightDistrict(validSelections);
   };
@@ -106,7 +102,7 @@
     TownHall.zipQuery = '';
     mapView.resetView();
     var $parent = $('#nearest');
-    var $results = $('#textresults');
+    var $results = $('#selection-results');
     $parent.empty();
     $results.empty();
     eventHandler.resetFilters();
@@ -270,11 +266,11 @@
   eventHandler.resultsRouting = function (maxDist, events, zipQuery){
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
-    var $results = $('#textresults');
+    var $results = $('#selection-results');
     $parent.empty();
     $results.empty();
     $('.event-row').remove();
-    var $text = $('<h4>');
+    var $text = $('.selection-results_content');
     var nearest = events.reduce(function(acc, cur){
       if (cur.dist < maxDist) {
         acc.push(cur);

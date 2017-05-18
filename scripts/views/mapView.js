@@ -50,6 +50,12 @@
       mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
       mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
     }
+
+    var text = $('h4');
+    text.html(' ');
+
+    eventHandler.setUrlParameter('zipcode', false);
+    eventHandler.setUrlParameter('district', false);
   };
 
   // Creates the button in our zoom controls to go to the national view
@@ -291,6 +297,7 @@
     });
     return masterBB;
   }
+
   // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
   mapView.focusMap = function focusMap (stateAbbr, districtCodes) {
     var height = window.innerHeight,
