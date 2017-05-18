@@ -574,6 +574,50 @@ li[data-toggle='popover']:hover {
   }
 }
 
+.event-row {
+  &.has-notes {
+    cursor: pointer;
+    &:hover {
+      background-color: @brand-gray;
+    }
+  }
+  .notes {
+    margin-top: 10px;
+    font-style: italic;
+  }
+}
+
+.event-modal {
+  .modal-header .modal-title {
+    color: @brand-primary;
+    h3 {
+      letter-spacing: .05em;
+      font-weight: 700;
+    }
+  }
+  .modal-body {
+    padding: 0.5em 2em 1.5em 2em;
+    h3 {
+      small {
+        display: inline-block;
+      }
+    }
+    .map {
+      position: relative;
+      padding-bottom: 40%; // This is the aspect ratio
+      height: 0;
+      overflow: hidden;
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
+  }
+}
+
 // google forms
 .embed-container {
   position: relative;
@@ -581,6 +625,11 @@ li[data-toggle='popover']:hover {
   height: 0;
   overflow: hidden;
 }
+
+.contact-embed-container{
+  padding-bottom: 1204px;
+}
+
   .embed-container iframe,
   .embed-container object,
   .embed-container embed {
@@ -613,6 +662,13 @@ li[data-toggle='popover']:hover {
   -o-background-size: cover;
   background-size: cover;
   height: 45em;
+  position: relative;
+}
+
+.photo-credit{
+  position: absolute;
+  right: 20px;
+  bottom: 127px;
 }
 
 img.grayscale {
@@ -669,16 +725,21 @@ img.grayscale {
 .map-legend {
   position: absolute;
   z-index: 99;
-  right: 4rem;
+  right: 1rem;
   bottom: 5rem;
   background-color: white;
   padding: 2rem 2.5rem;
-  box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.1)
+  box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.1);
+  transition: 0.2s all;
 }
 
 .map-legend h3 {
   margin: 0 0 1.75rem 0;
-  border-bottom: 3px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.map-legend__small h3 {
+  font-size: 1.8rem;
 }
 
 .map-legend dt, dd {
@@ -753,6 +814,9 @@ img.grayscale {
     top: 5px;
     right: 5px;
   }
+  .map-legend {
+    right: 5.5rem;
+  }  
 }
 
 @media screen and (max-width: 767px){
@@ -763,8 +827,8 @@ img.grayscale {
   .page{
     margin-bottom: 200px;
   }
-  .embed-container{
-    padding-bottom: 2871px;
+  .submit-embed-container{
+    padding-bottom: 1247px;
   }
   .panel{
     min-height: none;
@@ -789,5 +853,17 @@ img.grayscale {
         text-align: center;
       }
     }
+  }
+  .map-legend {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    padding-bottom: 1rem;
+  }
+  .map-legend h3{
+    font-size: 1.8rem;
+  }
+  .map-legend__small {
+    display: none;
   }
 }

@@ -1,36 +1,51 @@
-<li id="{{eventId}}" class="event-row list-group-item" data-Main_State-filter="{{State}}" data-Member-filter="{{Member}}"
-  data-container="body" data-animation="true" data-html="true"
-  {{#if Notes}}data-toggle="popover" title="Notes <a href='javascript:void(0)' class='close'>×</a>"
+<li id="{{eventId}}"
+  class="event-row list-group-item {{#if Notes}}has-notes{{/if}}"
+  data-Main_State-filter="{{State}}"
+  data-Member-filter="{{Member}}"
+  {{#if Notes}}
+    data-toggle="collapse"
+    data-target="#notes-{{eventId}}"
+    title="Click to toggle notes"
   {{/if}}
-  {{#unless Notes}} data-toggle="" {{/unless}}
-  data-placement="top" data-content="{{#if Notes}}{{Notes}}{{/if}}{{#unless Notes}}There are no notes for this event.{{/unless}}">
+  >
   <span class="member">
     <h4>
-    {{Member}}
-    <small>({{Party}})  {{State}},   {{District}}
-    </small>
-  </h4>
- <span class="badge badge-default badge-pill pull-right">  {{meetingType}}</span>
+      {{Member}}
+      <small>
+        ({{Party}}) {{State}}, {{District}}
+        <a data-toggle="modal" data-target=".event-modal" onclick="eventHandler.populateEventModal({{{json this}}})">Details</a>
+      </small>
+    </h4>
+    <span class="badge badge-default badge-pill pull-right"> {{meetingType}}</span>
   </span>
   <ul class="list-inline list-inline-separated">
-    {{#if Date}}
-    <li>{{Date}}
-    </li>
+    {{#if repeatingEvent}}
+      <li>{{repeatingEvent}}
+      </li>
     {{/if}}
+    {{#unless repeatingEvent}}
+      {{#if Date}}
+        <li>{{Date}}
+        </li>
+      {{/if}}
+    {{/unless}}
     {{#if Time}}
-    <li>{{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}  </li>
+      <li>{{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</li>
     {{/if}}
     {{#if eventName}}
-    <li>{{eventName}}</li>
+      <li>{{eventName}}</li>
     {{/if}}
     {{#if Location}}
-    <li>{{Location}}</li>
+      <li>{{Location}}</li>
     {{/if}}
     {{#if phoneNumber}}
-    <li>{{phoneNumber}}</li>
+      <li>{{phoneNumber}}</li>
     {{/if}}
     {{#if address}}
-    <li>{{address}}</li>
+      <li>{{address}}</li>
     {{/if}}
   </ul>
+  {{#if Notes}}
+    <div id="notes-{{eventId}}" class="collapse notes">{{{Notes}}}</div>
+  {{/if}}
 </li>

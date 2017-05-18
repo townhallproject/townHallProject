@@ -40,10 +40,8 @@
 
   TownHall.saveZipLookup = function (zip) {
     firebasedb.ref('/zipZeroResults/' + zip).once('value').then(function(snapshot){
-      console.log(zip);
       if (snapshot.exists()) {
         newVal = snapshot.val() + 1;
-        console.log('new val', newVal);
       }
       else {
         newVal = 1;
@@ -97,23 +95,28 @@
   // Converts zip to lat lng google obj
   TownHall.lookupZip = function (zip) {
     return new Promise(function (resolve, reject) {
-      firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
+      firebasedb.ref('/zipToDistrict/' + zip).once('value').then(function(snapshot) {
         if (snapshot.exists()) {
-          var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
-          TownHall.zipQuery = zipQueryLoc;
-          TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
-            resolve (sorted);
+          var districts = [];
+          snapshot.forEach(function(ele){
+            districts.push(ele.val());
           });
+          resolve(districts);
+          // var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
+          // TownHall.zipQuery = zipQueryLoc;
+          // TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
+          //   resolve (sorted);
+          // });
         } else {
-          reject ('That is not a real zip code');
+          reject ('That zip code is not in our database, if you think this is an error please email us.');
         }
       });
     });
   };
 
-  TownHall.lookupReps = function (zip) {
+  TownHall.lookupReps = function (key, zip) {
     var representativePromise = $.ajax({
-      url: 'https://congress.api.sunlightfoundation.com/legislators/locate?zip=' + zip,
+      url: 'https://congress.api.sunlightfoundation.com/legislators/locate?' + key + '=' + zip,
       dataType: 'jsonp'
     });
     return representativePromise;
@@ -124,7 +127,7 @@
     var locations = [];
     return firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
       snapshot.forEach(function(ele){
-        if (ele.val().StateAb !== 'DC') {
+        if (ele.val().meetingType !== 'DC Event' && ele.val().meetingType !== 'Coffee') {
           locations.push(new TownHall(ele.val()));
         }
       });
@@ -135,6 +138,38 @@
       });
       return sorted;
     });
+  };
+
+  // Match the looked up zip code to district #
+  TownHall.matchSelectionToZip = function (state, districts) {
+    var fetchedData = [];
+    var stateName;
+
+    // Fetch full state name
+    stateData.forEach(function(n){
+      if (n.USPS === state) {
+        stateName = n.Name;
+      }
+    });
+
+    fetchedData = TownHall.allTownHalls.filter(function(townhall){
+      return townhall.State === stateName && townhall.meetingType !== 'DC Event';
+    }).reduce(function(acc, curtownhall){
+      if (curtownhall.District === 'Senate') {
+        acc.push(curtownhall);
+      } else {
+        districts.forEach(function(d) {
+          var districtMatcher = parseInt(d);
+          var dataMatcher = parseInt(curtownhall.District.split('-')[1]);
+          dataMatcher = dataMatcher === 0 ? 1 : dataMatcher;
+          if (districtMatcher === dataMatcher) {
+            acc.push(curtownhall);
+          }
+        });
+      }
+      return acc;
+    },[]);
+    return fetchedData;
   };
 
   TownHall.addFilter = function(filter, value) {
@@ -153,6 +188,10 @@
     if (TownHall.filters[filter].length === 0) {
       delete TownHall.filters[filter];
     }
+  };
+
+  TownHall.removeFilterCategory = function(category) {
+    delete TownHall.filters[category];
   };
 
   TownHall.resetFilters = function() {

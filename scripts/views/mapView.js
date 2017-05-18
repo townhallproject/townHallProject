@@ -1,20 +1,20 @@
-(function closure(firebase) {
+(function closure(module) {
 
-  var eventHandler = {};
   var townhallData;
   var map;
-  
+  var mapView = {};
+
   // Define an intial view for the US
   var continentalView = function(w,h) { return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]); };
   var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
 
   function setMap(){
     // Specify Mapbox default access token
-    var accessToken = 'pk.eyJ1IjoiZG1vcmlhcnR5IiwiYSI6ImNpejlid2Y1djAxNWsyeHFwNTVoM2ZibWEifQ.MlGaldJiUQ91EDGdjJxLsA';
+    var accessToken = 'pk.eyJ1IjoidG93bmhhbGxwcm9qZWN0IiwiYSI6ImNqMnRwOG4wOTAwMnMycG1yMGZudHFxbWsifQ.FXyPo3-AD46IuWjjsGPJ3Q';
 
     // Specify uploaded Mapbox Studio style URL
-    var styleURL = 'mapbox://styles/dmoriarty/cj18brxs7002q2sptb60i1zfc';
-    var mapId = 'dmoriarty.cd-114-2015'; // used by the click handler only
+    var styleURL = 'mapbox://styles/townhallproject/cj2tpe64q000y2spk1wjsrilw';
+    var mapId = 'townhallproject.d46r2w4l'; // used by the click handler only
 
     mapboxgl.accessToken = accessToken;
     map = new mapboxgl.Map({
@@ -35,8 +35,28 @@
       makeZoomToNationalButton();
       addDistrictListener();
       addPopups();
+      addLayer ();
+      readData();
+      TownHall.isMap = true;
+      mapView.map = map;
     });
   }
+
+  mapView.resetView = function resetView() {
+    mapView.killSidebar();
+    mapView.map.flyTo(continentalView(window.innerWidth/2, window.innerHeight/2));
+    var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
+    if (visibility === 'visible') {
+      mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
+      mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
+    }
+
+    var text = $('h4');
+    text.html(' ');
+
+    eventHandler.setUrlParameter('zipcode', false);
+    eventHandler.setUrlParameter('district', false);
+  };
 
   // Creates the button in our zoom controls to go to the national view
   function makeZoomToNationalButton() {
@@ -46,18 +66,29 @@
 
     usaButton.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-usa';
     usaButton.innerHTML = '<span class="usa-icon"></span>';
-    usaButton.addEventListener('click', function(){
-      killSidebar();
-      map.flyTo(continentalView(window.innerWidth/2, window.innerHeight/2));
-    });
+    usaButton.addEventListener('click', mapView.resetView);
 
     document.querySelector('.mapboxgl-ctrl-group').appendChild(usaButton);
   }
 
-  // Add click listener to each district. Used for creating the sidebar, drawing a 'selected' state to the district, & zooming in. TODO: Plug into a sidebar to draw up the list of Town Halls.
+  mapView.districtSelect = function(feature) {
+    if (feature.state) {
+      eventHandler.renderResults(feature.state, [feature.district], feature.geoID);
+      eventHandler.setUrlParameter('zipcode', false);
+      eventHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
+    } else {
+      var visibility = map.getLayoutProperty('selected-fill', 'visibility');
+      if (visibility === 'visible') {
+        map.setLayoutProperty('selected-fill', 'visibility', 'none');
+        map.setLayoutProperty('selected-border', 'visibility', 'none');
+      }
+    }
+  };
+  // Add click listener to each district. Used for creating the sidebar, drawing a 'selected' state to the district, & zooming in.
+  // TODO: Plug into a sidebar to draw up the list of Town Halls.
   function addDistrictListener() {
     map.on('click', function(e) {
-      var feature = null;
+      var feature = {};
 
       if (1) {
         var features = map.queryRenderedFeatures(
@@ -65,77 +96,86 @@
           {
             layers: ['district_interactive']
           });
-        if (features.length > 0)
-          feature = features[0];
+        if (features.length > 0) {
+          feature.state = features[0].properties.ABR;
+          feature.district = features[0].properties.GEOID.substring(2,4);
+          feature.geoID = features[0].properties.GEOID;
+          mapView.districtSelect(feature);
+        }
       } else {
         $.ajax({
           url: 'https://api.mapbox.com/v4/' + mapId + '/tilequery/' + e.lngLat.lng + ',' + e.lngLat.lat + '.json?radius=0&access_token=' + accessToken,
           method: 'GET',
           success: function(resp) {
-            if (resp.type === 'FeatureCollection' && resp.features.length > 0)
-              feature = resp.features[0];
+            if (resp.type === 'FeatureCollection' && resp.features.length > 0) {
+              feature.state = resp.features[0].properties.ABR;
+              feature.district = resp.features[0].properties.GEOID.substring(2,4);
+              feature.geoID = resp.features[0].properties.GEOID;
+              mapView.districtSelect(feature);
+            }
           }
         });
-      }
-
-      if (feature) {
-        focusMap(feature.properties.ABR, feature.properties.GEOID.substring(2,4));
-        highlightDistrict(feature.properties.GEOID);
-        makeSidebar(feature.properties.ABR, feature.properties.GEOID.substring(2,4))
-      } else {
-        var visibility = map.getLayoutProperty('selected-fill', 'visibility');
-        if (visibility === 'visible') {
-          map.setLayoutProperty('selected-fill', 'visibility', 'none');
-          map.setLayoutProperty('selected-border', 'visibility', 'none');
-        }
       }
     });
   }
 
-  // Fetch data from Firebase, run map filter & point layers
-  function readData () {
-    var townHallsFB = firebase.database().ref('/townHalls/').once('value').then(function(snapshot){
-      var ele = new TownHall (snapshot.val());
-      townhallData = ele
+  // Offset points slightly to see events happening at same location.
+  function jitterPoint(lng, lat) {
+    var jitter = Math.random() * .001;
+    var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+    var plusOrMinus1 = Math.random() < 0.5 ? -1 : 1;
+    return [lng + jitter * plusOrMinus, lat + jitter * plusOrMinus1];
+  }
+  // puts tele town halls by House members in the district.
+  //TODO: geocode the data on the way in
+  function teleTownHallDistrict(townhall){
+    var districtId = townhall.District.split('-')[1];
+    if (districtId.length === 1){
+      districtId = '0' + districtId;
+    }
 
-      filterMap(ele);
-      makePointLayer(ele);
-      makeTable(ele);
-    });
+    var bb = bboxes[townhall.District.split('-')[0] + districtId];
+    townhall.lng = (bb[2] - bb[0])/2 + bb[0];
+    townhall.lat = (bb[3] - bb[1])/2 + bb[1];
+    return townhall;
+  }
+
+  var featuresHome = {
+    type: 'FeatureCollection',
+    features: []
   };
 
   // Creates the point layer.
-  function makePointLayer (data) {
-    var featuresHome = {
-      type: 'FeatureCollection',
-      features: []
-    };
-
-    for (key in data){
-      var type = data[key].meetingType;
-
-      if (type === 'Teletown Hall' || type === 'Tele-Town Hall'){
-        var iconKey = 'phone-in';
-      } else {
-        var iconKey = 'in-person';
+  function makePoint (townhall) {
+    var type = townhall.meetingType.toLowerCase();
+    if (type === 'teletown hall' || type === 'tele-town hall'){
+      var iconKey = 'phone-in';
+      if (townhall.District && townhall.District !== 'Senate') {
+        townhall = teleTownHallDistrict(townhall);
       }
-
-      if (data[key].lat) {
-        featuresHome.features.push({
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [data[key].lng, data[key].lat]
-          },
-          properties: {
-            district: data[key].District,
-            member: data[key].Member,
-            icon: iconKey
-          },
-        });
-      }
+    } else {
+      var iconKey = 'in-person';
     }
+    if (townhall.lat) {
+      featuresHome.features.push({
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: jitterPoint(townhall.lng, townhall.lat)
+        },
+        properties: {
+          district: townhall.District,
+          member: townhall.Member,
+          meetingType: townhall.meetingType,
+          icon: iconKey
+        },
+      });
+    } else {
+      // console.log(townhall.eventId, townhall.meetingType, townhall.State);
+    }
+  }
 
+  function addLayer () {
     map.addLayer({
       'id': 'townhall-points',
       'type': 'symbol',
@@ -159,7 +199,6 @@
       }
     });
   }
-
   // Adds a Popup listener to the point layer. TODO: Determine content for the popup.
   function addPopups () {
     var popup = new mapboxgl.Popup({
@@ -181,59 +220,54 @@
       var popupDistrict = '';
 
       if (feature.properties.district && feature.properties.district !== 'Senate') {
-        popupDistrict = ', District ' + (feature.properties.district).substring(3)
+        popupDistrict = ', District ' + (feature.properties.district).substring(3);
       }
 
       // Populate the popup and set its coordinates
       // based on the feature found.
       popup.setLngLat(feature.geometry.coordinates)
-          .setHTML('<b>' + feature.properties.member + '</b>' + popupDistrict)
+          .setHTML('<b>' + feature.properties.member + '</b>' + popupDistrict + '<br><span>' + feature.properties.meetingType + '</span>')
           .addTo(map);
     });
   }
 
-  // Does the initial filter for the map to determine which districts have Town Halls. TODO: Add in a data-driven style for the district layer that does a different fill if it's a local represenative vs. a Senator
-  function filterMap (townHallData) {
-    var filterDistrict = ['any'];
-    var includedStates = ['in', 'NAME'];
+  var filterDistrict = ['any'];
+  var includedStates = ['in', 'NAME'];
 
+  // Does the initial filter for the map to determine which districts have Town Halls.
+  // TODO: Add in a data-driven style for the district layer that does a different fill if it's a local represenative vs. a Senator
+  function filterMap (townHall) {
     // Fetch states with senators in em'
-    for (key in townHallData){
-      k = townHallData[key]
-
-      if (k.District == 'Senate' && k.State) {
-        includedStates.push(k.State)
-      }
+    if (townHall.District === 'Senate' && townHall.State && townHall.meetingType !== 'DC Event') {
+      includedStates.push(townHall.State);
     }
 
     var filterSenate = ['all', includedStates];
 
     // Fetch districts w/ town halls occuring
-    for (key in townHallData){
-      k = townHallData[key]
+    district = townHall.District;
 
-      district = k.District;
-
-      if (district && district !== 'Senate' && k.City !== 'Washington') {
-        var districtId = district.substring(3,5);
-        var getFIPS;
-
-        if (districtId.length === 1){
-          districtId = '0' + districtId;
-        }
-
-        stateData.forEach(function(n){
-          if (n.Name === k.State) {
-            getFIPS = n.FIPS;
-          }
-        });
-
-        var geoid = getFIPS + districtId;
-
-        filterDistrict.push(['==', 'GEOID', geoid]);
+    if (district && district !== 'Senate' && townHall.meetingType !== 'DC Event') {
+      var districtId = district.split('-')[1];
+      var getFIPS;
+      if (!districtId) {
+        return;
       }
-    }
 
+      if (districtId.length === 1){
+        districtId = '0' + districtId;
+      }
+
+      stateData.forEach(function(n){
+        if (n.Name === townHall.State) {
+          getFIPS = n.FIPS;
+        }
+      });
+
+      var geoid = getFIPS + districtId;
+
+      filterDistrict.push(['==', 'GEOID', geoid]);
+    }
     // Apply the filters to each of these layers
     toggleFilters('senate_fill', filterSenate);
     toggleFilters('district_fill', filterDistrict);
@@ -244,28 +278,47 @@
     map.setLayoutProperty(layer, 'visibility', 'visible');
   }
 
-  // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
-  function focusMap (stateAbbr, districtCode) {
-    var height = window.innerHeight,
-      width = window.innerWidth,
-      districtAbbr = districtCode ? districtCode : '';
-
-    var view = geoViewport.viewport(bboxes[stateAbbr + districtAbbr], [width/2, height/2]);
-    view.zoom = view.zoom - 0.5;
-    map.flyTo(view);
+  //TODO: add sentate events to a master bounding box so they are in the view
+  function masterBoundingBox (stateAbbr, districtCodes) {
+    var masterBB = [0,0,0,0];
+    districtCodes.forEach(function(district) {
+      newBB = bboxes[stateAbbr + district];
+      masterBB[0] = Math.min(masterBB[0], newBB[0]);
+      masterBB[2] = Math.min(masterBB[2], newBB[2]);
+      masterBB[1] = Math.max(masterBB[1], newBB[1]);
+      masterBB[3] = Math.max(masterBB[3], newBB[3]);
+    });
+    return masterBB;
   }
 
-  // Handles the highlight for districts when clicked on. 
-  function highlightDistrict (geoid) {
-    var filter;
+  // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
+  mapView.focusMap = function focusMap (stateAbbr, districtCodes) {
+    var height = window.innerHeight,
+      width = window.innerWidth,
+      statekey = stateAbbr,
+      bb = bboxes[stateAbbr];
+    if (districtCodes && districtCodes.length ===1) {
+      statekey = statekey + districtCodes[0];
+      bb = bboxes[statekey];
+    } else if (districtCodes && districtCodes.length > 1) {
+      bb = masterBoundingBox(stateAbbr, districtCodes);
+    }
 
+    var view = geoViewport.viewport(bb, [width/2, height/2]);
+    view.zoom = view.zoom - 0.5;
+    map.flyTo(view);
+  };
+
+  // Handles the highlight for districts when clicked on.
+  mapView.highlightDistrict = function highlightDistrict (geoid) {
+    var filter;
     // Filter for which district has been selected.
-    if(typeof geoid == 'object') {
+    if(typeof geoid === 'object') {
       filter = ['any'];
 
       geoid.forEach(function(i){
-        filter.push(['==', 'GEOID', i])
-      })
+        filter.push(['==', 'GEOID', i]);
+      });
     } else {
       filter = ['all', ['==', 'GEOID', geoid]];
     }
@@ -273,147 +326,48 @@
     // Set that layer filter to the selected
     toggleFilters('selected-fill', filter);
     toggleFilters('selected-border', filter);
-  }
-
-  // Make the Table below the map
-  function makeTable (data) {
-    var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
-    for (key in data){
-      var ele = data[key];
-      if(ele.Member){
-        var id = ele.Member+ele.Date;
-        ele.rowid = id.replace(/[\W]/g, '');
-        TownHall.allTownHalls.push(ele);
-        $('#all-events-table').append(tableRowTemplate(ele));
-      }
-    }
-  }
-
-  // Assign Zip Lookup function to Search field
-  function sidebarEvents () {
-    $('#look-up').on('submit', eventHandler.lookup);
-  }
-
-  // Zip Code Lookup!
-  eventHandler.lookup = function (e) {
-    e.preventDefault();
-    var zip = $('#look-up input').val();
-    if (zip) {
-      var validDistricts = [];
-      var validSelections = [];
-      var callbackTrigger = 0;
-      var thisState;
-      var stateCode;
-
-      zipLookup.forEach(function(n){
-        if (n.zip === zip || n.zip.substring(0,4) == zip.substring(0,4)) {
-          stateData.forEach(function(l){
-            if (l.USPS === n.abr) {
-              stateCode = l.FIPS;
-            }
-          });
-          var geoid = stateCode + n.dis;
-
-          focusMap(n.abr, n.dis);
-          thisState = n.abr;
-          validDistricts.push(n.dis);
-          validSelections.push(geoid);
-        }
-
-        callbackTrigger++;
-        if(callbackTrigger === zipLookup.length){
-          highlightDistrict(validSelections)
-          makeSidebar(thisState, validDistricts);
-        }
-      });
-    }
+  };
+  // Fetch data from Firebase, run map filter & point layers
+  // listens for new data.
+  function readData () {
+    var townHallsFB = firebase.database().ref('/townHalls/');
+    townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
+      var ele = new TownHall (snapshot.val());
+      TownHall.allTownHalls.push(ele);
+      TownHall.addFilterIndexes(ele);
+      filterMap(ele);
+      makePoint(ele);
+      eventHandler.initialTable(ele);
+    });
+    townHallsFB.once('value', function(snap) {
+    // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
+      map.getSource('townhall-points').setData(featuresHome);
+      eventHandler.zipSearchByParam();
+    });
   };
 
-  // Match the looked up zip code to district #
-  function matchSelectionToZip (state, districts) {
-    var fetchedData = []
-    var stateName;
-
-    // Fetch full state name
-    stateData.forEach(function(n){
-      if (n.USPS === state) {
-        stateName = n.Name;
-      }
-    });
-
-    // Filter through the town halls
-    for (key in townhallData){
-      var k = townhallData[key];
-
-      // Filter townhalls for ones within this state
-      if (k.State === stateName) {
-
-        // If this townhall is a Senate race, automatically add it
-        if (k.District === 'Senate') {
-          fetchedData.push(k)
-        } else {
-
-          // Otherwise, check to see if there are multiple districts captured. (In the case of looking up via zip code)
-          if(districts.constructor === Array) {
-            districts.forEach((d) => {
-              var districtMatcher = state + '-' + parseInt(d)
-              var dataMatcher = k.District.substring(0,3) + k.District.substring(3)
-
-              if (districtMatcher === dataMatcher) {
-                fetchedData.push(k)
-              }
-            })
-
-          // If only one district is selected, match it up from that
-          } else {
-            var districtNumber = parseInt(k.District.substring(3))
-
-            if (districtNumber === parseInt(districts)) {
-              fetchedData.push(k)
-            }
-          }
-        }
-      }
-    }
-
-    return fetchedData
-  }
-
-  // Create a sidebar and load it with Town Hall event cards.
-  function makeSidebar (state, districts) {
-
-    var districtMatcher = state + '-' + districts;
-    var selectedData = matchSelectionToZip(state, districts)
-    var districtCard = Handlebars.getTemplate('eventCards');
-
-    $('.nearest-with-results').empty()
-
-    selectedData.forEach((d) => {
-      d.partyShorten = d.Party.slice(0,3)
-      $('.nearest-with-results').append(districtCard(d))
-    });
-
-    $('.map-container-large').addClass('hidden')
-    $('.map-container-split').removeClass('hidden')
-    $('#map').prependTo('.map-fixing')
+  // Create a sidebar and map half view
+  mapView.makeSidebar = function makeSidebar (selectedData) {
+    $('.nearest-with-results').empty();
+    $('.map-container-large').addClass('hidden');
+    $('.map-container-split').removeClass('hidden');
+    $('#map').prependTo('.map-fixing');
     map.resize();
-  }
+  };
 
-  function killSidebar () {
-    $('.header-with-results').addClass('hidden')
-    $('.map-container-large').removeClass('hidden')
-    $('.map-container-split').addClass('hidden')
-    $('#map').prependTo('.map-large')
+  // go back to full screen
+  mapView.killSidebar = function killSidebar () {
+    $('.header-with-results').addClass('hidden');
+    $('.map-container-large').removeClass('hidden');
+    $('.map-container-split').addClass('hidden');
+    $('#map').prependTo('.map-large');
     map.resize();
-  }
+  };
 
   $(document).ready(function(){
     setMap();
-    readData();
-    sidebarEvents();
-    $('.kill-results').on('click', () => {
-      killSidebar();
-    });
-  });
 
-}(window.firebase));
+  });
+  module.mapView = mapView;
+
+}(window));
