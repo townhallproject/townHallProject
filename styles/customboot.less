@@ -725,7 +725,7 @@ img.grayscale {
 .map-legend {
   position: absolute;
   z-index: 99;
-  right: 4rem;
+  right: 1rem;
   bottom: 5rem;
   background-color: white;
   padding: 2rem 2.5rem;
@@ -736,6 +736,10 @@ img.grayscale {
 .map-legend h3 {
   margin: 0 0 1.75rem 0;
   border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.map-legend__small h3 {
+  font-size: 1.8rem;
 }
 
 .map-legend dt, dd {
@@ -810,6 +814,9 @@ img.grayscale {
     top: 5px;
     right: 5px;
   }
+  .map-legend {
+    right: 5.5rem;
+  }  
 }
 
 @media screen and (max-width: 767px){
@@ -855,5 +862,8 @@ img.grayscale {
   }
   .map-legend h3{
     font-size: 1.8rem;
+  }
+  .map-legend__small {
+    display: none;
   }
 }
