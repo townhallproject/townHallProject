@@ -729,12 +729,13 @@ img.grayscale {
   bottom: 5rem;
   background-color: white;
   padding: 2rem 2.5rem;
-  box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.1)
+  box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.1);
+  transition: 0.2s all;
 }
 
 .map-legend h3 {
   margin: 0 0 1.75rem 0;
-  border-bottom: 3px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .map-legend dt, dd {
@@ -845,5 +846,14 @@ img.grayscale {
         text-align: center;
       }
     }
+  }
+  .map-legend {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    padding-bottom: 1rem;
+  }
+  .map-legend h3{
+    font-size: 1.8rem;
   }
 }
