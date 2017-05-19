@@ -1,6 +1,8 @@
 (function(module) {
   var firebasedb = firebase.database();
   var provider = new firebase.auth.GoogleAuthProvider();
+  var zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
+  var emailRegEx = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   // object to hold the front end view functions
   var eventHandler = {};
@@ -62,8 +64,7 @@
   eventHandler.lookup = function (e) {
     e.preventDefault();
     var zip = $('#look-up input').val().trim();
-    regEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
-    var zipCheck = zip.match(regEx);
+    var zipCheck = zip.match(zipcodeRegEx);
     if (zipCheck) {
       var zipClean = zip.split('-')[0];
       var validDistricts = [];
@@ -89,6 +90,10 @@
           mapView.focusMap(thisState, validDistricts);
           eventHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
           eventHandler.renderResults(thisState, validDistricts, validSelections);
+          $('.email-signup--inline form input[name=zipcode]').val(zipClean);
+          $('.email-signup--inline form input[name=districts]').val(JSON.stringify(validDistricts.map(function(district) {
+            return thisState + '-' + district;
+          })));
         })
         .catch(function(error){
           eventHandler.zipErrorResponse(error, 'That zip code is not in our database, if you think this is an error please email us.');
@@ -353,6 +358,71 @@
     }
   };
 
+  eventHandler.validateSignup = function(e) {
+    e.preventDefault();
+    var first = $('#email-signup-form input[name=first]');
+    var last = $('#email-signup-form input[name=last]');
+    var email = $('#email-signup-form input[name=email]');
+    var zipcode = $('#email-signup-form input[name=zipcode]');
+    var partner = $('#email-signup-form input[name=partner]');
+    var districts = $('#email-signup-form input[name=districts]');
+    var errors = 0;
+
+    [first, last, email, zipcode].forEach(function(field) {
+      var name = field[0].name;
+      if (field[0].value.length === 0) {
+        field.addClass('has-error');
+        errors++;
+      } else if ((name === 'email' && !emailRegEx.test(field[0].value)) ||
+        (name === 'zipcode' && !zipcodeRegEx.test(field[0].value))) {
+        field.addClass('has-error');
+        errors++;
+      } else {
+        field.removeClass('has-error');
+      }
+    });
+
+    if (errors !== 0) {
+      return;
+    }
+
+    var zipClean = zipcode.val().split('-')[0];
+    var districtArray;
+    if (districts[0].value.length === 0) {
+      TownHall.lookupZip(zipClean)
+        .then(function(zipToDistricts){
+          districtArray = zipToDistricts.map(function(district){
+            return district.abr + '-' + district.dis;
+          });
+          submitSignup(first, last, zipClean, email, districtArray, partner);
+        });
+    } else {
+      districtArray = JSON.parse($('#email-signup-form input[name=districts]').val());
+      submitSignup(first, last, zipClean, email, districtArray, partner);
+    }
+  };
+
+  function submitSignup(first, last, zipcode, email, districts, partner) {
+    var person = {
+      'person' : {
+        'family_name': last.val(),
+        'given_name': first.val(),
+        'postal_addresses': [{ 'postal_code' : zipcode}],
+        'email_addresses' : [{ 'address' : email.val() }],
+        'districts': districts,
+        'partner': partner.prop('checked')
+      }
+    };
+
+    $.post('https://actionnetwork.org/api/v2/customFormUrlHere', person).done(function() {
+      localStorage.setItem('signedUp', true);
+      $('.email-signup--inline').fadeOut(750);
+    }).fail(function(xhr) {
+      $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
+    });
+    return false;
+  }
+
 
   function setupTypeaheads() {
     var typeaheadConfig = {
@@ -419,6 +489,7 @@
     $('#button-to-form').hide();
     $('#save-event').on('submit', eventHandler.save);
     $('#look-up').on('submit', eventHandler.lookup);
+    $('#email-signup-form').on('submit', eventHandler.validateSignup);
     $('#view-all').on('click', TownHall.viewAll);
     $('.sort').on('click', 'a', eventHandler.sortTable);
     setupTypeaheads();
@@ -435,6 +506,10 @@
       $("a[href='" + location.hash + "']").tab('show');
     } else {
       TownHall.isMap = true;
+    }
+
+    if (localStorage.getItem('signedUp') === 'true') {
+      $('.email-signup--inline').hide();
     }
 
     $('.hash-link').on('click', function onClickGethref(event) {

@@ -208,7 +208,7 @@ h2 {
 header {
   background-color: @brand-primary;
   color: white;
-  padding: 20px;
+  padding: 10px 0 15px;
 }
 
 .margin-bottom {
@@ -609,25 +609,15 @@ a.social-icon {
   button {
     .weight-heavy();
   }
-}
-
-.email-signup-error {
-  color: @state-danger-text;
-  background: @state-danger-bg;
-  border: @state-danger-border;
-  font-size: 2em;
-  padding: 0.5em 0;
-  margin-bottom: 1em;
-  text-align: center;
-  .weight-heavy();
-
-  select {
-    font-size: 0.75em;
+  .error {
+    color: @brand-danger;
     font-weight: 700;
-    height: 2em;
   }
 }
 
+.form-control.has-error {
+  border: solid 3px @brand-danger;
+}
 
 .forms {
   width: 80%;
@@ -826,6 +816,7 @@ img.grayscale {
 
 .map-large {
   position: relative;
+  border-bottom: solid @brand-primary 1px;
 }
 
 .map-legend {
@@ -926,6 +917,9 @@ img.grayscale {
 }
 
 @media screen and (max-width: 767px){
+  header {
+    padding: 50px 25px 60px;
+  }
   .footer{
     padding: 0px;
     padding-top: 20px;
