@@ -57,6 +57,7 @@
 
 // Brand Colors
 @brand-primary: #0d4668;
+@brand-primary-lighter: lighten(@brand-primary, 17.5%);
 @brand-secondary: #ff4741; //red
 @brand-cool: #b6e5fb;
 @brand-text: #132149;
@@ -390,8 +391,12 @@ a.social-icon {
 }
 
 #representativeCards {
+  display: none;
   background-color: #f4f4f4;
-  border-bottom:solid @brand-primary 1px;
+  -webkit-box-shadow: inset 0px -39px 29px -45px rgba(0,0,0,1);
+     -moz-box-shadow: inset 0px -39px 29px -45px rgba(0,0,0,1);
+          box-shadow: inset 0px -39px 29px -45px rgba(0,0,0,1);
+  padding-bottom: 1.5em;
   h2 {
     margin-top: 1em;
   }
@@ -501,7 +506,7 @@ a.social-icon {
 }
 
 // Results
-.input-md, .input-lg{
+.input-md, .input-lg {
   background-color: @brand-secondary;
   color: white;
   margin-bottom: 10px;
@@ -524,9 +529,8 @@ a.social-icon {
 }
 
 .btn-primary:hover {
-  border: white solid 2px;
-  background-color:white;
-  color: @brand-primary;
+  border: lighten(@brand-primary, 10%) solid 2px;
+  background-color: @brand-primary-lighter;
 }
 
 #donate-button{
@@ -551,12 +555,17 @@ a.social-icon {
   -ms-overflow-style: none;
 }
 
-.nearest-with-results{
+.nearest-with-results {
   height: 528px;
 }
 
-.header-with-results{
+.header-with-results {
   background-color: @brand-gray;
+  border-bottom: solid @brand-primary 1px;
+}
+
+.map-container-large {
+  border-bottom: solid @brand-primary 1px;
 }
 
 #map {
@@ -582,6 +591,7 @@ a.social-icon {
   form {
     margin-top: 20px;
   }
+  border-bottom: solid @brand-primary 1px;
   .checkbox-inline {
     font-size: 1.5em;
     font-weight: 700;

@@ -163,6 +163,7 @@
       if (representatives.results.length > 3) {
         $parent.append('<h4 class="col-md-12 text-center">Your zip code encompasses more than one district.<br><small><a href="http://www.house.gov/representatives/find/">Learn More</a></small></h4>');
       }
+      $parent.parent().show();
     });
   };
 
