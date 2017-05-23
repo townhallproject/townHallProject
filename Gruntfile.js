@@ -27,7 +27,7 @@ module.exports = function(grunt) {
           paths: '<%= bspath %>/less'
         },
         files: {
-          'styles/css/bootstrap.css': 'styles/customboot.less'
+          'styles/css/bootstrapTH.css': 'styles/customboot.less'
         }
       }
     },
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
         options: {
           map: true
         },
-        src: 'styles/css/bootstrap.css'
+        src: 'styles/css/bootstrapTH.css'
       }
     },
     cssmin: {
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
       },
       core: {
         files: {
-          'styles/css/bootstrap.min.css': 'styles/css/bootstrap.css'
+          'styles/css/bootstrapTH.min.css': 'styles/css/bootstrapTH.css'
         }
       }
     }

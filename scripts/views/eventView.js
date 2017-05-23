@@ -45,6 +45,7 @@
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
+    $('#email-signup-form input[name=zipcode]').val('');
     $('#representativeCards section').empty();
     $('#representativeCards').hide();
     $('.form-text-results').removeClass('text-center');
