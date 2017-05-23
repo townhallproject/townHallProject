@@ -206,7 +206,7 @@
           ]
         }
       }
-    });
+    }, 'district_interactive');
   }
   // Adds a Popup listener to the point layer. TODO: Determine content for the popup.
   function addPopups () {
