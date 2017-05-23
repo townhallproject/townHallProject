@@ -13,8 +13,7 @@
 
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="Town Hall Project">
-    <meta itemprop="description" content="Town Hall Project is a progressive, volunteer-powered initiative working to
-    identify and promote upcoming Congressional forums nationwide.">
+    <meta itemprop="description" content="Town Hall Project is a progressive, volunteer-powered initiative working to identify and promote upcoming Congressional forums nationwide.">
     <meta itemprop="image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_horizontal_facebook.png">
 
     <!-- Twitter Card data -->
@@ -149,12 +148,12 @@
 
         <div class="header-with-results map-container-split hidden">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5 col-md-offset-1">
               <section class="results multipleResults">
                 <div id="nearest" class="flexcroll nearest-with-results"></div>
               </section>
             </div>
-            <div class="col-md-6 map-small map-fixing">
+            <div class="col-md-5 map-small map-fixing">
 
               <div class="map-legend map-legend__small">
                 <h3>Town Halls by</h3>
@@ -174,7 +173,40 @@
             </div>
           </div>
         </div>
-
+        <section class="background-light-blue email-signup--inline">
+          <div class="container container-fluid">
+            <h2 class="text-center">Sign up for info on local events</h2>
+            <form id="email-signup-form">
+              <div class="row">
+                <div class="col-lg-8">
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control input-lg" name="first" placeholder="First Name">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control input-lg" name="last" placeholder="Last Name">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="email" class="form-control input-lg" name="email" placeholder="Email">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control input-lg" name="zipcode" placeholder="Zip Code">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="col-xs-12">
+                    <input type="hidden" name="districts">
+                    <button type="submit" name="button" class="btn btn-primary btn-lg btn-block">Sign up</button>
+                  </div>
+                  <div class="col-xs-12">
+                    <label class="checkbox-inline">
+                      <input type="checkbox" value="" name="partner"> Opt into partner emails
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
         <!-- Cards showing representatives and their contact info -->
         <div id="representativeCards">
           <section class="container container-fluid"></section>
@@ -187,7 +219,7 @@
             </p>
         </section>
         <a name="events-table" id="events-table"></a>
-        <section class=" container container-fluid">
+        <section class="container container-fluid">
           <h2 class="text-primary table-title text-center">Upcoming Events</h2>
           <div class="row">
               <small>
@@ -460,7 +492,7 @@
     <script src="/data/zipLookup.js"></script>
 
     <script src="templates.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="//www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
 
     <script src='https://actionnetwork.org/widgets/v2/form/stay-up-to-date-on-our-work?format=js&source=widget'></script>
     <script type="text/javascript">(function () {
