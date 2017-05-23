@@ -208,7 +208,8 @@ h2 {
 header {
   background-color: @brand-primary;
   color: white;
-  padding: 10px 0 15px;
+  //padding: 10px 0 15px;
+  padding: 20px;
 }
 
 .margin-bottom {
@@ -236,47 +237,52 @@ img {
 
 input, select {
   border: none;
-  &.input-lg {
-    background: @brand-white;
-    color: @brand-text;
-    .weight-heavy();
-    &::-webkit-input-placeholder { /* Chrome */
+}
+
+#email-signup-form {
+  input, select {
+    &.input-lg {
+      background: @brand-white;
       color: @brand-text;
-      opacity: 0.9;
-    }
-    &:-ms-input-placeholder { /* IE 10+ */
-      color: @brand-text;
-      opacity: 0.9;
-    }
-    &::-moz-placeholder { /* Firefox 19+ */
-      color: @brand-text;
-      opacity: 0.9;
-    }
-    &:-moz-placeholder { /* Firefox 4 - 18 */
-      color: @brand-text;
-      opacity: 0.9;
+      .weight-heavy();
+      &::-webkit-input-placeholder { /* Chrome */
+        color: @brand-text;
+        opacity: 0.9;
+      }
+      &:-ms-input-placeholder { /* IE 10+ */
+        color: @brand-text;
+        opacity: 0.9;
+      }
+      &::-moz-placeholder { /* Firefox 19+ */
+        color: @brand-text;
+        opacity: 0.9;
+      }
+      &:-moz-placeholder { /* Firefox 4 - 18 */
+        color: @brand-text;
+        opacity: 0.9;
+      }
     }
   }
 }
 
-#look-up {
+/* #look-up {
   input {
     color: @brand-secondary;
     text-align: center;
     padding: 1.1em 0;
-    &::-webkit-input-placeholder { /* Chrome */
+    &::-webkit-input-placeholder {
       color: @brand-secondary;
       opacity: 0.9;
     }
-    &:-ms-input-placeholder { /* IE 10+ */
+    &:-ms-input-placeholder {
       color: @brand-secondary;
       opacity: 0.9;
     }
-    &::-moz-placeholder { /* Firefox 19+ */
+    &::-moz-placeholder {
       color: @brand-secondary;
       opacity: 0.9;
     }
-    &:-moz-placeholder { /* Firefox 4 - 18 */
+    &:-moz-placeholder {
       color: @brand-secondary;
       opacity: 0.9;
     }
@@ -286,10 +292,23 @@ input, select {
     .weight-heavy();
     font-size: 1.75em;
   }
+} */
+
+.input-lg::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+}
+.input-lg::-moz-placeholder { /* Firefox 19+ */
+  color: white;
+}
+.input-lg:-ms-input-placeholder { /* IE 10+ */
+  color: white;
+}
+.input-lg:-moz-placeholder { /* Firefox 18- */
+  color: white;
 }
 
 .spacer {
-  margin-top: 45px;
+  margin-top: 120px;
 }
 
 #can_embed_form {
@@ -917,9 +936,6 @@ img.grayscale {
 }
 
 @media screen and (max-width: 767px){
-  header {
-    padding: 50px 25px 60px;
-  }
   .footer{
     padding: 0px;
     padding-top: 20px;
@@ -932,11 +948,6 @@ img.grayscale {
   }
   .panel{
     min-height: none;
-  }
-  #look-up {
-    input, button {
-      font-size: 1.3em;
-    }
   }
   .map-small #map {
     display:none;
