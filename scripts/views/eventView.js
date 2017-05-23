@@ -28,6 +28,7 @@
         eventHandler.resetFilters();
         eventHandler.render(sorted, TownHall.zipQuery);
         eventHandler.renderRepresentativeCards(TownHall.lookupReps(zipLookup), $('#representativeCards section'));
+        $('#email-title').text('Sign up to get updates about events in ' + zipLookup + '.');
         $('.email-signup--inline form input[name=zipcode]').val(zipLookup);
       })
       .catch(function(error){
@@ -50,6 +51,7 @@
     $('.header-with-results .results').removeClass('multipleResults');
     $('.left-panels').removeClass('left-panels-border');
     $('#nearest').removeClass('nearest-with-results');
+    $('#email-title').text('Sign up to get updates about local events.');
     $('#button-to-form').hide();
     $('.spacer').show();
     $('#look-up').appendTo($('.right-panels'));
@@ -459,9 +461,13 @@
         }, 50);
       } else if (hashid === '#home' && TownHall.isMap === true) {
         history.replaceState({}, document.title, '.');
+        eventHandler.resetHome();
+
         setTimeout( function(){
-          eventHandler.resetHome();
-        }, 0);
+          onResizeMap();
+
+        }, 500);
+
       } else {
         location.hash = hashid;
       }
