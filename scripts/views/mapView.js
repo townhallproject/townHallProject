@@ -5,7 +5,9 @@
   var mapView = {};
 
   // Define an intial view for the US
-  var continentalView = function(w,h) { return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]); };
+  var continentalView = function(w,h) {
+    return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
+  };
   var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
 
   function setMap(){
@@ -22,7 +24,7 @@
       style: styleURL,
       center: continental.center,
       zoom: continental.zoom,
-      minZoom: 3
+      minZoom: 2.5
     });
 
     // Set Mapbox map controls
@@ -44,7 +46,14 @@
 
   mapView.resetView = function resetView() {
     mapView.killSidebar();
-    mapView.map.flyTo(continentalView(window.innerWidth/2, window.innerHeight/2));
+
+    var resetView = continentalView(window.innerWidth/2, window.innerHeight/2);
+
+    if (resetView.zoom < 2.5) {
+      resetView.zoom = 2.5;
+    };
+
+    mapView.map.flyTo(resetView);
     var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
     if (visibility === 'visible') {
       mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
@@ -305,7 +314,12 @@
     }
 
     var view = geoViewport.viewport(bb, [width/2, height/2]);
-    view.zoom = view.zoom - 0.5;
+    if (view.zoom < 2.5) {
+      view.zoom = 2.5;
+    } else {
+      view.zoom = view.zoom - 0.5;
+    }
+
     map.flyTo(view);
   };
 
