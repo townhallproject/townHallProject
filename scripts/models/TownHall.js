@@ -111,6 +111,23 @@
     });
   };
 
+  TownHall.zipToDistrict = function (zip) {
+    districts = []
+    return new Promise(function (resolve, reject) {
+      firebasedb.ref('/zipToDistrict/' + zip).once('value').then(function(snapshot) {
+        if (snapshot.exists()) {
+          snapshot.forEach(function(ele){
+            var district = ele.val().abr + '-' + ele.val().dis
+            districts.push(district)
+          })
+          resolve(districts)
+        } else {
+          reject ('That is not a real zip code');
+        }
+      });
+    });
+  };
+
   TownHall.lookupReps = function (zip) {
     var representativePromise = $.ajax({
       url: 'https://congress.api.sunlightfoundation.com/legislators/locate?zip=' + zip,

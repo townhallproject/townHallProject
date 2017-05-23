@@ -107,15 +107,10 @@
                       <label  for="zip"></label>
                       <input class="form-control input-lg " type="zip" name="" value="" placeholder="Zip Code">
                       <button type="submit" name="button" class="btn btn-primary btn-lg">Find A Town Hall</button>
-                      <div id="textresults" class="text-center "></div>
                     </div>
                   </form>
-                  <div id="signupform ">
-                    <div id="button-to-form" class="text-center hidden">
-                      <h4>Sign up to stay up to date on town halls in your area</h4>
-                        <a href="#join" data-toggle="tab" class="btn btn-lg btn-white"><strong>Join Us</strong></a>
-                    </div>
-                  </div>
+                  <div id="textresults" class="text-center "></div>
+
                 </div>
               </div>
             </section>
@@ -138,6 +133,40 @@
             </div>
            </section>
         </div>
+        <section class="background-light-blue email-signup--inline">
+         <div class="container container-fluid">
+           <h1 class="text-center extra-large">Sign up to receive updates on local events.</h1>
+           <form id="email-signup-form">
+             <div class="row">
+               <div class="col-lg-8">
+                 <div class="col-sm-6">
+                   <input type="text" class="form-control input-lg" name="first" placeholder="First Name">
+                 </div>
+                 <div class="col-sm-6">
+                   <input type="text" class="form-control input-lg" name="last" placeholder="Last Name">
+                 </div>
+                 <div class="col-sm-6">
+                   <input type="email" class="form-control input-lg" name="email" placeholder="Email">
+                 </div>
+                 <div class="col-sm-6">
+                   <input type="text" class="form-control input-lg" name="zipcode" placeholder="Zip Code">
+                 </div>
+               </div>
+               <div class="col-lg-4">
+                 <div class="col-xs-12">
+                   <input type="hidden" name="districts">
+                   <button type="submit" name="button" class="btn btn-primary btn-light-background btn-lg btn-block">Sign up</button>
+                 </div>
+                 <div class="col-xs-12">
+                   <label class="checkbox-inline">
+                     <input type="checkbox" value="" name="partner"> Opt in to receive updates from our progressive partners.
+                   </label>
+                 </div>
+               </div>
+             </div>
+           </form>
+         </div>
+       </section>
         <!-- Cards showing representatives and their contact info -->
         <div id="representativeCards">
           <section class="container container-fluid"></section>
