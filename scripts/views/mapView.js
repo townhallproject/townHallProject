@@ -62,7 +62,7 @@
 
     var text = $('h4');
     text.html(' ');
-
+    $('#representativeCards section').empty();
     eventHandler.setUrlParameter('zipcode', false);
     eventHandler.setUrlParameter('district', false);
   };
@@ -83,6 +83,8 @@
   mapView.districtSelect = function(feature) {
     if (feature.state) {
       eventHandler.renderResults(feature.state, [feature.district], feature.geoID);
+      eventHandler.renderRepresentativeCards(TownHall.lookupReps(feature.state, feature.district), $('#representativeCards section'), feature.state);
+
       eventHandler.setUrlParameter('zipcode', false);
       eventHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
     } else {
