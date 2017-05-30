@@ -23,7 +23,11 @@
     //render table
     var districtText = ' ';
     validDistricts.forEach(function(district){
-      districtText = districtText + thisState + '-' + district + ' ';
+      if (district) {
+        districtText = districtText + thisState + '-' + district + ' ';
+      } else {
+        districtText = districtText + thisState;
+      }
     });
 
     var justSenate = true;
@@ -452,7 +456,8 @@
         history.replaceState({}, document.title, '.');
         setTimeout( function(){
           eventHandler.resetHome();
-        }, 0);
+          // mapView.resetView()
+        }, 1000);
       } else {
         location.hash = hashid;
       }
