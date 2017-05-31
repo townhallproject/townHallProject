@@ -23,12 +23,18 @@
     //render table
     var districtText = ' ';
     validDistricts.forEach(function(district){
-      districtText = districtText + thisState + '-' + district + ' ';
+      if (district) {
+        districtText = districtText + thisState + '-' + district + ' ';
+      } else {
+        districtText = districtText + thisState;
+      }
     });
 
     var justSenate = true;
+    var numOfDistrictEvents = 0;
     selectedData.forEach(function(ele){
       if(ele.District !== 'Senate') {
+        numOfDistrictEvents ++;
         justSenate = false;
       }
     });
@@ -46,8 +52,10 @@
       TownHall.currentContext = selectedData;
       eventHandler.renderTableWithArray(selectedData);
       mapView.makeSidebar(selectedData);
-      var message = 'Showing ' + selectedData.length + ' event(s) for ' + districtText;
-      $text.html(message);
+      var numOfSateEvents = selectedData.length - numOfDistrictEvents;
+      var message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
+      var messageState = '<p>and ' + numOfSateEvents + ' event(s) for ' + thisState + ' senators</p>';
+      $text.html(message + messageState);
 
       selectedData.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
@@ -137,32 +145,48 @@
     $panel.appendTo($parent);
   };
 
+  // renders the results of rep response
+  eventHandler.repCards = function(results, compiledTemplate, $parent) {
+    results.forEach(function(rep) {
+      switch(rep.party) {
+      case 'R':
+        rep.party = 'Republican';
+        break;
+      case 'D':
+        rep.party = 'Democrat';
+        break;
+      case 'I':
+        rep.party = 'Independent';
+        break;
+      }
+      var termEnd = new Date(rep.term_end);
+      // If term expires in janurary then assume the election is in the prior year
+      rep.electionYear = termEnd.getMonth() === 0 ? termEnd.getFullYear() - 1 : termEnd.getFullYear();
+      $parent.append(compiledTemplate(rep));
+    });
+  };
+
   // Display a list of reps with contact info
-  eventHandler.renderRepresentativeCards = function(representativePromise, $parent) {
+  eventHandler.renderRepresentativeCards = function(representativePromise, $parent, state) {
     $parent.empty(); // If they search for a new zipcode clear the old info
     representativePromise.success(function(representatives) {
       var compiledTemplate = Handlebars.getTemplate('representativeCard');
       $parent.append('<h2 class="text-primary text-center">Your Representatives</h2>');
-      representatives.results.forEach(function(rep) {
-        switch(rep.party) {
-        case 'R':
-          rep.party = 'Republican';
-          break;
-        case 'D':
-          rep.party = 'Democrat';
-          break;
-        case 'I':
-          rep.party = 'Independent';
-          break;
-        }
-        var termEnd = new Date(rep.term_end);
-        // If term expires in janurary then assume the election is in the prior year
-        rep.electionYear = termEnd.getMonth() === 0 ? termEnd.getFullYear() - 1 : termEnd.getFullYear();
-        $parent.append(compiledTemplate(rep));
-      });
+      eventHandler.repCards(representatives.results, compiledTemplate, $parent);
+
       if (representatives.results.length > 3) {
         $parent.append('<h4 class="col-md-12 text-center">Your zip code encompasses more than one district.<br><small><a href="http://www.house.gov/representatives/find/">Learn More</a></small></h4>');
+      } else if (representatives.results.length === 1) {
+        eventHandler.addRepresentativeCards(TownHall.lookupReps('state', state), $('#representativeCards section'));
       }
+    });
+  };
+
+  // append additional reps for lookup by district
+  eventHandler.addRepresentativeCards = function(representativePromise, $parent) {
+    representativePromise.success(function(representatives) {
+      var compiledTemplate = Handlebars.getTemplate('representativeCard');
+      eventHandler.repCards(representatives.results, compiledTemplate, $parent);
     });
   };
 
@@ -452,7 +476,8 @@
         history.replaceState({}, document.title, '.');
         setTimeout( function(){
           eventHandler.resetHome();
-        }, 0);
+          // mapView.resetView()
+        }, 1000);
       } else {
         location.hash = hashid;
       }

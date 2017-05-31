@@ -62,7 +62,7 @@
 
     var text = $('h4');
     text.html(' ');
-
+    $('#representativeCards section').empty();
     eventHandler.setUrlParameter('zipcode', false);
     eventHandler.setUrlParameter('district', false);
   };
@@ -83,6 +83,8 @@
   mapView.districtSelect = function(feature) {
     if (feature.state) {
       eventHandler.renderResults(feature.state, [feature.district], feature.geoID);
+      eventHandler.renderRepresentativeCards(TownHall.lookupReps(feature.state, feature.district), $('#representativeCards section'), feature.state);
+
       eventHandler.setUrlParameter('zipcode', false);
       eventHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
     } else {
@@ -100,6 +102,15 @@
       var feature = {};
 
       if (1) {
+        var points = map.queryRenderedFeatures(e.point, { layers: ['townhall-points'] });
+        // selected a marker
+        if (points.length > 0) {
+          feature.state = points[0].properties.stateAbbr;
+          feature.district = points[0].properties.districtId;
+          feature.geoID = points[0].properties.stateCode + feature.district;
+          mapView.districtSelect(feature);
+          return;
+        }
         var features = map.queryRenderedFeatures(
           e.point,
           {
@@ -135,13 +146,16 @@
     var plusOrMinus1 = Math.random() < 0.5 ? -1 : 1;
     return [lng + jitter * plusOrMinus, lat + jitter * plusOrMinus1];
   }
+
+  function zeroPad(districtID) {
+    var padding = '00';
+    return padding.substring(0, padding.length - districtID.length) + districtID;
+  };
   // puts tele town halls by House members in the district.
   //TODO: geocode the data on the way in
   function teleTownHallDistrict(townhall){
     var districtId = townhall.District.split('-')[1];
-    if (districtId.length === 1){
-      districtId = '0' + districtId;
-    }
+    districtId = zeroPad(districtId);
 
     var bb = bboxes[townhall.District.split('-')[0] + districtId];
     townhall.lng = (bb[2] - bb[0])/2 + bb[0];
@@ -157,6 +171,7 @@
   // Creates the point layer.
   function makePoint (townhall) {
     var type = townhall.meetingType.toLowerCase();
+    var districtId = '';
     if (type === 'teletown hall' || type === 'tele-town hall'){
       var iconKey = 'phone-in';
       if (townhall.District && townhall.District !== 'Senate') {
@@ -165,6 +180,18 @@
     } else {
       var iconKey = 'in-person';
     }
+    if (townhall.District && townhall.District !== 'Senate') {
+      if (!townhall.District.split('-')[1]) {
+        return;
+      }
+      districtId = zeroPad(townhall.District.split('-')[1]);
+      stateAbbr = townhall.District.split('-')[0];
+    }
+    var state = stateData.filter(function(ele){
+      return ele.Name === townhall.State;
+    });
+    stateAbbr = state[0].USPS;
+    stateCode = state[0].FIPS;
     if (townhall.lat) {
       featuresHome.features.push({
         type: 'Feature',
@@ -174,6 +201,9 @@
         },
         properties: {
           district: townhall.District,
+          districtId: districtId,
+          stateCode: stateCode,
+          stateAbbr: stateAbbr,
           member: townhall.Member,
           meetingType: townhall.meetingType,
           icon: iconKey
@@ -208,6 +238,9 @@
       }
     }, 'district_interactive');
   }
+
+
+
   // Adds a Popup listener to the point layer. TODO: Determine content for the popup.
   function addPopups () {
     var popup = new mapboxgl.Popup({
@@ -306,7 +339,7 @@
       width = window.innerWidth,
       statekey = stateAbbr,
       bb = bboxes[stateAbbr];
-    if (districtCodes && districtCodes.length ===1) {
+    if (districtCodes && districtCodes.length === 1) {
       statekey = statekey + districtCodes[0];
       bb = bboxes[statekey];
     } else if (districtCodes && districtCodes.length > 1) {
@@ -356,6 +389,7 @@
     townHallsFB.once('value', function(snap) {
     // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
       map.getSource('townhall-points').setData(featuresHome);
+      // console.log(featuresHome);
       eventHandler.zipSearchByParam();
     });
   };

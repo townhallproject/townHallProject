@@ -114,11 +114,23 @@
     });
   };
 
-  TownHall.lookupReps = function (key, zip) {
-    var representativePromise = $.ajax({
-      url: 'https://congress.api.sunlightfoundation.com/legislators/locate?' + key + '=' + zip,
-      dataType: 'jsonp'
-    });
+  TownHall.lookupReps = function (key, value) {
+    if (key === 'zip') {
+      var representativePromise = $.ajax({
+        url: 'https://congress.api.sunlightfoundation.com/legislators/locate?' + key + '=' + value,
+        dataType: 'jsonp'
+      });
+    } else if (key === 'state') {
+      var representativePromise = $.ajax({
+        url: 'https://congress.api.sunlightfoundation.com/legislators?state=' + value + '&chamber=senate',
+        dataType: 'jsonp'
+      });
+    } else {
+      var representativePromise = $.ajax({
+        url: 'https://congress.api.sunlightfoundation.com/legislators?state=' + key + '&district=' + value,
+        dataType: 'jsonp'
+      });
+    }
     return representativePromise;
   };
 
