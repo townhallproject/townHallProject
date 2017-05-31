@@ -191,20 +191,26 @@
     }
   };
 
+  // method for getting last updated date from database
   TownHall.getLastUpdated = function() {
     return new Promise(function(resolve, reject) {
       return firebasedb.ref('/townHalls').once('value').then(function(snapshot) {
-        var lastUpdatedDate;
-        var index = 0;
-        var lastIdx = snapshot.numChildren();
+        //  placeholder values for comparing latest upload date with most recent in loop
+        var lastUpdatedDate = 1;
+        var currentUpdateTime;
+        var formatDate;
+
+        // compare timestamp date objects - if higher, set human readable value to formatDate
         snapshot.forEach(function(element) {
-          index++;
-          if(element.val().lastUpdatedHuman !== null && index === lastIdx - 1) {
-            lastUpdatedDate = element.val().lastUpdatedHuman;
-            resolve(lastUpdatedDate);
+          currentUpdateTime = element.val().lastUpdated;
+          if (currentUpdateTime > lastUpdatedDate) {
+            lastUpdatedDate = currentUpdateTime;
+            formatDate = element.val().lastUpdatedHuman;
           }
         })
-        if (lastUpdatedDate === null) {
+        if (formatDate != null) {
+          resolve(formatDate);
+        } else {
           reject('no last update found');
         }
       });
