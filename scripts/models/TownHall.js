@@ -191,5 +191,25 @@
     }
   };
 
+  TownHall.getLastUpdated = function() {
+    return new Promise(function(resolve, reject) {
+      return firebasedb.ref('/townHalls').once('value').then(function(snapshot) {
+        var lastUpdatedDate;
+        var index = 0;
+        var lastIdx = snapshot.numChildren();
+        snapshot.forEach(function(element) {
+          index++;
+          if(element.val().lastUpdatedHuman !== null && index === lastIdx - 1) {
+            lastUpdatedDate = element.val().lastUpdatedHuman;
+            resolve(lastUpdatedDate);
+          }
+        })
+        if (lastUpdatedDate === null) {
+          reject('no last update found');
+        }
+      });
+    });
+  };
+
   module.TownHall = TownHall;
 })(window);
