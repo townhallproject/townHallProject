@@ -73,10 +73,10 @@
   };
 
   // Renders one panel, assumes data processing has happened
-  eventHandler.renderPanels = function(event, $parent) {
+  eventHandler.renderPanels = function(townhall, $parent) {
     var compiledTemplate = Handlebars.getTemplate('eventCards');
-    var $panel = $(compiledTemplate(event));
-    $panel.children('.panel').addClass(event.Party.slice(0,3));
+    var $panel = $(compiledTemplate(townhall));
+    $panel.children('.panel').addClass(townhall.Party.slice(0,3));
     $panel.appendTo($parent);
   };
 

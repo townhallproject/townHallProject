@@ -140,7 +140,7 @@
 }
 
 .navbar-right .btn {
-  font-size: 20px;
+  font-size: 1.2em;
 }
 
 .navbar-right .social-icons {
@@ -765,6 +765,223 @@ li[data-toggle='popover']:hover {
 img.grayscale {
   filter: grayscale(100%);
 }
+
+// Missing Members
+
+#missing-members {
+  background-color: @brand-gray;
+  .missing-member-cards-container{
+    -webkit-box-shadow: inset 0px 12px 29px -23px rgba(0,0,0,1);
+       -moz-box-shadow: inset 0px 12px 29px -23px rgba(0,0,0,1);
+            box-shadow: inset 0px 12px 29px -23px  rgba(0,0,0,1);
+  }
+  .navbar {
+    border-bottom: @brand-cool;
+    min-height: 105px;
+  }
+  .navbar-left{
+    padding-left: 15px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  .dropdown-menu .btn:hover {
+    background-color: @brand-secondary;
+  }
+  .dropdown a {
+    padding-top: 30px;
+  }
+}
+
+@media (min-width: 768px) {
+  #missing-members .navbar-right {
+      margin-right: 23px;
+    }
+}
+
+.element-item {
+  width: 25%;
+  min-width: 270px;
+  padding: 5px;
+}
+
+.element-item .card-header{
+  text-align: center;
+  position: relative;
+}
+.grid.container{
+  padding: 0;
+  min-height: 400px;
+  margin-bottom: 163px;
+  padding-top: 40px;
+}
+image-holder{
+  margin: auto;
+  text-align: center;
+}
+
+.about .element-item:hover{
+  filter: brightness(110%);
+}
+
+.element-item a {
+  text-decoration: none;
+}
+
+.navbar-left.filter-button-group .block{
+  display: block;
+  float: none;
+}
+.mm-turn-off-filter button:first-of-type, .dropdown.filter-button-group a{
+  margin-left: 30px;
+  margin-bottom: 5px;
+}
+.mm-turn-off-filter button {
+  margin-left: 5px;
+}
+
+.Dem .panel-heading, .card-representative.Democratic .card-header{
+  color: white;
+  background-color: #66bdf4;
+}
+
+.Ind .panel-heading, .card-representative.Independent .card-header{
+  color: white;
+  background-color: darken(#705f8c, 20%);
+}
+
+.card-representative.Republican .card-header{
+  background-color: #f87773;
+}
+
+.state-button {
+  display: inline-block;
+  float: left;
+  width: 25px;
+  text-align: center;
+  font-size: 12px;
+  padding: 2px;
+  vertical-align: middle;
+  line-height: 25px;
+  height: 25px;
+  cursor: pointer;
+  padding: 2px;
+  background-color: #252525;
+
+  a{
+   color: @brand-white;
+   font-size: 1em;
+ }
+}
+.state-button-holder{
+  max-width: 430px;
+  width: 100%;
+}
+
+.btn-xs.btn-filter.navbar-btn{
+  margin-right: 20px;
+  margin-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: @brand-primary;
+  color: @brand-white;
+}
+
+.btn-xs.btn-filter.navbar-btn:focus{
+  background-color: @brand-success;
+  color: @brand-white;
+}
+.btn-xs.btn-filter.navbar-btn:hover{
+  background-color: @brand-success;
+  color: @brand-white;
+}
+
+.background-color-1{
+  background-color: #f0f0f0;
+  a {
+    color: @brand-text
+  }
+}
+
+.background-color-2{
+  background-color: #d9d9d9;
+  a {
+    color: @brand-text
+  }
+}
+
+.background-color-3{
+  background-color: #bdbdbd;
+  a {
+    color: @brand-text
+  }
+}
+
+.background-color-4{
+  background-color: #969696;
+}
+
+.background-color-5{
+  background-color: #737373;
+}
+
+.background-color-6{
+  background-color: #525252;
+}
+.background-color-6{
+  background-color: #252525;
+}
+
+.mm.card-footer {
+    padding: 0;
+    border-top: none;
+}
+.footer-icon{
+  width: 32%;
+  display: inline-block;
+  text-align: center;
+  vertical-align:middle;
+  color:white;
+  height: 100%;
+  color: @brand-text;
+  min-height: 75px;
+}
+
+.footer-text {
+  padding-top: 5px;
+}
+.highlight{
+  font-weight: 900;
+}
+
+.mm .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.swing-left-link:hover {
+  color: @brand-secondary;
+}
+.swing-left-link {
+  color: @brand-text;
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+}
+.swingleft-holder a {
+  font-weight: normal;
+
+}
+
+.less-padding {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.rep-card-subtitle {
+  position: absolute;
+  top: 45px;
+  left:40%;
+}
+
 @media screen and (max-width: 1200px) {
   .spacer{
       margin-top: 85px;

@@ -71,6 +71,8 @@
             <li><a class="hash-link" data-toggle="tab" href="#submit">Submit an Event</a></li>
             <li><a class="hash-link"  data-toggle="tab" href="#about">About</a></li>
             <li><a class="hash-link" href="#join" data-toggle="tab">Get Event Updates</a></li>
+            <li><a class="hash-link" href="#missing-members" data-toggle="tab">Missing Members</a></li>
+
             <li><a id="privacy-policy-link" class="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#privacy-policy">Privacy Policy</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -379,7 +381,57 @@
               <small>Photo credit: Trang Dang</small>
             </div>
           </div>
-
+      </div>
+      <div id="missing-members">
+        <nav class="navbar navbar-default ">
+          <ul class="nav navbar-nav navbar-left filter-button-group" >
+            <li class="block"><span id="mm-current-state" data-current=0 data-total=0></span></li>
+            <li class="block filter-button-group mm-filter-info-holder">
+              <ul class="nav navbar-nav" id="mm-filter-info">
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-left filter-button-group" >
+            <li class="state-button-holder nav-item filter-button-group ">
+              <ul id="state-buttons" class=" button-group " data-filter-group="state">
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown filter-button-group">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party <span class="caret"></span></a>
+              <ul class="dropdown-menu button-group" data-filter-group="party">
+                <li class="downdown-title">Filter by party</li>
+                <li role="separator" class="divider"></li>
+                <li data-filter=".Democratic" id="Democratic" class="btn dropdown-item btn-filter btn-white">Democratic</li>
+                <li data-filter=".Republican" id="Republican" class="btn dropdown-item btn-filter btn-white">Republican</li>
+                <li data-filter=".Independent" id="Independent" class="btn dropdown-item btn-filter btn-white">Independent</li>
+                <li data-filter="" id="All" class="btn dropdown-item btn-filter btn-white" >All</li>
+              </ul>
+            </li>
+            <li class="dropdown filter-button-group">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chamber <span class="caret"></span></a>
+              <ul class="dropdown-menu button-group" data-filter-group="chamber">
+                <li class="downdown-title">Filter by chamber</li>
+                <li role="separator" class="divider"></li>
+                <li class="btn dropdown-item btn-filter btn-white" data-filter=".sen">Senate</li>
+                <li class="btn dropdown-item btn-filter btn-white" data-filter=".rep" id="Republican">House</li>
+                <li class="btn dropdown-item btn-filter btn-white" data-filter="" id="All" >All</li>
+              </ul>
+            </li>
+            <li class="nav-item filter-button-group button-group" data-filter-group="swingLeftFilter">
+              <a class="btn btn-xs btn-filter navbar-btn" data-filter=".swingLeft">Swing Left District</a>
+            </li>
+            <li class="nav-item filter-button-group button-group" data-filter-group="ahcaFilter">
+              <a class="btn btn-xs btn-filter navbar-btn" data-filter=".ahca">Voted for ACHA</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="missing-member-cards-container">
+          <div class="grid container">
+            <!-- <div class="element-item transition metal">...</div> -->
+          </div>
+        </div>
       </div>
       <div role="tabpanel" class="tab-pane " id="privacy-policy">
         <header class="margin-bottom">
@@ -448,6 +500,9 @@
     <script src="/vendor/scripts/handlebars-v4.0.5.js"></script>
     <script src="templates.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+
 
     <script src='https://actionnetwork.org/widgets/v2/form/stay-up-to-date-on-our-work?format=js&source=widget'></script>
     <script type="text/javascript">(function () {
@@ -459,9 +514,14 @@
                 var h = d[g]('body')[0];h.appendChild(s); }})();
     </script>
     <!-- Script Files -->
+    <script src="/scripts/data/statePop.js"></script>
+
     <script src="/scripts/models/TownHall.js"></script>
+    <script src="/scripts/models/MissingMember.js"></script>
+
     <script src="/scripts/views/mapView.js"></script>
     <script src="/scripts/views/eventView.js"></script>
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMap&libraries=visualization,geometry"></script>
   </body>
 </html>

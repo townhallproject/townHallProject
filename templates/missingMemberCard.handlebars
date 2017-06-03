@@ -1,0 +1,40 @@
+<div class="element-item {{party}} {{state}} {{type}} {{#if swingLeft}} swingLeft {{/if}} {{#if ahca}}ahca{{/if}} {{#if missingMember}}missingMember{{/if}}">
+  <div class="card card-representative {{party}}">
+    <div class="card-header">
+      <div class="row">
+      <div class="col-xs-4 col-sm-3 no-padding p-0">
+        <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-100px.jpeg" onerror="$(this).remove()" class="grayscale" />
+      </div>
+      <div class="col-xs-8 col-sm-9">
+        <h4>{{title}} {{first_name}} {{last_name}}</h4>
+        <small class="rep-card-subtitle">{{repOf}}</small>
+      </div>
+    </div>
+    </div>
+    <div class="card-block">
+      {{#if phone}}
+      <div >
+        <div><span>Phone:</span> {{phone}}</div>
+      </div>
+      {{/if}}
+    </div>
+    <div class="mm card-footer no-padding container-flex">
+      <div class="row">
+
+      <div class="footer-icon type-holder col-4 ">
+        <div class="footer-text"><small>Member of the</small> <span class="highlight">{{displayType}}</span></div>
+      </div>
+          <div class="footer-icon col-4 swingleft-holder less-padding">
+            {{#if swingLeft}}
+            <a class="swing-left-link" target="_blank" href="https://swingleft.org/district/{{repOf}}">
+              {{#if swingLeft}}<div class="footer-text"><small>In </small><span class="highlight">SwingLeft</span> <small> district</small></div> {{/if}}
+        </a>
+        {{/if}}
+
+      </div>
+        <div class="footer-icon  col-4 {{#if ahca}}ahca-holder {{/if}}">
+          {{#if ahca}} <div class="footer-text ahca-text"><small>Voted for </small><span class="highlight">AHCA</div></div>{{/if}}
+        </div>
+      </div>
+   </div>
+</div>
