@@ -390,16 +390,14 @@
               <ul class="nav navbar-nav" id="mm-filter-info">
               </ul>
             </li>
+
           </ul>
-          <ul class="nav navbar-nav navbar-left filter-button-group" >
-            <li class="state-button-holder nav-item filter-button-group ">
-              <ul id="state-buttons" class=" button-group " data-filter-group="state">
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown filter-button-group">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party <span class="caret"></span></a>
+          <!-- <ul class="nav navbar-nav navbar-left filter-button-group" >
+
+          </ul> -->
+          <ul class="nav navbar-nav navbar-right btn-group">
+            <li class="dropdown filter-button-group btn-group">
+              <a href="#" class="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party <span class="caret"></span></a>
               <ul class="dropdown-menu button-group" data-filter-group="party">
                 <li class="downdown-title">Filter by party</li>
                 <li role="separator" class="divider"></li>
@@ -409,8 +407,8 @@
                 <li data-filter="" id="All" class="btn dropdown-item btn-filter btn-white" >All</li>
               </ul>
             </li>
-            <li class="dropdown filter-button-group">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chamber <span class="caret"></span></a>
+            <li class="dropdown filter-button-group btn-group">
+              <a href="#" class="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chamber <span class="caret"></span></a>
               <ul class="dropdown-menu button-group" data-filter-group="chamber">
                 <li class="downdown-title">Filter by chamber</li>
                 <li role="separator" class="divider"></li>
@@ -419,12 +417,16 @@
                 <li class="btn dropdown-item btn-filter btn-white" data-filter="" id="All" >All</li>
               </ul>
             </li>
-            <li class="nav-item filter-button-group button-group" data-filter-group="swingLeftFilter">
-              <a class="btn btn-xs btn-filter navbar-btn" data-filter=".swingLeft">Swing Left District</a>
+            <li class="nav-item filter-button-group button-group btn-group" data-filter-group="swingLeftFilter">
+              <a class="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".swingLeft">Swing Left District</a>
             </li>
-            <li class="nav-item filter-button-group button-group" data-filter-group="ahcaFilter">
-              <a class="btn btn-xs btn-filter navbar-btn" data-filter=".ahca">Voted for ACHA</a>
+            <li class="nav-item filter-button-group button-group btn-group" data-filter-group="ahcaFilter">
+              <a class="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".ahca">Voted for ACHA</a>
             </li>
+          </ul>
+          <ul class="nav navbar-nav state-button-holder filter-button-group ">
+            <ul id="state-buttons" class="button-group " data-filter-group="state">
+            </ul>
           </ul>
         </nav>
         <div class="missing-member-cards-container">

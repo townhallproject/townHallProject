@@ -793,14 +793,23 @@ img.grayscale {
   .dropdown-menu .btn:hover {
     background-color: @brand-secondary;
   }
-  .dropdown a {
-    padding-top: 30px;
+  .btn-group a{
+    border: 1px solid @brand-white;
   }
 }
 
 @media (max-width: 768px) {
-  .btn-xs.btn-filter.navbar-btn {
+  .btn-xs.navbar-btn {
     margin-left: 0px;
+    }
+}
+@media (min-width: 768px) {
+  .btn-xs.navbar-btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    }
+    #missing-members .navbar-nav {
+      margin-right: 15px;
     }
 }
 
@@ -837,7 +846,7 @@ image-holder{
   display: block;
   float: none;
 }
-.mm-turn-off-filter button:first-of-type, .dropdown.filter-button-group a{
+.mm-turn-off-filter button:first-of-type {
   margin-left: 30px;
   margin-bottom: 5px;
 }
@@ -878,25 +887,25 @@ image-holder{
    font-size: 1em;
  }
 }
-.state-button-holder{
-  max-width: 349px;
+.state-button-holder {
+  margin-bottom: 5px;
   width: 100%;
+  #state-buttons{
+    width: 95%;
+    margin: auto;
+  }
 }
 
-.btn-xs.btn-filter.navbar-btn{
-  margin-right: 20px;
-  margin-left: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: @brand-primary;
+.btn-xs.mm-btn-group.navbar-btn{
+  background-color: @brand-primary-lighter;
   color: @brand-white;
 }
 
-.btn-xs.btn-filter.navbar-btn:focus{
+.btn-xs.mm-btn-group.navbar-btn:focus{
   background-color: @brand-success;
   color: @brand-white;
 }
-.btn-xs.btn-filter.navbar-btn:hover{
+.btn-xs.mm-btn-group.navbar-btn:hover{
   background-color: @brand-success;
   color: @brand-white;
 }
@@ -938,8 +947,8 @@ image-holder{
 }
 
 .mm.card-footer {
-    padding: 0;
-    border-top: none;
+  padding: 0;
+  border-top: 0.5px solid @brand-cool;
 }
 .footer-icon{
   width: 32%;
@@ -953,7 +962,7 @@ image-holder{
 }
 
 .footer-text {
-  padding-top: 5px;
+  padding: 5px;
 }
 .highlight{
   font-weight: 900;

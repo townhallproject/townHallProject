@@ -56,15 +56,13 @@ Moc.loadAll = function(){
   return new Promise(function (resolve, reject) {
     firebase.database().ref('mocData/').once('value').then(function(snapshot){
       snapshot.forEach(function(member){
-        total ++;
         var memberobj = new Moc(member.val());
         memberobj.partyClass = memberobj.party.substring(0,3)
-        if (memberobj.missingMember) {
-
+        if (memberobj.missingMember === true) {
           Moc.allMocsObjs.push(memberobj);
+          total ++;
         }
-
-        });
+      });
       $currentState.attr('data-current', total)
       $currentState.attr('data-total', total)
       resolve(Moc.allMocsObjs);
