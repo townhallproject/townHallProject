@@ -39,7 +39,7 @@ Moc.addFilter = function(filterObj, filterValue) {
         $('.' + filter).remove()
         var removeFilterbutton = '<li class="mm-turn-off-filter button-group ' + filter + '" data-filter-group=' + filter + '><button class=" btn-filter btn btn-secondary btn-xs" ' +
                      'data-filter="" >' +
-                        filterObj[filter] + '<i class="fa fa-times" aria-hidden="true"></i>' +
+                        filterObj[filter].split('.')[1] + '<i class="fa fa-times" aria-hidden="true"></i>' +
                       '</button></li>';
         $('#mm-filter-info').append(removeFilterbutton);
       } else if (filterObj[filter].length === 0) {

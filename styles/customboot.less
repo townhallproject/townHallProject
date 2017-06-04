@@ -779,10 +779,16 @@ img.grayscale {
     border-bottom: @brand-cool;
     min-height: 105px;
   }
-  .navbar-left{
+  .navbar-left:first-of-type{
     padding-left: 15px;
+    min-width: 276px;
+  }
+  .navbar-left{
     padding-top: 1em;
     padding-bottom: 1em;
+  }
+  .navbar-right .btn {
+    font-size: 1em;
   }
   .dropdown-menu .btn:hover {
     background-color: @brand-secondary;
@@ -792,9 +798,9 @@ img.grayscale {
   }
 }
 
-@media (min-width: 768px) {
-  #missing-members .navbar-right {
-      margin-right: 23px;
+@media (max-width: 768px) {
+  .btn-xs.btn-filter.navbar-btn {
+    margin-left: 0px;
     }
 }
 
@@ -873,7 +879,7 @@ image-holder{
  }
 }
 .state-button-holder{
-  max-width: 430px;
+  max-width: 349px;
   width: 100%;
 }
 
