@@ -790,6 +790,11 @@ img.grayscale {
   .navbar-right .btn {
     font-size: 1em;
   }
+  .navbar-right {
+    margin-left: 15px;
+    margin-right: 15px;
+
+  }
   .dropdown-menu .btn:hover {
     background-color: @brand-secondary;
   }
@@ -797,7 +802,21 @@ img.grayscale {
     border: 1px solid @brand-white;
   }
 }
-
+@media (max-width:564px) {
+  #missing-members .navbar-right .nav-item {
+    width: 100%;
+  }
+  .navbar-btn.btn-xs {
+    margin-top: 1px;
+    margin-bottom: 1px;
+  }
+  .nav-item a {
+    width: 100%;
+  }
+  #missing-members .btn-group {
+    border-radius: 3px;
+  }
+}
 @media (max-width: 768px) {
   .btn-xs.navbar-btn {
     margin-left: 0px;
@@ -808,8 +827,9 @@ img.grayscale {
     padding-top: 10px;
     padding-bottom: 10px;
     }
-    #missing-members .navbar-nav {
+    #missing-members .navbar-nav, #missing-members .navbar-right.btn-group {
       margin-right: 15px;
+      margin-left: 15px;
     }
 }
 
