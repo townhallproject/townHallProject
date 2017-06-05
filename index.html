@@ -13,8 +13,7 @@
 
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="Town Hall Project">
-    <meta itemprop="description" content="Town Hall Project is a progressive, volunteer-powered initiative working to
-    identify and promote upcoming Congressional forums nationwide.">
+    <meta itemprop="description" content="Town Hall Project is a progressive, volunteer-powered initiative working to identify and promote upcoming Congressional forums nationwide.">
     <meta itemprop="image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_horizontal_facebook.png">
 
     <!-- Twitter Card data -->
@@ -85,13 +84,13 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane page active" id="home">
         <header class="site-header clearfix">
-           <section class=" container container-fluid">
+           <section class="container container-fluid">
              <div class="row">
                <div class="col-md-6 left-panels">
-                  <div  class=" text-left site-header clearfix displayoff ">
+                  <div class="text-left site-header clearfix displayoff">
                     <div class="form-text-results col-md-12">
                       <div class="text-toggle header-large">
-                        <img src="/Images/THP_logo_inverse.png" alt="">
+                        <img src="/Images/THP_logo_inverse-thin.png" alt="">
                       </div>
                       <div class="text-toggle header-small hidden ">
                         <!-- <img src="/Images/THP_logo_inverse_simple.png" alt=""> -->
@@ -99,18 +98,24 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 right-panels">
-                  <div class="spacer">
-                  </div>
-                  <form id="look-up" class="form-inline text-center" action="index.html" method="post">
+                <div class="col-md-4 col-md-offset-1 right-panels">
+                  <div class="spacer"></div>
+                  <form id="look-up" class="text-center" action="index.html" method="post">
                     <div class="form-group text-center">
-                      <label  for="zip"></label>
-                      <input class="form-control input-lg " type="zip" name="" value="" placeholder="Zip Code">
-                      <button type="submit" name="button" class="btn btn-primary btn-lg">Find A Town Hall</button>
+                      <label for="zip"></label>
+                      <input class="form-control input-lg" type="zip" name="" value="" placeholder="Enter your Zip Code">
+                      <button type="submit" name="button" class="btn btn-primary btn-lg">Find Town Halls</button>
+                      <div id="selection-results" class="text-center ">
+                        <h4 class="selection-results_content"></h4>
+                      </div>
                     </div>
                   </form>
-                  <div id="textresults" class="text-center "></div>
-
+                  <div id="signupform ">
+                    <div id="button-to-form" class="text-center hidden">
+                      <h4>Sign up to stay up to date on town halls in your area</h4>
+                        <a href="#join" data-toggle="tab" class="btn btn-lg btn-white"><strong>Join Us</strong></a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>
@@ -179,7 +184,7 @@
             </p>
         </section>
         <a name="events-table" id="events-table"></a>
-        <section class=" container container-fluid">
+        <section class="container container-fluid">
           <h2 class="text-primary table-title text-center">Upcoming Events</h2>
           <div class="row">
               <small>
