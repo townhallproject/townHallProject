@@ -469,7 +469,14 @@
 
         }, 500);
 
-      } else {
+      } else if (hashid === '#missing-members') {
+        setTimeout(function () {
+          $('.grid').isotope();
+          console.log('update');
+        }, 1500);
+        location.hash = hashid;
+      }
+      else {
         location.hash = hashid;
       }
 
