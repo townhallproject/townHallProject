@@ -163,7 +163,7 @@ var $grid = $('.grid').isotope({
 
 // flatten object by concatting values
 function concatValues( obj ) {
-  var value = '';
+  var value = '.element-item';
   for ( var prop in obj ) {
     value += obj[ prop ];
   }

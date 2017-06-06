@@ -72,7 +72,6 @@
             <li><a class="hash-link"  data-toggle="tab" href="#about">About</a></li>
             <li><a class="hash-link" href="#join" data-toggle="tab">Get Event Updates</a></li>
             <li><a class="hash-link" href="#missing-members" data-toggle="tab">Missing Members</a></li>
-
             <li><a id="privacy-policy-link" class="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#privacy-policy">Privacy Policy</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -382,7 +381,7 @@
             </div>
           </div>
       </div>
-      <div id="missing-members">
+      <div role="tabpanel" class="tab-pane" id="missing-members">
         <nav class="navbar navbar-default ">
           <ul class="nav navbar-nav navbar-left filter-button-group" >
             <li class="block"><span id="mm-current-state" data-current=0 data-total=0></span></li>
@@ -403,7 +402,7 @@
                 <li role="separator" class="divider"></li>
                 <li data-filter=".Democratic" id="Democratic" class="btn dropdown-item btn-filter btn-white">Democratic</li>
                 <li data-filter=".Republican" id="Republican" class="btn dropdown-item btn-filter btn-white">Republican</li>
-                <li data-filter=".Independent" id="Independent" class="btn dropdown-item btn-filter btn-white">Independent</li>
+                <!-- <li data-filter=".Independent" id="Independent" class="btn dropdown-item btn-filter btn-white">Independent</li> -->
                 <li data-filter="" id="All" class="btn dropdown-item btn-filter btn-white" >All</li>
               </ul>
             </li>
