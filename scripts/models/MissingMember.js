@@ -65,6 +65,14 @@ Moc.loadAll = function(){
       });
       $currentState.attr('data-current', total)
       $currentState.attr('data-total', total)
+      Moc.allMocsObjs.sort(function(a, b){
+        if (a.state > b.state) {
+          return -1
+        } else if (a.state < b.state) {
+          return 1
+        }
+        return 0
+      })
       resolve(Moc.allMocsObjs);
     });
   });
@@ -152,10 +160,6 @@ var $grid = $('.grid').isotope({
     filters[ filterGroup ] = $this.attr('data-filter');
     // combine filters
     var filterValue = concatValues( filters );
-
-
-    console.log($(filterValue).length);
-    console.log(filters, filterValue);
     Moc.addFilter(filters, filterValue)
     $grid.isotope({ filter: filterValue });
   });

@@ -490,6 +490,9 @@
     $('body').on('click', '.popover .popover-title a.close', function(e) {
       $('[data-toggle="popover"]').popover('hide');
     });
+    $('#missing-member-banner-btn').on('click', function(e){
+      $('#missing-member-tab').click();
+    })
 
     // Fix popover bug in bootstrap 3 https://github.com/twbs/bootstrap/issues/16732
     $('body').on('hidden.bs.popover', function (e) {

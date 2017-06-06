@@ -767,6 +767,18 @@ img.grayscale {
 }
 
 // Missing Members
+.missing-member-report{
+  color: @brand-success;
+  line-height: 2em;
+  text-align: left;
+  padding-top: 2em;
+  .weight-thin{
+    font-weight: lighter;
+  }
+}
+.missing-member-img img{
+  max-width: 260px;
+}
 
 #missing-members {
   background-color: @brand-gray;
@@ -817,6 +829,9 @@ img.grayscale {
   #missing-members .btn-group {
     border-radius: 3px;
   }
+  #missing-members .grid {
+    width: 260px;
+  }
 }
 @media (max-width: 768px) {
   .btn-xs.navbar-btn {
@@ -844,12 +859,15 @@ img.grayscale {
   text-align: center;
   position: relative;
 }
-.grid.container{
+.grid{
   padding: 0;
   min-height: 400px;
   margin-bottom: 163px;
   padding-top: 40px;
+  margin: auto;
+
 }
+
 image-holder{
   margin: auto;
   text-align: center;
@@ -917,7 +935,7 @@ image-holder{
   }
 }
 
-.btn-xs.mm-btn-group.navbar-btn{
+.btn-xs.mm-btn-group.navbar-btn, .btn-blue{
   background-color: @brand-primary-lighter;
   color: @brand-white;
 }
@@ -926,7 +944,7 @@ image-holder{
   background-color: @brand-success;
   color: @brand-white;
 }
-.btn-xs.mm-btn-group.navbar-btn:hover{
+.btn-xs.mm-btn-group.navbar-btn:hover, .btn-blue:hover{
   background-color: @brand-success;
   color: @brand-white;
 }

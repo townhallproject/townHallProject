@@ -71,7 +71,7 @@
             <li><a class="hash-link" data-toggle="tab" href="#submit">Submit an Event</a></li>
             <li><a class="hash-link"  data-toggle="tab" href="#about">About</a></li>
             <li><a class="hash-link" href="#join" data-toggle="tab">Get Event Updates</a></li>
-            <li><a class="hash-link" href="#missing-members" data-toggle="tab">Missing Members</a></li>
+            <li><a class="hash-link" href="#missing-members" data-toggle="tab" id="missing-member-tab">Missing Members</a></li>
             <li><a id="privacy-policy-link" class="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#privacy-policy">Privacy Policy</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -134,6 +134,35 @@
             </div>
            </section>
         </div>
+        <section class="email-signup--inline">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-4 col-xs-12 col-sm-offset-1 missing-member-img">
+                    <img src="Images/missingMemberSmallNoNum.png" alt="" />
+                  </div>
+                  <div class="col-sm-5 col-xs-12 col-sm-offset-2">
+                    <button class="btn btn-white missing-member-report" type="button" name="button" id="missing-member-banner-btn">
+                      <span class="extra-large weight-heavy">MISSING<br>MEMBER<br></span>
+                      <span class="extra-large weight-thin">REPORT<br><small>2017 | JAN-MAY</small>
+                        </span>
+                        <div>View missing members </div><i class="fa fa-3x fa-long-arrow-right" aria-hidden="true"></i>
+                      </button>
+                        <!-- <div class="col-xs-6">
+                          <button class="btn btn-blue" type="button" name="button">Download Missing Members Report</button>
+                        </div> -->
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+        </section>
         <section class="background-light-blue email-signup--inline">
          <div class="container container-fluid">
            <h1 id="email-title" class="text-center extra-large">Sign up to receive updates on local events.</h1>
@@ -168,6 +197,7 @@
            </form>
          </div>
        </section>
+
         <!-- Cards showing representatives and their contact info -->
         <div id="representativeCards">
           <section class="container container-fluid"></section>
@@ -389,7 +419,6 @@
               <ul class="nav navbar-nav" id="mm-filter-info">
               </ul>
             </li>
-
           </ul>
           <!-- <ul class="nav navbar-nav navbar-left filter-button-group" >
 
@@ -428,9 +457,14 @@
             </ul>
           </ul>
         </nav>
+        <div class="inset">
+
+        </div>
         <div class="missing-member-cards-container">
-          <div class="grid container">
-            <!-- <div class="element-item transition metal">...</div> -->
+          <div class="container">
+            <div class="grid">
+              <!-- <div class="element-item transition metal">...</div> -->
+            </div>
           </div>
         </div>
       </div>
