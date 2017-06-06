@@ -440,7 +440,8 @@
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
-      $("a[href='" + location.hash + "']").tab('show');
+      var hashLocation = location.hash.split('?')[0]
+      $("a[href='" + hashLocation + "']").tab('show');
     } else {
       TownHall.isMap = true;
     }
@@ -472,7 +473,6 @@
       } else if (hashid === '#missing-members') {
         setTimeout(function () {
           $('.grid').isotope();
-          console.log('update');
         }, 1500);
         location.hash = hashid;
       }
