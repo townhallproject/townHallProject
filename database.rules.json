@@ -34,12 +34,15 @@
    },
     "townHallsOld" : {
       ".read": "true",
-      ".indexOn": "dateObj",
-      "$townHallID": {
-         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-      	 "dateObj": {
-            ".indexOn": ".value"
-      		}
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        "$month" : {
+        	".indexOn": "meetingType",
+          "$townHallID": {
+           ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+           "meetingType": {
+              ".indexOn": ".value"
+            }
+     		}
      }
    },
     "UserSubmission" : {

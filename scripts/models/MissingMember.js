@@ -2,29 +2,21 @@ function Moc(opts) {
   for (keys in opts) {
     this[keys] = opts[keys];
   }
-  this.TownHall = 0
+  this.TownHall = 0;
   if (this.type === 'sen') {
-    this.repOf = 'Sen. ' + this.state
-    this.displayType = 'Senate'
+    this.repOf = 'Sen. ' + this.state;
+    this.displayType = 'Senate';
   } else {
-    this.repOf = this.state + '-' + this.zeroPadding()
-    this.displayType = 'House'
-  }
-  if (this.currentEvents) {
-    for (const key of Object.keys(this.currentEvents)){
-      if (Object.keys(this.currentEvents[key]).length !== 20) {
-        townhallId = key.replace(/\s/g, '')
-        this[townhallId] = Object.keys(this.currentEvents[key]).length
-        }
-      }
+    this.repOf = this.state + '-' + this.zeroPadding();
+    this.displayType = 'House';
   }
 }
 
 Moc.prototype.zeroPadding = function() {
   var zeros = '00';
-  district = this.district.toString()
-  return zeros.substring(0, zeros.length - district.length) + district
-}
+  district = this.district.toString();
+  return zeros.substring(0, zeros.length - district.length) + district;
+};
 
 Moc.allMocsObjs = [];
 
@@ -32,47 +24,47 @@ Moc.addFilter = function(filterObj, filterValue) {
   $currentState = $('#mm-current-state');
   var total = parseInt($currentState.attr('data-total'));
 
-  var nofilters = true
-    Object.keys(filterObj).forEach(function(filter){
-      if (filterObj[filter].length > 0) {
-        nofilters = false
-        $('.' + filter).remove()
-        var removeFilterbutton = '<li class="mm-turn-off-filter button-group ' + filter + '" data-filter-group=' + filter + '><button class=" btn-filter btn btn-secondary btn-xs" ' +
+  var nofilters = true;
+  Object.keys(filterObj).forEach(function(filter){
+    if (filterObj[filter].length > 0) {
+      nofilters = false;
+      $('.' + filter).remove();
+      var removeFilterbutton = '<li class="mm-turn-off-filter button-group ' + filter + '" data-filter-group=' + filter + '><button class=" btn-filter btn btn-secondary btn-xs" ' +
                      'data-filter="" >' +
                         filterObj[filter].split('.')[1] + '<i class="fa fa-times" aria-hidden="true"></i>' +
                       '</button></li>';
-        $('#mm-filter-info').append(removeFilterbutton);
-      } else if (filterObj[filter].length === 0) {
-        $('.' + filter).remove()
-      }
-    })
-    var cur =   nofilters ? total : $(filterValue).length;
-    $currentState.text('Viewing ' + cur + ' of ' + total + ' total missing members');
+      $('#mm-filter-info').append(removeFilterbutton);
+    } else if (filterObj[filter].length === 0) {
+      $('.' + filter).remove();
+    }
+  });
+  var cur =   nofilters ? total : $(filterValue).length;
+  $currentState.text('Viewing ' + cur + ' of ' + total + ' total missing members');
 };
 
 Moc.loadAll = function(){
   $currentState = $('#mm-current-state');
-  var total = 0
+  var total = 0;
   return new Promise(function (resolve, reject) {
     firebase.database().ref('mocData/').once('value').then(function(snapshot){
       snapshot.forEach(function(member){
         var memberobj = new Moc(member.val());
-        memberobj.partyClass = memberobj.party.substring(0,3)
+        memberobj.partyClass = memberobj.party.substring(0,3);
         if (memberobj.missingMember === true) {
           Moc.allMocsObjs.push(memberobj);
           total ++;
         }
       });
-      $currentState.attr('data-current', total)
-      $currentState.attr('data-total', total)
+      $currentState.attr('data-current', total);
+      $currentState.attr('data-total', total);
       Moc.allMocsObjs.sort(function(a, b){
         if (a.state > b.state) {
-          return -1
+          return -1;
         } else if (a.state < b.state) {
-          return 1
+          return 1;
         }
-        return 0
-      })
+        return 0;
+      });
       resolve(Moc.allMocsObjs);
     });
   });
@@ -87,13 +79,13 @@ Moc.renderAll = function(template, parent, array) {
   var compiledTemplate = Handlebars.getTemplate(template);
   array.forEach(function(ele) {
     if (ele.type && ele.type === 'sen') {
-      ele.subtitle = 'Senator'
+      ele.subtitle = 'Senator';
     } else if (ele.type && ele.type === 'rep') {
-      ele.subtitle = ele.state + '-' + ele.district
+      ele.subtitle = ele.state + '-' + ele.district;
     }
-    $(parent).append($(compiledTemplate(ele)))
-  })
-}
+    $(parent).append($(compiledTemplate(ele)));
+  });
+};
 
 
 Moc.loadAll().then(function(returnedData){
@@ -102,7 +94,7 @@ Moc.loadAll().then(function(returnedData){
   var cur = parseInt($currentState.attr('data-current'));
   $currentState.text('Viewing ' + cur + ' of ' + total + ' total missing members');
 
-  Moc.renderAll('missingMemberCard', '.grid', returnedData)
+  Moc.renderAll('missingMemberCard', '.grid', returnedData);
 
   allCategories = returnedData.map(function(ele){
 
@@ -110,41 +102,39 @@ Moc.loadAll().then(function(returnedData){
       categoryID : ele.state.trim(),
       Category : ele.state,
       perCapita : 1
-    }
+    };
 
   }).reduce(function(acc, cur){
     if (acc.map(function(mapItem){return mapItem['categoryID']; }).indexOf(cur['categoryID']) > -1) {
-      acc[acc.map(function(mapItem){return mapItem['categoryID']; }).indexOf(cur['categoryID'])].count ++
-      cur.perCapita = parseInt(statePopulation[cur.categoryID])/cur.count
+      acc[acc.map(function(mapItem){return mapItem['categoryID']; }).indexOf(cur['categoryID'])].count ++;
+      cur.perCapita = parseInt(statePopulation[cur.categoryID])/cur.count;
     } else {
-      cur.count = 1
-      cur.perCapita = parseInt(statePopulation[cur.categoryID])/cur.count
-      acc.push(cur)
+      cur.count = 1;
+      cur.perCapita = parseInt(statePopulation[cur.categoryID])/cur.count;
+      acc.push(cur);
     }
     return acc;
-},[]).sort(function(a, b){
-  statea = a.categoryID
-  stateb = b.categoryID
-  if (statea > stateb) {
-    return 1
-  } else if (stateb > statea) {
-    return -1
-  }
-  return 0
-})
+  },[]).sort(function(a, b){
+    statea = a.categoryID;
+    stateb = b.categoryID;
+    if (statea > stateb) {
+      return 1;
+    } else if (stateb > statea) {
+      return -1;
+    }
+    return 0;
+  });
 
-Moc.renderAll('missingMemberButton', '#state-buttons', allCategories)
+  Moc.renderAll('missingMemberButton', '#state-buttons', allCategories);
 
-var $grid = $('.grid').isotope({
-  itemSelector: '.element-item',
-  getSortData: {
-  townhall: '.townHallNumber parseInt' // text from querySelector
-},
-  sortBy: 'townhall',
-  sortAscending: false
-
-
-});
+  var $grid = $('.grid').isotope({
+    itemSelector: '.element-item',
+    getSortData: {
+      townhall: '.townHallNumber parseInt' // text from querySelector
+    },
+    sortBy: 'townhall',
+    sortAscending: false
+  });
   // layout Isotope after each image loads
   $grid.imagesLoaded().progress( function() {
     $grid.isotope('layout');
@@ -160,10 +150,10 @@ var $grid = $('.grid').isotope({
     filters[ filterGroup ] = $this.attr('data-filter');
     // combine filters
     var filterValue = concatValues( filters );
-    Moc.addFilter(filters, filterValue)
+    Moc.addFilter(filters, filterValue);
     $grid.isotope({ filter: filterValue });
   });
-})
+});
 
 // flatten object by concatting values
 function concatValues( obj ) {

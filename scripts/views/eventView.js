@@ -440,7 +440,7 @@
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
-      var hashLocation = location.hash.split('?')[0]
+      var hashLocation = location.hash.split('?')[0];
       $("a[href='" + hashLocation + "']").tab('show');
     } else {
       TownHall.isMap = true;
@@ -499,6 +499,10 @@
     });
     $('#missing-member-banner-btn').on('click', function(e){
       $('#missing-member-tab').click();
+    });
+
+    $('#view-missing-member-report').on('click', function(e) {
+      $('.missing-members-modal').modal('show');
     })
 
     // Fix popover bug in bootstrap 3 https://github.com/twbs/bootstrap/issues/16732

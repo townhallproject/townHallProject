@@ -111,7 +111,6 @@
                     </div>
                   </form>
                   <div id="textresults" class="text-center "></div>
-
                 </div>
               </div>
             </section>
@@ -308,7 +307,6 @@
                 <footer class="text-success">President Obama, <cite title="Source Title">Farewell Address</cite></footer>
               </blockquote>
           </section>
-
         </header>
         <section class="container">
             <article class="center-block about">
@@ -330,7 +328,6 @@
                   <li>Staff office hours</li>
                   <li>Opportunities in Washington, D.C. to speak with your representative</li>
                 </ul>
-
                 <p>We do not currently include:</p>
                 <ul>
                   <li>Fundraisers outside the district/state</li>
@@ -414,15 +411,16 @@
       <div role="tabpanel" class="tab-pane" id="missing-members">
         <nav class="navbar navbar-default ">
           <ul class="nav navbar-nav navbar-left filter-button-group" >
-            <li class="block"><span id="mm-current-state" data-current=0 data-total=0></span></li>
+            <li class="block">
+              <div class="col-sm-6">
+                <button class="btn btn-white outline-text-color btn-block" type="button" name="button" id="view-missing-member-report">View Summary Report</button>
+              </div>
+              <span  class="col-sm-6" id="mm-current-state" data-current=0 data-total=0></span></li>
             <li class="block filter-button-group mm-filter-info-holder">
               <ul class="nav navbar-nav" id="mm-filter-info">
               </ul>
             </li>
           </ul>
-          <!-- <ul class="nav navbar-nav navbar-left filter-button-group" >
-
-          </ul> -->
           <ul class="nav navbar-nav navbar-right btn-group">
             <li class="nav-item dropdown filter-button-group btn-group">
               <a href="#" class="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party <span class="caret"></span></a>
@@ -458,12 +456,10 @@
           </ul>
         </nav>
         <div class="inset">
-
         </div>
         <div class="missing-member-cards-container">
           <div class="container">
             <div class="grid">
-              <!-- <div class="element-item transition metal">...</div> -->
             </div>
           </div>
         </div>
@@ -506,11 +502,22 @@
           </section>
         <div class="banner" id="cover">
         </div>
+      </div>
     </div>
     <div class="modal fade event-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         </div>
+      </div>
+    </div>
+    <div class="modal fade missing-members-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <img src="/Images/Missing_Member_Report.png" alt="" />
+            <a class="twitter-share-button"
+        href="https://townhallproject.com/Images/Missing_Member_Report.png?text=Missing%20Members%20Report">
+      Tweet</a>
+      <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ftownhallproject.com%2FImages%2FMissing_Member_Report.png&layout=button&size=small&mobile_iframe=true&appId=1549118422076809&width=59&height=20" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>        </div>
       </div>
     </div>
     <footer class="footer">
@@ -548,6 +555,22 @@
                 s.src = ('https:' == window.location.protocol ? 'https' : 'http')+'://addtocalendar.com/atc/1.5/atc.min.js';
                 var h = d[g]('body')[0];h.appendChild(s); }})();
     </script>
+    <script>window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+
+      return t;
+    }(document, "script", "twitter-wjs"));</script>
     <!-- Script Files -->
     <script src="/scripts/data/statePop.js"></script>
 

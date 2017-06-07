@@ -91,6 +91,22 @@
    color: @brand-white;
  }
 
+ .outline-primary {
+   border:solid 1px @brand-primary
+ }
+
+ .outline-bright-blue {
+   border:solid 1px @brand-success
+ }
+
+ .outline-red {
+   border:solid 1px @brand-secondary
+ }
+
+ .outline-text-color {
+   border:solid 1px @brand-text
+ }
+
 @link-color:                        @brand-secondary;
 @component-active-bg:               @brand-secondary;
 @nav-tabs-active-link-hover-color:  @brand-primary;
@@ -136,7 +152,7 @@
 }
 
 .navbar-left a {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .navbar-right .btn {
@@ -183,6 +199,7 @@ body{
   color: #1E2528;
   font-family: 'Raleway', sans-serif;
   margin-bottom: 60px;
+  font-weight: 100;
 }
 
 h1, h2 {
@@ -245,7 +262,6 @@ input{
      &.input-lg {
        background: @brand-white;
        color: @brand-text;
-      //  .weight-heavy();
        &::-webkit-input-placeholder { /* Chrome */
          color: @brand-success;
          opacity: 0.9;
@@ -322,11 +338,6 @@ a.social-icon {
   border-left-color: rgb(208, 209, 213);
   border-left-style: solid;
   border-left-width: 2px;
-  // border-image-source: initial;
-  // border-image-slice: initial;
-  // border-image-width: initial;
-  // border-image-outset: initial;
-  // border-image-repeat: initial;
 }
 
 .panel-heading small{
@@ -792,8 +803,9 @@ img.grayscale {
     border-bottom: @brand-cool;
     min-height: 105px;
   }
-  .navbar-left:first-of-type{
+  .navbar-left{
     padding-left: 15px;
+    padding-right: 15px;
     min-width: 276px;
   }
   .navbar-left{
@@ -868,7 +880,7 @@ img.grayscale {
 
 }
 
-image-holder{
+.image-holder{
   margin: auto;
   text-align: center;
 }
@@ -1032,7 +1044,7 @@ image-holder{
 
 .rep-card-subtitle {
   position: absolute;
-  top: 45px;
+  top: 63px;
   left:40%;
 }
 
