@@ -88,7 +88,7 @@
      "$townHallID": {
        ".read": "true",
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-      ".validate": "newData.hasChildren(['Member','Party','State'])"
+        ".validate": "newData.hasChildren(['Member','Party','State'])"
     }
   },
   "geolocate" : {
@@ -113,6 +113,15 @@
            ".read": "false",
     	 			".write": "true",
        	 	  ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000"
+        }
+    	},
+  "emailSignUps" : {
+         ".read": "false",
+    	 		".write": "true",
+        	"$user" : {
+           ".read": "false",
+    	 			".write": "true",
+            ".validate": "newData.hasChildren(['person'])"
         }
     	},
   "users": {

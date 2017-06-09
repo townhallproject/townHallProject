@@ -131,6 +131,7 @@
         dataType: 'jsonp'
       });
     }
+
     return representativePromise;
   };
 

@@ -44,7 +44,8 @@
     <link href="/vendor/styles/jquery-ui.structure.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,900" rel="stylesheet">
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' />
-    <link rel="stylesheet" href="/styles/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/styles/css/bootstrapTH.min.css">
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -108,17 +109,15 @@
                       <label  for="zip"></label>
                       <input class="form-control input-lg " type="zip" name="" value="" placeholder="Zip Code">
                       <button type="submit" name="button" class="btn btn-primary btn-lg">Find A Town Hall</button>
+
                       <div id="selection-results" class="text-center ">
                         <h4 class="selection-results_content"></h4>
                       </div>
+
                     </div>
                   </form>
-                  <div id="signupform ">
-                    <div id="button-to-form" class="text-center hidden">
-                      <h4>Sign up to stay up to date on town halls in your area</h4>
-                        <a href="#join" data-toggle="tab" class="btn btn-lg btn-white"><strong>Join Us</strong></a>
-                    </div>
-                  </div>
+                  <div id="textresults" class="text-center "></div>
+
                 </div>
               </div>
             </section>
@@ -159,6 +158,40 @@
           </div>
         </div>
 
+        <section class="background-light-blue email-signup--inline">
+         <div class="container container-fluid">
+           <h1 id="email-title" class="text-center extra-large">Sign up to receive updates on local events.</h1>
+           <form id="email-signup-form">
+             <div class="row">
+               <div class="col-lg-8">
+                 <div class="col-sm-6">
+                   <input type="text" class="form-control input-lg" name="first" placeholder="First Name">
+                 </div>
+                 <div class="col-sm-6">
+                   <input type="text" class="form-control input-lg" name="last" placeholder="Last Name">
+                 </div>
+                 <div class="col-sm-6">
+                   <input type="email" class="form-control input-lg" name="email" placeholder="Email">
+                 </div>
+                 <div class="col-sm-6">
+                   <input type="text" class="form-control input-lg" name="zipcode" placeholder="Zip Code">
+                 </div>
+               </div>
+               <div class="col-lg-4">
+                 <div class="col-xs-12">
+                   <input type="hidden" name="districts">
+                   <button type="submit" name="button" class="btn btn-primary btn-light-background btn-lg btn-block">Sign up</button>
+                 </div>
+                 <div class="col-xs-12">
+                   <label class="checkbox-inline">
+                     <input type="checkbox" value="" name="partner"> Opt in to receive updates from our progressive partners.
+                   </label>
+                 </div>
+               </div>
+             </div>
+           </form>
+         </div>
+       </section>
         <!-- Cards showing representatives and their contact info -->
         <div id="representativeCards">
           <section class="container container-fluid"></section>
@@ -176,11 +209,12 @@
           <div class="row">
               <small>
                 <ul class="list-unstyled container">
-                  <li><span class="text-secondary">Town Hall</span><span> - A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents</span></li>
-                  <li><span class="text-secondary">Office Hours </span><span> - Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend	</span></li>
+                  <li><span class="text-secondary">Town Hall</span><span> - A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents.</span></li>
+                  <li><span class="text-secondary">Empty Chair Town Hall</span><span> - A citizen-organized town hall held with or without the invited lawmaker.</span></li>
+                  <li><span class="text-secondary">Office Hours </span><span> - Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend.</span></li>
                   <li><span class="text-secondary">Ticketed Event</span><span> - Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
-                  <li><span class="text-secondary">TeleTown Hall Meeting </span><span>	- A town hall conducted by conference call.</span></li>
-                  <li><span class="text-secondary">DC Event</span><span>	- Event held in the MOC's DC Office.</span></li>
+                  <li><span class="text-secondary">TeleTown Hall Meeting </span><span> - A town hall conducted by conference call.</span></li>
+                  <li><span class="text-secondary">DC Event</span><span> - Event held in the MOC's DC Office.</span></li>
                 </ul>
               </small>
           </div>
