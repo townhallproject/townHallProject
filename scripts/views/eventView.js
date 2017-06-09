@@ -412,15 +412,16 @@
 
     var zipClean = zipcode.val().split('-')[0];
     var districtArray;
-    if (districts[0].value.length === 0) {
-      TownHall.zipToDistrict(zipClean)
-        .then(function(zipToDistricts){
-          submitSignup(first, last, zipClean, email, zipToDistricts, partner);
-        });
-    } else {
-      districtArray = JSON.parse($('#email-signup-form input[name=districts]').val());
+    // if (districts[0].value.length === 0) {
+    //   TownHall.zipToDistrict(zipClean)
+    //     .then(function(zipToDistricts){
+    //       submitSignup(first, last, zipClean, email, zipToDistricts, partner);
+    //     });
+    // } else {
+      // districtArray = JSON.parse($('#email-signup-form input[name=districts]').val())
+      districtArray =[]
       submitSignup(first, last, zipClean, email, districtArray, partner);
-    }
+    // }
   };
 
   function submitSignup(first, last, zipcode, email, districts, partner) {
@@ -439,18 +440,18 @@
       return a & a;
     }, 0);
 
-    firebasedb.ref('/emailSignUps/' + userID).set(person).then(function(returned){
-      localStorage.setItem('signedUp', true);
-      $('.email-signup--inline').fadeOut(750);
-    }).catch(function(error){
-      $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
-    });
-    // $.post('https://actionnetwork.org/api/v2/customFormUrlHere', person).done(function() {
+    // firebasedb.ref('/emailSignUps/' + userID).set(person).then(function(returned){
     //   localStorage.setItem('signedUp', true);
     //   $('.email-signup--inline').fadeOut(750);
-    // }).fail(function(xhr) {
+    // }).catch(function(error){
     //   $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
     // });
+    $.post('https://actionnetwork.org/api/v2/forms/eafd3b2a-8c6b-42da-bec8-962da91b128c/submissions', person).done(function() {
+      localStorage.setItem('signedUp', true);
+      $('.email-signup--inline').fadeOut(750);
+    }).fail(function(xhr) {
+      $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
+    });
     return false;
   }
 
