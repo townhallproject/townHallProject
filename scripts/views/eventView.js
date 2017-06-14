@@ -329,29 +329,35 @@
         'given_name': first.val(),
         'postal_addresses': [{ 'postal_code' : zipcode}],
         'email_addresses' : [{ 'address' : email.val() }],
-        'districts': districts,
-        'partner': partner.prop('checked')
+        'custom_fields': {
+          'districts': districts,
+          'partner': partner.prop('checked')
+        }
       }
     };
     var userID = email.val().split('').reduce(function(a, b) {
       a = ((a << 5) - a) + b.charCodeAt(0);
       return a & a;
     }, 0);
-
-    firebasedb.ref('/emailSignUps/' + userID).set(person).then(function(returned){
-      localStorage.setItem('signedUp', true);
-      $('.email-signup--inline').fadeOut(750);
-    }).catch(function(error){
-      $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
+    console.log(person);
+    $.ajax({
+      url: 'https://actionnetwork.org/api/v2/forms/eafd3b2a-8c6b-42da-bec8-962da91b128c/submissions',
+      method: 'POST',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify(person),
+      success: function() {
+        localStorage.setItem('signedUp', true);
+        $('#email-signup').fadeOut(750);
+      },
+      error: function(error) {
+        console.log('error', error);
+        $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
+      }
     });
-    // $.post('https://actionnetwork.org/api/v2/customFormUrlHere', person).done(function() {
-    //   localStorage.setItem('signedUp', true);
-    //   $('.email-signup--inline').fadeOut(750);
-    // }).fail(function(xhr) {
-    //   $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
-    // });
     return false;
   }
+
 
   function setupTypeaheads() {
     var typeaheadConfig = {
@@ -446,7 +452,7 @@
       TownHall.isMap = true;
     }
     if (localStorage.getItem('signedUp') === 'true') {
-      $('.email-signup--inline').hide();
+      $('#email-signup').hide();
     }
 
     $('.hash-link').on('click', function onClickGethref(event) {
@@ -488,7 +494,10 @@
     $('.event-modal').on('hide.bs.modal', function (e) {
       setUrlParameter('eventId', false);
     });
-
+    $('#close-email').on('click', function(e){
+      localStorage.setItem('signedUp', true);
+      $('#email-signup').fadeOut(750);
+    });
     // Only show one popover at a time
     $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
       $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
