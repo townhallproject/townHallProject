@@ -329,8 +329,10 @@
         'given_name': first.val(),
         'postal_addresses': [{ 'postal_code' : zipcode}],
         'email_addresses' : [{ 'address' : email.val() }],
-        'districts': districts,
-        'partner': partner.prop('checked')
+        'custom_fields': {
+          'districts': districts,
+          'partner': partner.prop('checked')
+        }
       }
     };
     var userID = email.val().split('').reduce(function(a, b) {
@@ -338,18 +340,27 @@
       return a & a;
     }, 0);
 
-    firebasedb.ref('/emailSignUps/' + userID).set(person).then(function(returned){
-      localStorage.setItem('signedUp', true);
-      $('.email-signup--inline').fadeOut(750);
-    }).catch(function(error){
-      $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
-    });
-    // $.post('https://actionnetwork.org/api/v2/customFormUrlHere', person).done(function() {
+    // firebasedb.ref('/emailSignUps/' + userID).set(person).then(function(returned){
     //   localStorage.setItem('signedUp', true);
     //   $('.email-signup--inline').fadeOut(750);
-    // }).fail(function(xhr) {
+    // }).catch(function(error){
     //   $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
     // });
+    $.ajax({
+      url: 'https://actionnetwork.org/api/v2/forms/eafd3b2a-8c6b-42da-bec8-962da91b128c/submissions',
+      method: 'POST',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify(person),
+      success: function() {
+        localStorage.setItem('signedUp', true);
+        $('.email-signup--inline').fadeOut(750);
+      },
+      error: function(error) {
+        console.log('error', error);
+        $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
+      }
+    });
     return false;
   }
 
