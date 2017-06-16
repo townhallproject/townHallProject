@@ -102,7 +102,7 @@ UploadVideo.prototype.uploadFile = function(file) {
     },
     status: {
       // Do NOT change this else it'll show up on the channel by default
-      privacyStatus: 'unlisted',
+      privacyStatus: 'private',
       // Do NOT change this else you won't be able to move it to the other channel without an extra step
       license: 'creativeCommon'
     }
