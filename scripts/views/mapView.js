@@ -192,7 +192,7 @@
     });
     stateAbbr = state[0].USPS;
     stateCode = state[0].FIPS;
-    if (townhall.lat) {
+    if (townhall.lat && townhall.meetingType !== 'DC Event') {
       featuresHome.features.push({
         type: 'Feature',
         geometry: {
@@ -238,8 +238,6 @@
       }
     }, 'district_interactive');
   }
-
-
 
   // Adds a Popup listener to the point layer. TODO: Determine content for the popup.
   function addPopups () {
