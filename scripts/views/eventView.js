@@ -322,6 +322,17 @@
     }
   };
 
+  eventHandler.toggleSearchStyling = function(event) {
+    var button = $(this).siblings('button');
+    if (this.value.length === 5) {
+      button.attr('disabled', false)
+            .removeClass('is_disabled');
+    } else {
+      button.attr('disabled', true)
+            .addClass('is_disabled');
+    }
+  };
+
   function submitSignup(first, last, zipcode, email, districts, partner) {
     var person = {
       'person' : {
@@ -430,6 +441,7 @@
     eventHandler.addFilter('meetingType', 'Town Hall');
     eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
 
+    $('#look-up input').on('input propertychange', eventHandler.toggleSearchStyling);
     // Perform zip search on load
     var zipcode = getUrlParameter('zipcode');
     if (zipcode) {
