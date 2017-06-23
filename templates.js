@@ -19,7 +19,8 @@ Handlebars.registerHelper('json', function(context) {
 });
 
 Handlebars.registerHelper('addressQuery', function(address) {
-  return address.replace(/,/g, '').replace(/ /g, '+');
+  return escape(address)
+  // return address.replace(/,/g, '').replace(/ /g, '+');
 });
 
 // Adapted from http://stackoverflow.com/a/16315366
