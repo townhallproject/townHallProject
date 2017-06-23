@@ -322,6 +322,17 @@
     }
   };
 
+  // Get latest update
+  eventHandler.latestUpdate = function() {
+    TownHall.getLastUpdated()
+      .then(function(latestUpdateDate) {
+        $("#last-updated-date").text(latestUpdateDate);
+      })
+      .catch(function(error) {
+        console.log("error getting last updated date.");
+      });
+  };
+
   function submitSignup(first, last, zipcode, email, districts, partner) {
     var person = {
       'person' : {
@@ -429,6 +440,9 @@
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
     eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
+
+    // get lastest update date
+    eventHandler.latestUpdate(); 
 
     // Perform zip search on load
     var zipcode = getUrlParameter('zipcode');
