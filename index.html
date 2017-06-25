@@ -385,9 +385,9 @@
       <div role="tabpanel" class="tab-pane page" id="upload-video">
         <section class="container">
           <h1 class="text-primary text-center">Share your Town Hall Videos</h2>
-          <div class="col-sm-8 col-sm-offset-2 upload-video-stage-1">
-            <h3>Have a video from a town hall you want to share?</h3>
-            <button class="btn btn-primary btn-light-background upload-video-begin">Click to begin uploading</button>
+          <div class="col-sm-8 col-sm-offset-2 upload-video-stage-1 text-center">
+            <h3 class="margin-bottom">Have a video from a town hall you want to share?</h3>
+            <button class="btn btn-primary btn-lg btn-light-background upload-video-begin center-block">Click to begin uploading</button>
           </div>
           <div class="col-sm-8 col-sm-offset-2 upload-video-stage-2 is_hidden">
             <h3>Authorizing with youtube, please wait...</h3>
@@ -405,16 +405,16 @@
                 <input input type="file" id="video-file-field" class="button form-control" accept="video/*">
               </div>
               <div>
-                <em>By uploading a video you grant the Town Hall Project permission to use the video and share it with our progressive partners.  You also certify that you own all rights to the content or that you are authorized by the owner to make the content publicly available.</em>
+                <em>By uploading a video you grant the Town Hall Project permission to use the video and share it with the public.  You also certify that you own all rights to the content or that you are authorized by the owner to make the content publicly available.</em>
               </div>
               <button name="button" class="btn btn-primary btn-light-background btn-lg upload-video-upload">Upload my video</button>
             </form>
           </div>
           <div class="col-sm-8 col-sm-offset-2 upload-video-stage-4 is_hidden">
             <h3>
-              <div>Upload in progress:</div>
-              <div><progress id="upload-video-progress" max="1" value="0"></progress> <span id="upload-video-percent-transferred"></span>%</div>
               <div><span id="upload-video-bytes-transferred"></span>/<span id="upload-video-total-bytes"></span> bytes</div>
+              <div class="d-inline-block">Upload in progress:</div>
+              <div class="d-inline-block"><progress id="upload-video-progress" max="1" value="0"></progress> <span id="upload-video-percent-transferred"></span>%</div>
             </h3>
           </div>
           <div class="col-sm-8 col-sm-offset-2 upload-video-stage-5 is_hidden">
