@@ -128,12 +128,13 @@ UploadVideo.prototype.uploadFile = function(file) {
       }
     }.bind(this),
     onProgress: function(data) {
-      var currentTime = Date.now();
       var bytesUploaded = data.loaded;
       var totalBytes = data.total;
       // The times are in millis, so we need to divide by 1000 to get seconds.
-      var bytesPerSecond = bytesUploaded / ((currentTime - this.uploadStartTime) / 1000);
+      var bytesPerSecond = bytesUploaded / ((Date.now() - this.uploadStartTime) / 1000);
       var estimatedSecondsRemaining = (totalBytes - bytesUploaded) / bytesPerSecond;
+      var estimatedMinutesRemaining = Math.floor(estimatedSecondsRemaining / 60);
+      estimatedSecondsRemaining -= estimatedMinutesRemaining * 60;
       var percentageComplete = (bytesUploaded * 100) / totalBytes;
 
       $('#upload-video-progress').attr({
@@ -142,8 +143,7 @@ UploadVideo.prototype.uploadFile = function(file) {
       });
 
       $('#upload-video-percent-transferred').text(percentageComplete.toFixed(2));
-      $('#upload-video-bytes-transferred').text(bytesUploaded.toFixed(0));
-      $('#upload-video-total-bytes').text(totalBytes.toFixed(0));
+      $('#upload-video-seconds-remaining').text(estimatedMinutesRemaining.toFixed(0) + 'm' + estimatedSecondsRemaining.toFixed(0) + 's');
     }.bind(this),
     onComplete: function(data) {
       eventHandler.uploadVideoStage5();
