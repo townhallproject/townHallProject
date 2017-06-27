@@ -329,9 +329,16 @@
   };
 
   eventHandler.uploadVideoStage3 = function(e) {
+    $('.upload-video-upload').unbind('click');
     $('.upload-video-upload').click(eventHandler.uploadVideoStage4);
     $('.upload-video-stage-2').addClass('is_hidden');
     $('.upload-video-stage-3').removeClass('is_hidden');
+    $('.upload-video-stage-5').addClass('is_hidden');
+  };
+
+  eventHandler.resetVideoForm = function(e) {
+    $('#upload-video-form input[type=text]').val('');
+    $('#upload-video-form textarea').val('');
   };
 
   eventHandler.uploadVideoStage4 = function(e) {
@@ -462,6 +469,10 @@
     $('.filter').on('click', 'a', eventHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
     $('button.upload-video-begin').click(eventHandler.uploadVideoStage2);
+    $('#upload-another').on('click', eventHandler.resetVideoForm);
+    $('#video-file-field').change(function(){
+      $('.upload-video-upload').attr('disabled', false);
+    });
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
     eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
