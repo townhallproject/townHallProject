@@ -322,6 +322,30 @@
     }
   };
 
+  eventHandler.uploadVideoStage2 = function(e) {
+    $('.upload-video-stage-1').addClass('is_hidden');
+    $('.upload-video-stage-2').removeClass('is_hidden');
+    authWithYoutube();
+  };
+
+  eventHandler.uploadVideoStage3 = function(e) {
+    $('.upload-video-upload').click(eventHandler.uploadVideoStage4);
+    $('.upload-video-stage-2').addClass('is_hidden');
+    $('.upload-video-stage-3').removeClass('is_hidden');
+  };
+
+  eventHandler.uploadVideoStage4 = function(e) {
+    $('.upload-video-upload').attr('disabled', true);
+    uploadVideo.handleUploadClicked();
+    $('.upload-video-stage-3').addClass('is_hidden');
+    $('.upload-video-stage-4').removeClass('is_hidden');
+  };
+
+  eventHandler.uploadVideoStage5 = function(e) {
+    $('.upload-video-stage-4').addClass('is_hidden');
+    $('.upload-video-stage-5').removeClass('is_hidden');
+  };
+
   function submitSignup(first, last, zipcode, email, districts, partner) {
     var person = {
       'person' : {
@@ -437,6 +461,7 @@
 
     $('.filter').on('click', 'a', eventHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
+    $('button.upload-video-begin').click(eventHandler.uploadVideoStage2);
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
     eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
