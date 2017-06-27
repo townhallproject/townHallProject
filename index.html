@@ -410,13 +410,19 @@
           </div>
       </div>
       <div role="tabpanel" class="tab-pane" id="missing-members">
-        <nav class="navbar navbar-default ">
-          <ul class="nav navbar-nav navbar-left filter-button-group" >
+        <header>
+          <section class="container container-fluid">
+            <div class="col-md-6 col-md-offset-3">
+              <p class="lead">193 members of Congress have not held a single town hall event this year. Is yours one of them?</p>
+            </div>
+          </section>
+        <nav class="navbar navbar-default">
+          <ul class="nav navbar-nav navbar-left filter-button-group">
             <li class="block">
               <div class="col-sm-6">
                 <button class="btn btn-white outline-text-color btn-block" type="button" name="button" id="view-missing-member-report">View Summary Report</button>
               </div>
-              <span  class="col-sm-6" id="mm-current-state" data-current=0 data-total=0></span></li>
+              <span class="col-sm-6" id="mm-current-state" data-current=0 data-total=0></span></li>
             <li class="block filter-button-group mm-filter-info-holder">
               <ul class="nav navbar-nav" id="mm-filter-info">
               </ul>
@@ -456,6 +462,7 @@
             </ul>
           </ul>
         </nav>
+    </header>
         <div class="inset">
         </div>
         <div class="missing-member-cards-container">
@@ -580,6 +587,7 @@
 
     <script src="/scripts/views/mapView.js"></script>
     <script src="/scripts/views/eventView.js"></script>
+    <script src="/scripts/views/missingMembersView.js"></script>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMap&libraries=visualization,geometry"></script>
   </body>

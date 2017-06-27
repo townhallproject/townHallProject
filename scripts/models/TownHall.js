@@ -112,15 +112,15 @@
   };
 
   TownHall.zipToDistrict = function (zip) {
-    districts = []
+    districts = [];
     return new Promise(function (resolve, reject) {
       firebasedb.ref('/zipToDistrict/' + zip).once('value').then(function(snapshot) {
         if (snapshot.exists()) {
           snapshot.forEach(function(ele){
-            var district = ele.val().abr + '-' + ele.val().dis
-            districts.push(district)
-          })
-          resolve(districts)
+            var district = ele.val().abr + '-' + ele.val().dis;
+            districts.push(district);
+          });
+          resolve(districts);
         } else {
           reject ('That is not a real zip code');
         }

@@ -512,7 +512,7 @@
 
     $('#view-missing-member-report').on('click', function(e) {
       $('.missing-members-modal').modal('show');
-    })
+    });
 
     // Fix popover bug in bootstrap 3 https://github.com/twbs/bootstrap/issues/16732
     $('body').on('hidden.bs.popover', function (e) {
