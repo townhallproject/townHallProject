@@ -91,6 +91,22 @@
    color: @brand-white;
  }
 
+ .outline-primary {
+   border:solid 1px @brand-primary
+ }
+
+ .outline-bright-blue {
+   border:solid 1px @brand-success
+ }
+
+ .outline-red {
+   border:solid 1px @brand-secondary
+ }
+
+ .outline-text-color {
+   border:solid 1px @brand-text
+ }
+
 @link-color:                        @brand-secondary;
 @component-active-bg:               @brand-secondary;
 @nav-tabs-active-link-hover-color:  @brand-primary;
@@ -122,6 +138,8 @@
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
 @navbar-border-radius:                     none;
+@grid-float-breakpoint: @screen-md-min;
+
 .weight-heavy {
    font-weight: 700;
    letter-spacing: 0.06em;
@@ -136,11 +154,11 @@
 }
 
 .navbar-left a {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .navbar-right .btn {
-  font-size: 20px;
+  font-size: 1.2em;
 }
 
 .navbar-right .social-icons {
@@ -183,6 +201,7 @@ body{
   color: #1E2528;
   font-family: 'Raleway', sans-serif;
   margin-bottom: 60px;
+  font-weight: 100;
 }
 
 h1, h2 {
@@ -249,7 +268,6 @@ input{
      &.input-lg {
        background: @brand-white;
        color: @brand-text;
-      //  .weight-heavy();
        &::-webkit-input-placeholder { /* Chrome */
          color: @brand-success;
          opacity: 0.9;
@@ -332,11 +350,6 @@ a.social-icon {
   border-left-color: rgb(208, 209, 213);
   border-left-style: solid;
   border-left-width: 2px;
-  // border-image-source: initial;
-  // border-image-slice: initial;
-  // border-image-width: initial;
-  // border-image-outset: initial;
-  // border-image-repeat: initial;
 }
 
 .panel-heading small{
@@ -618,6 +631,10 @@ a.social-icon {
      color: @brand-danger;
      font-weight: 700;
    }
+   .close{
+     font-size: 40px;
+     color: @brand-text;
+   }
  }
 
  .form-control.has-error {
@@ -775,6 +792,280 @@ li[data-toggle='popover']:hover {
 img.grayscale {
   filter: grayscale(100%);
 }
+
+// Missing Members
+.missing-member-report{
+  color: @brand-success;
+  line-height: 2em;
+  text-align: left;
+  padding-top: 2em;
+  .weight-thin{
+    font-weight: lighter;
+  }
+}
+.missing-member-img img{
+  max-width: 260px;
+}
+
+#missing-members {
+  background-color: @brand-gray;
+  .missing-member-cards-container{
+    padding-bottom: 130px;
+    -webkit-box-shadow: inset 0px 12px 29px -13px rgba(0,0,0,1);
+       -moz-box-shadow: inset 0px 12px 29px -13px rgba(0,0,0,1);
+            box-shadow: inset 0px 12px 29px -13px  rgba(0,0,0,1);
+  }
+  .navbar {
+    border-bottom: @brand-cool;
+    min-height: 105px;
+    background-color: transparent;
+    border: none;
+  }
+  .navbar-left{
+    padding-left: 15px;
+    padding-right: 15px;
+    min-width: 276px;
+  }
+  .navbar-left{
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  .navbar-right .btn {
+    font-size: 1em;
+  }
+  .navbar-right {
+    margin-left: 15px;
+    margin-right: 15px;
+
+  }
+  .dropdown-menu .btn:hover {
+    background-color: @brand-secondary;
+  }
+  .btn-group a{
+    border: 1px solid @brand-white;
+  }
+}
+@media (max-width:564px) {
+  #missing-members .navbar-right .nav-item {
+    width: 100%;
+  }
+  .navbar-btn.btn-xs {
+    margin-top: 1px;
+    margin-bottom: 1px;
+  }
+  .nav-item a {
+    width: 100%;
+  }
+  #missing-members .btn-group {
+    border-radius: 3px;
+  }
+  #missing-members .grid {
+    width: 260px;
+  }
+}
+@media (max-width: 768px) {
+  .btn-xs.navbar-btn {
+    margin-left: 0px;
+    }
+}
+@media (min-width: 768px) {
+  .btn-xs.navbar-btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    }
+    #missing-members .navbar-nav, #missing-members .navbar-right.btn-group {
+      margin-right: 15px;
+      margin-left: 15px;
+    }
+}
+
+.element-item {
+  width: 25%;
+  min-width: 270px;
+  padding: 5px;
+}
+
+.element-item .card-header{
+  text-align: center;
+  position: relative;
+}
+.grid{
+  padding: 0;
+  min-height: 400px;
+  margin-bottom: 163px;
+  padding-top: 40px;
+  margin: auto;
+
+}
+
+.image-holder{
+  margin: auto;
+  text-align: center;
+}
+
+.about .element-item:hover{
+  filter: brightness(110%);
+}
+
+.element-item a {
+  text-decoration: none;
+}
+
+.navbar-left.filter-button-group .block{
+  display: block;
+  float: none;
+}
+.mm-turn-off-filter button:first-of-type {
+  margin-left: 30px;
+  margin-bottom: 5px;
+}
+.mm-turn-off-filter button {
+  margin-left: 5px;
+}
+
+.Dem .panel-heading, .card-representative.Democratic .card-header{
+  color: white;
+  background-color: #66bdf4;
+}
+
+.Ind .panel-heading, .card-representative.Independent .card-header{
+  color: white;
+  background-color: darken(#705f8c, 20%);
+}
+
+.card-representative.Republican .card-header{
+  background-color: #f87773;
+}
+
+.state-button {
+  display: inline-block;
+  float: left;
+  width: 25px;
+  text-align: center;
+  font-size: 12px;
+  padding: 2px;
+  vertical-align: middle;
+  line-height: 25px;
+  height: 25px;
+  cursor: pointer;
+  padding: 2px;
+  background-color: #252525;
+
+  a{
+   color: @brand-white;
+   font-size: 1em;
+ }
+}
+.state-button-holder {
+  margin-bottom: 5px;
+  width: 100%;
+  #state-buttons{
+    width: 95%;
+    margin: auto;
+  }
+}
+
+.btn-xs.mm-btn-group.navbar-btn, .btn-blue{
+  background-color: @brand-primary-lighter;
+  color: @brand-white;
+}
+
+.btn-xs.mm-btn-group.navbar-btn:focus{
+  background-color: @brand-success;
+  color: @brand-white;
+}
+.btn-xs.mm-btn-group.navbar-btn:hover, .btn-blue:hover{
+  background-color: @brand-success;
+  color: @brand-white;
+}
+
+.background-color-1{
+  background-color: #f0f0f0;
+  a {
+    color: @brand-text
+  }
+}
+
+.background-color-2{
+  background-color: #d9d9d9;
+  a {
+    color: @brand-text
+  }
+}
+
+.background-color-3{
+  background-color: #bdbdbd;
+  a {
+    color: @brand-text
+  }
+}
+
+.background-color-4{
+  background-color: #969696;
+}
+
+.background-color-5{
+  background-color: #737373;
+}
+
+.background-color-6{
+  background-color: #525252;
+}
+.background-color-6{
+  background-color: #252525;
+}
+
+.mm.card-footer {
+  padding: 0;
+  border-top: 0.5px solid @brand-cool;
+}
+.footer-icon{
+  width: 32%;
+  display: inline-block;
+  text-align: center;
+  vertical-align:middle;
+  color:white;
+  height: 100%;
+  color: @brand-text;
+  min-height: 75px;
+}
+
+.footer-text {
+  padding: 5px;
+}
+.highlight{
+  font-weight: 900;
+}
+
+.mm .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.swing-left-link:hover {
+  color: @brand-secondary;
+}
+.swing-left-link {
+  color: @brand-text;
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+}
+.swingleft-holder a {
+  font-weight: normal;
+
+}
+
+.less-padding {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.rep-card-subtitle {
+  position: absolute;
+  top: 63px;
+  left:40%;
+}
+
 @media screen and (max-width: 1200px) {
   .spacer{
       margin-top: 85px;

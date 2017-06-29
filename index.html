@@ -68,10 +68,11 @@
         <div class="collapse navbar-collapse" id="main-nav">
           <ul class="nav navbar-nav navbar-left" roll="tablists">
             <li></li>
-            <li><a class="hash-link" data-toggle="tab" href="#submit">Submit an Event</a></li>
             <li><a class="hash-link"  data-toggle="tab" href="#about">About</a></li>
-            <li><a class="hash-link" href="#join" data-toggle="tab">Get Event Updates</a></li>
-            <li class="is_hidden"><a class="hash-link" href="#upload-video" data-toggle="tab">Upload Video</a></li>
+            <li><a class="hash-link" href="#missing-members" data-toggle="tab" id="missing-member-tab">Missing Members</a></li>
+            <li><a class="hash-link" href="#join" data-toggle="tab">Get event updates</a></li>
+            <li><a class="hash-link" href="#upload-video" data-toggle="tab">Share a video</a></li>
+            <li><a class="hash-link" data-toggle="tab" href="#submit">Submit an event</a></li>
             <li><a id="privacy-policy-link" class="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#privacy-policy">Privacy Policy</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -111,7 +112,6 @@
                     </div>
                   </form>
                   <div id="textresults" class="text-center "></div>
-
                 </div>
               </div>
             </section>
@@ -134,7 +134,37 @@
             </div>
            </section>
         </div>
-        <section class="background-light-blue email-signup--inline">
+        <section class="email-signup--inline">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-4 col-xs-12 col-sm-offset-1 missing-member-img">
+                    <img src="Images/missingMemberSmallNoNum.png" alt="" />
+                  </div>
+                  <div class="col-sm-5 col-xs-12 col-sm-offset-2">
+                    <button class="btn btn-white missing-member-report" type="button" name="button" id="missing-member-banner-btn">
+                      <span class="extra-large weight-heavy">MISSING<br>MEMBER<br></span>
+                      <span class="extra-large weight-thin">REPORT<br><small>2017 | JAN-MAY</small>
+                        </span>
+                        <div>View missing members </div><i class="fa fa-3x fa-long-arrow-right" aria-hidden="true"></i>
+                      </button>
+                        <!-- <div class="col-xs-6">
+                          <button class="btn btn-blue" type="button" name="button">Download Missing Members Report</button>
+                        </div> -->
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+        </section>
+        <section class="background-light-blue email-signup--inline" id="email-signup">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-email"><span aria-hidden="true">&times;</span></button>
          <div class="container container-fluid">
            <h1 id="email-title" class="text-center extra-large">Sign up to receive updates on local events.</h1>
            <form id="email-signup-form">
@@ -168,6 +198,7 @@
            </form>
          </div>
        </section>
+
         <!-- Cards showing representatives and their contact info -->
         <div id="representativeCards">
           <section class="container container-fluid"></section>
@@ -278,7 +309,6 @@
                 <footer class="text-success">President Obama, <cite title="Source Title">Farewell Address</cite></footer>
               </blockquote>
           </section>
-
         </header>
         <section class="container">
             <article class="center-block about">
@@ -300,7 +330,6 @@
                   <li>Staff office hours</li>
                   <li>Opportunities in Washington, D.C. to speak with your representative</li>
                 </ul>
-
                 <p>We do not currently include:</p>
                 <ul>
                   <li>Fundraisers outside the district/state</li>
@@ -380,7 +409,69 @@
               <small>Photo credit: Trang Dang</small>
             </div>
           </div>
-
+      </div>
+      <div role="tabpanel" class="tab-pane" id="missing-members">
+        <header>
+          <section class="container container-fluid">
+            <div class="col-md-6 col-md-offset-3">
+              <p class="lead">193 members of Congress have not held a single town hall event this year. Is yours one of them?</p>
+            </div>
+          </section>
+        <nav class="navbar navbar-default">
+          <ul class="nav navbar-nav navbar-left filter-button-group">
+            <li class="block">
+              <div class="col-sm-6">
+                <button class="btn btn-white outline-text-color btn-block" type="button" name="button" id="view-missing-member-report">View Summary Report</button>
+              </div>
+              <span class="col-sm-6" id="mm-current-state" data-current=0 data-total=0></span></li>
+            <li class="block filter-button-group mm-filter-info-holder">
+              <ul class="nav navbar-nav" id="mm-filter-info">
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right btn-group">
+            <li class="nav-item dropdown filter-button-group btn-group">
+              <a href="#" class="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party <span class="caret"></span></a>
+              <ul class="dropdown-menu button-group" data-filter-group="party">
+                <li class="downdown-title">Filter by party</li>
+                <li role="separator" class="divider"></li>
+                <li data-filter=".Democratic" id="Democratic" class="btn dropdown-item btn-filter btn-white">Democratic</li>
+                <li data-filter=".Republican" id="Republican" class="btn dropdown-item btn-filter btn-white">Republican</li>
+                <!-- <li data-filter=".Independent" id="Independent" class="btn dropdown-item btn-filter btn-white">Independent</li> -->
+                <li data-filter="" id="All" class="btn dropdown-item btn-filter btn-white" >All</li>
+              </ul>
+            </li>
+            <li class=" nav-item dropdown filter-button-group btn-group">
+              <a href="#" class="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chamber <span class="caret"></span></a>
+              <ul class="dropdown-menu button-group" data-filter-group="chamber">
+                <li class="downdown-title">Filter by chamber</li>
+                <li role="separator" class="divider"></li>
+                <li class="btn dropdown-item btn-filter btn-white" data-filter=".Senate">Senate</li>
+                <li class="btn dropdown-item btn-filter btn-white" data-filter=".House" id="Republican">House</li>
+                <li class="btn dropdown-item btn-filter btn-white" data-filter="" id="All" >All</li>
+              </ul>
+            </li>
+            <li class="nav-item filter-button-group button-group btn-group" data-filter-group="swingLeftFilter">
+              <a class="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".swingLeft">Swing Left District</a>
+            </li>
+            <li class="nav-item filter-button-group button-group btn-group" data-filter-group="ahcaFilter">
+              <a class="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".ahca">Voted for AHCA</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav state-button-holder filter-button-group ">
+            <ul id="state-buttons" class="button-group " data-filter-group="state">
+            </ul>
+          </ul>
+        </nav>
+    </header>
+        <div class="inset">
+        </div>
+        <div class="missing-member-cards-container">
+          <div class="container">
+            <div class="grid">
+            </div>
+          </div>
+        </div>
       </div>
       <div role="tabpanel" class="tab-pane page" id="upload-video">
         <section class="container">
@@ -463,11 +554,22 @@
           </section>
         <div class="banner" id="cover">
         </div>
+      </div>
     </div>
     <div class="modal fade event-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         </div>
+      </div>
+    </div>
+    <div class="modal fade missing-members-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <img src="/Images/Missing_Member_Report.png" alt="" />
+            <a class="twitter-share-button"
+        href="https://townhallproject.com/Images/Missing_Member_Report.png?text=Missing%20Members%20Report">
+      Tweet</a>
+      <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ftownhallproject.com%2FImages%2FMissing_Member_Report.png&layout=button&size=small&mobile_iframe=true&appId=1549118422076809&width=59&height=20" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>        </div>
       </div>
     </div>
     <footer class="footer">
@@ -493,6 +595,9 @@
     <script src="/vendor/scripts/cors-uploader.js"></script>
     <script src="templates.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+
 
     <script src='https://actionnetwork.org/widgets/v2/form/stay-up-to-date-on-our-work?format=js&source=widget'></script>
     <script type="text/javascript">(function () {
@@ -503,10 +608,31 @@
                 s.src = ('https:' == window.location.protocol ? 'https' : 'http')+'://addtocalendar.com/atc/1.5/atc.min.js';
                 var h = d[g]('body')[0];h.appendChild(s); }})();
     </script>
+    <script>window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+
+      return t;
+    }(document, "script", "twitter-wjs"));</script>
     <!-- Script Files -->
+    <script src="/scripts/data/statePop.js"></script>
+
     <script src="/scripts/models/TownHall.js"></script>
+    <script src="/scripts/models/MissingMember.js"></script>
+
     <script src="/scripts/views/mapView.js"></script>
     <script src="/scripts/views/eventView.js"></script>
+    <script src="/scripts/views/missingMembersView.js"></script>
     <script src="/scripts/views/videoUploadView.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMap&libraries=visualization,geometry"></script>
   </body>

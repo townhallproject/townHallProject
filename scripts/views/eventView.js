@@ -73,10 +73,10 @@
   };
 
   // Renders one panel, assumes data processing has happened
-  eventHandler.renderPanels = function(event, $parent) {
+  eventHandler.renderPanels = function(townhall, $parent) {
     var compiledTemplate = Handlebars.getTemplate('eventCards');
-    var $panel = $(compiledTemplate(event));
-    $panel.children('.panel').addClass(event.Party.slice(0,3));
+    var $panel = $(compiledTemplate(townhall));
+    $panel.children('.panel').addClass(townhall.Party.slice(0,3));
     $panel.appendTo($parent);
   };
 
@@ -370,7 +370,6 @@
       a = ((a << 5) - a) + b.charCodeAt(0);
       return a & a;
     }, 0);
-
     // firebasedb.ref('/emailSignUps/' + userID).set(person).then(function(returned){
     //   localStorage.setItem('signedUp', true);
     //   $('.email-signup--inline').fadeOut(750);
@@ -385,7 +384,7 @@
       data: JSON.stringify(person),
       success: function() {
         localStorage.setItem('signedUp', true);
-        $('.email-signup--inline').fadeOut(750);
+        $('#email-signup').fadeOut(750);
       },
       error: function(error) {
         console.log('error', error);
@@ -394,6 +393,7 @@
     });
     return false;
   }
+
 
   function setupTypeaheads() {
     var typeaheadConfig = {
@@ -487,12 +487,13 @@
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
-      $("a[href='" + location.hash + "']").tab('show');
+      var hashLocation = location.hash.split('?')[0];
+      $("a[href='" + hashLocation + "']").tab('show');
     } else {
       TownHall.isMap = true;
     }
     if (localStorage.getItem('signedUp') === 'true') {
-      $('.email-signup--inline').hide();
+      $('#email-signup').hide();
     }
 
     $('.hash-link').on('click', function onClickGethref(event) {
@@ -516,7 +517,13 @@
 
         }, 500);
 
-      } else {
+      } else if (hashid === '#missing-members') {
+        setTimeout(function () {
+          $('.grid').isotope();
+        }, 1500);
+        location.hash = hashid;
+      }
+      else {
         location.hash = hashid;
       }
 
@@ -528,7 +535,10 @@
     $('.event-modal').on('hide.bs.modal', function (e) {
       setUrlParameter('eventId', false);
     });
-
+    $('#close-email').on('click', function(e){
+      localStorage.setItem('signedUp', true);
+      $('#email-signup').fadeOut(750);
+    });
     // Only show one popover at a time
     $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
       $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
@@ -536,6 +546,13 @@
 
     $('body').on('click', '.popover .popover-title a.close', function(e) {
       $('[data-toggle="popover"]').popover('hide');
+    });
+    $('#missing-member-banner-btn').on('click', function(e){
+      $('#missing-member-tab').click();
+    });
+
+    $('#view-missing-member-report').on('click', function(e) {
+      $('.missing-members-modal').modal('show');
     });
 
     // Fix popover bug in bootstrap 3 https://github.com/twbs/bootstrap/issues/16732
