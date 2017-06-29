@@ -322,6 +322,37 @@
     }
   };
 
+  eventHandler.uploadVideoStage2 = function(e) {
+    $('.upload-video-stage-1').addClass('is_hidden');
+    $('.upload-video-stage-2').removeClass('is_hidden');
+    authWithYoutube();
+  };
+
+  eventHandler.uploadVideoStage3 = function(e) {
+    $('.upload-video-upload').unbind('click');
+    $('.upload-video-upload').click(eventHandler.uploadVideoStage4);
+    $('.upload-video-stage-2').addClass('is_hidden');
+    $('.upload-video-stage-3').removeClass('is_hidden');
+    $('.upload-video-stage-5').addClass('is_hidden');
+  };
+
+  eventHandler.resetVideoForm = function(e) {
+    $('#upload-video-form input[type=text]').val('');
+    $('#upload-video-form textarea').val('');
+  };
+
+  eventHandler.uploadVideoStage4 = function(e) {
+    $('.upload-video-upload').attr('disabled', true);
+    uploadVideo.handleUploadClicked();
+    $('.upload-video-stage-3').addClass('is_hidden');
+    $('.upload-video-stage-4').removeClass('is_hidden');
+  };
+
+  eventHandler.uploadVideoStage5 = function(e) {
+    $('.upload-video-stage-4').addClass('is_hidden');
+    $('.upload-video-stage-5').removeClass('is_hidden');
+  };
+
   function submitSignup(first, last, zipcode, email, districts, partner) {
     var person = {
       'person' : {
@@ -339,7 +370,12 @@
       a = ((a << 5) - a) + b.charCodeAt(0);
       return a & a;
     }, 0);
-    console.log(person);
+    // firebasedb.ref('/emailSignUps/' + userID).set(person).then(function(returned){
+    //   localStorage.setItem('signedUp', true);
+    //   $('.email-signup--inline').fadeOut(750);
+    // }).catch(function(error){
+    //   $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
+    // });
     $.ajax({
       url: 'https://actionnetwork.org/api/v2/forms/eafd3b2a-8c6b-42da-bec8-962da91b128c/submissions',
       method: 'POST',
@@ -432,6 +468,11 @@
 
     $('.filter').on('click', 'a', eventHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
+    $('button.upload-video-begin').click(eventHandler.uploadVideoStage2);
+    $('#upload-another').on('click', eventHandler.resetVideoForm);
+    $('#video-file-field').change(function(){
+      $('.upload-video-upload').attr('disabled', false);
+    });
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
     eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');

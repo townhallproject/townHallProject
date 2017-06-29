@@ -210,6 +210,10 @@ h1, h2 {
   font-size: 45px;
 }
 
+.is_hidden {
+  display: none!important;
+}
+
 .navbar{
   border-bottom: @brand-secondary 2px solid;
   margin-bottom: 0;
@@ -281,6 +285,12 @@ input{
      }
    }
  }
+
+#upload-video-form {
+  div {
+    margin-bottom: 1em;
+  }
+}
 
 #can_embed_form{
   padding:20px;
@@ -1119,4 +1129,16 @@ img.grayscale {
       }
     }
   }
+}
+
+
+/* Bootstrap 4 port.  Once we switch over please delete these! */
+.d-block {
+  display: block;
+}
+.d-inline-block {
+  display: inline-block;
+}
+.d-inline {
+  display: inline;
 }
