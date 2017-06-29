@@ -17,11 +17,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
-// Storing refresh tokens on a client is stupid 99.9% of the time,
-// but we're dealing with the 0.1% case where it's secure here.
-// This refresh token is locked down to youtube uploading and nothing else.
-// Plus the account is a throwaway and would be completely useless even if compromised.
 var authInfo = {
   client_id: '1060892537782-gsbi9kn8qf5t1370uc7lnhqqopt9e9d3.apps.googleusercontent.com',
   client_secret: '8vcglkf2blCtQM3p25hiyV21',
