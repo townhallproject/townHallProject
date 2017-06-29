@@ -323,17 +323,17 @@
   };
 
   eventHandler.uploadVideoStage2 = function(e) {
-    $('.upload-video-stage-1').addClass('is_hidden');
-    $('.upload-video-stage-2').removeClass('is_hidden');
+    $('.upload-video-stage-1').addClass('hidden');
+    $('.upload-video-stage-2').removeClass('hidden');
     authWithYoutube();
   };
 
   eventHandler.uploadVideoStage3 = function(e) {
     $('.upload-video-upload').unbind('click');
     $('.upload-video-upload').click(eventHandler.uploadVideoStage4);
-    $('.upload-video-stage-2').addClass('is_hidden');
-    $('.upload-video-stage-3').removeClass('is_hidden');
-    $('.upload-video-stage-5').addClass('is_hidden');
+    $('.upload-video-stage-2').addClass('hidden');
+    $('.upload-video-stage-3').removeClass('hidden');
+    $('.upload-video-stage-5').addClass('hidden');
   };
 
   eventHandler.resetVideoForm = function(e) {
@@ -344,13 +344,13 @@
   eventHandler.uploadVideoStage4 = function(e) {
     $('.upload-video-upload').attr('disabled', true);
     uploadVideo.handleUploadClicked();
-    $('.upload-video-stage-3').addClass('is_hidden');
-    $('.upload-video-stage-4').removeClass('is_hidden');
+    $('.upload-video-stage-3').addClass('hidden');
+    $('.upload-video-stage-4').removeClass('hidden');
   };
 
   eventHandler.uploadVideoStage5 = function(e) {
-    $('.upload-video-stage-4').addClass('is_hidden');
-    $('.upload-video-stage-5').removeClass('is_hidden');
+    $('.upload-video-stage-4').addClass('hidden');
+    $('.upload-video-stage-5').removeClass('hidden');
   };
 
   function submitSignup(first, last, zipcode, email, districts, partner) {
