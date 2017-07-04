@@ -28,11 +28,13 @@ Moc.loadAll = function(){
   return new Promise(function (resolve, reject) {
     firebase.database().ref('mocData/').once('value').then(function(snapshot){
       snapshot.forEach(function(member){
-        var memberobj = new Moc(member.val());
-        memberobj.partyClass = memberobj.party.substring(0,3);
-        if (memberobj.missingMember === true) {
-          Moc.allMocsObjs.push(memberobj);
-          total ++;
+        if (member.val().party) {
+          var memberobj = new Moc(member.val());
+          memberobj.partyClass = memberobj.party.substring(0,3);
+          if (memberobj.missingMember === true) {
+            Moc.allMocsObjs.push(memberobj);
+            total ++;
+          }
         }
       });
       $('#mm-current-state').attr('data-current', total);
