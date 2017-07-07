@@ -97,10 +97,13 @@
 
   Moc.loadAll().then(function(returnedData){
     $currentState = $('#mm-current-state');
+    $copy = $('#mm-total-copy');
+
     var total = parseInt($currentState.attr('data-total'));
     var cur = parseInt($currentState.attr('data-current'));
     // inital report of data
     $currentState.text('Viewing ' + cur + ' of ' + total + ' total missing members');
+    $copy.text(total);
     // make cards
     missingMemberView.renderAll('missingMemberCard', '.grid', returnedData);
     // add state buttons
