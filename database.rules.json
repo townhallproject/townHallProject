@@ -64,9 +64,12 @@
   	"mocData" : {
       ".read": "true",
       "$mocKey": {
-        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-        "currentEvents" : {
-          ".write": "auth.uid !== null"
+        	".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        	"lastUpdated": {
+        		".write": "auth.uid !== null"
+       		 },
+        	"currentEvents" : {
+          	".write": "auth.uid !== null"
         }
      }
    },
