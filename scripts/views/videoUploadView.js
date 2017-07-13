@@ -20,7 +20,7 @@ limitations under the License.
 var authInfo = {
   client_id: '1060892537782-gsbi9kn8qf5t1370uc7lnhqqopt9e9d3.apps.googleusercontent.com',
   client_secret: '8vcglkf2blCtQM3p25hiyV21',
-  refresh_token: '1/ycXlop7VdlsbxcUdwdRfIwc-YD9cU3Jo-1XVeb7Jh4w',
+  refresh_token: '1/RL2UCZxiHKGWSMk2ed_yuIrn9AEetbXxHk1k5TIQzyU',
   grant_type: 'refresh_token'
 };
 
