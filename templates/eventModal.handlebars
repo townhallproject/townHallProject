@@ -17,13 +17,13 @@
 <div class="modal-body">
   <div class="row">
     {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
-      <h3 class="col-xs-10 col-md-9">
+      <h3 class="col-xs-10 col-md-9 line-height-medium">
         {{#ifCond District '===' 'Senate'}}
           {{Member}} <small>Home state MoC (not present)</small>
         {{else}}
           {{Member}} <small>Home district MoC (not present)</small>
         {{/ifCond}}
-        <br />{{districtAdopter}} <small>Visiting MoC (will be present)</small>
+        <span class="d-inline-block">{{districtAdopter}} <small>Visiting MoC (will be present)</small>
       </h3>
     {{else}}
       <h3 class="col-xs-10 col-md-9">{{Member}} <small> ({{Party}}) {{State}}, {{District}}</small></h3>
