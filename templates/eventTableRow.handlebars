@@ -9,13 +9,22 @@
   {{/if}}
   >
   <span class="member">
-    <h4>
-      {{Member}}
-      <small>
-        ({{Party}}) {{State}}, {{District}}
+    {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
+      <h4 class="line-height-medium">
+        {{#ifCond District '===' 'Senate'}}
+          {{Member}} <small>Home state MoC (not present)</small>
+        {{else}}
+          {{Member}} <small>Home district MoC (not present)</small>
+        {{/ifCond}}
         <a data-toggle="modal" data-target=".event-modal" onclick="eventHandler.populateEventModal({{{json this}}})">Details</a>
-      </small>
-    </h4>
+        <br />{{districtAdopter}} <small>Visiting MoC (will be present)</small>
+      </h4>
+    {{else}}
+      <h4>
+        {{Member}} <small> ({{Party}}) {{State}}, {{District}}</small>
+        <a data-toggle="modal" data-target=".event-modal" onclick="eventHandler.populateEventModal({{{json this}}})">Details</a>
+      </h4>
+    {{/ifCond}}
     <span class="badge badge-default badge-pill pull-right"> {{meetingType}}</span>
   </span>
   <ul class="list-inline list-inline-separated">
