@@ -476,6 +476,7 @@
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
     eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
+    eventHandler.addFilter('meetingType', 'Tele-Town Hall');
 
     // Perform zip search on load
     var zipcode = getUrlParameter('zipcode');
