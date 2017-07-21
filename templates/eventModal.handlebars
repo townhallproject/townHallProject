@@ -16,7 +16,19 @@
 </div>
 <div class="modal-body">
   <div class="row">
-    <h3 class="col-xs-10 col-md-9">{{Member}} <small> ({{Party}}) {{State}}, {{District}}</small></h3>
+    {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
+      <h3 class="col-xs-10 col-md-9 line-height-medium">
+        {{#ifCond District '===' 'Senate'}}
+          <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{Member}} <small> ({{Party}}) {{State}}, {{District}}</small>
+        {{else}}
+          <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{Member}} <small> ({{Party}}) {{State}}, {{District}}</small>
+        {{/ifCond}}
+        <br>
+        <span class="discriptor-text d-inline-block">Visiting MoC (will be present): </span>{{districtAdopter}} <small> ({{districtAdopterParty}}) {{districtAdopterState}}, {{districtAdopterDistrict}}</small>
+      </h3>
+    {{else}}
+      <h3 class="col-xs-10 col-md-9">{{Member}} <small>({{Party}}) {{State}}, {{District}}</small></h3>
+    {{/ifCond}}
     <h3 class="col-xs-2 col-md-3">
       <span class="addtocalendar pull-right">
         <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
@@ -33,6 +45,7 @@
       </span>
     </div>
   </h3>
+
   {{#if Notes}}
     <p>{{{Notes}}}</p>
   {{/if}}

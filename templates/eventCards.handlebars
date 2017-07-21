@@ -24,8 +24,23 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-        <h3>{{Member}} <small>({{Party}}, {{District}})</small></h3>
-      </div>
+          {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
+            <h3 class="line-height-small">
+              <div class="row">
+                {{#ifCond District '===' 'Senate'}}
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>{{Member}} <small> ({{Party}}, {{District}})</small></span>
+                {{else}}
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>{{Member}} <small> ({{Party}}, {{District}})</small></span>
+                {{/ifCond}}
+              <!-- </div>
+              <div class="row margin-top-5"> -->
+                <span class="d-inline-block col-sm-6"><span class="small-white">Visiting MoC (will be present):<br></span>{{districtAdopter}} <small> ({{districtAdopterParty}}, {{districtAdopterDistrict}})</small></span>
+              </div>
+            </h3>
+          {{else}}
+            <h3>{{Member}} <small>({{Party}}, {{District}})</small></h3>
+          {{/ifCond}}
+        </div>
       </div>
     </div>
     <div class="panel-body">

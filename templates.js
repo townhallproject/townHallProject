@@ -56,6 +56,7 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
 });
 
 Handlebars.registerHelper('shortDateTime', function(townhall) {
-  var localString = new Date(townhall.Date + " " + townhall.Time).toLocaleString()
-  return localString.slice(0, -6) + localString.slice(-2) + " " + townhall.timeZone;
-})
+  var localString = new Date(townhall.Date + ' ' + townhall.Time).toLocaleString();
+  var shortDateTime = localString.slice(0, -6) + localString.slice(-2);
+  return townhall.timeZone ? townhall.timeZone : null;
+});
