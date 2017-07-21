@@ -293,18 +293,134 @@ a.social-icon {
   margin-bottom: 0;
 }
 
-
- .list-group-heading{
-   padding-bottom: 0;
-   padding-left: 0;
-   padding-right: 0;
-   .navbar-right {
-      margin-right: 0;
-   }
-   .navbar-nav{
-     margin-left: 0;
-   }
+.list-group-heading{
+ padding-bottom: 0;
+ padding-left: 0;
+ padding-right: 0;
+ .navbar-right {
+    margin-right: 0;
  }
+ .navbar-nav{
+   margin-left: 0;
+ }
+}
+
+.list-group { margin-bottom: 0; }
+.event-card { margin-bottom: 1rem; }
+
+.panel-heading_in-person  { background-color: #439cbf; }
+.panel-heading_staff      { background-color: #ceca3e; }
+.panel-heading_activism   { background-color: #f96262; }
+.panel-heading_tele       { background-color: #2eaf52; }
+
+.event-icon__in-person {
+  background-image: url('/images/map/circle-in-person.svg');
+  background-size: 20px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  margin: 2px 0 0 0;
+}
+
+.event-icon__tele {
+  background-image: url('/images/map/circle-tele.svg');
+  background-size: 20px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  margin: 2px 0 0 0;
+}
+
+.event-icon__staff {
+  background-image: url('/images/map/circle-staff.svg');
+  background-size: 20px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  margin: 2px 0 0 0;
+}
+
+.event-icon__activism {
+  background-image: url('/images/map/circle-activism.svg');
+  background-size: 20px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  margin: 2px 0 0 0;
+}
+
+.event-icon__with-date { margin-top: 7px; }
+
+.calendarButton {
+  border-right: 1px solid #ccc;
+  padding: 9px 7px 9px 0px;
+  margin-right: 10px;
+}
+
+.event-represenative { 
+  margin-left: 18px;
+  padding-bottom: 1rem;
+}
+
+.event-represenative:after {
+  content:""; 
+  background: #ddd; 
+  position: absolute; 
+  bottom: 0;
+  left: -3px;
+  height: 1px;
+  width: calc(100% - 30px);
+}
+
+.Dem::before {
+  content: '';
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: #3facef;
+}
+
+.Rep::before {
+  content: '';
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: @brand-secondary;
+}
+
+.event-party { color: #aaa; }
+
+.event-name {
+  color: #0d4668;
+  margin: 0;
+  font-size: 2rem;
+}
+
+.event-date::after {
+  content:""; 
+  background: #ddd; 
+  position: absolute; 
+  bottom: 0;
+  left: -15px;
+  height: 1px;
+  width: calc(100% + 30px); 
+}
+
+.event-date {
+  color: #aaa; 
+  padding-bottom: 1.5rem;
+  position: relative;
+}
+
+.list-item-no-border {
+  border: 0;
+  padding: 0;
+  margin-bottom: 1rem;
+}
 
 .Dem .panel-heading, .card-representative.Democrat .card-header{
   color: white;
@@ -774,6 +890,22 @@ img.grayscale {
 .map-legend .map-legend__tele {
   border: none;
   background-image: url('/images/map/phone-in.svg');
+  background-size: 18px;
+  height: 18px;
+  width: 16px;
+}
+
+.map-legend .map-legend__staff {
+  border: none;
+  background-image: url('/images/map/staff.svg');
+  background-size: 18px;
+  height: 18px;
+  width: 16px;
+}
+
+.map-legend .map-legend__activ {
+  border: none;
+  background-image: url('/images/map/activism.svg');
   background-size: 18px;
   height: 18px;
   width: 16px;

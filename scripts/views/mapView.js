@@ -34,6 +34,7 @@
     map.touchZoomRotate.disableRotation();
 
     map.on('load', function() {
+      backSpaceHack();
       makeZoomToNationalButton();
       addDistrictListener();
       addPopups();
@@ -170,13 +171,17 @@
 
   // Creates the point layer.
   function makePoint (townhall) {
-    var type = townhall.meetingType.toLowerCase();
+    var type = townhall.iconFlag;
     var districtId = '';
-    if (type === 'teletown hall' || type === 'tele-town hall'){
+    if (type === 'tele'){
       var iconKey = 'phone-in';
       if (townhall.District && townhall.District !== 'Senate') {
         townhall = teleTownHallDistrict(townhall);
       }
+    } else if (type === 'activism') {
+      var iconKey = 'activism';
+    } else if (type === 'staff') {
+      var iconKey = 'staff';
     } else {
       var iconKey = 'in-person';
     }
@@ -376,6 +381,7 @@
   // listens for new data.
   function readData () {
     var townHallsFB = firebase.database().ref('/townHalls/');
+
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
       TownHall.allTownHalls.push(ele);
@@ -384,13 +390,39 @@
       makePoint(ele);
       eventHandler.initialTable(ele);
     });
+
     townHallsFB.once('value', function(snap) {
     // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
       map.getSource('townhall-points').setData(featuresHome);
-      // console.log(featuresHome);
       eventHandler.zipSearchByParam();
     });
   };
+
+  function backSpaceHack () {
+    var rx = /INPUT|SELECT|TEXTAREA/i;
+
+    $(document).bind('keydown keypress', function(e) {
+      if (e.which === 8) {
+        if(!rx.test(e.target.tagName) || e.target.disabled || e.target.readOnly) {
+          mapView.killSidebar();
+          eventHandler.setUrlParameter('zipcode', false);
+          eventHandler.setUrlParameter('district', false);
+          var resetView = continentalView(window.innerWidth/2, window.innerHeight/2);
+
+          if (resetView.zoom < 2.5) {
+            resetView.zoom = 2.5;
+          };
+
+          mapView.map.flyTo(resetView);
+          var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
+          if (visibility === 'visible') {
+            mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
+            mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
+          }
+        }
+      }
+    });
+  }
 
   // Create a sidebar and map half view
   mapView.makeSidebar = function makeSidebar (selectedData) {
