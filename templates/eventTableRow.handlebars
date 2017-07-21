@@ -12,12 +12,12 @@
     {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
       <h4 class="line-height-medium">
         {{#ifCond District '===' 'Senate'}}
-          {{Member}} <small>Home state MoC (not present)</small>
+          <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{Member}} <small> ({{Party}}) {{State}}, {{District}}</small>
         {{else}}
-          {{Member}} <small>Home district MoC (not present)</small>
+          <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{Member}} <small> ({{Party}}) {{State}}, {{District}}</small>
         {{/ifCond}}
         <a data-toggle="modal" data-target=".event-modal" onclick="eventHandler.populateEventModal({{{json this}}})">Details</a>
-        <br />{{districtAdopter}} <small>Visiting MoC (will be present)</small>
+        <br/><span class="discriptor-text d-inline-block">Visiting MoC (will be present): </span>{{districtAdopter}} <small> ({{districtAdopterParty}}) {{districtAdopterState}}, {{districtAdopterDistrict}}</small>
       </h4>
     {{else}}
       <h4>
