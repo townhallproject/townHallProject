@@ -279,4 +279,4 @@ var stateData = [
     'FIPS': 78,
     'USPS': 'VI'
   }
-]
+];

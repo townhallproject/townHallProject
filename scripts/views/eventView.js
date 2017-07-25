@@ -143,10 +143,11 @@
   eventHandler.renderPanels = function(townhall, $parent) {
     if (townhall.address) {
       townhall.addressLink = 'https://www.google.com/maps/dir/Current+Location/' + escape(townhall.address);
-    }
+    };
+
     var compiledTemplate = Handlebars.getTemplate('eventCards');
     var $panel = $(compiledTemplate(townhall));
-    $panel.children('.panel').addClass(townhall.Party.slice(0,3));
+    $panel.find('.event-represenative').children('h3').addClass(townhall.Party.slice(0,3));
     $panel.appendTo($parent);
   };
 

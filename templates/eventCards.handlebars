@@ -1,42 +1,49 @@
-<div class="col-md-12 col-sm-6">
-  <div class="panel panel-secondary {{partyShorten}}">
-    <div class="panel-heading">
+<div class="col-md-12 col-sm-6 event-card">
+  <div class="panel panel-secondary">
+    <div class="panel-heading panel-heading_{{iconFlag}}">
       <div class="row">
         <div class="col-xs-6">
-          <p>{{meetingType}}</p>
+          <p class="event-icon__{{iconFlag}} {{#if dateValid}}event-icon__with-date{{/if}}">{{meetingType}}</p>
         </div>
         {{#if dateValid}}
         <div class="col-xs-6 ">
           <span class="addtocalendar pull-right">
-            <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
+            <a class="atcb-link btn btn-white btn-md">
+              <span class="calendarButton">Add to Calendar</span>
+              <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+            </a>
             <var class="atc_event">
               <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
                 <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
                 <var class="atc_timezone">{{zoneString}}</var>
                 <var class="atc_title">{{meetingType}}: {{Member}}</var>
                 <var class="atc_description">{{{Notes}}}</var>
-                <var class="atc_location">{{address}}</var>
+                <var class="atc_ocation">{{address}}</var>
                 <var class="atc_organizer">{{Party}}</var>
               </var>
           </span>
         </div>
-      {{/if}}
+        {{/if}}
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <h3>{{Member}} <small>({{Party}}, {{District}})</small></h3>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 event-represenative">
+        <h3>{{Member}} <small class="event-party">({{Party}}, {{District}})</small></h3>
       </div>
     </div>
     <div class="panel-body">
       {{#if eventName}}
-      <h3 class="text-success text-center">{{eventName}}</h3>
+        <h3 class="text-success text-center event-name">{{eventName}}</h3>
       {{/if}}
-      <span class="text-success text-center"><h4>
-        <span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4></span>
+      <span class="text-success text-center">
+        <h4 class="event-date">
+          <span class>{{Date}}</span>
+          <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span>
+        </h4>
+      </span>
       <ul class="list-group list-group-flush">
         {{#if Notes}}
-        <li class="list-group-item list-item-no-border">{{{Notes}}}
+        <li class="list-group-item list-item-no-border list-item-no-border">{{{Notes}}}
         </li>
         {{/if}}
         {{#if phoneNumber}}
@@ -55,7 +62,7 @@
         {{/if}}
         <li class="list-group-item">
           <address>
-            <strong>{{Location}}</strong></br>
+            {{Location}}</br>
             {{#if address}}{{address}}<br>{{/if}}
             {{#unless address}}
             {{streetAddress}}<br>
