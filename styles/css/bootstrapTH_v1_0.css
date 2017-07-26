@@ -5752,7 +5752,7 @@ a.social-icon:hover {
   background-color: #2eaf52;
 }
 .event-icon__in-person {
-  background-image: url('../Images/map/circle-in-person.svg');
+  background-image: url('/Images/map/circle-in-person.svg');
   background-size: 20px;
   background-position: left center;
   background-repeat: no-repeat;
@@ -5760,7 +5760,7 @@ a.social-icon:hover {
   margin: 2px 0 0 0;
 }
 .event-icon__tele {
-  background-image: url('../Images/map/circle-tele.svg');
+  background-image: url('/Images/map/circle-tele.svg');
   background-size: 20px;
   background-position: left center;
   background-repeat: no-repeat;
