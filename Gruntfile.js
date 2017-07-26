@@ -27,7 +27,7 @@ module.exports = function(grunt) {
           paths: '<%= bspath %>/less'
         },
         files: {
-          'styles/css/bootstrapTH.css': 'styles/customboot.less'
+          'styles/css/bootstrapTH_v1_0.css': 'styles/customboot.less'
         }
       }
     },
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
       },
       core: {
         files: {
-          'styles/css/bootstrapTH.min.css': 'styles/css/bootstrapTH.css'
+          'styles/css/bootstrapTH_v1_0.min.css': 'styles/css/bootstrapTH_v1_0.css'
         }
       }
     }
