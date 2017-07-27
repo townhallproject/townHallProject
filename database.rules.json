@@ -64,7 +64,7 @@
   	"mocData" : {
       ".read": "true",
       "$mocKey": {
-        	".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        	".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
         	"lastUpdated": {
         		".write": "auth.uid !== null"
        		 },
