@@ -48,7 +48,16 @@
       <h3 class="text-success text-center">{{eventName}}</h3>
       {{/if}}
       <span class="text-success text-center"><h4>
-        <span class>{{Date}}</span><span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4></span>
+        <span class>
+          {{#if repeatingEvent}}
+            {{repeatingEvent}}
+
+        {{/if}}
+        {{#unless repeatingEvent}}
+          {{#if Date}}
+            {{Date}}
+          {{/if}}
+        {{/unless}}</span><span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4></span>
       <ul class="list-group list-group-flush">
         {{#if Notes}}
         <li class="list-group-item list-item-no-border">{{{Notes}}}
