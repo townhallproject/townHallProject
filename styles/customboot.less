@@ -402,7 +402,6 @@ a.social-icon {
 }
 
 .event-represenative {
-  margin-left: 18px;
   padding-bottom: 1rem;
 }
 
@@ -413,7 +412,7 @@ a.social-icon {
   bottom: 0;
   left: -3px;
   height: 1px;
-  width: calc(100% - 30px);
+  width: 100%;
 }
 
 .Dem::before {
@@ -940,12 +939,11 @@ img.grayscale {
 }
 
 .map-legend {
-  position: absolute;
+  position: relative;;
   z-index: 99;
-  right: 1rem;
-  bottom: 5rem;
+  bottom: 0rem;
   background-color: white;
-  padding: 2rem 2.5rem;
+  padding: 1.2rem;
   box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.1);
   transition: 0.2s all;
 }
@@ -961,15 +959,14 @@ img.grayscale {
 
 .map-legend dt, dd {
   display: inline-block;
-  vertical-align: middle;
-  margin-bottom: 1rem;
+  // vertical-align: middle;
 }
 
 .map-legend dt {
   width: 15px;
   height: 15px;
   border: 1px solid black;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 
 .map-legend__senate {

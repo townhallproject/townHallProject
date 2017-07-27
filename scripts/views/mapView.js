@@ -9,6 +9,15 @@
     return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
   };
   var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
+  var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+
+  function centerMap(){
+    var ne = bounds.getNorthEast();
+    ne.lng = ne.lng + (continental.center[0] - bounds.getCenter().lng)
+    bounds.extend(ne)
+    console.log(bounds);
+  }
+
 
   function setMap(){
     // Specify Mapbox default access token
@@ -23,8 +32,8 @@
       container: 'map',
       style: styleURL,
       center: continental.center,
-      zoom: continental.zoom,
-      minZoom: 2.5
+      zoom: continental.zoom
+      // minZoom: 2.
     });
 
     // Set Mapbox map controls
@@ -45,16 +54,10 @@
     });
   }
 
+
   mapView.resetView = function resetView() {
     mapView.killSidebar();
-
-    var resetView = continentalView(window.innerWidth/2, window.innerHeight/2);
-
-    if (resetView.zoom < 2.5) {
-      resetView.zoom = 2.5;
-    };
-
-    mapView.map.flyTo(resetView);
+    map.fitBounds(bounds, {padding:50})
     var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
     if (visibility === 'visible') {
       mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
@@ -198,6 +201,7 @@
     stateAbbr = state[0].USPS;
     stateCode = state[0].FIPS;
     if (townhall.lat && townhall.meetingType !== 'DC Event') {
+      bounds.extend([townhall.lng, townhall.lat]);
       featuresHome.features.push({
         type: 'Feature',
         geometry: {
@@ -394,6 +398,10 @@
     townHallsFB.once('value', function(snap) {
     // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
       map.getSource('townhall-points').setData(featuresHome);
+      centerMap()
+      map.fitBounds(bounds, {padding: 20});
+
+      // map.flyTo(continental.center);
       eventHandler.zipSearchByParam();
     });
   };
@@ -413,7 +421,7 @@
             resetView.zoom = 2.5;
           };
 
-          mapView.map.flyTo(resetView);
+          mapView.map.fitBounds(bounds);
           var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
           if (visibility === 'visible') {
             mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
