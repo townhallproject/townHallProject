@@ -45,6 +45,7 @@
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
+    $('#missing-member-banner').show();
     $('#email-signup-form input[name=zipcode]').val('');
     $('#representativeCards section').empty();
     $('#representativeCards').hide();
@@ -216,6 +217,7 @@
     $('.header-small').removeClass('hidden');
     $('.header-small').fadeIn();
     $('.header-large').hide();
+    $('#missing-member-banner').hide();
     $('.form-text-results').addClass('text-center');
     $('.left-panels').addClass('left-panels-border');
     $('#nearest').addClass('nearest-with-results');
@@ -370,12 +372,6 @@
       a = ((a << 5) - a) + b.charCodeAt(0);
       return a & a;
     }, 0);
-    // firebasedb.ref('/emailSignUps/' + userID).set(person).then(function(returned){
-    //   localStorage.setItem('signedUp', true);
-    //   $('.email-signup--inline').fadeOut(750);
-    // }).catch(function(error){
-    //   $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
-    // });
     $.ajax({
       url: 'https://actionnetwork.org/api/v2/forms/eafd3b2a-8c6b-42da-bec8-962da91b128c/submissions',
       method: 'POST',
