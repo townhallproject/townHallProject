@@ -944,8 +944,16 @@ img.grayscale {
   bottom: 0rem;
   background-color: white;
   padding: 1.2rem;
-  box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.1);
+  box-shadow: 0 -3px 67px 1px rgba(0,0,0,.1);
   transition: 0.2s all;
+}
+
+.map-legend.map-legend-inset{
+  position: absolute;
+  right: 1rem;
+  bottom: 5rem;
+  padding: 2rem 2.5rem;
+  box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.1);
 }
 
 .map-legend h3 {
@@ -959,7 +967,6 @@ img.grayscale {
 
 .map-legend dt, dd {
   display: inline-block;
-  // vertical-align: middle;
 }
 
 .map-legend dt {
@@ -967,6 +974,13 @@ img.grayscale {
   height: 15px;
   border: 1px solid black;
   margin-right: 0.5rem;
+}
+
+.map-legend .map-legend-icon {
+  border: none;
+  background-size: 18px;
+  height: 18px;
+  width: 16px;
 }
 
 .map-legend__senate {
@@ -978,35 +992,19 @@ img.grayscale {
 }
 
 .map-legend .map-legend__person {
-  border: none;
   background-image: url('/Images/map/in-person.svg');
-  background-size: 18px;
-  height: 18px;
-  width: 16px;
 }
 
 .map-legend .map-legend__tele {
-  border: none;
   background-image: url('/Images/map/phone-in.svg');
-  background-size: 18px;
-  height: 18px;
-  width: 16px;
 }
 
 .map-legend .map-legend__staff {
-  border: none;
   background-image: url('/Images/map/staff.svg');
-  background-size: 18px;
-  height: 18px;
-  width: 16px;
 }
 
 .map-legend .map-legend__activ {
-  border: none;
   background-image: url('/Images/map/activism.svg');
-  background-size: 18px;
-  height: 18px;
-  width: 16px;
 }
 
 .usa-icon {
@@ -1040,9 +1038,6 @@ img.grayscale {
   .kill-results {
     top: 5px;
     right: 5px;
-  }
-  .map-legend {
-    right: 5.5rem;
   }
 }
 
@@ -1087,10 +1082,13 @@ img.grayscale {
     bottom: 0;
     padding-bottom: 1rem;
   }
-  .map-legend h3{
-    font-size: 1.8rem;
+  .map-legend .map-legend-li{
+    width: 165px;
   }
   .map-legend__small {
+    display: none;
+  }
+  .map-legend-inset {
     display: none;
   }
 }

@@ -11,14 +11,6 @@
   var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
   var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
 
-  function centerMap(){
-    var ne = bounds.getNorthEast();
-    ne.lng = ne.lng + (continental.center[0] - bounds.getCenter().lng)
-    bounds.extend(ne)
-    console.log(bounds);
-  }
-
-
   function setMap(){
     // Specify Mapbox default access token
     var accessToken = 'pk.eyJ1IjoidG93bmhhbGxwcm9qZWN0IiwiYSI6ImNqMnRwOG4wOTAwMnMycG1yMGZudHFxbWsifQ.FXyPo3-AD46IuWjjsGPJ3Q';
@@ -32,8 +24,8 @@
       container: 'map',
       style: styleURL,
       center: continental.center,
-      zoom: continental.zoom
-      // minZoom: 2.
+      zoom: continental.zoom,
+      minZoom: 1.5
     });
 
     // Set Mapbox map controls
@@ -57,7 +49,9 @@
 
   mapView.resetView = function resetView() {
     mapView.killSidebar();
-    map.fitBounds(bounds, {padding:50})
+    bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+    map.fitBounds(bounds);
+    $('#representativeCards').hide();
     var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
     if (visibility === 'visible') {
       mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
@@ -201,7 +195,6 @@
     stateAbbr = state[0].USPS;
     stateCode = state[0].FIPS;
     if (townhall.lat && townhall.meetingType !== 'DC Event') {
-      bounds.extend([townhall.lng, townhall.lat]);
       featuresHome.features.push({
         type: 'Feature',
         geometry: {
@@ -352,7 +345,7 @@
     } else if (districtCodes && districtCodes.length > 1) {
       bb = masterBoundingBox(stateAbbr, districtCodes);
     }
-
+    bounds = bb;
     var view = geoViewport.viewport(bb, [width/2, height/2]);
     if (view.zoom < 2.5) {
       view.zoom = 2.5;
@@ -398,13 +391,12 @@
     townHallsFB.once('value', function(snap) {
     // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
       map.getSource('townhall-points').setData(featuresHome);
-      centerMap()
-      map.fitBounds(bounds, {padding: 20});
-
-      // map.flyTo(continental.center);
+      mapView.resetView();
       eventHandler.zipSearchByParam();
     });
   };
+
+
 
   function backSpaceHack () {
     var rx = /INPUT|SELECT|TEXTAREA/i;
@@ -421,7 +413,7 @@
             resetView.zoom = 2.5;
           };
 
-          mapView.map.fitBounds(bounds);
+          map.fitBounds(bounds);
           var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
           if (visibility === 'visible') {
             mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
@@ -452,7 +444,9 @@
 
   $(document).ready(function(){
     setMap();
-
+    $( window ).resize(function() {
+      map.fitBounds(bounds);
+    });
   });
   module.mapView = mapView;
 
