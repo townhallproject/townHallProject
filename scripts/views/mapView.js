@@ -407,11 +407,6 @@
           mapView.killSidebar();
           eventHandler.setUrlParameter('zipcode', false);
           eventHandler.setUrlParameter('district', false);
-          var resetView = continentalView(window.innerWidth/2, window.innerHeight/2);
-
-          if (resetView.zoom < 2.5) {
-            resetView.zoom = 2.5;
-          };
 
           map.fitBounds(bounds);
           var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
