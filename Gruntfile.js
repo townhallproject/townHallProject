@@ -48,7 +48,7 @@ module.exports = function(grunt) {
         options: {
           map: true
         },
-        src: 'styles/css/bootstrapTH.css'
+        src: 'styles/css/bootstrapTH_v1_0.css'
       }
     },
     cssmin: {

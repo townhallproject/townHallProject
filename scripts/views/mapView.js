@@ -9,6 +9,7 @@
     return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
   };
   var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
+  var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
 
   function setMap(){
     // Specify Mapbox default access token
@@ -24,7 +25,7 @@
       style: styleURL,
       center: continental.center,
       zoom: continental.zoom,
-      minZoom: 2.5
+      minZoom: 1.5
     });
 
     // Set Mapbox map controls
@@ -45,16 +46,12 @@
     });
   }
 
+
   mapView.resetView = function resetView() {
     mapView.killSidebar();
-
-    var resetView = continentalView(window.innerWidth/2, window.innerHeight/2);
-
-    if (resetView.zoom < 2.5) {
-      resetView.zoom = 2.5;
-    };
-
-    mapView.map.flyTo(resetView);
+    bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+    map.fitBounds(bounds);
+    $('#representativeCards').hide();
     var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
     if (visibility === 'visible') {
       mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
@@ -348,7 +345,7 @@
     } else if (districtCodes && districtCodes.length > 1) {
       bb = masterBoundingBox(stateAbbr, districtCodes);
     }
-
+    bounds = bb;
     var view = geoViewport.viewport(bb, [width/2, height/2]);
     if (view.zoom < 2.5) {
       view.zoom = 2.5;
@@ -394,9 +391,12 @@
     townHallsFB.once('value', function(snap) {
     // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
       map.getSource('townhall-points').setData(featuresHome);
+      mapView.resetView();
       eventHandler.zipSearchByParam();
     });
   };
+
+
 
   function backSpaceHack () {
     var rx = /INPUT|SELECT|TEXTAREA/i;
@@ -407,13 +407,8 @@
           mapView.killSidebar();
           eventHandler.setUrlParameter('zipcode', false);
           eventHandler.setUrlParameter('district', false);
-          var resetView = continentalView(window.innerWidth/2, window.innerHeight/2);
 
-          if (resetView.zoom < 2.5) {
-            resetView.zoom = 2.5;
-          };
-
-          mapView.map.flyTo(resetView);
+          map.fitBounds(bounds);
           var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
           if (visibility === 'visible') {
             mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
@@ -444,7 +439,9 @@
 
   $(document).ready(function(){
     setMap();
-
+    $( window ).resize(function() {
+      map.fitBounds(bounds);
+    });
   });
   module.mapView = mapView;
 
