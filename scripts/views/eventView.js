@@ -420,7 +420,7 @@
     //     });
     // } else {
       // districtArray = JSON.parse($('#email-signup-form input[name=districts]').val())
-      districtArray =[]
+      districtArray =[];
       submitSignup(first, last, zipClean, email, districtArray, partner);
     // }
   };

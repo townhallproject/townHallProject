@@ -57,9 +57,8 @@
       mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
       mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
     }
+    $('.selection-results_content').empty();
 
-    var text = $('h4');
-    text.html(' ');
     $('#representativeCards section').empty();
     eventHandler.setUrlParameter('zipcode', false);
     eventHandler.setUrlParameter('district', false);
