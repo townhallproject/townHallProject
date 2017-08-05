@@ -40,7 +40,7 @@
       addDistrictListener();
       addPopups();
       addLayer ();
-      readData();
+      readData(true);
       TownHall.isMap = true;
       mapView.map = map;
     });
@@ -376,27 +376,34 @@
   };
   // Fetch data from Firebase, run map filter & point layers
   // listens for new data.
-  function readData () {
+  function readData (webgl) {
     var townHallsFB = firebase.database().ref('/townHalls/');
 
-    townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
-      var ele = new TownHall (snapshot.val());
-      TownHall.allTownHalls.push(ele);
-      TownHall.addFilterIndexes(ele);
-      filterMap(ele);
-      makePoint(ele);
-      eventHandler.initialTable(ele);
-    });
+    if (webgl) {
+      townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
+        var ele = new TownHall (snapshot.val());
+        TownHall.allTownHalls.push(ele);
+        TownHall.addFilterIndexes(ele);
+        filterMap(ele);
+        makePoint(ele);
+        eventHandler.initialTable(ele);
+      });
 
-    townHallsFB.once('value', function(snap) {
-    // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
-      map.getSource('townhall-points').setData(featuresHome);
-      mapView.resetView();
-      eventHandler.zipSearchByParam();
-    });
+      townHallsFB.once('value', function(snap) {
+      // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
+        map.getSource('townhall-points').setData(featuresHome);
+        mapView.resetView();
+        eventHandler.zipSearchByParam();
+      });
+    } else {
+      townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
+        var ele = new TownHall (snapshot.val());
+        TownHall.allTownHalls.push(ele);
+        TownHall.addFilterIndexes(ele);
+        eventHandler.initialTable(ele);
+      });
+    }
   };
-
-
 
   function backSpaceHack () {
     var rx = /INPUT|SELECT|TEXTAREA/i;
@@ -442,7 +449,7 @@
       var webGlFlag = '<div class="">\
         <div class="webGl-warning" target="_blank">\
           <img src="../Images/map/ohno-computer.png"></img>\
-          <p>Our map feature that should be here uses WebGL. Your browser does not have WebGL working currently.</p>\
+          <p>Our map feature that should be here uses WebGL, a plugin common in most modern browsers. Your browser does not have WebGL working currently.</p>\
             <p>You can learn how to enable WebGL on <a href="https://get.webgl.org/" target="_blank">this website.</a></p>\
         </div>\
       </div>';
@@ -456,6 +463,8 @@
       $('.map-large')
         .addClass('warning-container')
         .html(webGlFlag);
+
+      readData(false);
     } else {
       setMap();
       $( window ).resize(function() {
