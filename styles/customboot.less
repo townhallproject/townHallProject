@@ -1096,12 +1096,13 @@ img.grayscale {
 
 .warning-container {
   height: 20rem;
-  img {
+}
+
+.webGl-compimg {
     width: 100px;
     height: 100px;
     float: left;
-    margin: 0 6rem 2.5rem 0;
-  }
+    margin: 0 6rem 2.5rem 0;  
 }
 
 .webGl-warning {
@@ -1114,13 +1115,13 @@ img.grayscale {
   .warning-container {
     height: 32rem;
     text-align: center;
-    img {
-      float: initial;
-      margin: 0 0 2.5rem 0;
-    }
     p {
       text-align: left;
     }
+  }
+  .webGl-compimg {
+    float: initial;
+    margin: 0 0 2.5rem 0;
   }
 }
 
@@ -1142,19 +1143,18 @@ img.grayscale {
   .webGl-warning { width: 120px; }
 }
 
-/*
-@media screen and (max-width: 767px){
-  .webGl-warning { width: 400px; }
-  .warning-container {
-    height: 20rem;
-  }
+.webGL-kill {
+  position: absolute;
+  font-size: 1.2rem;
+  font-weight: 700;
+  top: 2rem;
+  right: 2.5rem;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  opacity: 0.75;
 }
 
-@media screen and (max-width: 400px){
-  .webGl-warning { width: 320; }
-  .warning-container { height: 38rem; }
-}
-*/
 .webgl-disabled {
   cursor: not-allowed;
   pointer-events: none;

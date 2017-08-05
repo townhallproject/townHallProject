@@ -448,10 +448,11 @@
     if (!mapboxgl.supported()) {
       var webGlFlag = '<div class="">\
         <div class="webGl-warning" target="_blank">\
-          <img src="../Images/map/ohno-computer.png"></img>\
+          <img class="webGl-compimg" src="../Images/map/ohno-computer.png"></img>\
           <p>Our map feature that should be here uses WebGL, a plugin common in most modern browsers. Your browser does not have WebGL working currently.</p>\
             <p>You can learn how to enable WebGL on <a href="https://get.webgl.org/" target="_blank">this website.</a></p>\
         </div>\
+        <img class="webGL-kill" src="../Images/map/xmark.svg"></img>\
       </div>';
 
       // House cleaning
@@ -463,6 +464,10 @@
       $('.map-large')
         .addClass('warning-container')
         .html(webGlFlag);
+
+      $('.webGL-kill').click(function(){
+        $('.map-container-large').addClass('hidden');
+      });
 
       readData(false);
     } else {
