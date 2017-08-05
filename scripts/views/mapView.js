@@ -438,10 +438,30 @@
   };
 
   $(document).ready(function(){
-    setMap();
-    $( window ).resize(function() {
-      map.fitBounds(bounds);
-    });
+    if (!mapboxgl.supported()) {
+      var webGlFlag = '<div class="">\
+        <div class="webGl-warning" target="_blank">\
+          <img src="../Images/map/ohno-computer.png"></img>\
+          <p>Our map feature that should be here uses WebGL. Your browser does not have WebGL working currently.</p>\
+            <p>You can learn how to enable WebGL on <a href="https://get.webgl.org/" target="_blank">this website.</a></p>\
+        </div>\
+      </div>';
+
+      // House cleaning
+      $('.map-legend').remove();
+      $('#map').remove();
+      $('.fath-button').addClass('webgl-disabled');
+
+      // Set oh no! text
+      $('.map-large')
+        .addClass('warning-container')
+        .html(webGlFlag);
+    } else {
+      setMap();
+      $( window ).resize(function() {
+        map.fitBounds(bounds);
+      });
+    }
   });
   module.mapView = mapView;
 
