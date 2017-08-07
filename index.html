@@ -132,33 +132,39 @@
            </section>
         </div>
         <section class="email-signup--inline" id="missing-member-banner">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="row">
-                  <div class="col-sm-4 col-xs-12 col-sm-offset-1 missing-member-img">
-                    <img src="Images/missingMemberSmallNoNum.png" alt="" />
-                  </div>
-                  <div class="col-sm-5 col-xs-12 col-sm-offset-2">
-                    <button class="btn btn-white missing-member-report" type="button" name="button" id="missing-member-banner-btn">
-                      <span class="extra-large weight-heavy">MISSING<br>MEMBER<br></span>
-                      <span class="extra-large weight-thin">REPORT<br><small>2017 | JAN-MAY</small>
-                        </span>
-                        <div>View missing members </div><i class="fa fa-3x fa-long-arrow-right" aria-hidden="true"></i>
-                      </button>
-                        <!-- <div class="col-xs-6">
-                          <button class="btn btn-blue" type="button" name="button">Download Missing Members Report</button>
-                        </div> -->
-                  </div>
+          <div class="container container-fluid">
+              <h2 class="text-primary table-title text-center">Members of Congress holding town halls during August Recess 2017</h2>
+              <h4>Senate</h4>
+              <div class="progress">
+                <div class="progress-bar progress-bar-dem-no-events dem-senate" data-count=48>
+                  <span class="sr-only">Democratic no events</span>
                 </div>
-
+                <div class="progress-bar progress-bar-dem-has-events dem-aug-progress-senate" data-count=0>
+                  <span class="sr-only">Democratic progress</span>
+                </div>
+                <div class="progress-bar progress-bar-rep-has-events rep-aug-progress-senate" data-count=0>
+                  <span class="sr-only">Republican progress</span>
+                </div>
+                <div class="progress-bar progress-bar-rep-no-events rep-senate" data-count=52>
+                  <span class="sr-only">Republican no events</span>
+                </div>
               </div>
-
-            </div>
-
+              <h4>House</h4>
+              <div class="progress">
+                <div class="progress-bar progress-bar-dem-no-events dem-house" data-count=194>
+                  <span class="sr-only">Democratic progress</span>
+                </div>
+                <div class="progress-bar progress-bar-dem-has-events dem-aug-progress-house" data-count=0>
+                  <span class="sr-only">Democratic progress</span>
+                </div>
+                <div class="progress-bar progress-bar-rep-has-events rep-aug-progress-house" data-count=0>
+                  <span class="sr-only">Republican progress</span>
+                </div>
+                <div class="progress-bar progress-bar-rep-no-events rep-house" data-count=240>
+                  <span class="sr-only">Republican progress</span>
+                </div>
+              </div>
           </div>
-
-
         </section>
         <section class="background-light-blue email-signup--inline" id="email-signup">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-email"><span aria-hidden="true">&times;</span></button>
@@ -586,6 +592,7 @@
     <!-- Vendor Files -->
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/jquery-ui.js"></script>
+    <script src="/vendor/scripts/moment.min.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
     <script src="/vendor/scripts/bootstrap3-typeahead.min.js"></script>
     <script src="/vendor/scripts/tether.js"></script>
