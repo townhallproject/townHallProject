@@ -111,6 +111,23 @@
     });
   };
 
+  TownHall.zipToDistrict = function (zip) {
+    districts = [];
+    return new Promise(function (resolve, reject) {
+      firebasedb.ref('/zipToDistrict/' + zip).once('value').then(function(snapshot) {
+        if (snapshot.exists()) {
+          snapshot.forEach(function(ele){
+            var district = ele.val().abr + '-' + ele.val().dis;
+            districts.push(district);
+          });
+          resolve(districts);
+        } else {
+          reject ('That is not a real zip code');
+        }
+      });
+    });
+  };
+
   TownHall.lookupReps = function (zip) {
     var representativePromise = $.ajax({
       url: 'https://congress.api.sunlightfoundation.com/legislators/locate?zip=' + zip,
@@ -124,7 +141,7 @@
     var locations = [];
     return firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
       snapshot.forEach(function(ele){
-        if (ele.val().StateAb !== 'DC') {
+        if (ele.val().meetingType !== 'DC Event' && ele.val().meetingType !== 'Coffee') {
           locations.push(new TownHall(ele.val()));
         }
       });
@@ -153,6 +170,10 @@
     if (TownHall.filters[filter].length === 0) {
       delete TownHall.filters[filter];
     }
+  };
+
+  TownHall.removeFilterCategory = function(category) {
+    delete TownHall.filters[category];
   };
 
   TownHall.resetFilters = function() {

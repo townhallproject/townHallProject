@@ -25,10 +25,24 @@ The published event list on our site is open for citizens, activists, and resear
 - In the comments of your Pull Request, point out which issue you've resolved and how.
 
 ## Running Locally
+
 - `npm i`
 - `bower i`
 - `node server.js`
 - Open localhost:3000
+
+## Tech
+
+[Firebase](https://firebase.google.com/docs/) is both a real-time database and hosting platform. `firebase serve` will run the server.
+
+In event.js, we initialize the server with a config object. Then we're able to access different locations using `.ref(<some string>)`.
+
+To read the data at an endpoint once, we chain `.ref()` with `.once()`. This returns a promise. We can do things with the data in the resolve function of the promise.
+
+Writing data follows a similar pattern. We chain `.ref()` with `.set(<some value>)`.
+
+For more information, check out the Firebase [docs](https://firebase.google.com/docs/).
+
 
 #### Style Changes
 - In a second terminal window

@@ -398,11 +398,12 @@
 // Adds all events as markers
 // renders tables
   window.readData = function (){
-    var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('State');
+    var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('dateObj');
     townHallsFB.on('child_added', function getSnapShot(snapshot) {
       var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
       var ele = new TownHall (snapshot.val());
+      eventHandler.recessProgress(ele);
       TownHall.allTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
       eventHandler.initialTable(ele);
