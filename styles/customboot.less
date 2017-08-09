@@ -1108,3 +1108,70 @@ img.grayscale {
     display: none;
   }
 }
+
+.warning-container {
+  height: 20rem;
+}
+
+.webGl-compimg {
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin: 0 6rem 2.5rem 0;  
+}
+
+.webGl-warning {
+  margin: 5rem auto 0;
+  width: 750px;
+}
+
+@media screen and (max-width: 800px){
+  .webGl-warning { width: 500px; }
+  .warning-container {
+    height: 32rem;
+    text-align: center;
+    p {
+      text-align: left;
+    }
+  }
+  .webGl-compimg {
+    float: initial;
+    margin: 0 0 2.5rem 0;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .webGl-warning { width: 400px; }
+}
+
+@media screen and (max-width: 450px){
+  .webGl-warning { width: 350px; }
+}
+
+@media screen and (max-width: 400px){
+  .warning-container { height: 38rem; }
+  .webGl-warning { width: 200px; }
+}
+
+@media screen and (max-width: 200px){
+  .warning-container { height: 46rem; }
+  .webGl-warning { width: 120px; }
+}
+
+.webGL-kill {
+  position: absolute;
+  font-size: 1.2rem;
+  font-weight: 700;
+  top: 2rem;
+  right: 2.5rem;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.webgl-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+}

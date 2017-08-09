@@ -40,7 +40,7 @@
       addDistrictListener();
       addPopups();
       addLayer ();
-      readData();
+      readData(true);
       TownHall.isMap = true;
       mapView.map = map;
     });
@@ -375,27 +375,34 @@
   };
   // Fetch data from Firebase, run map filter & point layers
   // listens for new data.
-  function readData () {
+  function readData (webgl) {
     var townHallsFB = firebase.database().ref('/townHalls/');
 
-    townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
-      var ele = new TownHall (snapshot.val());
-      TownHall.allTownHalls.push(ele);
-      TownHall.addFilterIndexes(ele);
-      filterMap(ele);
-      makePoint(ele);
-      eventHandler.initialTable(ele);
-    });
+    if (webgl) {
+      townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
+        var ele = new TownHall (snapshot.val());
+        TownHall.allTownHalls.push(ele);
+        TownHall.addFilterIndexes(ele);
+        filterMap(ele);
+        makePoint(ele);
+        eventHandler.initialTable(ele);
+      });
 
-    townHallsFB.once('value', function(snap) {
-    // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
-      map.getSource('townhall-points').setData(featuresHome);
-      mapView.resetView();
-      eventHandler.zipSearchByParam();
-    });
+      townHallsFB.once('value', function(snap) {
+      // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
+        map.getSource('townhall-points').setData(featuresHome);
+        mapView.resetView();
+        eventHandler.zipSearchByParam();
+      });
+    } else {
+      townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
+        var ele = new TownHall (snapshot.val());
+        TownHall.allTownHalls.push(ele);
+        TownHall.addFilterIndexes(ele);
+        eventHandler.initialTable(ele);
+      });
+    }
   };
-
-
 
   function backSpaceHack () {
     var rx = /INPUT|SELECT|TEXTAREA/i;
@@ -437,10 +444,37 @@
   };
 
   $(document).ready(function(){
-    setMap();
-    $( window ).resize(function() {
-      map.fitBounds(bounds);
-    });
+    if (!mapboxgl.supported()) {
+      var webGlFlag = '<div class="">\
+        <div class="webGl-warning" target="_blank">\
+          <img class="webGl-compimg" src="../Images/map/ohno-computer.png"></img>\
+          <p>Our map feature that should be here uses WebGL, a plugin common in most modern browsers. Your browser does not have WebGL working currently.</p>\
+            <p>You can learn how to enable WebGL on <a href="https://get.webgl.org/" target="_blank">this website.</a></p>\
+        </div>\
+        <img class="webGL-kill" src="../Images/map/xmark.svg"></img>\
+      </div>';
+
+      // House cleaning
+      $('.map-legend').remove();
+      $('#map').remove();
+      $('.fath-button').addClass('webgl-disabled');
+
+      // Set oh no! text
+      $('.map-large')
+        .addClass('warning-container')
+        .html(webGlFlag);
+
+      $('.webGL-kill').click(function(){
+        $('.map-container-large').addClass('hidden');
+      });
+
+      readData(false);
+    } else {
+      setMap();
+      $( window ).resize(function() {
+        map.fitBounds(bounds);
+      });
+    }
   });
   module.mapView = mapView;
 
