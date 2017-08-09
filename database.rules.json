@@ -39,6 +39,9 @@
         	".indexOn": "meetingType",
           "$townHallID": {
            ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+						"dateObj":{
+              ".indexOn": ".value"
+            },
            "meetingType": {
               ".indexOn": ".value"
             }
@@ -65,7 +68,10 @@
       ".read": "true",
       "$mocKey": {
         	".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
-        	"lastUpdated": {
+        	"lastUpdatedBy": {
+        		".write": "auth.uid !== null"
+       		 },
+           "lastUpdated": {
         		".write": "auth.uid !== null"
        		 },
         	"currentEvents" : {
@@ -101,13 +107,13 @@
     ".read": "true",
     "state": {
       "$state": {
-       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        ".write": "auth.uid !== null",
     	 ".validate": "newData.hasChildren(['lat','lng'])"
       	}
    		},
      "street": {
        "$street":{
-          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        ".write": "auth.uid !== null",
    	  		".validate": "newData.hasChildren(['lat','lng'])"
        }
    	}
@@ -132,9 +138,14 @@
     	},
   "users": {
       "$user_id": {
-        ".read": "$user_id === auth.uid",
-        ".write": "$user_id === auth.uid"
-      }
+        ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        ".write": "$user_id === auth.uid",
+      	"mocs" : {
+          "$mocID" : {
+          	".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true"
+          }
+        }
+       }
     }
   }
 }
