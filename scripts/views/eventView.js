@@ -62,6 +62,23 @@
       selectedData.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       });
+
+      var leftColumnHeight = 0,
+        rightColumnHeight = 0,
+        articles = $('.event-card');
+
+      for (var i = 0; i < articles.length; i++) {
+        articles[i].setAttribute('height', 'height:' + articles[i].offsetHeight);
+
+        console.log(leftColumnHeight, rightColumnHeight)
+
+        if (leftColumnHeight > rightColumnHeight) {
+          rightColumnHeight += articles.eq(i).addClass('event-card-right').outerHeight(true);
+        } else {
+          leftColumnHeight += articles.eq(i).outerHeight(true);
+        }
+      }
+
       addtocalendar.load();
     } else {
       $text.html('There are no events for ' + districtText);

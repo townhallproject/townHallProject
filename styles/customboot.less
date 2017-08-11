@@ -349,7 +349,10 @@ a.social-icon {
  }
 }
 
-.list-group { margin-bottom: 0; }
+.list-group {
+  margin-bottom: 0;
+  overflow-wrap: break-word;
+}
 .event-card { margin-bottom: 1rem; }
 
 .panel-heading_in-person  { background-color: #439cbf; }
@@ -667,7 +670,7 @@ a.social-icon {
 }
 
 #nearest {
-  padding-top:10px;
+  padding: 20px 0 0.5rem 0;
   overflow-y: scroll;
   overflow-x: hidden;
   -ms-overflow-style: none;
@@ -1174,4 +1177,55 @@ img.grayscale {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.5;
+}
+
+.event-card__container {
+  display: block;
+  width: 100%;
+  margin: 2% auto;
+}
+
+.event-card {
+  display: block;
+  width: 100%;
+  margin: 0 0 2%;
+  height: auto;
+  float: left;
+  clear: left;
+}
+
+.event-card-right {
+  float: right;
+  clear: right;
+}
+
+@media screen and (max-width: 959px){
+  .event-card {
+    width: 49%;
+  }
+
+  .panel {
+    min-height: auto
+  }
+}
+
+@media screen and (max-width: 650px){
+  .event-card {
+    width: 100%;
+  }
+}
+
+.row-no-margin {
+  margin: 0;
+}
+
+.nearest-cover {
+  position: absolute;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  box-shadow: inset 0px 30px 50px -20px #d4e0e5, inset 0px -35px 50px -20px #d4e0e5;
+  pointer-events: none;
 }
