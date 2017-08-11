@@ -46,11 +46,14 @@
     });
   }
 
+  mapView.initialView = function setInitialView() {
+    bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+    map.fitBounds(bounds);
+  };
 
   mapView.resetView = function resetView() {
     mapView.killSidebar();
-    bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
-    map.fitBounds(bounds);
+    mapView.intitalView();
     $('#representativeCards').hide();
     var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
     if (visibility === 'visible') {
@@ -391,7 +394,7 @@
       townHallsFB.once('value', function(snap) {
       // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
         map.getSource('townhall-points').setData(featuresHome);
-        mapView.resetView();
+        mapView.initialView();
         eventHandler.zipSearchByParam();
       });
     } else {
