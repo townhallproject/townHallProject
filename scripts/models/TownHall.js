@@ -174,7 +174,7 @@
         districts.forEach(function(d) {
           var districtMatcher = parseInt(d);
           var dataMatcher = parseInt(curtownhall.District.split('-')[1]);
-          dataMatcher = dataMatcher === 0 ? 1 : dataMatcher;
+
           if (districtMatcher === dataMatcher) {
             acc.push(curtownhall);
           }
