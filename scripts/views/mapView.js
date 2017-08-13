@@ -207,6 +207,7 @@
           coordinates: jitterPoint(townhall.lng, townhall.lat)
         },
         properties: {
+          repeatingEvent: townhall.repeatingEvent,
           date: townhall.yearMonthDay,
           startTime: townhall.Time,
           district: townhall.District,
@@ -274,20 +275,25 @@
 
       // Populate the popup and set its coordinates
       // based on the feature found.
+      if (feature.properties.repeatingEvent) {
+        var timeContent = feature.properties.repeatingEvent;
+      } else {
+        var date = new Date(feature.properties.date);
+        var time = feature.properties.startTime;
 
-      var date = new Date(feature.properties.date);
-      var time = feature.properties.startTime;
+        if(time.charAt(0) === '0') {
+          time = time.substr(1);
+        }
 
-      if(time.charAt(0) === '0') {
-        time = time.substr(1);
+        var day = date.getDate();
+        var weekday = weekdays[date.getDay()];
+        var month = months[date.getMonth()];
+
+        var timeContent = month + ' ' + day + '</span><br><span>' + weekday + ', ' + time;
       }
 
-      var day = date.getDate();
-      var weekday = weekdays[date.getDay()];
-      var month = months[date.getMonth()];
-
       popup.setLngLat(feature.geometry.coordinates)
-          .setHTML('<b>' + feature.properties.member + '</b>' + popupDistrict + '<br><span>' + month + ' ' + day + ',</span><br><span>' + weekday + ' ' + time + '</span>')
+          .setHTML('<div class="mapbox-popup-title"><b>' + feature.properties.member + '</b>' + popupDistrict + '</div><span>' + timeContent + '</span>')
           .addTo(map);
     });
   }
