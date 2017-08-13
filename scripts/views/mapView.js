@@ -3,6 +3,8 @@
   var townhallData;
   var map;
   var mapView = {};
+  var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   // Define an intial view for the US
   var continentalView = function(w,h) {
@@ -196,6 +198,7 @@
     });
     stateAbbr = state[0].USPS;
     stateCode = state[0].FIPS;
+
     if (townhall.lat && townhall.meetingType !== 'DC Event') {
       featuresHome.features.push({
         type: 'Feature',
@@ -204,6 +207,8 @@
           coordinates: jitterPoint(townhall.lng, townhall.lat)
         },
         properties: {
+          date: townhall.yearMonthDay,
+          startTime: townhall.Time,
           district: townhall.District,
           districtId: districtId,
           stateCode: stateCode,
@@ -269,8 +274,20 @@
 
       // Populate the popup and set its coordinates
       // based on the feature found.
+
+      var date = new Date(feature.properties.date);
+      var time = feature.properties.startTime;
+
+      if(time.charAt(0) === '0') {
+        time = time.substr(1);
+      }
+
+      var day = date.getDate();
+      var weekday = weekdays[date.getDay()];
+      var month = months[date.getMonth()];
+
       popup.setLngLat(feature.geometry.coordinates)
-          .setHTML('<b>' + feature.properties.member + '</b>' + popupDistrict + '<br><span>' + feature.properties.meetingType + '</span>')
+          .setHTML('<b>' + feature.properties.member + '</b>' + popupDistrict + '<br><span>' + month + ' ' + day + ',</span><br><span>' + weekday + ' ' + time + '</span>')
           .addTo(map);
     });
   }
