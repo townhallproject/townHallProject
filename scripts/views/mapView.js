@@ -53,7 +53,7 @@
 
   mapView.resetView = function resetView() {
     mapView.killSidebar();
-    mapView.intitalView();
+    mapView.initialView();
     $('#representativeCards').hide();
     var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
     if (visibility === 'visible') {
