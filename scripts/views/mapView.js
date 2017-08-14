@@ -172,22 +172,16 @@
 
   // Creates the point layer.
   function makePoint (townhall) {
-    if (townhall.meetingType === 'DC Event') {
+    if (townhall.meetingType === 'DC Event' || !townhall.lat || !townhall.iconFlag) {
       return;
     }
-    var type = townhall.iconFlag;
+    var iconKey = townhall.iconFlag;
     var districtId = '';
-    if (type === 'tele'){
-      var iconKey = 'phone-in';
+    if (iconKey === 'tele'){
+      iconKey = 'phone-in';
       if (townhall.District && townhall.District !== 'Senate') {
         townhall = teleTownHallDistrict(townhall);
       }
-    } else if (type === 'activism') {
-      var iconKey = 'activism';
-    } else if (type === 'staff') {
-      var iconKey = 'staff';
-    } else {
-      var iconKey = 'in-person';
     }
     if (townhall.District && townhall.District !== 'Senate') {
       if (!townhall.District.split('-')[1]) {
@@ -202,27 +196,25 @@
     stateAbbr = state[0].USPS;
     stateCode = state[0].FIPS;
 
-    if (townhall.lat) {
-      featuresHome.features.push({
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: jitterPoint(townhall.lng, townhall.lat)
-        },
-        properties: {
-          repeatingEvent: townhall.repeatingEvent,
-          date: townhall.yearMonthDay,
-          startTime: townhall.Time,
-          district: townhall.District,
-          districtId: districtId,
-          stateCode: stateCode,
-          stateAbbr: stateAbbr,
-          member: townhall.Member,
-          meetingType: townhall.meetingType,
-          icon: iconKey
-        },
-      });
-    } 
+    featuresHome.features.push({
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: jitterPoint(townhall.lng, townhall.lat)
+      },
+      properties: {
+        repeatingEvent: townhall.repeatingEvent,
+        date: townhall.yearMonthDay,
+        startTime: townhall.Time,
+        district: townhall.District,
+        districtId: districtId,
+        stateCode: stateCode,
+        stateAbbr: stateAbbr,
+        member: townhall.Member,
+        meetingType: townhall.meetingType,
+        icon: iconKey
+      },
+    });
   }
 
   function addLayer () {
