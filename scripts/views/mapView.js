@@ -172,6 +172,9 @@
 
   // Creates the point layer.
   function makePoint (townhall) {
+    if (townhall.meetingType === 'DC Event') {
+      return;
+    }
     var type = townhall.iconFlag;
     var districtId = '';
     if (type === 'tele'){
@@ -199,7 +202,7 @@
     stateAbbr = state[0].USPS;
     stateCode = state[0].FIPS;
 
-    if (townhall.lat && townhall.meetingType !== 'DC Event') {
+    if (townhall.lat) {
       featuresHome.features.push({
         type: 'Feature',
         geometry: {
@@ -219,9 +222,7 @@
           icon: iconKey
         },
       });
-    } else {
-      // console.log(townhall.eventId, townhall.meetingType, townhall.State);
-    }
+    } 
   }
 
   function addLayer () {
