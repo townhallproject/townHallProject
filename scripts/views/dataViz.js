@@ -23,14 +23,25 @@
     });
   };
 
+  function updateTotalEventsBar($bar){
+    current = Number($bar.attr('data-count'));
+    max = Number($bar.attr('data-max'));
+    updated = current + 1;
+    max = updated > max ? updated : max;
+    width = updated / (max + 50) * 100;
+    $bar.attr('data-count', updated);
+    $bar.width(width + '%');
+    $bar.text(updated);
+  }
+
   function parseBars(party, chamber, newMember, total) {
     if (newMember) {
       $memberBar = $('.' + party + '-aug-progress-' + chamber);
       $total = $('.' + party + '-' + chamber);
       updateProgressBar($memberBar, total, $total);
     }
-    // $bar = $(`.${party}-aug-total-${chamber}`);
-    // updateTotalEventsBar($bar)
+    $bar = $('.' + party + '-aug-total-' + chamber);
+    updateTotalEventsBar($bar)
   }
 
   dataviz.membersEvents = new Set();
