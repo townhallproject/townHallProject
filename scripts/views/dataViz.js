@@ -8,6 +8,7 @@
     width = updated / total * 100;
     $bar.width(width + '%');
     $bar.text(updated);
+
     currentNoEvents = Number($total.attr('data-count'));
     updatedNoEvents = currentNoEvents - 1;
     $total.attr('data-count', updatedNoEvents);
@@ -41,10 +42,11 @@
       updateProgressBar($memberBar, total, $total);
     }
     $bar = $('.' + party + '-aug-total-' + chamber);
-    updateTotalEventsBar($bar)
+    updateTotalEventsBar($bar);
   }
 
   dataviz.membersEvents = new Set();
+
   dataviz.recessProgress = function (townhall) {
     var total;
     var newMember = false;
@@ -69,6 +71,7 @@
       parseBars(party, chamber, newMember, total);
     }
   };
+
 
   dataviz.initalProgressBar = function initalProgressBar(total, $total){
     currentNoEvents = Number($total.attr('data-count'));
