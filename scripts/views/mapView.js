@@ -51,7 +51,9 @@
 
   mapView.initialView = function setInitialView() {
     bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
-    map.fitBounds(bounds);
+    if (mapView.webGL) {
+      map.fitBounds(bounds);
+    }
   };
 
   mapView.resetView = function resetView() {
@@ -397,34 +399,28 @@
   // listens for new data.
   function readData (webgl) {
     var townHallsFB = firebase.database().ref('/townHalls/');
+    townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
+      var ele = new TownHall (snapshot.val());
+      TownHall.allTownHalls.push(ele);
+      TownHall.addFilterIndexes(ele);
+      eventHandler.initialTable(ele);
 
-    if (webgl) {
-      townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
-        var ele = new TownHall (snapshot.val());
-        TownHall.allTownHalls.push(ele);
-        TownHall.addFilterIndexes(ele);
+      if (webgl) {
         filterMap(ele);
         makePoint(ele);
-        eventHandler.initialTable(ele);
-      });
-
-      townHallsFB.once('value', function(snap) {
+      } else {
+        googleMap.setData(ele);
+      }
+    });
+    townHallsFB.once('value', function(snap) {
+      if (webgl) {
         map.getSource('townhall-points').setData(featuresHome);
         mapView.initialView();
-        eventHandler.zipSearchByParam();
-      });
-    } else {
-      //TODO: still enable search
-      townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
-        var ele = new TownHall (snapshot.val());
-        TownHall.allTownHalls.push(ele);
-        TownHall.addFilterIndexes(ele);
-        eventHandler.initialTable(ele);
-      });
-      townHallsFB.once('value', function(snap) {
-        eventHandler.zipSearchByParam();
-      });
-    }
+      }
+      eventHandler.zipSearchByParam();
+    });
+
+
   };
 
   function backSpaceHack () {
@@ -453,8 +449,11 @@
     $('.nearest-with-results').empty();
     $('.map-container-large').addClass('hidden');
     $('.map-container-split').removeClass('hidden');
+    $('.map-legend').appendTo('.map-small');
     $('#map').prependTo('.map-fixing');
-    map.resize();
+    if (mapboxgl.supported()) {
+      map.resize();
+    }
   };
 
   // go back to full screen
@@ -462,37 +461,24 @@
     $('.header-with-results').addClass('hidden');
     $('.map-container-large').removeClass('hidden');
     $('.map-container-split').addClass('hidden');
+    $('.map-legend').appendTo('.map-large');
     $('#map').prependTo('.map-large');
-    map.resize();
+    if (mapboxgl.supported()) {
+      map.resize();
+    }
   };
 
   $(document).ready(function(){
     if (!mapboxgl.supported()) {
-      var webGlFlag = '<div class="">\
-        <div class="webGl-warning" target="_blank">\
-          <img class="webGl-compimg" src="../Images/map/ohno-computer.png"></img>\
-          <p>Our map feature that should be here uses WebGL, a plugin common in most modern browsers. Your browser does not have WebGL working currently.</p>\
-            <p>You can learn how to enable WebGL on <a href="https://get.webgl.org/" target="_blank">this website.</a></p>\
-        </div>\
-        <img class="webGL-kill" src="../Images/map/xmark.svg"></img>\
-      </div>';
-
-      // House cleaning
-      $('.map-legend').remove();
-      $('#map').remove();
-      // $('.fath-button').addClass('webgl-disabled');
-
-      // Set oh no! text
-      $('.map-large')
-        .addClass('warning-container')
-        .html(webGlFlag);
-
+      $('.show-if-no-webgl').removeClass('hidden');
+      $('.hide-if-no-webgl').addClass('hidden');
       $('.webGL-kill').click(function(){
-        $('.map-container-large').addClass('hidden');
+        $('.webgl-banner').addClass('hidden');
       });
       mapView.webGL = false;
       readData(false);
     } else {
+      mapView.webGL = true;
       setMap();
       $( window ).resize(function() {
         map.fitBounds(bounds);
