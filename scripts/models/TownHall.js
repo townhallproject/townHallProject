@@ -198,6 +198,7 @@
       }
       return acc;
     },[]);
+    console.log(fetchedData);
     return fetchedData;
   };
 

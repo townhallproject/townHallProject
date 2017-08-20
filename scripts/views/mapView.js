@@ -35,7 +35,7 @@
     map.scrollZoom.disable();
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
-    
+
     map.on('load', function() {
       console.log('load');
       backSpaceHack();
@@ -409,7 +409,6 @@
       });
 
       townHallsFB.once('value', function(snap) {
-      // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
         map.getSource('townhall-points').setData(featuresHome);
         mapView.initialView();
         eventHandler.zipSearchByParam();
@@ -421,6 +420,9 @@
         TownHall.allTownHalls.push(ele);
         TownHall.addFilterIndexes(ele);
         eventHandler.initialTable(ele);
+      });
+      townHallsFB.once('value', function(snap) {
+        eventHandler.zipSearchByParam();
       });
     }
   };
@@ -478,7 +480,7 @@
       // House cleaning
       $('.map-legend').remove();
       $('#map').remove();
-      $('.fath-button').addClass('webgl-disabled');
+      // $('.fath-button').addClass('webgl-disabled');
 
       // Set oh no! text
       $('.map-large')
@@ -488,7 +490,7 @@
       $('.webGL-kill').click(function(){
         $('.map-container-large').addClass('hidden');
       });
-
+      mapView.webGL = false;
       readData(false);
     } else {
       setMap();

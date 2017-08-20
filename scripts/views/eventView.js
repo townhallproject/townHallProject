@@ -46,7 +46,7 @@
     } else {
       mapView.focusMap(thisState, validDistricts);
     }
-
+    console.log(selectedData);
     if (selectedData.length > 0) {
       // set globals for filtering
       $('#nearest').addClass('nearest-with-results');
@@ -58,7 +58,6 @@
       var message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
       var messageState = '<p>and ' + numOfSateEvents + ' event(s) for ' + thisState + ' senators</p>';
       $text.html(message + messageState);
-
       selectedData.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       });
@@ -73,6 +72,7 @@
     e.preventDefault();
     var zip = $('#look-up input').val().trim();
     var zipCheck = zip.match(zipcodeRegEx);
+    console.log(zip);
     if (zipCheck) {
       var zipClean = zip.split('-')[0];
       var validDistricts = [];
@@ -95,8 +95,11 @@
             validDistricts.push(district.dis);
             validSelections.push(geoid);
           });
-          mapView.focusMap(thisState, validDistricts);
+          if (mapView.webGL) {
+            mapView.focusMap(thisState, validDistricts);
+          }
           eventHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
+          console.log(thisState, validDistricts, validSelections);
           eventHandler.renderResults(thisState, validDistricts, validSelections);
         })
         .catch(function(error){
