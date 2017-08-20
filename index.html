@@ -13,16 +13,14 @@
 
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="Town Hall Project">
-    <meta itemprop="description" content="Town Hall Project is a progressive, volunteer-powered initiative working to
-    identify and promote upcoming Congressional forums nationwide.">
+    <meta itemprop="description" content="Town Hall Project is a progressive, citizen-powered initiative to research and promote civic engagement with public officials.">
     <meta itemprop="image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_horizontal_facebook.png">
 
     <!-- Twitter Card data -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@townhallproject">
     <meta name="twitter:title" content="Town Hall Project">
-    <meta name="twitter:description" content="Town Hall Project is a progressive, volunteer-powered initiative working to
-    identify and promote upcoming Congressional forums nationwide.">
+    <meta name="twitter:description" content="Town Hall Project is a progressive, citizen-powered initiative to research and promote civic engagement with public officials.">
     <meta name="twitter:creator" content="@townhallproject">
     <!-- Twitter summary card must be at least 120px x 120px -->
     <meta name="twitter:image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_vertical_twitter.png">
@@ -33,8 +31,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://townhallproject-86312.firebaseapp.com/" />
     <meta property="og:image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_horizontal_facebook.png">
-    <meta property="og:description" content="Town Hall Project is a progressive, volunteer-powered initiative working to
-    identify and promote upcoming Congressional forums nationwide.">
+    <meta property="og:description" content="Town Hall Project is a progressive, citizen-powered initiative to research and promote civic engagement with public officials.">
     <meta property="og:site_name" content="Town Hall Project" />
     <link href='https://actionnetwork.org/css/style-embed-whitelabel.css' rel='stylesheet' type='text/css' />
     <script src="https://use.fontawesome.com/316bfde8e8.js"></script>
@@ -69,9 +66,11 @@
         <div class="collapse navbar-collapse" id="main-nav">
           <ul class="nav navbar-nav navbar-left" roll="tablists">
             <li></li>
-            <li><a class="hash-link" data-toggle="tab" href="#submit">Submit an Event</a></li>
             <li><a class="hash-link"  data-toggle="tab" href="#about">About</a></li>
-            <li><a class="hash-link" href="#join" data-toggle="tab">Get Event Updates</a></li>
+            <li><a class="hash-link" href="#missing-members" data-toggle="tab" id="missing-member-tab">Missing Members</a></li>
+            <li><a class="hash-link" href="#join" data-toggle="tab">Join us</a></li>
+            <li><a class="hash-link" href="#upload-video" data-toggle="tab">Share a video</a></li>
+            <li><a class="hash-link" data-toggle="tab" href="#submit">Submit an event</a></li>
             <li><a id="privacy-policy-link" class="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#privacy-policy">Privacy Policy</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -116,7 +115,6 @@
                     </div>
                   </form>
                   <div id="textresults" class="text-center "></div>
-
                 </div>
               </div>
             </section>
@@ -192,8 +190,103 @@
             </div>
           </div>
         </div>
+        <section class="email-signup--inline" id="missing-member-banner">
+          <div class="container container-fluid">
+            <div class="row">
+              <h2 class="text-center extra-large">August Recess 2017</h2>
+              <div class="col-sm-6 graphs">
+                <h4 class="text-primary table-title text-center">Members of Congress holding town halls</h4>
+                <dt>Senate</dt>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-dem-no-events dem-senate" data-count=48>
+                    <span class="sr-only">Democratic no events</span>
+                  </div>
+                  <div class="progress-bar progress-bar-dem-has-events dem-aug-progress-senate" data-count=0>
+                    <span class="sr-only">Democratic progress</span>
+                  </div>
+                  <div class="progress-bar progress-bar-rep-has-events rep-aug-progress-senate" data-count=0>
+                    <span class="sr-only">Republican progress</span>
+                  </div>
+                  <div class="progress-bar progress-bar-rep-no-events rep-senate" data-count=52>
+                    <span class="sr-only">Republican no events</span>
+                  </div>
+                </div>
+                <dt>House</dt>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-dem-no-events dem-house" data-count=194>
+                    <span class="sr-only">Democratic progress</span>
+                  </div>
+                  <div class="progress-bar progress-bar-dem-has-events dem-aug-progress-house" data-count=0>
+                    <span class="sr-only">Democratic progress</span>
+                  </div>
+                  <div class="progress-bar progress-bar-rep-has-events rep-aug-progress-house" data-count=0>
+                    <span class="sr-only">Republican progress</span>
+                  </div>
+                  <div class="progress-bar progress-bar-rep-no-events rep-house" data-count=240>
+                    <span class="sr-only">Republican progress</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-6">
+                    <dl class="dl-horizontal progress-bar-key">
+                      <dt class="key progress-bar-dem-no-events"></dt>
+                      <dd>Democrats without town halls</dd>
+                    </dl>
+                    <dl class="dl-horizontal progress-bar-key">
+                      <dt class="key progress-bar-dem-has-events"></dt>
+                      <dd>Democrats holding town halls</dd>
+                    </dl>
+                  </div>
+                  <div class="col-xs-6">
+                    <dl class="dl-horizontal progress-bar-key">
+                      <dt class="key progress-bar-rep-no-events"></dt>
+                      <dd>Republicans without town halls</dd>
+                    </dl>
+                    <dl class="dl-horizontal progress-bar-key">
+                      <dt class="key progress-bar-rep-has-events"></dt>
+                      <dd>Republicans holding town halls</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 graphs">
+                <dl class="dl-horizontal graph">
+                  <h4 class="text-primary table-title text-center">Total number of town halls</h4>
+                  <dt>Senate</dt>
+                  <dd>
+                    <div class="progress bar-graph">
+                      <div class="progress-bar progress-bar-dem-has-events dem-aug-total-senate" data-count=0 data-max=100>
+                        <span class="sr-only">Democratic progress</span>
+                      </div>
+                    </div>
+                    <div class="progress bar-graph">
+                      <div class="progress-bar progress-bar-rep-has-events rep-aug-total-senate" data-count=0 data-max=100>
+                        <span class="sr-only">Democratic progress</span>
+                      </div>
+                    </div>
+                  </dd>
+                  <dt>House</dt>
+                  <dd>
+                    <div class="progress bar-graph">
+                      <div class="progress-bar progress-bar-dem-has-events dem-aug-total-house" data-count=0 data-max=100>
+                        <span class="sr-only">Democratic progress</span>
+                      </div>
+                    </div>
+                    <div class="progress bar-graph">
+                      <div class="progress-bar progress-bar-rep-has-events rep-aug-total-house" data-count=0 data-max=100>
+                        <span class="sr-only">Democratic progress</span>
+                      </div>
+                    </div>
+                  </dd>
+                </dl>
+              </div>
+            </div>
 
-        <section class="background-light-blue email-signup--inline">
+
+          </div>
+        </section>
+        <section class="background-light-blue email-signup--inline" id="email-signup">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-email"><span aria-hidden="true">&times;</span></button>
          <div class="container container-fluid">
            <h1 id="email-title" class="text-center extra-large">Sign up to receive updates on local events.</h1>
            <form id="email-signup-form">
@@ -227,6 +320,7 @@
            </form>
          </div>
        </section>
+
         <!-- Cards showing representatives and their contact info -->
         <div id="representativeCards">
           <section class="container container-fluid"></section>
@@ -244,12 +338,13 @@
           <div class="row">
               <small>
                 <ul class="list-unstyled container">
-                  <li><span class="text-secondary">Town Hall</span><span> - A forum where members of Congress give updates on the current affairs of Congress and answer questions from constituents.</span></li>
-                  <li><span class="text-secondary">Empty Chair Town Hall</span><span> - A citizen-organized town hall held with or without the invited lawmaker.</span></li>
-                  <li><span class="text-secondary">Office Hours </span><span> - Serves the same purpose as a Town Hall, however Elected Officials are not always expected to attend.</span></li>
-                  <li><span class="text-secondary">Ticketed Event</span><span> - Oftentimes county party events, local fundraisers, or campaign functions. There may be a fee for admission.</span></li>
-                  <li><span class="text-secondary">TeleTown Hall Meeting </span><span> - A town hall conducted by conference call.</span></li>
-                  <li><span class="text-secondary">DC Event</span><span> - Event held in the MOC's DC Office.</span></li>
+                  <li><span class="text-secondary">Town Hall</span><span> - A forum where members of Congress give legislative updates and answer open questions from constituents.</span></li>
+                  <li><span class="text-secondary">"Empty Chair" Town Hall</span><span> - A citizen-organized town hall held with or without the invited lawmaker.</span></li>
+                  <li><span class="text-secondary">Adopt-A-District/State</span><span> - A citizen-organized town hall featuring a member of Congress from another district.</span></li>
+                  <li><span class="text-secondary">Office Hours </span><span> - Opportunity to meet and questions the staff of a member of Congress. Usually held in district offices but sometimes are "mobile office hours."</span></li>
+                  <li><span class="text-secondary">Ticketed Event</span><span> - Paid events. Typically county party events or local fundraisers. Note: Town Hall Project does not encourage buying tickets to these events and does not endorse any candidates.</span></li>
+                  <li><span class="text-secondary">TeleTown Hall Meeting </span><span> - A town hall conducted by conference call or online.</span></li>
+                  <li><span class="text-secondary">DC Event</span><span> - Event held in Washington D.C. when Congress is in session. Typically in the member's office.</span></li>
                 </ul>
               </small>
           </div>
@@ -295,10 +390,11 @@
                         <li class="downdown-title">Filter by Event Type</li>
                         <li role="separator" class="divider"></li>
                         <li><a data-filter="meetingType" id="Town Hall" class="dropdown-item" href="#">Town Hall</a></li>
+                        <li><a data-filter="meetingType" id="Empty Chair Town Hall" class="dropdown-item" href="#">Empty Chair Town Hall</a></li>
+                        <li><a data-filter="meetingType" id="Adopt-A-District/State" href="#">Adopt-A-District/State</a></li>
                         <li><a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a></li>
                         <li><a data-filter="meetingType" id="Ticketed Event" class="dropdown-item" href="#">Ticketed Event</a></li>
                         <li><a data-filter="meetingType" id="Tele-Town Hall" class="dropdown-item" href="#">Tele-Town Hall</a></li>
-                        <li><a data-filter="meetingType" id="Empty Chair Town Hall" class="dropdown-item" href="#">Empty Chair Town Hall</a></li>
                         <li><a data-filter="meetingType" id="DC Event" class="dropdown-item" href="#">DC Event</a></li>
                         <li><a data-filter="meetingType" id="All" class="dropdown-item" href="#">All</a></li>
                       </ul>
@@ -337,7 +433,6 @@
                 <footer class="text-success">President Obama, <cite title="Source Title">Farewell Address</cite></footer>
               </blockquote>
           </section>
-
         </header>
         <section class="container">
             <article class="center-block about">
@@ -359,7 +454,6 @@
                   <li>Staff office hours</li>
                   <li>Opportunities in Washington, D.C. to speak with your representative</li>
                 </ul>
-
                 <p>We do not currently include:</p>
                 <ul>
                   <li>Fundraisers outside the district/state</li>
@@ -376,7 +470,6 @@
                 <ul>
                   <li>Indivisible's <a href="//www.indivisibleguide.com/resource/town-halls/" target="_blank">Town Hall strategy resources</a></li>
                   <li>CAP Action's <a href="//www.resistanceinyourpocket.com/" target="_blank">Recess Toolkit</a></li>
-                  <li>MoveOn.org's <a href="//www.resistancerecess.com/survey/resistance-aprilrecess-materials/" target="_blank">Resistance Recess</a></li>
                 </ul>
               </div>
             </article>
@@ -390,7 +483,7 @@
               <div class="col-sm-6">
                 <h3>Our Supporters</h3>
                 <p>Town Hall Project is possible because of the hard work of researchers, organizers, and developers across country, and the generous support of hundreds of grassroots donors.</p>
-                <p>We are also proud to partner with <a href="//www.americanprogressaction.org/resistance-near-me/" target="_blank">CAP Action</a>, <a href="//www.resistancerecess.com/event/resistance-aprilrecess/search/" target="_blank">MoveOn.org</a>, <a href="//nextgenclimate.org/" target="_blank">NextGen Climate</a>, and other progressive allies in supporting grassroots action to hold our elected officials accountable.</p>
+                <p>We are also proud to partner with <a href="https://nextgenamerica.org/" target="_blank">NextGen America</a> and other progressive allies in supporting grassroots action to hold our elected officials accountable.</p>
               </div>
             </article>
           </section>
@@ -423,7 +516,7 @@
             </div>
           </section>
         </div>
-        <div role="tabpanel" class="tab-pane " id="join">
+        <div role="tabpanel" class="tab-pane" id="join">
           <header>
             <section class="container container-fluid">
                 <div class="col-md-6 col-md-offset-3">
@@ -439,9 +532,114 @@
               <small>Photo credit: Trang Dang</small>
             </div>
           </div>
-
       </div>
-      <div role="tabpanel" class="tab-pane " id="privacy-policy">
+      <div role="tabpanel" class="tab-pane" id="missing-members">
+        <header>
+          <section class="container container-fluid">
+            <div class="col-md-6 col-md-offset-3">
+              <p class="lead"><span id="mm-total-copy">188</span> members of Congress have not held a single in-person town hall this year.<span class="text-success"> Is yours one of them?</span></p>
+            </div>
+          </section>
+          <nav class="navbar navbar-default">
+            <ul class="nav navbar-nav navbar-left filter-button-group">
+              <li class="block">
+                <div class="col-sm-6">
+                  <button class="btn btn-primary btn-block" type="button" name="button" id="view-missing-member-report">View Jan-May Infographic</button>
+                </div>
+                <span class="col-sm-6" id="mm-current-state" data-current=0 data-total=0></span></li>
+              <li class="block filter-button-group mm-filter-info-holder">
+                <ul class="nav navbar-nav" id="mm-filter-info">
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right btn-group">
+              <li class="nav-item dropdown filter-button-group btn-group">
+                <a href="#" class="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party <span class="caret"></span></a>
+                <ul class="dropdown-menu button-group" data-filter-group="party">
+                  <li class="downdown-title">Filter by party</li>
+                  <li role="separator" class="divider"></li>
+                  <li data-filter=".Democratic" id="Democratic" class="btn dropdown-item btn-filter btn-white">Democratic</li>
+                  <li data-filter=".Republican" id="Republican" class="btn dropdown-item btn-filter btn-white">Republican</li>
+                  <!-- <li data-filter=".Independent" id="Independent" class="btn dropdown-item btn-filter btn-white">Independent</li> -->
+                  <li data-filter="" id="All" class="btn dropdown-item btn-filter btn-white" >All</li>
+                </ul>
+              </li>
+              <li class=" nav-item dropdown filter-button-group btn-group">
+                <a href="#" class="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Chamber <span class="caret"></span></a>
+                <ul class="dropdown-menu button-group" data-filter-group="chamber">
+                  <li class="downdown-title">Filter by chamber</li>
+                  <li role="separator" class="divider"></li>
+                  <li class="btn dropdown-item btn-filter btn-white" data-filter=".Senate">Senate</li>
+                  <li class="btn dropdown-item btn-filter btn-white" data-filter=".House" id="Republican">House</li>
+                  <li class="btn dropdown-item btn-filter btn-white" data-filter="" id="All" >All</li>
+                </ul>
+              </li>
+              <li class="nav-item filter-button-group button-group btn-group" data-filter-group="swingLeftFilter">
+                <a class="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".swingLeft">Swing Left District</a>
+              </li>
+              <li class="nav-item filter-button-group button-group btn-group" data-filter-group="ahcaFilter">
+                <a class="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".ahca">Voted for AHCA</a>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav state-button-holder filter-button-group ">
+              <ul id="state-buttons" class="button-group " data-filter-group="state">
+              </ul>
+            </ul>
+          </nav>
+        </header>
+        <div class="inset">
+        </div>
+        <div class="missing-member-cards-container">
+          <div class="container">
+            <div class="grid">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="tabpanel" class="tab-pane page" id="upload-video">
+        <section class="container">
+          <h1 class="text-primary text-center">Share your Town Hall Videos</h2>
+          <div class="col-sm-8 col-sm-offset-2 upload-video-stage-1 text-center">
+            <h3 class="margin-bottom">Have a video from a town hall you want to share?</h3>
+            <button class="btn btn-primary btn-lg btn-light-background upload-video-begin center-block">Click to begin uploading</button>
+          </div>
+          <div class="col-sm-8 col-sm-offset-2 upload-video-stage-2 hidden">
+            <h3>Authorizing with youtube, please wait...</h3>
+          </div>
+          <div class="col-sm-8 col-sm-offset-2 upload-video-stage-3 hidden">
+            <form id="upload-video-form">
+              <h3>Video Information</h3>
+              <div>
+                <input type="text" class="form-control" name="title" placeholder="Title (event and date)">
+              </div>
+              <div>
+                <textarea class="form-control" name="description" placeholder="Please tell us about any particularly powerful questions, answers or other moments--and the relevant timecode when possible"></textarea>
+              </div>
+              <div>
+                <input input type="file" id="video-file-field" class="button form-control" accept="video/*">
+              </div>
+              <div>
+                <em>By uploading a video you grant the Town Hall Project permission to use the video and share it with the public.  You also certify that you own all rights to the content or that you are authorized by the owner to make the content publicly available.</em>
+              </div>
+              <button name="button" class="btn btn-primary btn-light-background btn-lg upload-video-upload" disabled="true">Upload my video</button>
+            </form>
+          </div>
+          <div class="col-sm-8 col-sm-offset-2 upload-video-stage-4 hidden">
+            <h3>
+              <div class="d-inline-block margin-bottom">Upload in progress:</div>
+              <div class="d-inline-block margin-bottom"><progress id="upload-video-progress" max="1" value="0"></progress></div>
+              <div class="d-inline-block margin-bottom"><span id="upload-video-percent-transferred"></span>% complete.</div>
+              <div class="d-inline-block margin-bottom">About <span id="upload-video-seconds-remaining"></span> remaining.</div>
+            </h3>
+          </div>
+          <div class="col-sm-8 col-sm-offset-2 upload-video-stage-5 hidden">
+            <h3>Your video has been successfully uploaded.  It will be reviewed by our team shortly.  Thank you!</h3>
+            <button class="btn btn-primary btn-lg btn-light-background upload-video-begin center-block" id="upload-another">Upload another video</button>
+          </div>
+        </section>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="privacy-policy">
         <header class="margin-bottom">
           <section class="container ">
             <div class="col-sm-6 col-sm-offset-4">
@@ -479,11 +677,22 @@
           </section>
         <div class="banner" id="cover">
         </div>
+      </div>
     </div>
     <div class="modal fade event-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         </div>
+      </div>
+    </div>
+    <div class="modal fade missing-members-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+          <img src="/Images/Missing_Member_Report.png" alt="" />
+            <a class="twitter-share-button"
+        href="https://townhallproject.com/Images/Missing_Member_Report.png?text=Missing%20Members%20Report">
+      Tweet</a>
+      <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ftownhallproject.com%2FImages%2FMissing_Member_Report.png&layout=button&size=small&mobile_iframe=true&appId=1549118422076809&width=59&height=20" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>        </div>
       </div>
     </div>
     <footer class="footer">
@@ -502,6 +711,7 @@
     <!-- Vendor Files -->
     <script src="/vendor/scripts/jquery-2.1.4.js"></script>
     <script src="/vendor/scripts/jquery-ui.js"></script>
+    <script src="/vendor/scripts/moment.min.js"></script>
     <script src="/vendor/scripts/bootstrap.min.js"></script>
     <script src="/vendor/scripts/bootstrap3-typeahead.min.js"></script>
     <script src="/vendor/scripts/tether.js"></script>
@@ -511,9 +721,12 @@
     <script src="/data/states.js"></script>
     <script src="/data/bboxes.js"></script>
     <script src="/data/zipLookup.js"></script>
-
+    <script src="/vendor/scripts/cors-uploader.js"></script>
     <script src="templates.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+
 
     <script src='https://actionnetwork.org/widgets/v2/form/stay-up-to-date-on-our-work?format=js&source=widget'></script>
     <script type="text/javascript">(function () {
@@ -524,9 +737,32 @@
         s.src = ('https:' == window.location.protocol ? 'https' : 'http')+'://addtocalendar.com/atc/1.5/atc.min.js';
         var h = d[g]('body')[0];h.appendChild(s); }})();
     </script>
+    <script>window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+
+      return t;
+    }(document, "script", "twitter-wjs"));</script>
     <!-- Script Files -->
+    <script src="/scripts/data/statePop.js"></script>
+
     <script src="/scripts/models/TownHall.js"></script>
+    <script src="/scripts/models/MissingMember.js"></script>
+
     <script src="/scripts/views/eventView.js"></script>
     <script src="/scripts/views/mapView.js"></script>
-    </body>
+    <script src="/scripts/views/dataViz.js"></script>
+    <script src="/scripts/views/videoUploadView.js"></script>
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMap&libraries=visualization,geometry"></script> -->
+  </body>
 </html>

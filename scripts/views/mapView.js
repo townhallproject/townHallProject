@@ -35,8 +35,9 @@
     map.scrollZoom.disable();
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
-
+    
     map.on('load', function() {
+      console.log('load');
       backSpaceHack();
       makeZoomToNationalButton();
       addDistrictListener();
@@ -414,6 +415,7 @@
         eventHandler.zipSearchByParam();
       });
     } else {
+      //TODO: still enable search
       townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
         var ele = new TownHall (snapshot.val());
         TownHall.allTownHalls.push(ele);

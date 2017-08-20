@@ -113,6 +113,7 @@
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
+    $('#missing-member-banner').show();
     $('#email-signup-form input[name=zipcode]').val('');
     $('#representativeCards section').empty();
     $('#representativeCards').hide();
@@ -148,6 +149,7 @@
     var compiledTemplate = Handlebars.getTemplate('eventCards');
     var $panel = $(compiledTemplate(townhall));
     $panel.find('.event-represenative').children('h3').addClass(townhall.Party.slice(0,3));
+
     $panel.appendTo($parent);
   };
 
@@ -298,6 +300,7 @@
     $('.header-small').removeClass('hidden');
     $('.header-small').fadeIn();
     $('.header-large').hide();
+    $('#missing-member-banner').hide();
     $('.form-text-results').addClass('text-center');
     $('.left-panels').addClass('left-panels-border');
     $('#look-up').appendTo($('.left-panels'));
@@ -425,6 +428,37 @@
     // }
   };
 
+  eventHandler.uploadVideoStage2 = function(e) {
+    $('.upload-video-stage-1').addClass('hidden');
+    $('.upload-video-stage-2').removeClass('hidden');
+    authWithYoutube();
+  };
+
+  eventHandler.uploadVideoStage3 = function(e) {
+    $('.upload-video-upload').unbind('click');
+    $('.upload-video-upload').click(eventHandler.uploadVideoStage4);
+    $('.upload-video-stage-2').addClass('hidden');
+    $('.upload-video-stage-3').removeClass('hidden');
+    $('.upload-video-stage-5').addClass('hidden');
+  };
+
+  eventHandler.resetVideoForm = function(e) {
+    $('#upload-video-form input[type=text]').val('');
+    $('#upload-video-form textarea').val('');
+  };
+
+  eventHandler.uploadVideoStage4 = function(e) {
+    $('.upload-video-upload').attr('disabled', true);
+    uploadVideo.handleUploadClicked();
+    $('.upload-video-stage-3').addClass('hidden');
+    $('.upload-video-stage-4').removeClass('hidden');
+  };
+
+  eventHandler.uploadVideoStage5 = function(e) {
+    $('.upload-video-stage-4').addClass('hidden');
+    $('.upload-video-stage-5').removeClass('hidden');
+  };
+
   function submitSignup(first, last, zipcode, email, districts, partner) {
     var person = {
       'person' : {
@@ -433,9 +467,9 @@
         'postal_addresses': [{ 'postal_code' : zipcode}],
         'email_addresses' : [{ 'address' : email.val() }],
         'custom_fields': {
-        			'districts': districts,
-        			'partner': partner.prop('checked')
-        		}
+          'districts': districts,
+          'partner': partner.prop('checked')
+        }
       }
     };
     var userID = email.val().split('').reduce(function(a, b) {
@@ -443,29 +477,24 @@
       return a & a;
     }, 0);
 
-    // firebasedb.ref('/emailSignUps/' + userID).set(person).then(function(returned){
-    //   localStorage.setItem('signedUp', true);
-    //   $('.email-signup--inline').fadeOut(750);
-    // }).catch(function(error){
-    //   $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
-    // });
-      $.ajax({
-        url: 'https://actionnetwork.org/api/v2/forms/eafd3b2a-8c6b-42da-bec8-962da91b128c/submissions',
-        method: "POST",
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify(person),
-        success: function() {
-          localStorage.setItem('signedUp', true);
-          $('.email-signup--inline').fadeOut(750);
-        },
-        error: function(error) {
-          console.log('error', error);
+    $.ajax({
+      url: 'https://actionnetwork.org/api/v2/forms/eafd3b2a-8c6b-42da-bec8-962da91b128c/submissions',
+      method: 'POST',
+      dataType: 'json',
+      contentType: 'application/json',
+      data: JSON.stringify(person),
+      success: function() {
+        localStorage.setItem('signedUp', true);
+        $('#email-signup').fadeOut(750);
+      },
+      error: function(error) {
+        console.log('error', error);
         $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
       }
-    })
+    });
     return false;
   }
+
 
   function setupTypeaheads() {
     var typeaheadConfig = {
@@ -523,6 +552,7 @@
     }
   }
 
+
   $(document).ready(function(){
     init();
   });
@@ -539,19 +569,38 @@
 
     $('.filter').on('click', 'a', eventHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
+    $('button.upload-video-begin').click(eventHandler.uploadVideoStage2);
+    $('#upload-another').on('click', eventHandler.resetVideoForm);
+    $('#video-file-field').change(function(){
+      $('.upload-video-upload').attr('disabled', false);
+    });
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
     eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
+    eventHandler.addFilter('meetingType', 'Tele-Town Hall');
+
+
+    dataviz.initalProgressBar(100, $('.dem-senate'));
+    dataviz.initalProgressBar(100, $('.rep-senate'));
+    dataviz.initalProgressBar(434, $('.dem-house'));
+    dataviz.initalProgressBar(434, $('.rep-house'));
+    // Perform zip search on load
+    var zipcode = getUrlParameter('zipcode');
+    if (zipcode) {
+      $('#look-up input').val(zipcode);
+      eventHandler.lookup(document.createEvent('Event'));
+    }
 
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
-      $("a[href='" + location.hash + "']").tab('show');
+      var hashLocation = location.hash.split('?')[0];
+      $("a[href='" + hashLocation + "']").tab('show');
     } else {
       TownHall.isMap = true;
     }
     if (localStorage.getItem('signedUp') === 'true') {
-      $('.email-signup--inline').hide();
+      $('#email-signup').hide();
     }
 
     $('.hash-link').on('click', function onClickGethref(event) {
@@ -568,13 +617,18 @@
         }, 50);
       } else if (hashid === '#home' && TownHall.isMap === true) {
         history.replaceState({}, document.title, '.');
-        eventHandler.resetHome();
 
         setTimeout( function(){
           eventHandler.resetHome();
-          // mapView.resetView()
-        }, 1000);
-      } else {
+        }, 500);
+
+      } else if (hashid === '#missing-members') {
+        setTimeout(function () {
+          $('.grid').isotope();
+        }, 1500);
+        location.hash = hashid;
+      }
+      else {
         location.hash = hashid;
       }
 
@@ -583,7 +637,27 @@
 
     // Remove query param when closing modal
     $('.event-modal').on('hide.bs.modal', function (e) {
-      eventHandler.setUrlParameter('eventId', false);
+
+      setUrlParameter('eventId', false);
+    });
+    $('#close-email').on('click', function(e){
+      localStorage.setItem('signedUp', true);
+      $('#email-signup').fadeOut(750);
+    });
+    // Only show one popover at a time
+    $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
+      $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
+    });
+
+    $('body').on('click', '.popover .popover-title a.close', function(e) {
+      $('[data-toggle="popover"]').popover('hide');
+    });
+    $('#missing-member-banner-btn').on('click', function(e){
+      $('#missing-member-tab').click();
+    });
+
+    $('#view-missing-member-report').on('click', function(e) {
+      $('.missing-members-modal').modal('show');
     });
 
     $('.privacy-policy-button').on('click', function(e){

@@ -23,30 +23,45 @@
               </var>
           </span>
         </div>
-        {{/if}}
+      {{/if}}
       </div>
-    </div>
-    <div class="container no-padding">
-      <div class="col-xs-12 event-represenative">
-        <h3>{{Member}} <small class="event-party">({{Party}}, {{District}})</small></h3>
+      <div class="row">
+        <div class="col-xs-12">
+          {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
+            <h3 class="line-height-small">
+              <div class="row">
+                {{#ifCond District '===' 'Senate'}}
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>{{Member}} <small> ({{Party}}, {{District}})</small></span>
+                {{else}}
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>{{Member}} <small> ({{Party}}, {{District}})</small></span>
+                {{/ifCond}}
+              <!-- </div>
+              <div class="row margin-top-5"> -->
+                <span class="d-inline-block col-sm-6"><span class="small-white">Visiting MoC (will be present):<br></span>{{districtAdopter}} <small> ({{districtAdopterParty}}, {{districtAdopterDistrict}})</small></span>
+              </div>
+            </h3>
+          {{else}}
+            <h3>{{Member}} <small>({{Party}}, {{District}})</small></h3>
+          {{/ifCond}}
+        </div>
       </div>
     </div>
     <div class="panel-body">
       {{#if eventName}}
         <h3 class="text-success text-center event-name">{{eventName}}</h3>
       {{/if}}
-      <span class="text-success text-center">
-        {{#if repeatingEvent}}
-          <h4 class="event-date">
-            <span class>{{repeatingEvent}}</span>
-          </h4>
-        {{else}}
-          <h4 class="event-date">
-            <span class>{{Date}}</span>
-            <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span>
-          </h4>
-        {{/if}}
-      </span>
+      <span class="text-success text-center"><h4>
+        <span class>
+          {{#if repeatingEvent}}
+            {{repeatingEvent}}
+          {{/if}}
+          {{#unless repeatingEvent}}
+            {{#if Date}}
+              {{Date}}
+            {{/if}}
+          {{/unless}}
+        </span>
+      <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4></span>
       <ul class="list-group list-group-flush">
         {{#if Notes}}
         <li class="list-group-item list-item-no-border list-item-no-border">{{{Notes}}}
