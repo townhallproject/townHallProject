@@ -18,7 +18,6 @@
   eventHandler.renderResults = function(thisState, validDistricts, validSelections) {
     var districtMatcher = thisState + '-' + validDistricts;
     var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
-    console.log(selectedData);
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $text = $('.selection-results_content');
@@ -47,18 +46,15 @@
       } else {
         mapView.focusMap(thisState, validDistricts);
       }
-    } else {
-      onResizeMap();
     }
-
     if (selectedData.length > 0) {
       // set globals for filtering
-      console.log('length greater than 0');
       $('#nearest').addClass('nearest-with-results');
       TownHall.isCurrentContext = true;
       TownHall.currentContext = selectedData;
       eventHandler.renderTableWithArray(selectedData);
       mapView.makeSidebar(selectedData);
+
       var numOfSateEvents = selectedData.length - numOfDistrictEvents;
       var message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
       var messageState = '<p>and ' + numOfSateEvents + ' event(s) for ' + thisState + ' senators</p>';
@@ -66,6 +62,11 @@
       selectedData.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       });
+      if (!mapView.webGL) {
+        console.log(selectedData, TownHall.zipQuery);
+        // recenterMap(selectedData, TownHall.zipQuery);
+        // onResizeMap()
+      }
       addtocalendar.load();
     } else {
       $text.html('There are no events for ' + districtText);
@@ -77,7 +78,6 @@
     e.preventDefault();
     var zip = $('#look-up input').val().trim();
     var zipCheck = zip.match(zipcodeRegEx);
-    console.log(zip);
     if (zipCheck) {
       var zipClean = zip.split('-')[0];
       var validDistricts = [];
@@ -104,7 +104,6 @@
             mapView.focusMap(thisState, validDistricts);
           }
           eventHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
-          console.log(thisState, validDistricts, validSelections);
           eventHandler.renderResults(thisState, validDistricts, validSelections);
         })
         .catch(function(error){

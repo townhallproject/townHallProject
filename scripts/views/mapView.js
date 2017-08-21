@@ -37,7 +37,6 @@
     map.touchZoomRotate.disableRotation();
 
     map.on('load', function() {
-      console.log('load');
       backSpaceHack();
       makeZoomToNationalButton();
       addDistrictListener();
@@ -60,10 +59,12 @@
     mapView.killSidebar();
     mapView.initialView();
     $('#representativeCards').hide();
-    var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
-    if (visibility === 'visible') {
-      mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
-      mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
+    if (mapView.webGL) {
+      var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
+      if (visibility === 'visible') {
+        mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
+        mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
+      }
     }
     $('.selection-results_content').empty();
 
@@ -409,7 +410,7 @@
         filterMap(ele);
         makePoint(ele);
       } else {
-        googleMap.setData(ele);
+        noWebGlMapView.setData(ele);
       }
     });
     townHallsFB.once('value', function(snap) {
@@ -472,6 +473,7 @@
     if (!mapboxgl.supported()) {
       $('.show-if-no-webgl').removeClass('hidden');
       $('.hide-if-no-webgl').addClass('hidden');
+      $('.map-container-split').addClass('no-web-gl');
       $('.webGL-kill').click(function(){
         $('.webgl-banner').addClass('hidden');
       });

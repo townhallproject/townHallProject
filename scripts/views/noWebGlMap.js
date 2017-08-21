@@ -1,5 +1,5 @@
 (function closure(firebase) {
-  var map;
+  var googleMap;
   var google;
   var infowindow;
 
@@ -337,9 +337,11 @@
         ]
       }
     ];
+    var minZoomLevel = 4;
+    var maxZoomLevel = 20;
 
     var options = {
-      zoom: 4,
+      zoom: minZoomLevel,
       scrollwheel: false,
       navigationControl: false,
       mapTypeControl: false,
@@ -347,13 +349,12 @@
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    map = new google.maps.Map(document.getElementById('map'), options);
-    console.log(map);
+    googleMap = new google.maps.Map(document.getElementById('map'), options);
     var bounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(20, -124.39),
       new google.maps.LatLng(49.38, -66.94)
     );
-    map.fitBounds(bounds);
+    googleMap.fitBounds(bounds);
     google.maps.event.addDomListener(window, 'resize', onResizeMap);
   };
 
@@ -362,33 +363,36 @@
     var resizeBounds = new google.maps.LatLngBounds();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     if ( TownHall.zipQuery) {
+      console.log(TownHall.zipQuery);
       resizeBounds.extend(TownHall.zipQuery);
+      googleMap.setCenter(TownHall.zipQuery);
     }
     data.forEach(function(ele){
       if (ele.lat && ele.lng) {
         marker = new google.maps.LatLng(ele.lat, ele.lng);
         resizeBounds.extend(marker);
       } else {
-        // console.log(ele.eventId);
+       // console.log(ele.eventId);
       }
     });
-    google.maps.event.trigger(map, 'resize');
-    map.fitBounds(resizeBounds);
+    
+    // google.maps.event.trigger(googleMap, 'resize');
+    googleMap.fitBounds(resizeBounds);
   };
 
   // TODO; Probably redudent with resize map
   window.recenterMap = function(markers, zipQuery) {
-    google.maps.event.trigger(map, 'resize');
     var bounds = new google.maps.LatLngBounds();
     var geocoder = new google.maps.Geocoder();
     for (var i = 0; i < markers.length; i++) {
       marker = new google.maps.LatLng(markers[i].lat, markers[i].lng);
       bounds.extend(marker);
     }
-      // google.maps.event.trigger(map, 'resize');
+    console.log(bounds);
+    google.maps.event.trigger(googleMap, 'resize');
     bounds.extend(zipQuery);
-    map.setCenter(zipQuery);
-    map.fitBounds(bounds);
+    googleMap.setCenter(zipQuery);
+    googleMap.fitBounds(bounds);
       //TODO: add maker for search query, but need to be able to remove it.
       // var marker = new google.maps.Marker({
       //   map: map,
@@ -410,8 +414,8 @@
 // Adds all events into main data array
 // Adds all events as markers
 // renders tables
-  googleMap = {};
-  googleMap.setData = function (townhall){
+  noWebGlMapView = {};
+  noWebGlMapView.setData = function (townhall){
     var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
     var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
     dataviz.recessProgress(townhall);
@@ -433,7 +437,7 @@
       strokeWeight: 0.5,
       fillColor: '#FF0000',
       fillOpacity: 0.35,
-      map: map,
+      map: googleMap,
       position: latLng,
       name: townhall.name,
       time: townhall.time
@@ -441,7 +445,7 @@
     marker.setIcon(assignMarker(townhall.iconFlag));
     marker.addListener('click', function() {
       infowindow.setContent(contentString);
-      infowindow.open(map, marker);
+      infowindow.open(googleMap, marker);
     });
   };
 

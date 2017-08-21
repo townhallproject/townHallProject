@@ -102,11 +102,9 @@
             districts.push(ele.val());
           });
           resolve(districts);
-          // var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
-          // TownHall.zipQuery = zipQueryLoc;
-          // TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
-          //   resolve (sorted);
-          // });
+          var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
+          TownHall.zipQuery = zipQueryLoc;
+
         } else {
           reject ('That zip code is not in our database, if you think this is an error please email us.');
         }
