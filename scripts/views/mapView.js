@@ -470,7 +470,7 @@
   };
 
   $(document).ready(function(){
-    if (!mapboxgl.supported()) {
+    // if (!mapboxgl.supported()) {
       $('.show-if-no-webgl').removeClass('hidden');
       $('.hide-if-no-webgl').addClass('hidden');
       $('.map-container-split').addClass('no-web-gl');
@@ -479,13 +479,13 @@
       });
       mapView.webGL = false;
       readData(false);
-    } else {
-      mapView.webGL = true;
-      setMap();
-      $( window ).resize(function() {
-        map.fitBounds(bounds);
-      });
-    }
+    // } else {
+    //   mapView.webGL = true;
+    //   setMap();
+    //   $( window ).resize(function() {
+    //     map.fitBounds(bounds);
+    //   });
+    // }
   });
   module.mapView = mapView;
 

@@ -102,6 +102,8 @@
           });
           if (mapView.webGL) {
             mapView.focusMap(thisState, validDistricts);
+          } else {
+            TownHall.getZipLatLng(zipClean)
           }
           eventHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
           eventHandler.renderResults(thisState, validDistricts, validSelections);

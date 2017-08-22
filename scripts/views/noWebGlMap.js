@@ -5,7 +5,7 @@
 
 //draws map
   window.initMap = function initMap() {
-    if (mapboxgl.supported()) {
+    if (  mapView.webGL) {
       console.log('websgl');
       return;
     }
@@ -338,7 +338,7 @@
       }
     ];
     var minZoomLevel = 4;
-    var maxZoomLevel = 20;
+    var maxZoomLevel = 10;
 
     var options = {
       zoom: minZoomLevel,
@@ -362,11 +362,12 @@
     var geocoder = new google.maps.Geocoder();
     var resizeBounds = new google.maps.LatLngBounds();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    if ( TownHall.zipQuery) {
-      console.log(TownHall.zipQuery);
-      resizeBounds.extend(TownHall.zipQuery);
-      googleMap.setCenter(TownHall.zipQuery);
-    }
+    console.log(TownHall.zipQuery);
+    // if ( TownHall.zipQuery) {
+    //   console.log(TownHall.zipQuery);
+    //   resizeBounds.extend(TownHall.zipQuery);
+    //   googleMap.setCenter(TownHall.zipQuery);
+    // }
     data.forEach(function(ele){
       if (ele.lat && ele.lng) {
         marker = new google.maps.LatLng(ele.lat, ele.lng);
@@ -375,9 +376,14 @@
        // console.log(ele.eventId);
       }
     });
-    
+
     // google.maps.event.trigger(googleMap, 'resize');
     googleMap.fitBounds(resizeBounds);
+    if (googleMap.getZoom() > 12) {
+      googleMap.setZoom(12)
+    }
+    console.log(googleMap.getZoom())
+
   };
 
   // TODO; Probably redudent with resize map
