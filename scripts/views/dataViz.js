@@ -1,21 +1,7 @@
 (function(module) {
   var dataviz = {};
 
-  function updateProgressBar($bar, total, $total){
-    current = Number($bar.attr('data-count'));
-    updated = current + 1;
-    $bar.attr('data-count', updated);
-    width = updated / total * 100;
-    $bar.width(width + '%');
-    $bar.text(updated);
 
-    currentNoEvents = Number($total.attr('data-count'));
-    updatedNoEvents = currentNoEvents - 1;
-    $total.attr('data-count', updatedNoEvents);
-    widthNoEvents = updatedNoEvents / total * 100;
-    $total.width(widthNoEvents + '%');
-    $total.text(updatedNoEvents);
-  }
 
   dataviz.getPastEvents = function(path, dateStart, dateEnd){
     var ref = firebase.database().ref(path);
@@ -24,10 +10,37 @@
     });
   };
 
-  function updateTotalEventsBar($bar){
+  dataviz.listenForRemove = function(path){
+    var ref = firebase.database().ref(path);
+    ref.on('child_removed', function(snapshot) {
+      remove = true
+      dataviz.removeLiveEvent(snapshot.val(), remove);
+    });
+  };
+
+  function updateProgressBar($bar, total, $total, remove){
+    var increment = remove ? -1 : 1
+
+    current = Number($bar.attr('data-count'));
+    updated = current + increment;
+    $bar.attr('data-count', updated);
+    width = updated / total * 100;
+    $bar.width(width + '%');
+    $bar.text(updated);
+
+    currentNoEvents = Number($total.attr('data-count'));
+    updatedNoEvents = currentNoEvents - increment;
+    $total.attr('data-count', updatedNoEvents);
+    widthNoEvents = updatedNoEvents / total * 100;
+    $total.width(widthNoEvents + '%');
+    $total.text(updatedNoEvents);
+  }
+
+  function updateTotalEventsBar($bar, remove){
+    var increment = remove ? -1 : 1
     current = Number($bar.attr('data-count'));
     max = Number($bar.attr('data-max'));
-    updated = current + 1;
+    updated = current + increment;
     max = updated > max ? updated : max;
     width = updated / (max + 50) * 100;
     $bar.attr('data-count', updated);
@@ -47,10 +60,9 @@
 
   dataviz.membersEvents = new Set();
 
-  dataviz.recessProgress = function (townhall) {
+  dataviz.recessProgress = function (townhall, removed) {
     var total;
     var newMember = false;
-
     if (moment(townhall.dateObj).isBetween('2017-07-29', '2017-09-04', []) && townhall.meetingType ==='Town Hall') {
       if (!dataviz.membersEvents.has(townhall.Member)) {
         newMember = true;
@@ -68,7 +80,7 @@
         total = 434;
         chamber = 'house';
       }
-      parseBars(party, chamber, newMember, total);
+      parseBars(party, chamber, newMember, total, removed);
     }
   };
 
