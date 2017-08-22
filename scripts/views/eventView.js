@@ -21,6 +21,7 @@
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $text = $('.selection-results_content');
+    $('#missing-member-banner').hide()
     $parent.empty();
     //render table
     var districtText = ' ';
@@ -62,11 +63,6 @@
       selectedData.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       });
-      if (!mapView.webGL) {
-        console.log(selectedData, TownHall.zipQuery);
-        // recenterMap(selectedData, TownHall.zipQuery);
-        // onResizeMap()
-      }
       addtocalendar.load();
     } else {
       $text.html('There are no events for ' + districtText);
@@ -76,6 +72,7 @@
 
   eventHandler.lookup = function (e) {
     e.preventDefault();
+    TownHall.zipQuery
     var zip = $('#look-up input').val().trim();
     var zipCheck = zip.match(zipcodeRegEx);
     if (zipCheck) {
@@ -87,6 +84,7 @@
       var stateCode;
       TownHall.lookupZip(zipClean)
         .then(function(zipToDistricts){
+          TownHall.zipQuery = zipClean
           eventHandler.setUrlParameter('district', false);
           eventHandler.setUrlParameter('zipcode', zipClean);
           eventHandler.resetFilters();
@@ -102,8 +100,6 @@
           });
           if (mapView.webGL) {
             mapView.focusMap(thisState, validDistricts);
-          } else {
-            TownHall.getZipLatLng(zipClean)
           }
           eventHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
           eventHandler.renderResults(thisState, validDistricts, validSelections);

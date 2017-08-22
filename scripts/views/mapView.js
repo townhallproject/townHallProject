@@ -57,17 +57,18 @@
 
   mapView.resetView = function resetView() {
     mapView.killSidebar();
-    mapView.initialView();
     $('#representativeCards').hide();
     if (mapView.webGL) {
+      mapView.initialView();
       var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
       if (visibility === 'visible') {
         mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
         mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
       }
+    } else {
+
     }
     $('.selection-results_content').empty();
-
     $('#representativeCards section').empty();
     eventHandler.setUrlParameter('zipcode', false);
     eventHandler.setUrlParameter('district', false);
@@ -454,6 +455,8 @@
     $('#map').prependTo('.map-fixing');
     if (mapboxgl.supported()) {
       map.resize();
+    } else {
+      onResizeMap()
     }
   };
 
@@ -466,11 +469,13 @@
     $('#map').prependTo('.map-large');
     if (mapboxgl.supported()) {
       map.resize();
+    } else {
+      onResizeMap()
     }
   };
 
   $(document).ready(function(){
-    // if (!mapboxgl.supported()) {
+    if (!mapboxgl.supported()) {
       $('.show-if-no-webgl').removeClass('hidden');
       $('.hide-if-no-webgl').addClass('hidden');
       $('.map-container-split').addClass('no-web-gl');
@@ -479,13 +484,13 @@
       });
       mapView.webGL = false;
       readData(false);
-    // } else {
-    //   mapView.webGL = true;
-    //   setMap();
-    //   $( window ).resize(function() {
-    //     map.fitBounds(bounds);
-    //   });
-    // }
+    } else {
+      mapView.webGL = true;
+      setMap();
+      $( window ).resize(function() {
+        map.fitBounds(bounds);
+      });
+    }
   });
   module.mapView = mapView;
 

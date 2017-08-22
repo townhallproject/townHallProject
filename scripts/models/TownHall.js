@@ -114,8 +114,9 @@
     return new Promise(function (resolve, reject) {
       firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
         if (snapshot.exists()) {
-        var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
-        TownHall.zipQuery = zipQueryLoc;
+        var zipQueryLoc = {};
+        zipQueryLoc.lat = snapshot.val().LAT;
+        zipQueryLoc.lng = snapshot.val().LNG;
         resolve(zipQueryLoc)
         } else {
           reject ('That is not a real zip code');
@@ -191,7 +192,6 @@
       }
       return acc;
     },[]);
-    console.log(fetchedData);
     return fetchedData;
   };
 

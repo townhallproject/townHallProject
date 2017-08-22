@@ -5,7 +5,7 @@
 
 //draws map
   window.initMap = function initMap() {
-    if (  mapView.webGL) {
+    if (mapView.webGL) {
       console.log('websgl');
       return;
     }
@@ -362,28 +362,17 @@
     var geocoder = new google.maps.Geocoder();
     var resizeBounds = new google.maps.LatLngBounds();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    console.log(TownHall.zipQuery);
-    // if ( TownHall.zipQuery) {
-    //   console.log(TownHall.zipQuery);
-    //   resizeBounds.extend(TownHall.zipQuery);
-    //   googleMap.setCenter(TownHall.zipQuery);
-    // }
     data.forEach(function(ele){
       if (ele.lat && ele.lng) {
         marker = new google.maps.LatLng(ele.lat, ele.lng);
         resizeBounds.extend(marker);
-      } else {
-       // console.log(ele.eventId);
       }
     });
-
-    // google.maps.event.trigger(googleMap, 'resize');
+    google.maps.event.trigger(googleMap, 'resize');
     googleMap.fitBounds(resizeBounds);
     if (googleMap.getZoom() > 12) {
       googleMap.setZoom(12)
     }
-    console.log(googleMap.getZoom())
-
   };
 
   // TODO; Probably redudent with resize map
@@ -394,7 +383,6 @@
       marker = new google.maps.LatLng(markers[i].lat, markers[i].lng);
       bounds.extend(marker);
     }
-    console.log(bounds);
     google.maps.event.trigger(googleMap, 'resize');
     bounds.extend(zipQuery);
     googleMap.setCenter(zipQuery);
