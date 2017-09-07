@@ -160,11 +160,19 @@
   };
   // puts tele town halls by House members in the district.
   //TODO: geocode the data on the way in
-  function teleTownHallDistrict(townhall){
-    var districtId = townhall.District.split('-')[1];
-    districtId = zeroPad(districtId);
-
-    var bb = bboxes[townhall.District.split('-')[0] + districtId];
+  function teleTownHallMarker(townhall, state){
+    if (townhall.District !== 'Senate') {
+      var districtId = townhall.District.split('-')[1];
+      districtId = zeroPad(districtId);
+      key = townhall.District.split('-')[0] + districtId;
+    } else {
+      var key = state
+    }
+    var bb = bboxes[key];
+    if (!bb) {
+      console.log(key);
+      return townhall;
+    }
     townhall.lng = (bb[2] - bb[0])/2 + bb[0];
     townhall.lat = (bb[3] - bb[1])/2 + bb[1];
     return townhall;
@@ -177,29 +185,32 @@
 
   // Creates the point layer.
   function makePoint (townhall) {
-    if (townhall.meetingType === 'DC Event' || !townhall.lat || !townhall.iconFlag) {
+    if (townhall.meetingType === 'DC Event' || !townhall.iconFlag) {
       return;
     }
     var iconKey = townhall.iconFlag;
     var districtId = '';
-    if (iconKey === 'tele'){
-      iconKey = 'phone-in';
-      if (townhall.District && townhall.District !== 'Senate') {
-        townhall = teleTownHallDistrict(townhall);
-      }
-    }
-    if (townhall.District && townhall.District !== 'Senate') {
-      if (!townhall.District.split('-')[1]) {
-        return;
-      }
-      districtId = zeroPad(townhall.District.split('-')[1]);
-      stateAbbr = townhall.District.split('-')[0];
-    }
     var state = stateData.filter(function(ele){
       return ele.Name === townhall.State;
     });
     stateAbbr = state[0].USPS;
     stateCode = state[0].FIPS;
+    if (townhall.District && townhall.District !== 'Senate') {
+      if (!townhall.District.split('-')[1]) {
+        return;
+      }
+      districtId = zeroPad(townhall.District.split('-')[1]);
+    }
+
+    if (iconKey === 'tele'){
+      iconKey = 'phone-in';
+      townhall = teleTownHallMarker(townhall, stateAbbr);
+      if (!townhall.lat) {
+        return
+      }
+    }
+
+
 
     featuresHome.features.push({
       type: 'Feature',

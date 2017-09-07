@@ -560,9 +560,13 @@
         }, 500);
 
       } else if (hashid === '#missing-members') {
-        setTimeout(function () {
-          $('.grid').isotope();
-        }, 1500);
+        if (!Moc.loaded) {
+          missingMemberView.init()
+        } else {
+          setTimeout(function () {
+            $('.grid').isotope();
+          }, 1500);
+        }
         location.hash = hashid;
       }
       else {
