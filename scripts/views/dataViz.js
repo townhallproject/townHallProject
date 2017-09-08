@@ -95,6 +95,7 @@
 
   var dateStart = new Date('2017-07-29').valueOf();
   var dateEnd = new Date('2017-09-04').valueOf();
+  dataviz.getPastEvents('townHallsOld/2017-8', dateStart, dateEnd);
   dataviz.getPastEvents('townHallsOld/2017-7', dateStart, dateEnd);
   dataviz.getPastEvents('townHallsOld/2017-6', dateStart, dateEnd);
 
