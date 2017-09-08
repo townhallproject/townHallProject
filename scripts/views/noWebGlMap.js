@@ -360,6 +360,7 @@
 
   window.onResizeMap = function onResizeMap() {
     console.log('resizing');
+    google.maps.event.trigger(googleMap, 'resize');
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     var selection = TownHall.isCurrentContext ? true:false;
     if (selection) {
@@ -382,7 +383,6 @@
         }
       });
       googleMap.fitBounds(resizeBounds);
-      google.maps.event.trigger(googleMap, 'resize');
       if (googleMap.getZoom() > 12) {
         googleMap.setZoom(12);
       }
@@ -416,7 +416,6 @@
     var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
     dataviz.recessProgress(townhall);
     TownHall.addFilterIndexes(townhall);
-    eventHandler.initialTable(townhall);
     $('[data-toggle="popover"]').popover({
       container: 'body',
       html:true

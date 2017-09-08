@@ -66,7 +66,9 @@
         mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
       }
     } else {
-      onResizeMap();
+      setTimeout(function () {
+        onResizeMap()
+      }, 50);
     }
     eventHandler.setUrlParameter('zipcode', false);
     eventHandler.setUrlParameter('district', false);
@@ -479,8 +481,6 @@
     $('#map').prependTo('.map-large');
     if (mapView.webGL) {
       map.resize();
-    } else {
-      onResizeMap();
     }
   };
 

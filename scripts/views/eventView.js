@@ -7,7 +7,8 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
-  eventHandler.zipErrorResponse = function(errorMessage) {
+  eventHandler.zipErrorResponse = function(errorMessage, error) {
+    console.warn(error);
     var $text = $('.selection-results_content');
     $text.text(errorMessage);
   };
@@ -60,10 +61,10 @@
     var justSenate = counts[0];
     var numOfDistrictEvents = counts[1];
     eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
+
     if (selectedData.length > 0) {
       // set globals for filtering
       $parent.addClass('nearest-with-results');
-
 
       TownHall.isCurrentContext = true;
       TownHall.currentContext = selectedData;
@@ -79,8 +80,10 @@
       mapView.makeSidebar(selectedData);
       addtocalendar.load();
     } else {
-      mapView.killSidebar()
+      mapView.killSidebar();
       $text.html('There are no events for ' + districtText);
+      eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
+      eventHandler.resetTable();
     }
     if (mapView.webGL) {
       mapView.highlightDistrict(validSelections);
@@ -103,6 +106,7 @@
 
   eventHandler.lookup = function (e) {
     e.preventDefault();
+    TownHall.resetData();
     TownHall.zipQuery;
     var zip = $('#look-up input').val().trim();
     var zipCheck = zip.match(zipcodeRegEx);
@@ -131,13 +135,26 @@
           eventHandler.renderResults(thisState, validDistricts, validSelections);
         })
         .catch(function(error){
-          eventHandler.zipErrorResponse(error, 'That zip code is not in our database, if you think this is an error please email us.');
+          eventHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.', error);
         });
 
     } else {
       eventHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
     }
   };
+
+  eventHandler.resetTable = function(){
+    TownHall.resetData();
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
+    eventHandler.initialFilters();
+  }
+
+  eventHandler.initialFilters = function() {
+    eventHandler.resetFilters();
+    eventHandler.addFilter('meetingType', 'Town Hall');
+    eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
+    eventHandler.addFilter('meetingType', 'Tele-Town Hall');
+  }
 
   // reset the home page to originial view
   eventHandler.resetHome = function () {
@@ -155,20 +172,15 @@
     $('#button-to-form').hide();
     $('.spacer').show();
     $('#look-up').appendTo($('.right-panels'));
-    TownHall.isCurrentContext = false;
-    TownHall.currentContext = [];
-    TownHall.zipQuery = '';
+    eventHandler.resetTable();
     mapView.resetView();
     var $parent = $('#nearest');
     var $results = $('.selection-results_content');
     $parent.removeClass('nearest-with-results');
     $parent.empty();
     $results.empty();
-    eventHandler.resetFilters();
-    eventHandler.addFilter('meetingType', 'Town Hall');
-    eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
+    eventHandler.initialFilters()
     TownHall.sortOn = 'Date';
-    eventHandler.renderTableWithArray(eventHandler.getFilterState());
   };
 
   // Renders one panel, assumes data processing has happened
@@ -314,8 +326,8 @@
     var cur = parseInt($currentState.attr('data-current'));
     $currentState.attr('data-total', total);
     $table = $('#all-events-table');
-
-    if (townhall.meetingType === 'Town Hall' || townhall.meetingType === 'Empty Chair Town Hall') {
+    var meetingTypes = TownHall.filters.meetingType;
+    if (meetingTypes.indexOf(townhall.meetingType) > -1) {
       cur ++;
       eventHandler.renderTable(townhall, $table);
       $currentState.attr('data-current', cur);
@@ -540,10 +552,7 @@
     $('#video-file-field').change(function(){
       $('.upload-video-upload').attr('disabled', false);
     });
-    eventHandler.resetFilters();
-    eventHandler.addFilter('meetingType', 'Town Hall');
-    eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
-    eventHandler.addFilter('meetingType', 'Tele-Town Hall');
+    eventHandler.initialFilters()
 
 
     dataviz.initalProgressBar(100, $('.dem-senate'));
@@ -569,19 +578,13 @@
 
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
-        setTimeout( function(){
           if (location.pathname ='/') {
             eventHandler.resetHome();
             TownHall.isMap = true;
           }
-        }, 50);
       } else if (hashid === '#home' && TownHall.isMap === true) {
         history.replaceState({}, document.title, '.');
-
-        setTimeout( function(){
           eventHandler.resetHome();
-        }, 500);
-
       } else if (hashid === '#missing-members') {
         if (!Moc.loaded) {
           missingMemberView.init();

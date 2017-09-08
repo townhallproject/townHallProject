@@ -110,6 +110,12 @@
     });
   };
 
+  TownHall.resetData = function() {
+    TownHall.isCurrentContext = false;
+    TownHall.currentContext = [];
+    TownHall.zipQuery = '';
+  }
+
   TownHall.getZipLatLng = function (zip) {
     return new Promise(function (resolve, reject) {
       firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
