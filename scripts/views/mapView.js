@@ -154,7 +154,7 @@
     return [lng + jitter * plusOrMinus, lat + jitter * plusOrMinus1];
   }
 
-  function zeroPad(districtID) {
+  mapView.zeroPad = function zeroPad(districtID) {
     var padding = '00';
     return padding.substring(0, padding.length - districtID.length) + districtID;
   };
@@ -163,14 +163,13 @@
   function teleTownHallMarker(townhall, state){
     if (townhall.District !== 'Senate') {
       var districtId = townhall.District.split('-')[1];
-      districtId = zeroPad(districtId);
+      districtId = mapView.zeroPad(districtId);
       key = townhall.District.split('-')[0] + districtId;
     } else {
       var key = state;
     }
     var bb = bboxes[key];
     if (!bb) {
-      console.log(key);
       return townhall;
     }
     townhall.lng = (bb[2] - bb[0])/2 + bb[0];
@@ -199,7 +198,7 @@
       if (!townhall.District.split('-')[1]) {
         return;
       }
-      districtId = zeroPad(townhall.District.split('-')[1]);
+      districtId = mapView.zeroPad(townhall.District.split('-')[1]);
     }
 
     if (iconKey === 'tele'){
@@ -469,7 +468,7 @@
     if (mapboxgl.supported()) {
       map.resize();
     } else {
-      // onResizeMap()
+      onResizeMap()
     }
   };
 
@@ -483,7 +482,7 @@
     if (mapboxgl.supported()) {
       map.resize();
     } else {
-      // onResizeMap()
+      onResizeMap()
     }
   };
 

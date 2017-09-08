@@ -359,30 +359,38 @@
   noWebGlMapView = {};
 
   window.onResizeMap = function onResizeMap() {
-    console.log('resize');
-    var geocoder = new google.maps.Geocoder();
-    var resizeBounds = new google.maps.LatLngBounds();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    var areMarkers = false;
-    data.forEach(function(ele){
-      if (ele.lat && ele.lng) {
-        areMarkers = true;
-        marker = new google.maps.LatLng(ele.lat, ele.lng);
-        resizeBounds.extend(marker);
-
+    var selection = TownHall.isCurrentContext ? true:false;
+    if (selection) {
+      var stateData = eventHandler.getStateDataFromName(data[0].State)
+      var counts = eventHandler.checkIfOnlySenate(data);
+      var validDistricts = []
+      var justSenate = counts[0];
+      var validDistricts = data.map(function(ele){
+        return mapView.zeroPad(ele.District.split('-')[1])
+      }).filter(function(ele, index, array){
+        return array.indexOf(ele) == index;
+      })
+      eventHandler.whereToZoomMap(justSenate, stateData[0].USPS, validDistricts);
+    } else {
+      var resizeBounds = new google.maps.LatLngBounds();
+      data.forEach(function(ele){
+        if (ele.lat && ele.lng) {
+          marker = new google.maps.LatLng(ele.lat, ele.lng);
+          resizeBounds.extend(marker);
+        }
+      });
+      googleMap.fitBounds(resizeBounds);
+      google.maps.event.trigger(googleMap, 'resize');
+      if (googleMap.getZoom() > 12) {
+        googleMap.setZoom(12);
       }
-    });
-
-    // google.maps.event.trigger(googleMap, 'resize');
-    googleMap.fitBounds(resizeBounds);
-    if (googleMap.getZoom() > 12) {
-      googleMap.setZoom(12);
     }
   };
 
   // TODO; Probably redudent with resize map
   noWebGlMapView.focusMap = function(bb) {
-    console.log(bb);
+    google.maps.event.trigger(googleMap, 'resize');
     var southWest = new google.maps.LatLng(bb[1], bb[0]);
     var northEast = new google.maps.LatLng(bb[3], bb[2]);
     var bounds = new google.maps.LatLngBounds(southWest, northEast);

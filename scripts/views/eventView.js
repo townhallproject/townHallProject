@@ -42,7 +42,6 @@
   };
 
   eventHandler.renderResults = function(thisState, validDistricts, validSelections) {
-    console.log('rendering', thisState, validDistricts, validSelections);
     var districtMatcher = thisState + '-' + validDistricts;
     var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
     var $zip = $('#look-up input').val();
@@ -64,10 +63,8 @@
     var justSenate = counts[0];
     var numOfDistrictEvents = counts[1];
     eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
-    console.log('selectedData', selectedData);
     if (selectedData.length > 0) {
       // set globals for filtering
-      console.log(selectedData);
       $('#nearest').addClass('nearest-with-results');
       TownHall.isCurrentContext = true;
       TownHall.currentContext = selectedData;
@@ -90,13 +87,26 @@
     }
   };
 
+  eventHandler.getStateDataFromAbbr = function(abbr) {
+    var stateObj = stateData.filter(function(state){
+      return state.USPS === abbr;
+    });
+    return stateObj
+  }
+
+  eventHandler.getStateDataFromName = function(stateName) {
+    var stateObj = stateData.filter(function(state){
+      return state.Name === stateName;
+    });
+    return stateObj
+  }
+
   eventHandler.lookup = function (e) {
     e.preventDefault();
     TownHall.zipQuery;
     var zip = $('#look-up input').val().trim();
     var zipCheck = zip.match(zipcodeRegEx);
     if (zipCheck) {
-      console.log(zipCheck);
       var zipClean = zip.split('-')[0];
       var validDistricts = [];
       var validSelections = [];
@@ -110,22 +120,13 @@
           eventHandler.setUrlParameter('zipcode', zipClean);
           eventHandler.resetFilters();
           zipToDistricts.forEach(function(district){
-            var stateDate = stateData.filter(function(state){
-              return state.USPS === district.abr;
-            });
-            stateCode = stateDate[0].FIPS;
+            stateObj = eventHandler.getStateDataFromAbbr(district.abr)
+            stateCode = stateObj[0].FIPS;
             var geoid = stateCode + district.dis;
             thisState = district.abr;
             validDistricts.push(district.dis);
             validSelections.push(geoid);
           });
-          bb = mapView.getBoundingBox(thisState, validDistricts);
-          console.log(bb);
-          if (mapView.webGL) {
-            mapView.focusMap(bb);
-          } else {
-            // focusMap(bb)
-          }
           eventHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
           eventHandler.renderResults(thisState, validDistricts, validSelections);
         })
