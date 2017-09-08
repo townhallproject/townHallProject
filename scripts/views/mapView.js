@@ -403,7 +403,7 @@
       var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
       var ele = new TownHall (snapshot.val());
-      eventHandler.recessProgress(ele);
+      dataviz.recessProgress(ele);
       TownHall.allTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
       eventHandler.initialTable(ele);
