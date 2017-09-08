@@ -145,8 +145,8 @@
 
   eventHandler.resetTable = function(){
     TownHall.resetData();
-    eventHandler.renderTableWithArray(eventHandler.getFilterState());
     eventHandler.initialFilters();
+    eventHandler.renderTableWithArray(eventHandler.getFilterState());
   }
 
   eventHandler.initialFilters = function() {
