@@ -15,13 +15,40 @@
     $results.append($text);
   };
 
+  eventHandler.whereToZoomMap = function(justSenate, thisState, validDistricts){
+    if (justSenate) {
+      bb = mapView.getBoundingBox(thisState);
+    } else {
+      bb = mapView.getBoundingBox(thisState, validDistricts);
+    }
+    if (mapView.webGL) {
+      mapView.focusMap(bb);
+    } else {
+      noWebGlMapView.focusMap(bb);
+    }
+  };
+
+  eventHandler.checkIfOnlySenate = function(selectedData){
+    var justSenate = true;
+    var numOfDistrictEvents = 0;
+
+    selectedData.forEach(function(ele){
+      if(ele.District !== 'Senate') {
+        numOfDistrictEvents ++;
+        justSenate = false;
+      }
+    });
+    return [justSenate, numOfDistrictEvents];
+  };
+
   eventHandler.renderResults = function(thisState, validDistricts, validSelections) {
+    console.log('rendering', thisState, validDistricts, validSelections);
     var districtMatcher = thisState + '-' + validDistricts;
     var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $text = $('.selection-results_content');
-    $('#missing-member-banner').hide()
+    $('#missing-member-banner').hide();
     $parent.empty();
     //render table
     var districtText = ' ';
@@ -33,23 +60,14 @@
       }
     });
 
-    var justSenate = true;
-    var numOfDistrictEvents = 0;
-    selectedData.forEach(function(ele){
-      if(ele.District !== 'Senate') {
-        numOfDistrictEvents ++;
-        justSenate = false;
-      }
-    });
-    if (mapView.webGL) {
-      if (justSenate) {
-        mapView.focusMap(thisState);
-      } else {
-        mapView.focusMap(thisState, validDistricts);
-      }
-    }
+    var counts = eventHandler.checkIfOnlySenate(selectedData);
+    var justSenate = counts[0];
+    var numOfDistrictEvents = counts[1];
+    eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
+    console.log('selectedData', selectedData);
     if (selectedData.length > 0) {
       // set globals for filtering
+      console.log(selectedData);
       $('#nearest').addClass('nearest-with-results');
       TownHall.isCurrentContext = true;
       TownHall.currentContext = selectedData;
@@ -67,15 +85,18 @@
     } else {
       $text.html('There are no events for ' + districtText);
     }
-    mapView.highlightDistrict(validSelections);
+    if (mapView.webGL) {
+      mapView.highlightDistrict(validSelections);
+    }
   };
 
   eventHandler.lookup = function (e) {
     e.preventDefault();
-    TownHall.zipQuery
+    TownHall.zipQuery;
     var zip = $('#look-up input').val().trim();
     var zipCheck = zip.match(zipcodeRegEx);
     if (zipCheck) {
+      console.log(zipCheck);
       var zipClean = zip.split('-')[0];
       var validDistricts = [];
       var validSelections = [];
@@ -84,7 +105,7 @@
       var stateCode;
       TownHall.lookupZip(zipClean)
         .then(function(zipToDistricts){
-          TownHall.zipQuery = zipClean
+          TownHall.zipQuery = zipClean;
           eventHandler.setUrlParameter('district', false);
           eventHandler.setUrlParameter('zipcode', zipClean);
           eventHandler.resetFilters();
@@ -98,8 +119,12 @@
             validDistricts.push(district.dis);
             validSelections.push(geoid);
           });
+          bb = mapView.getBoundingBox(thisState, validDistricts);
+          console.log(bb);
           if (mapView.webGL) {
-            mapView.focusMap(thisState, validDistricts);
+            mapView.focusMap(bb);
+          } else {
+            // focusMap(bb)
           }
           eventHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
           eventHandler.renderResults(thisState, validDistricts, validSelections);
@@ -561,7 +586,7 @@
 
       } else if (hashid === '#missing-members') {
         if (!Moc.loaded) {
-          missingMemberView.init()
+          missingMemberView.init();
         } else {
           setTimeout(function () {
             $('.grid').isotope();

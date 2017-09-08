@@ -6,7 +6,6 @@
 //draws map
   window.initMap = function initMap() {
     if (mapView.webGL) {
-      console.log('websgl');
       return;
     }
     google = window.google;
@@ -357,43 +356,37 @@
     googleMap.fitBounds(bounds);
     google.maps.event.addDomListener(window, 'resize', onResizeMap);
   };
+  noWebGlMapView = {};
 
   window.onResizeMap = function onResizeMap() {
+    console.log('resize');
     var geocoder = new google.maps.Geocoder();
     var resizeBounds = new google.maps.LatLngBounds();
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
+    var areMarkers = false;
     data.forEach(function(ele){
       if (ele.lat && ele.lng) {
+        areMarkers = true;
         marker = new google.maps.LatLng(ele.lat, ele.lng);
         resizeBounds.extend(marker);
+
       }
     });
-    google.maps.event.trigger(googleMap, 'resize');
+
+    // google.maps.event.trigger(googleMap, 'resize');
     googleMap.fitBounds(resizeBounds);
     if (googleMap.getZoom() > 12) {
-      googleMap.setZoom(12)
+      googleMap.setZoom(12);
     }
   };
 
   // TODO; Probably redudent with resize map
-  window.recenterMap = function(markers, zipQuery) {
-    var bounds = new google.maps.LatLngBounds();
-    var geocoder = new google.maps.Geocoder();
-    for (var i = 0; i < markers.length; i++) {
-      marker = new google.maps.LatLng(markers[i].lat, markers[i].lng);
-      bounds.extend(marker);
-    }
-    google.maps.event.trigger(googleMap, 'resize');
-    bounds.extend(zipQuery);
-    googleMap.setCenter(zipQuery);
+  noWebGlMapView.focusMap = function(bb) {
+    console.log(bb);
+    var southWest = new google.maps.LatLng(bb[1], bb[0]);
+    var northEast = new google.maps.LatLng(bb[3], bb[2]);
+    var bounds = new google.maps.LatLngBounds(southWest, northEast);
     googleMap.fitBounds(bounds);
-      //TODO: add maker for search query, but need to be able to remove it.
-      // var marker = new google.maps.Marker({
-      //   map: map,
-      //   position: zipQuery,
-      //   name: 'zipQuery',
-      //
-      // })
   };
 
   function assignMarker(iconFlag) {
@@ -408,7 +401,6 @@
 // Adds all events into main data array
 // Adds all events as markers
 // renders tables
-  noWebGlMapView = {};
   noWebGlMapView.setData = function (townhall){
     var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
     var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');

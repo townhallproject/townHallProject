@@ -166,7 +166,7 @@
       districtId = zeroPad(districtId);
       key = townhall.District.split('-')[0] + districtId;
     } else {
-      var key = state
+      var key = state;
     }
     var bb = bboxes[key];
     if (!bb) {
@@ -206,7 +206,7 @@
       iconKey = 'phone-in';
       townhall = teleTownHallMarker(townhall, stateAbbr);
       if (!townhall.lat) {
-        return
+        return;
       }
     }
 
@@ -367,11 +367,8 @@
     return masterBB;
   }
 
-  // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
-  mapView.focusMap = function focusMap (stateAbbr, districtCodes) {
-    var height = window.innerHeight,
-      width = window.innerWidth,
-      statekey = stateAbbr,
+  mapView.getBoundingBox = function(stateAbbr, districtCodes) {
+    var statekey = stateAbbr,
       bb = bboxes[stateAbbr];
     if (districtCodes && districtCodes.length === 1) {
       statekey = statekey + districtCodes[0];
@@ -379,14 +376,18 @@
     } else if (districtCodes && districtCodes.length > 1) {
       bb = masterBoundingBox(stateAbbr, districtCodes);
     }
-    bounds = bb;
-    var view = geoViewport.viewport(bb, [width/2, height/2]);
+    return bb;
+  };
+  // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
+  mapView.focusMap = function focusMap (bb) {
+    var height = window.innerHeight,
+      width = window.innerWidth,
+      view = geoViewport.viewport(bb, [width/2, height/2]);
     if (view.zoom < 2.5) {
       view.zoom = 2.5;
     } else {
       view.zoom = view.zoom - 0.5;
     }
-
     map.flyTo(view);
   };
 
@@ -468,7 +469,7 @@
     if (mapboxgl.supported()) {
       map.resize();
     } else {
-      onResizeMap()
+      // onResizeMap()
     }
   };
 
@@ -482,7 +483,7 @@
     if (mapboxgl.supported()) {
       map.resize();
     } else {
-      onResizeMap()
+      // onResizeMap()
     }
   };
 
