@@ -68,8 +68,6 @@
     } else {
       onResizeMap();
     }
-    $('.selection-results_content').empty();
-    $('#representativeCards section').empty();
     eventHandler.setUrlParameter('zipcode', false);
     eventHandler.setUrlParameter('district', false);
   };
@@ -82,7 +80,7 @@
 
     usaButton.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-usa';
     usaButton.innerHTML = '<span class="usa-icon"></span>';
-    usaButton.addEventListener('click', mapView.resetView);
+    usaButton.addEventListener('click', eventHandler.resetHome);
 
     document.querySelector('.mapboxgl-ctrl-group').appendChild(usaButton);
   }

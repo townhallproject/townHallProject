@@ -99,7 +99,6 @@
   missingMemberView.init = function(){
     Moc.loadAll().then(function(returnedData){
       Moc.loaded = true;
-      console.log('loaded');
       $currentState = $('#mm-current-state');
       $copy = $('#mm-total-copy');
       var total = parseInt($currentState.attr('data-total'));

@@ -10,7 +10,6 @@
   eventHandler.zipErrorResponse = function(errorMessage) {
     var $text = $('.selection-results_content');
     $text.text(errorMessage);
-    $results.append($text);
   };
 
   eventHandler.whereToZoomMap = function(justSenate, thisState, validDistricts){
@@ -161,7 +160,7 @@
     TownHall.zipQuery = '';
     mapView.resetView();
     var $parent = $('#nearest');
-    var $results = $('#selection-results_content');
+    var $results = $('.selection-results_content');
     $parent.removeClass('nearest-with-results');
     $parent.empty();
     $results.empty();
