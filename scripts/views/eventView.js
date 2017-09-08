@@ -8,8 +8,6 @@
   var eventHandler = {};
 
   eventHandler.zipErrorResponse = function(errorMessage) {
-    var $results = $('#selection-results');
-    $results.empty();
     var $text = $('.selection-results_content');
     $text.text(errorMessage);
     $results.append($text);
@@ -67,7 +65,6 @@
       // set globals for filtering
       $parent.addClass('nearest-with-results');
 
-      mapView.makeSidebar(selectedData);
 
       TownHall.isCurrentContext = true;
       TownHall.currentContext = selectedData;
@@ -80,8 +77,10 @@
       selectedData.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       });
+      mapView.makeSidebar(selectedData);
       addtocalendar.load();
     } else {
+      mapView.killSidebar()
       $text.html('There are no events for ' + districtText);
     }
     if (mapView.webGL) {
@@ -162,8 +161,8 @@
     TownHall.zipQuery = '';
     mapView.resetView();
     var $parent = $('#nearest');
+    var $results = $('#selection-results_content');
     $parent.removeClass('nearest-with-results');
-    var $results = $('#selection-results');
     $parent.empty();
     $results.empty();
     eventHandler.resetFilters();

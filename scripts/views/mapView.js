@@ -460,6 +460,7 @@
 
   // Create a sidebar and map half view
   mapView.makeSidebar = function makeSidebar (selectedData) {
+    $('.header-with-results').removeClass('hidden');
     $('.map-container-large').addClass('hidden');
     $('.map-container-split').removeClass('hidden');
     $('.map-legend').appendTo('.map-small');
