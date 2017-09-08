@@ -117,7 +117,7 @@
         var zipQueryLoc = {};
         zipQueryLoc.lat = snapshot.val().LAT;
         zipQueryLoc.lng = snapshot.val().LNG;
-        resolve(zipQueryLoc)
+        resolve(zipQueryLoc);
         } else {
           reject ('That is not a real zip code');
         }

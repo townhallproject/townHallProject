@@ -65,11 +65,13 @@
     eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
     if (selectedData.length > 0) {
       // set globals for filtering
-      $('#nearest').addClass('nearest-with-results');
+      $parent.addClass('nearest-with-results');
+
+      mapView.makeSidebar(selectedData);
+
       TownHall.isCurrentContext = true;
       TownHall.currentContext = selectedData;
       eventHandler.renderTableWithArray(selectedData);
-      mapView.makeSidebar(selectedData);
 
       var numOfSateEvents = selectedData.length - numOfDistrictEvents;
       var message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
@@ -151,7 +153,6 @@
     $('.form-text-results').removeClass('text-center');
     $('.header-with-results .results').removeClass('multipleResults');
     $('.left-panels').removeClass('left-panels-border');
-    $('#nearest').removeClass('nearest-with-results');
     $('#email-title').text('Sign up to get updates about local events.');
     $('#button-to-form').hide();
     $('.spacer').show();
@@ -161,6 +162,7 @@
     TownHall.zipQuery = '';
     mapView.resetView();
     var $parent = $('#nearest');
+    $parent.removeClass('nearest-with-results');
     var $results = $('#selection-results');
     $parent.empty();
     $results.empty();
@@ -176,11 +178,8 @@
     if (townhall.address) {
       townhall.addressLink = 'https://www.google.com/maps/dir/Current+Location/' + escape(townhall.address);
     };
-
     var compiledTemplate = Handlebars.getTemplate('eventCards');
     var $panel = $(compiledTemplate(townhall));
-    $panel.find('.event-represenative').children('h3').addClass(townhall.Party.slice(0,3));
-
     $panel.appendTo($parent);
   };
 

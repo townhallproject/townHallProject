@@ -359,6 +359,7 @@
   noWebGlMapView = {};
 
   window.onResizeMap = function onResizeMap() {
+    console.log('resizing');
     var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
     var selection = TownHall.isCurrentContext ? true:false;
     if (selection) {
@@ -390,6 +391,7 @@
 
   // TODO; Probably redudent with resize map
   noWebGlMapView.focusMap = function(bb) {
+    console.log('focusing');
     google.maps.event.trigger(googleMap, 'resize');
     var southWest = new google.maps.LatLng(bb[1], bb[0]);
     var northEast = new google.maps.LatLng(bb[3], bb[2]);
@@ -413,7 +415,6 @@
     var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
     var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
     dataviz.recessProgress(townhall);
-    TownHall.allTownHalls.push(townhall);
     TownHall.addFilterIndexes(townhall);
     eventHandler.initialTable(townhall);
     $('[data-toggle="popover"]').popover({

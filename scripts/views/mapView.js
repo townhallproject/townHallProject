@@ -66,7 +66,7 @@
         mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
       }
     } else {
-
+      onResizeMap();
     }
     $('.selection-results_content').empty();
     $('#representativeCards section').empty();
@@ -460,15 +460,14 @@
 
   // Create a sidebar and map half view
   mapView.makeSidebar = function makeSidebar (selectedData) {
-    $('.nearest-with-results').empty();
     $('.map-container-large').addClass('hidden');
     $('.map-container-split').removeClass('hidden');
     $('.map-legend').appendTo('.map-small');
     $('#map').prependTo('.map-fixing');
-    if (mapboxgl.supported()) {
+    if (mapView.webGL) {
       map.resize();
     } else {
-      onResizeMap()
+      onResizeMap();
     }
   };
 
@@ -479,10 +478,10 @@
     $('.map-container-split').addClass('hidden');
     $('.map-legend').appendTo('.map-large');
     $('#map').prependTo('.map-large');
-    if (mapboxgl.supported()) {
+    if (mapView.webGL) {
       map.resize();
     } else {
-      onResizeMap()
+      onResizeMap();
     }
   };
 
