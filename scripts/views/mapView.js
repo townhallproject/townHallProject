@@ -35,9 +35,8 @@
     map.scrollZoom.disable();
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
-    
+
     map.on('load', function() {
-      console.log('load');
       backSpaceHack();
       makeZoomToNationalButton();
       addDistrictListener();
@@ -51,21 +50,26 @@
 
   mapView.initialView = function setInitialView() {
     bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
-    map.fitBounds(bounds);
+    if (mapView.webGL) {
+      map.fitBounds(bounds);
+    }
   };
 
   mapView.resetView = function resetView() {
     mapView.killSidebar();
-    mapView.initialView();
     $('#representativeCards').hide();
-    var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
-    if (visibility === 'visible') {
-      mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
-      mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
+    if (mapView.webGL) {
+      mapView.initialView();
+      var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
+      if (visibility === 'visible') {
+        mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
+        mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
+      }
+    } else {
+      setTimeout(function () {
+        onResizeMap()
+      }, 50);
     }
-    $('.selection-results_content').empty();
-
-    $('#representativeCards section').empty();
     eventHandler.setUrlParameter('zipcode', false);
     eventHandler.setUrlParameter('district', false);
   };
@@ -78,7 +82,7 @@
 
     usaButton.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-usa';
     usaButton.innerHTML = '<span class="usa-icon"></span>';
-    usaButton.addEventListener('click', mapView.resetView);
+    usaButton.addEventListener('click', eventHandler.resetHome);
 
     document.querySelector('.mapboxgl-ctrl-group').appendChild(usaButton);
   }
@@ -150,17 +154,24 @@
     return [lng + jitter * plusOrMinus, lat + jitter * plusOrMinus1];
   }
 
-  function zeroPad(districtID) {
+  mapView.zeroPad = function zeroPad(districtID) {
     var padding = '00';
     return padding.substring(0, padding.length - districtID.length) + districtID;
   };
   // puts tele town halls by House members in the district.
   //TODO: geocode the data on the way in
-  function teleTownHallDistrict(townhall){
-    var districtId = townhall.District.split('-')[1];
-    districtId = zeroPad(districtId);
-
-    var bb = bboxes[townhall.District.split('-')[0] + districtId];
+  function teleTownHallMarker(townhall, state){
+    if (townhall.District !== 'Senate') {
+      var districtId = townhall.District.split('-')[1];
+      districtId = mapView.zeroPad(districtId);
+      key = townhall.District.split('-')[0] + districtId;
+    } else {
+      var key = state;
+    }
+    var bb = bboxes[key];
+    if (!bb) {
+      return townhall;
+    }
     townhall.lng = (bb[2] - bb[0])/2 + bb[0];
     townhall.lat = (bb[3] - bb[1])/2 + bb[1];
     return townhall;
@@ -173,29 +184,32 @@
 
   // Creates the point layer.
   function makePoint (townhall) {
-    if (townhall.meetingType === 'DC Event' || !townhall.lat || !townhall.iconFlag) {
+    if (townhall.meetingType === 'DC Event' || !townhall.iconFlag) {
       return;
     }
     var iconKey = townhall.iconFlag;
     var districtId = '';
-    if (iconKey === 'tele'){
-      iconKey = 'phone-in';
-      if (townhall.District && townhall.District !== 'Senate') {
-        townhall = teleTownHallDistrict(townhall);
-      }
-    }
-    if (townhall.District && townhall.District !== 'Senate') {
-      if (!townhall.District.split('-')[1]) {
-        return;
-      }
-      districtId = zeroPad(townhall.District.split('-')[1]);
-      stateAbbr = townhall.District.split('-')[0];
-    }
     var state = stateData.filter(function(ele){
       return ele.Name === townhall.State;
     });
     stateAbbr = state[0].USPS;
     stateCode = state[0].FIPS;
+    if (townhall.District && townhall.District !== 'Senate') {
+      if (!townhall.District.split('-')[1]) {
+        return;
+      }
+      districtId = mapView.zeroPad(townhall.District.split('-')[1]);
+    }
+
+    if (iconKey === 'tele'){
+      iconKey = 'phone-in';
+      townhall = teleTownHallMarker(townhall, stateAbbr);
+      if (!townhall.lat) {
+        return;
+      }
+    }
+
+
 
     featuresHome.features.push({
       type: 'Feature',
@@ -352,11 +366,8 @@
     return masterBB;
   }
 
-  // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
-  mapView.focusMap = function focusMap (stateAbbr, districtCodes) {
-    var height = window.innerHeight,
-      width = window.innerWidth,
-      statekey = stateAbbr,
+  mapView.getBoundingBox = function(stateAbbr, districtCodes) {
+    var statekey = stateAbbr,
       bb = bboxes[stateAbbr];
     if (districtCodes && districtCodes.length === 1) {
       statekey = statekey + districtCodes[0];
@@ -364,14 +375,18 @@
     } else if (districtCodes && districtCodes.length > 1) {
       bb = masterBoundingBox(stateAbbr, districtCodes);
     }
-    bounds = bb;
-    var view = geoViewport.viewport(bb, [width/2, height/2]);
+    return bb;
+  };
+  // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
+  mapView.focusMap = function focusMap (bb) {
+    var height = window.innerHeight,
+      width = window.innerWidth,
+      view = geoViewport.viewport(bb, [width/2, height/2]);
     if (view.zoom < 2.5) {
       view.zoom = 2.5;
     } else {
       view.zoom = view.zoom - 0.5;
     }
-
     map.flyTo(view);
   };
 
@@ -397,32 +412,29 @@
   // listens for new data.
   function readData (webgl) {
     var townHallsFB = firebase.database().ref('/townHalls/');
+    townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
+      var ele = new TownHall (snapshot.val());
+      TownHall.allTownHalls.push(ele);
+      dataviz.recessProgress(ele);
+      TownHall.addFilterIndexes(ele);
+      eventHandler.initialTable(ele);
 
-    if (webgl) {
-      townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
-        var ele = new TownHall (snapshot.val());
-        TownHall.allTownHalls.push(ele);
-        TownHall.addFilterIndexes(ele);
+      if (webgl) {
         filterMap(ele);
         makePoint(ele);
-        eventHandler.initialTable(ele);
-      });
-
-      townHallsFB.once('value', function(snap) {
-      // console.log("initial data loaded!", snap.numChildren() === TownHall.allTownHalls.length);
+      } else {
+        noWebGlMapView.setData(ele);
+      }
+    });
+    townHallsFB.once('value', function(snap) {
+      if (webgl) {
         map.getSource('townhall-points').setData(featuresHome);
         mapView.initialView();
-        eventHandler.zipSearchByParam();
-      });
-    } else {
-      //TODO: still enable search
-      townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
-        var ele = new TownHall (snapshot.val());
-        TownHall.allTownHalls.push(ele);
-        TownHall.addFilterIndexes(ele);
-        eventHandler.initialTable(ele);
-      });
-    }
+      }
+      eventHandler.zipSearchByParam();
+    });
+
+
   };
 
   function backSpaceHack () {
@@ -448,11 +460,16 @@
 
   // Create a sidebar and map half view
   mapView.makeSidebar = function makeSidebar (selectedData) {
-    $('.nearest-with-results').empty();
+    $('.header-with-results').removeClass('hidden');
     $('.map-container-large').addClass('hidden');
     $('.map-container-split').removeClass('hidden');
+    $('.map-legend').appendTo('.map-small');
     $('#map').prependTo('.map-fixing');
-    map.resize();
+    if (mapView.webGL) {
+      map.resize();
+    } else {
+      onResizeMap();
+    }
   };
 
   // go back to full screen
@@ -460,37 +477,25 @@
     $('.header-with-results').addClass('hidden');
     $('.map-container-large').removeClass('hidden');
     $('.map-container-split').addClass('hidden');
+    $('.map-legend').appendTo('.map-large');
     $('#map').prependTo('.map-large');
-    map.resize();
+    if (mapView.webGL) {
+      map.resize();
+    }
   };
 
   $(document).ready(function(){
     if (!mapboxgl.supported()) {
-      var webGlFlag = '<div class="">\
-        <div class="webGl-warning" target="_blank">\
-          <img class="webGl-compimg" src="../Images/map/ohno-computer.png"></img>\
-          <p>Our map feature that should be here uses WebGL, a plugin common in most modern browsers. Your browser does not have WebGL working currently.</p>\
-            <p>You can learn how to enable WebGL on <a href="https://get.webgl.org/" target="_blank">this website.</a></p>\
-        </div>\
-        <img class="webGL-kill" src="../Images/map/xmark.svg"></img>\
-      </div>';
-
-      // House cleaning
-      $('.map-legend').remove();
-      $('#map').remove();
-      $('.fath-button').addClass('webgl-disabled');
-
-      // Set oh no! text
-      $('.map-large')
-        .addClass('warning-container')
-        .html(webGlFlag);
-
+      $('.show-if-no-webgl').removeClass('hidden');
+      $('.hide-if-no-webgl').addClass('hidden');
+      $('.map-container-split').addClass('no-web-gl');
       $('.webGL-kill').click(function(){
-        $('.map-container-large').addClass('hidden');
+        $('.webgl-banner').addClass('hidden');
       });
-
+      mapView.webGL = false;
       readData(false);
     } else {
+      mapView.webGL = true;
       setMap();
       $( window ).resize(function() {
         map.fitBounds(bounds);

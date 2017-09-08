@@ -101,12 +101,8 @@
           snapshot.forEach(function(ele){
             districts.push(ele.val());
           });
+
           resolve(districts);
-          // var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
-          // TownHall.zipQuery = zipQueryLoc;
-          // TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
-          //   resolve (sorted);
-          // });
         } else {
           reject ('That zip code is not in our database, if you think this is an error please email us.');
         }
@@ -114,16 +110,20 @@
     });
   };
 
-  TownHall.zipToDistrict = function (zip) {
-    districts = [];
+  TownHall.resetData = function() {
+    TownHall.isCurrentContext = false;
+    TownHall.currentContext = [];
+    TownHall.zipQuery = '';
+  }
+
+  TownHall.getZipLatLng = function (zip) {
     return new Promise(function (resolve, reject) {
-      firebasedb.ref('/zipToDistrict/' + zip).once('value').then(function(snapshot) {
+      firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
         if (snapshot.exists()) {
-          snapshot.forEach(function(ele){
-            var district = ele.val().abr + '-' + ele.val().dis;
-            districts.push(district);
-          });
-          resolve(districts);
+        var zipQueryLoc = {};
+        zipQueryLoc.lat = snapshot.val().LAT;
+        zipQueryLoc.lng = snapshot.val().LNG;
+        resolve(zipQueryLoc);
         } else {
           reject ('That is not a real zip code');
         }

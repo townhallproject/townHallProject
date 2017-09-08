@@ -14,6 +14,7 @@ function Moc(opts) {
   }
 }
 
+Moc.loaded = false;
 Moc.allMocsObjs = [];
 
 Moc.prototype.zeroPadding = function() {

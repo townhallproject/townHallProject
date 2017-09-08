@@ -1430,11 +1430,16 @@ img.grayscale {
   background-image: url('/Images/map/activism.svg');
 }
 
-.map-legend__small {
+.map-small .map-legend {
   left: initial;
   right: 0;
   padding: 2rem 2rem 0.5rem;
  }
+ .no-web-gl .map-small .map-legend {
+   right: initial;
+   left: 0;
+ }
+
 .usa-icon {
   width: 20px;
   height: 20px;
@@ -1446,7 +1451,7 @@ img.grayscale {
   display: inline-block;
 }
 
-.list-inline__small .map-legend-li {
+.map-small .map-legend-li {
   display: block;
   margin-bottom: 1.5rem;
 }
@@ -1519,9 +1524,7 @@ img.grayscale {
   .map-legend .map-legend-li{
     width: 165px;
   }
-  .map-legend__small {
-    display: none;
-  }
+
   .map-legend-inset {
     display: none;
   }
@@ -1532,14 +1535,14 @@ img.grayscale {
 }
 
 .webGl-compimg {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     float: left;
-    margin: 0 6rem 2.5rem 0;  
+    margin: 0 6rem 2.5rem 0;
 }
 
 .webGl-warning {
-  margin: 5rem auto 0;
+  margin: 2.5rem auto 0;
   width: 750px;
 }
 
@@ -1575,13 +1578,15 @@ img.grayscale {
   .warning-container { height: 46rem; }
   .webGl-warning { width: 120px; }
 }
-
+.webgl-banner{
+  position: relative;
+}
 .webGL-kill {
   position: absolute;
   font-size: 1.2rem;
   font-weight: 700;
-  top: 2rem;
-  right: 2.5rem;
+  top: 0.5rem;
+  right: 0.5rem;
   width: 20px;
   height: 20px;
   cursor: pointer;
