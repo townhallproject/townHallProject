@@ -64,7 +64,7 @@
     mapView.killSidebar();
     mapView.zoomLocation = false;
     $('#representativeCards').hide();
-    if (mapView.webGL) {
+    if (mapView.webGL && mapView.map) {
       mapView.initialView();
       var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
       if (visibility === 'visible') {

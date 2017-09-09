@@ -572,6 +572,15 @@
     if (location.hash) {
       var hashLocation = location.hash.split('?')[0];
       $("a[href='" + hashLocation + "']").tab('show');
+      if (hashLocation === '#missing-members') {
+        if (!Moc.loaded) {
+          missingMemberView.init();
+        } else {
+          setTimeout(function () {
+            $('.grid').isotope();
+          }, 1500);
+        }
+      }
     } else {
       TownHall.isMap = true;
     }
