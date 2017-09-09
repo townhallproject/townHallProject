@@ -34,13 +34,14 @@
     <meta property="og:description" content="Town Hall Project is a progressive, citizen-powered initiative to research and promote civic engagement with public officials.">
     <meta property="og:site_name" content="Town Hall Project" />
     <link href='https://actionnetwork.org/css/style-embed-whitelabel.css' rel='stylesheet' type='text/css' />
-    <link href='https://actionnetwork.org/css/style-embed-whitelabel.css' rel='stylesheet' type='text/css' />
     <script src="https://use.fontawesome.com/316bfde8e8.js"></script>
     <link href="https://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
     <link href="/vendor/styles/jquery-ui.min.css" rel="stylesheet" type="text/css">
     <link href="/vendor/styles/jquery-ui.structure.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,900" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/css/bootstrapTH.min.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' />
+
+    <link rel="stylesheet" href="/styles/css/bootstrapTH_v1_0.min.css">
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -101,11 +102,16 @@
                 <div class="col-md-6 right-panels">
                   <div class="spacer">
                   </div>
-                  <form id="look-up" class="form-inline text-center" action="index.html" method="post">
+                  <form id="look-up" class="form-inline text-center" action="index.html">
                     <div class="form-group text-center">
                       <label  for="zip"></label>
                       <input class="form-control input-lg " type="zip" name="" value="" placeholder="Zip Code">
-                      <button type="submit" name="button" class="btn btn-primary btn-lg">Find A Town Hall</button>
+                      <button type="submit" name="button" class="btn btn-primary btn-lg fath-button">Find A Town Hall</button>
+
+                      <div id="selection-results" class="text-center ">
+                        <h4 class="selection-results_content"></h4>
+                      </div>
+
                     </div>
                   </form>
                   <div id="textresults" class="text-center "></div>
@@ -113,24 +119,57 @@
               </div>
             </section>
         </header>
-        <div class="container-fluid">
-          <div class="row map-large">
-            <div id="map"></div>
-          </div>
-        </div>
-        <div class="header-with-results">
-          <section class="container container-fluid">
-            <div class="row">
-              <div class="col-md-6 no-padding ">
-                   <section class="results">
-                     <div id="nearest" class="flexcroll"></div>
-                   </section>
-               </div>
-               <div class="col-md-6 map-small no-padding">
-               </div>
+          <div class="container-fluid map-container-large">
+            <div class="hidden show-if-no-webgl webgl-banner">
+              <div class="webGl-warning" target="_blank">
+                <img class="webGl-compimg" src="../Images/map/ohno-computer.png"></img>
+                <p>Our interactive map feature uses WebGL, a plugin common in most modern browsers. Your browser does not have WebGL working currently.</p>
+                  <p>You can learn how to enable WebGL on <a href="https://get.webgl.org/" target="_blank">this website.</a></p>
+              </div>
+              <img class="webGL-kill" src="../Images/map/xmark.svg"></img>
             </div>
-           </section>
-        </div>
+            <div class="row map-large">
+              <div id="map"></div>
+              <div class="map-legend">
+                <ul class="list-inline">
+                  <li class="map-legend-li hide-if-no-webgl">
+                    <dt class="map-legend__senate"></dt>
+                    <dd>U.S. Senator</dd>
+                  </li>
+                  <li class="map-legend-li hide-if-no-webgl">
+                    <dt class="map-legend__distrcit"></dt>
+                    <dd>U.S. Representative</dd></li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__person"></dt>
+                    <dd>In-person</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__staff"></dt>
+                    <dd>Staff-only</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__tele"></dt>
+                    <dd>Call-in</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__activ"></dt>
+                    <dd>Activist Event</dd>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="header-with-results map-container-split hidden">
+            <div class="row">
+              <div class="col-md-6">
+                <section class="results multipleResults">
+                  <div id="nearest" class="flexcroll nearest-with-results"></div>
+                </section>
+              </div>
+              <div class="col-md-6 map-small map-fixing">
+              </div>
+            </div>
+          </div>
         <section class="email-signup--inline" id="missing-member-banner">
           <div class="container container-fluid">
             <div class="row">
@@ -222,8 +261,6 @@
                 </dl>
               </div>
             </div>
-
-
           </div>
         </section>
         <section class="background-light-blue email-signup--inline" id="email-signup">
@@ -657,6 +694,11 @@
     <script src="/vendor/scripts/bootstrap3-typeahead.min.js"></script>
     <script src="/vendor/scripts/tether.js"></script>
     <script src="/vendor/scripts/handlebars-v4.0.5.js"></script>
+    <script src="/vendor/scripts/mapbox-gl-v0.32.1.js"></script>
+    <script src="/vendor/scripts/geo-viewport.js"></script>
+    <script src="/data/states.js"></script>
+    <script src="/data/bboxes.js"></script>
+    <script src="/data/zipLookup.js"></script>
     <script src="/vendor/scripts/cors-uploader.js"></script>
     <script src="templates.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
@@ -666,12 +708,12 @@
 
     <script src='https://actionnetwork.org/widgets/v2/form/stay-up-to-date-on-our-work?format=js&source=widget'></script>
     <script type="text/javascript">(function () {
-            if (window.addtocalendar)if(typeof window.addtocalendar.start == "function")return;
-            if (window.ifaddtocalendar == undefined) { window.ifaddtocalendar = 1;
-                var d = document, s = d.createElement('script'), g = 'getElementsByTagName';
-                s.type = 'text/javascript';s.charset = 'UTF-8';s.async = true;
-                s.src = ('https:' == window.location.protocol ? 'https' : 'http')+'://addtocalendar.com/atc/1.5/atc.min.js';
-                var h = d[g]('body')[0];h.appendChild(s); }})();
+      if (window.addtocalendar)if(typeof window.addtocalendar.start == "function")return;
+      if (window.ifaddtocalendar == undefined) { window.ifaddtocalendar = 1;
+        var d = document, s = d.createElement('script'), g = 'getElementsByTagName';
+        s.type = 'text/javascript';s.charset = 'UTF-8';s.async = true;
+        s.src = ('https:' == window.location.protocol ? 'https' : 'http')+'://addtocalendar.com/atc/1.5/atc.min.js';
+        var h = d[g]('body')[0];h.appendChild(s); }})();
     </script>
     <script>window.twttr = (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0],
@@ -695,11 +737,13 @@
     <script src="/scripts/models/TownHall.js"></script>
     <script src="/scripts/models/MissingMember.js"></script>
 
-    <script src="/scripts/views/mapView.js"></script>
-    <script src="/scripts/views/dataViz.js"></script>
     <script src="/scripts/views/eventView.js"></script>
     <script src="/scripts/views/missingMembersView.js"></script>
+    <script src="/scripts/views/mapView.js"></script>
+    <script src="/scripts/views/noWebGlMap.js"></script>
+
+    <script src="/scripts/views/dataViz.js"></script>
     <script src="/scripts/views/videoUploadView.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMap&libraries=visualization,geometry"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbJaVRRwYGGqYY1y6C53dnMG8ruONFJ90&callback=initMap&libraries=visualization,geometry"></script>
   </body>
 </html>

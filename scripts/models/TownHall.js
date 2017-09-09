@@ -40,10 +40,8 @@
 
   TownHall.saveZipLookup = function (zip) {
     firebasedb.ref('/zipZeroResults/' + zip).once('value').then(function(snapshot){
-      console.log(zip);
       if (snapshot.exists()) {
         newVal = snapshot.val() + 1;
-        console.log('new val', newVal);
       }
       else {
         newVal = 1;
@@ -97,30 +95,35 @@
   // Converts zip to lat lng google obj
   TownHall.lookupZip = function (zip) {
     return new Promise(function (resolve, reject) {
-      firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
-        if (snapshot.exists()) {
-          var zipQueryLoc = new google.maps.LatLng(snapshot.val().LAT, snapshot.val().LNG);
-          TownHall.zipQuery = zipQueryLoc;
-          TownHall.returnNearest(zipQueryLoc).then(function(sorted) {
-            resolve (sorted);
-          });
-        } else {
-          reject ('That is not a real zip code');
-        }
-      });
-    });
-  };
-
-  TownHall.zipToDistrict = function (zip) {
-    districts = [];
-    return new Promise(function (resolve, reject) {
       firebasedb.ref('/zipToDistrict/' + zip).once('value').then(function(snapshot) {
         if (snapshot.exists()) {
+          var districts = [];
           snapshot.forEach(function(ele){
-            var district = ele.val().abr + '-' + ele.val().dis;
-            districts.push(district);
+            districts.push(ele.val());
           });
+
           resolve(districts);
+        } else {
+          reject ('That zip code is not in our database, if you think this is an error please email us.');
+        }
+      });
+    });
+  };
+
+  TownHall.resetData = function() {
+    TownHall.isCurrentContext = false;
+    TownHall.currentContext = [];
+    TownHall.zipQuery = '';
+  }
+
+  TownHall.getZipLatLng = function (zip) {
+    return new Promise(function (resolve, reject) {
+      firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
+        if (snapshot.exists()) {
+        var zipQueryLoc = {};
+        zipQueryLoc.lat = snapshot.val().LAT;
+        zipQueryLoc.lng = snapshot.val().LNG;
+        resolve(zipQueryLoc);
         } else {
           reject ('That is not a real zip code');
         }
@@ -128,11 +131,23 @@
     });
   };
 
-  TownHall.lookupReps = function (zip) {
-    var representativePromise = $.ajax({
-      url: 'https://congress.api.sunlightfoundation.com/legislators/locate?zip=' + zip,
-      dataType: 'jsonp'
-    });
+  TownHall.lookupReps = function (key, value) {
+    if (key === 'zip') {
+      var representativePromise = $.ajax({
+        url: 'https://congress.api.sunlightfoundation.com/legislators/locate?' + key + '=' + value,
+        dataType: 'jsonp'
+      });
+    } else if (key === 'state') {
+      var representativePromise = $.ajax({
+        url: 'https://congress.api.sunlightfoundation.com/legislators?state=' + value + '&chamber=senate',
+        dataType: 'jsonp'
+      });
+    } else {
+      var representativePromise = $.ajax({
+        url: 'https://congress.api.sunlightfoundation.com/legislators?state=' + key + '&district=' + value,
+        dataType: 'jsonp'
+      });
+    }
     return representativePromise;
   };
 
@@ -152,6 +167,38 @@
       });
       return sorted;
     });
+  };
+
+  // Match the looked up zip code to district #
+  TownHall.matchSelectionToZip = function (state, districts) {
+    var fetchedData = [];
+    var stateName;
+
+    // Fetch full state name
+    stateData.forEach(function(n){
+      if (n.USPS === state) {
+        stateName = n.Name;
+      }
+    });
+
+    fetchedData = TownHall.allTownHalls.filter(function(townhall){
+      return townhall.State === stateName && townhall.meetingType !== 'DC Event';
+    }).reduce(function(acc, curtownhall){
+      if (curtownhall.District === 'Senate') {
+        acc.push(curtownhall);
+      } else {
+        districts.forEach(function(d) {
+          var districtMatcher = parseInt(d);
+          var dataMatcher = parseInt(curtownhall.District.split('-')[1]);
+
+          if (districtMatcher === dataMatcher) {
+            acc.push(curtownhall);
+          }
+        });
+      }
+      return acc;
+    },[]);
+    return fetchedData;
   };
 
   TownHall.addFilter = function(filter, value) {

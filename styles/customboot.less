@@ -373,18 +373,133 @@ a.social-icon {
   margin-bottom: 0;
 }
 
-
- .list-group-heading{
-   padding-bottom: 0;
-   padding-left: 0;
-   padding-right: 0;
-   .navbar-right {
-      margin-right: 0;
-   }
-   .navbar-nav{
-     margin-left: 0;
-   }
+.list-group-heading{
+ padding-bottom: 0;
+ padding-left: 0;
+ padding-right: 0;
+ .navbar-right {
+    margin-right: 0;
  }
+ .navbar-nav{
+   margin-left: 0;
+ }
+}
+
+.list-group { margin-bottom: 0; }
+.event-card { margin-bottom: 1rem; }
+
+.panel-heading_in-person  { background-color: #439cbf; }
+.panel-heading_staff      { background-color: #d0a8c1; }
+.panel-heading_activism   { background-color: #ec955a; }
+.panel-heading_tele       { background-color: #73b94c; }
+
+.event-icon__in-person {
+  background-image: url('/Images/map/circle-in-person.svg');
+  background-size: 20px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  margin: 2px 0 0 0;
+}
+
+.event-icon__tele {
+  background-image: url('/Images/map/circle-tele.svg');
+  background-size: 20px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  margin: 2px 0 0 0;
+}
+
+.event-icon__staff {
+  background-image: url('/Images/map/circle-staff.svg');
+  background-size: 20px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  margin: 2px 0 0 0;
+}
+
+.event-icon__activism {
+  background-image: url('/Images/map/circle-activism.svg');
+  background-size: 20px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  margin: 2px 0 0 0;
+}
+
+.event-icon__with-date { margin-top: 7px; }
+
+.calendarButton {
+  border-right: 1px solid #ccc;
+  padding: 9px 7px 9px 0px;
+  margin-right: 10px;
+}
+
+.event-represenative {
+  padding-bottom: 1rem;
+}
+
+.event-represenative:after {
+  content:"";
+  background: #ddd;
+  position: absolute;
+  bottom: 0;
+  left: -3px;
+  height: 1px;
+  width: 100%;
+}
+
+.Dem::before {
+  content: '';
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: #3facef;
+}
+
+.Rep::before {
+  content: '';
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: @brand-secondary;
+}
+
+.event-party { color: #aaa; }
+
+.event-name {
+  color: #0d4668;
+  margin: 0;
+  font-size: 2rem;
+}
+
+.event-date::after {
+  content:"";
+  background: #ddd;
+  position: absolute;
+  bottom: 0;
+  left: -15px;
+  height: 1px;
+  width: calc(100% + 30px);
+}
+
+.event-date {
+  color: #aaa;
+  padding-bottom: 1.5rem;
+  position: relative;
+}
+
+.list-item-no-border {
+  border: 0;
+  padding: 0;
+  margin-bottom: 1rem;
+}
 
 .Dem .panel-heading, .card-representative.Democrat .card-header{
   color: white;
@@ -673,7 +788,7 @@ dt.key{
 }
 
 .nearest-with-results {
-  height: 528px;
+  height: 568px;
 }
 
 .header-with-results {
@@ -682,11 +797,11 @@ dt.key{
 }
 
 #map {
-  height: 528px;
+  height: 568px;
 }
 
 #mapEmbed {
-  height: 528px;
+  height: 568px;
 }
 #mapEmbedContainer{
   position: relative;
@@ -1171,12 +1286,182 @@ img.grayscale {
   }
 }
 
+.usa-icon {
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  background-image: url('/Images/map/usa.svg');
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.multipleResults {
+  position: relative;
+}
+
+.kill-results {
+  position: absolute;
+  top: 10px;
+  right: -18px;
+  text-align: center;
+  vertical-align: middle;
+  z-index: 999;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.2s;
+  &:hover {
+    opacity: 0.4;
+  }
+}
+
+.mapboxgl-popup-anchor-bottom { padding-bottom: 20px; }
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip { border-top-color: @brand-primary; }
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip { border-bottom-color: @brand-primary; }
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: @brand-primary;
+  padding-left: 1.25rem;
+  margin-bottom: 3rem;
+}
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: @brand-primary;
+  padding-right: 1.25rem;
+  margin-bottom: 3rem;
+}
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip { border-bottom-color: @brand-primary; }
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip { border-bottom-color: @brand-primary; }
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip {
+  border-top-color: @brand-primary;
+  padding-bottom: 20px;
+}
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+  border-top-color: @brand-primary;
+  padding-bottom: 20px;
+}
+
+.mapboxgl-popup-content {
+  color: white;
+  max-width: 240px;
+  background-color: @brand-primary;
+  box-shadow: 0px 1px 3px @brand-primary;
+  -webkit-box-shadow: 0px 1px 3px #0d4668;
+          box-shadow: 0px 1px 3px #0d4668;
+}
+
+.mapbox-popup-title {
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.map-large {
+  position: relative;
+}
+
+.map-legend {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 1.0rem 2.5rem 1.0rem;
+  margin: 1rem 1rem;
+  background-color: rgba(255,255,255,0.75);
+  -webkit-box-shadow: 0 -3px 67px 1px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 -3px 67px 1px rgba(0, 0, 0, 0.1);
+  -webkit-transition: 0.2s all;
+       -o-transition: 0.2s all;
+          transition: 0.2s all;
+}
+
+.map-legend.map-legend-inset{
+  position: absolute;
+  right: 1rem;
+  box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.1);
+}
+
+.map-legend {
+    dt, dd {
+    display: inline-block;
+  }
+  dd {
+    display: inline-block;
+  }
+  dt {
+    margin-right: 0.5rem;
+    vertical-align:text-top;
+  }
+  .map-legend-icon {
+    border: none;
+    background-size: 18px;
+    height: 18px;
+    width: 16px;
+  }
+  .list-inline {
+    margin-bottom: 0px;
+  }
+}
+
+.map-legend__senate {
+  border: 1px solid black;
+  width: 15px;
+  height: 15px;
+  background-image: url('/Images/map/senate-fill.svg');
+}
+
+.map-legend__distrcit {
+  border: 1px solid black;
+  width: 15px;
+  height: 15px;
+  background-color: hsl(185, 77%, 46%);
+}
+
+.map-legend .map-legend__person {
+  background-image: url('/Images/map/in-person.svg');
+}
+
+.map-legend .map-legend__tele {
+  background-image: url('/Images/map/phone-in.svg');
+}
+
+.map-legend .map-legend__staff {
+  background-image: url('/Images/map/staff.svg');
+}
+
+.map-legend .map-legend__activ {
+  background-image: url('/Images/map/activism.svg');
+}
+
+.map-small .map-legend {
+  left: initial;
+  right: 0;
+  padding: 2rem 2rem 0.5rem;
+ }
+ .no-web-gl .map-small .map-legend {
+   right: initial;
+   left: 0;
+ }
+
+.usa-icon {
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  background-image: url('/Images/map/usa.svg');
+  -webkit-background-size: 20px 20px;
+          background-size: 20px 20px;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.map-small .map-legend-li {
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
 @media screen and (max-width: 959px){
   form{
     margin-top: 20px;
   }
   #map {
-    height: 25em;
+    height: 39em;
     border-top: solid @brand-primary 2px;
   }
   .nearest-with-results{
@@ -1187,6 +1472,10 @@ img.grayscale {
   }
   .header-with-results .container{
     width: 100%;
+  }
+  .kill-results {
+    top: 5px;
+    right: 5px;
   }
 }
 
@@ -1225,6 +1514,89 @@ img.grayscale {
       }
     }
   }
+  .map-legend {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 1.5rem 2.5rem 1rem;
+    margin: 1rem 1rem;
+  }
+  .map-legend .map-legend-li{
+    width: 165px;
+  }
+
+  .map-small .map-legend {
+    display: none;
+  }
+}
+
+.warning-container {
+  height: 20rem;
+}
+
+.webGl-compimg {
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin: 0 6rem 2.5rem 0;
+}
+
+.webGl-warning {
+  margin: 2.5rem auto 0;
+  width: 750px;
+}
+
+@media screen and (max-width: 800px){
+  .webGl-warning { width: 500px; }
+  .warning-container {
+    height: 32rem;
+    text-align: center;
+    p {
+      text-align: left;
+    }
+  }
+  .webGl-compimg {
+    float: initial;
+    margin: 0 0 2.5rem 0;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .webGl-warning { width: 400px; }
+}
+
+@media screen and (max-width: 450px){
+  .webGl-warning { width: 350px; }
+}
+
+@media screen and (max-width: 400px){
+  .warning-container { height: 38rem; }
+  .webGl-warning { width: 200px; }
+}
+
+@media screen and (max-width: 200px){
+  .warning-container { height: 46rem; }
+  .webGl-warning { width: 120px; }
+}
+.webgl-banner{
+  position: relative;
+}
+.webGL-kill {
+  position: absolute;
+  font-size: 1.2rem;
+  font-weight: 700;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.webgl-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 
