@@ -1538,12 +1538,11 @@ img.grayscale {
     width: 50px;
     height: 50px;
     float: left;
-    margin: 0 6rem 2.5rem 0;
+    margin: 0 3rem 2.5rem 0;
 }
 
 .webGl-warning {
-  margin: 2.5rem;
-  width: 750px;
+  max-width: 750px;
 }
 
 @media screen and (max-width: 800px){
@@ -1555,14 +1554,14 @@ img.grayscale {
       text-align: left;
     }
   }
-  .webGl-compimg {
-    float: initial;
-    margin: 0 0 2.5rem 0;
-  }
 }
 
 @media screen and (max-width: 600px){
   .webGl-warning { width: 400px; }
+  .webGl-compimg {
+    float: initial;
+    margin: 0 0 2.5rem 0;
+  }
 }
 
 @media screen and (max-width: 450px){
@@ -1578,8 +1577,10 @@ img.grayscale {
   .warning-container { height: 46rem; }
   .webGl-warning { width: 120px; }
 }
+
 .webgl-banner{
   position: relative;
+  margin: 2.5rem;
 }
 .webGL-kill {
   position: absolute;

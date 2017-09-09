@@ -586,12 +586,16 @@
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
         if (location.pathname ='/') {
-          eventHandler.resetHome();
+          setTimeout(function () {
+            eventHandler.resetHome();
+          }, 100);
           TownHall.isMap = true;
         }
       } else if (hashid === '#home' && TownHall.isMap === true) {
         history.replaceState({}, document.title, '.');
-        eventHandler.resetHome();
+        setTimeout(function () {
+          eventHandler.resetHome();
+        }, 100);
       } else if (hashid === '#missing-members') {
         if (!Moc.loaded) {
           missingMemberView.init();
