@@ -12,6 +12,7 @@
     return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
   };
   var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
+  var mainBB = [-128.8, 23.6, -65.4, 50.2];
   var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
 
   function setMap(){
@@ -28,8 +29,11 @@
       style: styleURL,
       center: continental.center,
       zoom: continental.zoom,
-      minZoom: 1.5
+      minZoom: 1.5,
+      attributionControl: false
     });
+    map.addControl(new mapboxgl.AttributionControl(), 'top-left');
+
 
     // Set Mapbox map controls
     map.addControl(new mapboxgl.NavigationControl());
@@ -69,7 +73,7 @@
       }
     } else {
       setTimeout(function () {
-        onResizeMap()
+        onResizeMap();
       }, 50);
     }
     eventHandler.setUrlParameter('zipcode', false);
@@ -500,8 +504,8 @@
       mapView.webGL = true;
       setMap();
       $( window ).resize(function() {
-        bounds = mapView.zoomLocation ? mapView.zoomLocation : bounds;
-        map.fitBounds(bounds);
+        bounds = mapView.zoomLocation ? mapView.zoomLocation : mainBB;
+        mapView.focusMap(bounds);
       });
     }
   });

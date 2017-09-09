@@ -359,21 +359,12 @@
   noWebGlMapView = {};
 
   window.onResizeMap = function onResizeMap() {
-    console.log('resizing');
     google.maps.event.trigger(googleMap, 'resize');
-    var data = TownHall.isCurrentContext ? TownHall.currentContext:TownHall.allTownHalls;
-    var selection = TownHall.isCurrentContext ? true:false;
+    var data = TownHall.allTownHalls;
+    var selection = mapView.zoomLocation;
     if (selection) {
-      var stateData = eventHandler.getStateDataFromName(data[0].State)
-      var counts = eventHandler.checkIfOnlySenate(data);
-      var validDistricts = []
-      var justSenate = counts[0];
-      var validDistricts = data.map(function(ele){
-        return mapView.zeroPad(ele.District.split('-')[1])
-      }).filter(function(ele, index, array){
-        return array.indexOf(ele) == index;
-      })
-      eventHandler.whereToZoomMap(justSenate, stateData[0].USPS, validDistricts);
+      bounds = mapView.zoomLocation ? mapView.zoomLocation : mainBB;
+      noWebGlMapView.focusMap(bounds);
     } else {
       var resizeBounds = new google.maps.LatLngBounds();
       data.forEach(function(ele){
@@ -391,7 +382,6 @@
 
   // TODO; Probably redudent with resize map
   noWebGlMapView.focusMap = function(bb) {
-    console.log('focusing');
     google.maps.event.trigger(googleMap, 'resize');
     var southWest = new google.maps.LatLng(bb[1], bb[0]);
     var northEast = new google.maps.LatLng(bb[3], bb[2]);
