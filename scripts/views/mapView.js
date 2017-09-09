@@ -5,6 +5,7 @@
   var mapView = {};
   var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  mapView.zoomLocation = false;
 
   // Define an intial view for the US
   var continentalView = function(w,h) {
@@ -57,6 +58,7 @@
 
   mapView.resetView = function resetView() {
     mapView.killSidebar();
+    mapView.zoomLocation = false;
     $('#representativeCards').hide();
     if (mapView.webGL) {
       mapView.initialView();
@@ -498,6 +500,7 @@
       mapView.webGL = true;
       setMap();
       $( window ).resize(function() {
+        bounds = mapView.zoomLocation ? mapView.zoomLocation : bounds;
         map.fitBounds(bounds);
       });
     }

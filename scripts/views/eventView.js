@@ -19,6 +19,7 @@
     } else {
       bb = mapView.getBoundingBox(thisState, validDistricts);
     }
+    mapView.zoomLocation = bb;
     if (mapView.webGL) {
       mapView.focusMap(bb);
     } else {
@@ -29,7 +30,9 @@
   eventHandler.checkIfOnlySenate = function(selectedData){
     var justSenate = true;
     var numOfDistrictEvents = 0;
-
+    if (selectedData.length === 0) {
+      justSenate = false;
+    }
     selectedData.forEach(function(ele){
       if(ele.District !== 'Senate') {
         numOfDistrictEvents ++;
@@ -40,7 +43,6 @@
   };
 
   eventHandler.renderResults = function(thisState, validDistricts, validSelections) {
-    var districtMatcher = thisState + '-' + validDistricts;
     var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
     var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
@@ -56,12 +58,7 @@
         districtText = districtText + thisState;
       }
     });
-
-    var counts = eventHandler.checkIfOnlySenate(selectedData);
-    var justSenate = counts[0];
-    var numOfDistrictEvents = counts[1];
-    eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
-
+    var justSenate = true;
     if (selectedData.length > 0) {
       // set globals for filtering
       $parent.addClass('nearest-with-results');
@@ -70,19 +67,29 @@
       TownHall.currentContext = selectedData;
       eventHandler.renderTableWithArray(selectedData);
 
+      var counts = eventHandler.checkIfOnlySenate(selectedData);
+      justSenate = counts[0];
+      var numOfDistrictEvents = counts[1];
+
       var numOfSateEvents = selectedData.length - numOfDistrictEvents;
       var message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
       var messageState = '<p>and ' + numOfSateEvents + ' event(s) for ' + thisState + ' senators</p>';
+
       $text.html(message + messageState);
       selectedData.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       });
+
       mapView.makeSidebar(selectedData);
+      eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
+
       addtocalendar.load();
     } else {
-      mapView.killSidebar();
       $text.html('There are no events for ' + districtText);
+      justSenate = false;
+      mapView.killSidebar();
       eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
+
       eventHandler.resetTable();
     }
     if (mapView.webGL) {
@@ -94,15 +101,15 @@
     var stateObj = stateData.filter(function(state){
       return state.USPS === abbr;
     });
-    return stateObj
-  }
+    return stateObj;
+  };
 
   eventHandler.getStateDataFromName = function(stateName) {
     var stateObj = stateData.filter(function(state){
       return state.Name === stateName;
     });
-    return stateObj
-  }
+    return stateObj;
+  };
 
   eventHandler.lookup = function (e) {
     e.preventDefault();
@@ -124,7 +131,7 @@
           eventHandler.setUrlParameter('zipcode', zipClean);
           eventHandler.resetFilters();
           zipToDistricts.forEach(function(district){
-            stateObj = eventHandler.getStateDataFromAbbr(district.abr)
+            stateObj = eventHandler.getStateDataFromAbbr(district.abr);
             stateCode = stateObj[0].FIPS;
             var geoid = stateCode + district.dis;
             thisState = district.abr;
@@ -147,14 +154,14 @@
     TownHall.resetData();
     eventHandler.initialFilters();
     eventHandler.renderTableWithArray(eventHandler.getFilterState());
-  }
+  };
 
   eventHandler.initialFilters = function() {
     eventHandler.resetFilters();
     eventHandler.addFilter('meetingType', 'Town Hall');
     eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
     eventHandler.addFilter('meetingType', 'Tele-Town Hall');
-  }
+  };
 
   // reset the home page to originial view
   eventHandler.resetHome = function () {
@@ -179,7 +186,7 @@
     $parent.removeClass('nearest-with-results');
     $parent.empty();
     $results.empty();
-    eventHandler.initialFilters()
+    eventHandler.initialFilters();
     TownHall.sortOn = 'Date';
   };
 
@@ -552,7 +559,7 @@
     $('#video-file-field').change(function(){
       $('.upload-video-upload').attr('disabled', false);
     });
-    eventHandler.initialFilters()
+    eventHandler.initialFilters();
 
 
     dataviz.initalProgressBar(100, $('.dem-senate'));
@@ -578,13 +585,13 @@
 
       if (hashid === '#home' && TownHall.isMap === false) {
         history.replaceState({}, document.title, '.');
-          if (location.pathname ='/') {
-            eventHandler.resetHome();
-            TownHall.isMap = true;
-          }
+        if (location.pathname ='/') {
+          eventHandler.resetHome();
+          TownHall.isMap = true;
+        }
       } else if (hashid === '#home' && TownHall.isMap === true) {
         history.replaceState({}, document.title, '.');
-          eventHandler.resetHome();
+        eventHandler.resetHome();
       } else if (hashid === '#missing-members') {
         if (!Moc.loaded) {
           missingMemberView.init();

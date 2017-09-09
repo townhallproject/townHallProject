@@ -112,6 +112,7 @@
 
   TownHall.resetData = function() {
     TownHall.isCurrentContext = false;
+    mapView.zoomLocation = false;
     TownHall.currentContext = [];
     TownHall.zipQuery = '';
   }
