@@ -421,7 +421,6 @@
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
       TownHall.allTownHalls.push(ele);
-      dataviz.recessProgress(ele);
       TownHall.addFilterIndexes(ele);
       eventHandler.initialTable(ele);
 

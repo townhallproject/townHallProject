@@ -101,9 +101,13 @@
 
   var dateStart = new Date('2017-07-29').valueOf();
   var dateEnd = new Date('2017-09-04').valueOf();
-  dataviz.getPastEvents('townHallsOld/2017-8', dateStart, dateEnd);
-  dataviz.getPastEvents('townHallsOld/2017-7', dateStart, dateEnd);
-  dataviz.getPastEvents('townHallsOld/2017-6', dateStart, dateEnd);
+  // dataviz.getPastEvents('townHallsOld/2017-8', dateStart, dateEnd);
+  // dataviz.getPastEvents('townHallsOld/2017-7', dateStart, dateEnd);
+  // dataviz.getPastEvents('townHallsOld/2017-6', dateStart, dateEnd);
+  // dataviz.initalProgressBar(100, $('.dem-senate'));
+  // dataviz.initalProgressBar(100, $('.rep-senate'));
+  // dataviz.initalProgressBar(434, $('.dem-house'));
+  // dataviz.initalProgressBar(434, $('.rep-house'));
 
   module.dataviz = dataviz;
 })(window);
