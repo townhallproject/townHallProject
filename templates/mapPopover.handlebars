@@ -1,14 +1,23 @@
-<div class="text-info">
-  <h4>{{Member}}</h4>
+<div class="text-info map-popup">
+  <h4 class="mapbox-popup-title">{{Member}}</h4>
   <p>{{Location}}</p>
-  <span>{{Time}}</span> on <span>
+  <span>{{Time}} </span>
+  <span>
     {{#if repeatingEvent}}
-      {{repeatingEvent}}
+      on {{repeatingEvent}}
     {{/if}}
     {{#unless repeatingEvent}}
       {{#if Date}}
-        {{Date}}
+        on {{Date}}
       {{/if}}
     {{/unless}}
-</span> at <a href="{{addressLink}}" target="_blank">{{address}}</a>
+  </span><br>
+    {{#if addressLink}}
+      <span><a href="{{addressLink}}" target="_blank">{{address}}</a></span>
+    {{/if}}
+    {{#unless addressLink}}
+      {{#if address}}
+        <span>{{address}}</span>
+      {{/if}}
+    {{/unless}}
 </div>

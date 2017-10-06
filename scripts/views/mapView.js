@@ -224,14 +224,19 @@
         coordinates: jitterPoint(townhall.lng, townhall.lat)
       },
       properties: {
+        //TODO: normalize this.
         repeatingEvent: townhall.repeatingEvent,
-        date: townhall.yearMonthDay,
-        startTime: townhall.Time,
+        date: townhall.Date,
+        Date: townhall.Date,
+        Time: townhall.Time,
         district: townhall.District,
+        District: townhall.District,
         districtId: districtId,
         stateCode: stateCode,
         stateAbbr: stateAbbr,
         member: townhall.Member,
+        Member: townhall.Member,
+        address: townhall.address,
         meetingType: townhall.meetingType,
         icon: iconKey
       },
@@ -279,35 +284,11 @@
         popup.remove();
         return;
       }
-
       var feature = features[0];
-      var popupDistrict = '';
-
-      if (feature.properties.district && feature.properties.district !== 'Senate') {
-        popupDistrict = ', District ' + (feature.properties.district).substring(3);
-      }
-
-      // Populate the popup and set its coordinates
-      // based on the feature found.
-      if (feature.properties.repeatingEvent) {
-        var timeContent = feature.properties.repeatingEvent;
-      } else {
-        var date = new Date(feature.properties.date);
-        var time = feature.properties.startTime;
-
-        if(time.charAt(0) === '0') {
-          time = time.substr(1);
-        }
-
-        var day = date.getDate();
-        var weekday = weekdays[date.getDay()];
-        var month = months[date.getMonth()];
-
-        var timeContent = month + ' ' + day + '</span><br><span>' + weekday + ', ' + time;
-      }
-
+      var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
+      var townhall = new TownHall(feature.properties);
       popup.setLngLat(feature.geometry.coordinates)
-          .setHTML('<div class="mapbox-popup-title"><b>' + feature.properties.member + '</b>' + popupDistrict + '</div><span>' + timeContent + '</span>')
+          .setHTML(mapPopoverTemplate(townhall))
           .addTo(map);
     });
   }
