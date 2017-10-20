@@ -168,7 +168,7 @@
             );
           }
           districtLookups.push(
-            firebase.database().ref('/mocByStateDistrict/' + obj.abr + '-' + (obj.dis || 'At-Large')).once('value').then(function(snapshot) {
+            firebase.database().ref('/mocByStateDistrict/' + obj.abr + '-' + (obj.dis === '0' ? '00' : obj.dis)).once('value').then(function(snapshot) {
               return [snapshot.val().govtrack_id];
             })
           );
