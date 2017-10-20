@@ -224,14 +224,14 @@
   // Display a list of reps with contact info
   eventHandler.renderRepresentativeCards = function(representativePromise, $parent, state) {
     $parent.empty(); // If they search for a new zipcode clear the old info
-    representativePromise.success(function(representatives) {
+    representativePromise.then(function(representatives) {
       var compiledTemplate = Handlebars.getTemplate('representativeCard');
       $parent.append('<h2 class="text-primary text-center">Your Representatives</h2>');
-      eventHandler.repCards(representatives.results, compiledTemplate, $parent);
+      eventHandler.repCards(representatives, compiledTemplate, $parent);
 
-      if (representatives.results.length > 3) {
+      if (representatives.length > 3) {
         $parent.append('<h4 class="col-md-12 text-center">Your zip code encompasses more than one district.<br><small><a href="http://www.house.gov/representatives/find/">Learn More</a></small></h4>');
-      } else if (representatives.results.length === 1) {
+      } else if (representatives.length === 1) {
         eventHandler.addRepresentativeCards(TownHall.lookupReps('state', state), $('#representativeCards section'));
       }
       $parent.parent().show();

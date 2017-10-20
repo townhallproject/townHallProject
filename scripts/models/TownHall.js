@@ -4,7 +4,7 @@
       this[key] = opts[key];
     }
   }
-  //Global data stete
+  //Global data state
   TownHall.allTownHalls = [];
   TownHall.allMoCs = [];
   TownHall.allStates = [];
@@ -37,6 +37,7 @@
 
   firebase.initializeApp(config);
   var firebasedb = firebase.database();
+  var MoCPromise = firebasedb.ref('mocData/').once('value');
 
   TownHall.saveZipLookup = function (zip) {
     firebasedb.ref('/zipZeroResults/' + zip).once('value').then(function(snapshot){
@@ -114,16 +115,16 @@
     TownHall.isCurrentContext = false;
     TownHall.currentContext = [];
     TownHall.zipQuery = '';
-  }
+  };
 
   TownHall.getZipLatLng = function (zip) {
     return new Promise(function (resolve, reject) {
       firebasedb.ref('/zips/' + zip).once('value').then(function(snapshot) {
         if (snapshot.exists()) {
-        var zipQueryLoc = {};
-        zipQueryLoc.lat = snapshot.val().LAT;
-        zipQueryLoc.lng = snapshot.val().LNG;
-        resolve(zipQueryLoc);
+          var zipQueryLoc = {};
+          zipQueryLoc.lat = snapshot.val().LAT;
+          zipQueryLoc.lng = snapshot.val().LNG;
+          resolve(zipQueryLoc);
         } else {
           reject ('That is not a real zip code');
         }
@@ -132,24 +133,55 @@
   };
 
   TownHall.lookupReps = function (key, value) {
-    if (key === 'zip') {
-      var representativePromise = $.ajax({
-        url: 'https://congress.api.sunlightfoundation.com/legislators/locate?' + key + '=' + value,
-        dataType: 'jsonp'
+    return _lookupRepIds(key, value).then(function(keys) {
+      return _lookupRepObjs(keys);
+    });
+  };
+
+  function _lookupRepObjs(keys) {
+    return MoCPromise.then(function(MoCs) {
+      MoCs = MoCs.val();
+      return keys.map(function(key) {
+        return MoCs[key]
       });
-    } else if (key === 'state') {
-      var representativePromise = $.ajax({
-        url: 'https://congress.api.sunlightfoundation.com/legislators?state=' + value + '&chamber=senate',
-        dataType: 'jsonp'
-      });
-    } else {
-      var representativePromise = $.ajax({
-        url: 'https://congress.api.sunlightfoundation.com/legislators?state=' + key + '&district=' + value,
-        dataType: 'jsonp'
+    });
+  }
+
+  function _lookupRepIds(key, value) {
+    if (key === 'state') {
+        return firebasedb.ref('/mocByStateDistrict/' + value).once('value').then(function(snapshot) {
+            return [snapshot.val().junior.govtrack_id, snapshot.val().senior.govtrack_id];
+        });
+    } else if (key === 'zip') {
+      return firebasedb.ref('/zipToDistrict/' + value).once('value').then(function(snapshot) {
+        let districts = snapshot.val();
+
+        // Get all the district promises together
+        let districtLookups = [];
+        Object.keys(districts).forEach(function(key, index, array) {
+          let obj = districts[key]
+          if (index === 0) {
+            districtLookups.push(
+              firebasedb.ref('/mocByStateDistrict/' + obj.abr).once('value').then(function(snapshot) {
+                  return [snapshot.val().junior.govtrack_id, snapshot.val().senior.govtrack_id];
+              })
+            );
+          }
+          districtLookups.push(
+            firebase.database().ref('/mocByStateDistrict/' + obj.abr + '-' + (obj.dis || 'At-Large')).once('value').then(function(snapshot) {
+              return [snapshot.val().govtrack_id];
+            })
+          );
+        });
+
+        // Return all ids
+        return Promise.all(districtLookups).then(function(values) {
+          // Flatten results
+          return [].concat.apply([], values);
+        });
       });
     }
-    return representativePromise;
-  };
+  }
 
   // given a zip, returns sorted array of events
   TownHall.returnNearest = function (zipQueryLoc) {
