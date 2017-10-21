@@ -4,14 +4,14 @@
 
 
   dataviz.getPastEvents = function(path, dateStart, dateEnd){
-    var ref = firebase.database().ref(path);
+    var ref = firebasedb.ref(path);
     ref.orderByChild('dateObj').startAt(dateStart).endAt(dateEnd).on('child_added', function(snapshot) {
       dataviz.recessProgress(snapshot.val());
     });
   };
 
   dataviz.listenForRemove = function(path){
-    var ref = firebase.database().ref(path);
+    var ref = firebasedb.ref(path);
     ref.on('child_removed', function(snapshot) {
       remove = true
       dataviz.removeLiveEvent(snapshot.val(), remove);

@@ -1,5 +1,4 @@
 (function(module) {
-  var firebasedb = firebase.database();
   var provider = new firebase.auth.GoogleAuthProvider();
   var zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
   var emailRegEx = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -533,7 +532,7 @@
   function checkEventParam() {
     var eventId = getUrlParameter('eventId');
     if (eventId) {
-      firebase.database().ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
+      firebasedb.ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
         if (snapshot.val()) {
           eventHandler.populateEventModal(snapshot.val());
           $('.event-modal').modal('show');

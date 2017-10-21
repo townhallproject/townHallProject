@@ -27,7 +27,7 @@ Moc.loadAll = function(){
   $currentState = $('#mm-current-state');
   var total = 0;
   return new Promise(function (resolve, reject) {
-    firebase.database().ref('mocData/').once('value').then(function(snapshot){
+    firebasedb.ref('mocData/').once('value').then(function(snapshot){
       snapshot.forEach(function(member){
         if (member.val().party) {
           var memberobj = new Moc(member.val());

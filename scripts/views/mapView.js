@@ -398,7 +398,7 @@
   // Fetch data from Firebase, run map filter & point layers
   // listens for new data.
   function readData (webgl) {
-    var townHallsFB = firebase.database().ref('/townHalls/');
+    var townHallsFB = firebasedb.ref('/townHalls/');
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
       TownHall.allTownHalls.push(ele);

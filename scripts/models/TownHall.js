@@ -25,20 +25,6 @@
     other : 'no time zone'
   };
 
-  //FIREBASE METHODS
-  // Initialize Firebase
-  var config = {
-    apiKey: 'AIzaSyDwZ41RWIytGELNBnVpDr7Y_k1ox2F2Heg',
-    authDomain: 'townhallproject-86312.firebaseapp.com',
-    databaseURL: 'https://townhallproject-86312.firebaseio.com',
-    storageBucket: 'townhallproject-86312.appspot.com',
-    messagingSenderId: '208752196071'
-  };
-
-  firebase.initializeApp(config);
-  var firebasedb = firebase.database();
-  var MoCPromise = firebasedb.ref('mocData/').once('value');
-
   TownHall.saveZipLookup = function (zip) {
     firebasedb.ref('/zipZeroResults/' + zip).once('value').then(function(snapshot){
       if (snapshot.exists()) {
@@ -168,7 +154,7 @@
             );
           }
           districtLookups.push(
-            firebase.database().ref('/mocByStateDistrict/' + obj.abr + '-' + (obj.dis === '0' ? '00' : obj.dis)).once('value').then(function(snapshot) {
+            firebasedb.ref('/mocByStateDistrict/' + obj.abr + '-' + (obj.dis === '0' ? '00' : obj.dis)).once('value').then(function(snapshot) {
               return [snapshot.val().govtrack_id];
             })
           );
@@ -186,7 +172,7 @@
   // given a zip, returns sorted array of events
   TownHall.returnNearest = function (zipQueryLoc) {
     var locations = [];
-    return firebase.database().ref('/townHalls').once('value').then(function(snapshot) {
+    return firebasedb.ref('/townHalls').once('value').then(function(snapshot) {
       snapshot.forEach(function(ele){
         if (ele.val().meetingType !== 'DC Event' && ele.val().meetingType !== 'Coffee') {
           locations.push(new TownHall(ele.val()));
