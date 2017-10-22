@@ -566,14 +566,13 @@
     });
     eventHandler.initialFilters();
 
-
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
       var hashLocation = location.hash.split('?')[0];
       $("a[href='" + hashLocation + "']").tab('show');
       if (hashLocation === '#missing-members') {
-        if (!Moc.loaded) {
+        if (!missingMemberView.loaded) {
           missingMemberView.init();
         } else {
           setTimeout(function () {
@@ -606,7 +605,7 @@
           eventHandler.resetHome();
         }, 100);
       } else if (hashid === '#missing-members') {
-        if (!Moc.loaded) {
+        if (!missingMemberView.loaded) {
           missingMemberView.init();
         } else {
           setTimeout(function () {
