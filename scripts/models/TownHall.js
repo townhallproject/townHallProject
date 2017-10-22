@@ -125,10 +125,11 @@
   };
 
   function _lookupRepObjs(keys) {
-    return MoCPromise.then(function(MoCs) {
-      MoCs = MoCs.val();
+    return MoC.all.then(function(MoCs) {
       return keys.map(function(key) {
-        return MoCs[key]
+        return MoCs.find(function(member) {
+          return member.govtrack_id === key;
+        });
       });
     });
   }
