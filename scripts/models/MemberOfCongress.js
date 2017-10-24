@@ -22,9 +22,10 @@
 
   MoC.all = firebasedb.ref('mocData/').once('value').then(function(snapshot) {
     var MoCs = snapshot.val();
-    // Do we need to check if party exists here? It was in the missing members code, but I can't see any examples of MoCs without party
     return Object.keys(MoCs).map(function(key) {
       return new MoC(MoCs[key]);
+    }).filter(function(member){
+      return member.in_office;
     }).sort(function(a, b) {
       if (a.state > b.state) {
         return -1;
