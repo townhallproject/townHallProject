@@ -563,7 +563,7 @@
     $('button.upload-video-begin').click(eventHandler.uploadVideoStage2);
     $('#upload-another').on('click', eventHandler.resetVideoForm);
     $('#video-file-field').change(function(){
-    $('.upload-video-upload').attr('disabled', false);
+      $('.upload-video-upload').attr('disabled', false);
     });
     eventHandler.initialFilters();
 
@@ -656,8 +656,8 @@
     // certain point past events table position
     var divTop = $('#all-events-table').offset().top + 380;
     $(window).scroll(function() {
-      if($(window).scrollTop() > divTop) { 
-        $('#scrollBtn').show(); 
+      if($(window).scrollTop() > divTop) {
+        $('#scrollBtn').show();
       } else {
         $('#scrollBtn').hide();
       }
