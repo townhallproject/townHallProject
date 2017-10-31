@@ -557,7 +557,7 @@
     $('button.upload-video-begin').click(eventHandler.uploadVideoStage2);
     $('#upload-another').on('click', eventHandler.resetVideoForm);
     $('#video-file-field').change(function(){
-      $('.upload-video-upload').attr('disabled', false);
+    $('.upload-video-upload').attr('disabled', false);
     });
     eventHandler.initialFilters();
 
