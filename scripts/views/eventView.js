@@ -329,7 +329,7 @@
   // When the user clicks on the button, scroll to the top of the events table
   eventHandler.scrollToTopTable = function() {
     $('html, body').animate({scrollTop:$('#events-table').offset().top}, 'fast');
-  }
+  };
 
   // initial state of table
   eventHandler.initialTable = function (townhall) {
@@ -659,13 +659,13 @@
 
     // Only show scroll button if user reaches
     // certain point past events table position
-    var divTop = $("#all-events-table").offset().top + 380;
+    var divTop = $('#all-events-table').offset().top + 380;
     $(window).scroll(function() {
-        if($(window).scrollTop() > divTop) { 
-            $("#scrollBtn").show(); 
-        } else {
-          $("#scrollBtn").hide();
-        }
+      if($(window).scrollTop() > divTop) { 
+        $('#scrollBtn').show(); 
+      } else {
+        $('#scrollBtn').hide();
+      }
     });
   }
 
