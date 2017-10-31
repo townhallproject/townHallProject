@@ -568,11 +568,6 @@
     eventHandler.initialFilters();
 
 
-    dataviz.initalProgressBar(100, $('.dem-senate'));
-    dataviz.initalProgressBar(100, $('.rep-senate'));
-    dataviz.initalProgressBar(434, $('.dem-house'));
-    dataviz.initalProgressBar(434, $('.rep-house'));
-
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {

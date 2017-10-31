@@ -404,7 +404,6 @@
   noWebGlMapView.setData = function (townhall){
     var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
     var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
-    dataviz.recessProgress(townhall);
     TownHall.addFilterIndexes(townhall);
     $('[data-toggle="popover"]').popover({
       container: 'body',

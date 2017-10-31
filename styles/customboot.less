@@ -34,9 +34,9 @@
 @import "pager.less";
 @import "labels.less";
 @import "badges.less";
-// @import "jumbotron.less";
+@import "jumbotron.less";
 @import "thumbnails.less";
-@import "alerts.less";
+// @import "alerts.less";
 @import "progress-bars.less";
 @import "media.less";
 @import "list-group.less";
@@ -66,6 +66,7 @@
 @brand-info: #132149;
 @brand-secondary-dark : darken(@brand-secondary, 20%);
 @brand-white: #ffffff;
+
 .text-white{
   color: @brand-white;
 }
@@ -78,7 +79,7 @@
   color: @brand-secondary-dark;
 }
 
-.background-gray{
+.background-gray {
     background-color: @brand-gray;
 }
 
@@ -233,6 +234,10 @@ h1, h2 {
   border-bottom: @brand-secondary 2px solid;
   margin-bottom: 0;
   background-color: @brand-white;
+}
+
+.navbar-main{
+  box-shadow: 0px 4px 4px rgba(0,0,0,0.1);
 }
 
 .fa-1x{
@@ -561,6 +566,19 @@ a.social-icon {
     font-weight: 700;
     letter-spacing: 0.05em;
   }
+}
+.time-sensitive {
+  padding-bottom: 1em;
+}
+.time-sensitive .container{
+  max-width: 950px;
+}
+.time-sensitive p {
+  padding: 10px 20px 5px 20px;
+  margin: 0;
+}
+.time-sensitive .large{
+  font-size: 1.5em;
 }
 .progress{
   height: 40px;
@@ -1311,6 +1329,7 @@ img.grayscale {
   .spacer{
       margin-top: 20px;
   }
+
 }
 
 .usa-icon {
@@ -1367,13 +1386,17 @@ img.grayscale {
 }
 
 .mapboxgl-popup-content {
-  color: white;
+  color: @brand-white;
   max-width: 240px;
   background-color: @brand-primary;
   box-shadow: 0px 1px 3px @brand-primary;
   -webkit-box-shadow: 0px 1px 3px #0d4668;
           box-shadow: 0px 1px 3px #0d4668;
+  span, h4 {
+    color: @brand-white;
+  }
 }
+
 
 .mapbox-popup-title {
   border-bottom: 2px solid rgba(255,255,255,0.2);
