@@ -119,14 +119,14 @@
   };
 
   TownHall.lookupReps = function (key, value) {
-    return _lookupRepIds(key, value).then(function(keys) {
-      return _lookupRepObjs(keys);
+    return _lookupRepIds(key, value).then(function(govtrack_ids) {
+      return _lookupRepObjs(govtrack_ids);
     });
   };
 
-  function _lookupRepObjs(keys) {
+  function _lookupRepObjs(govtrack_ids) {
     return MoC.all.then(function(MoCs) {
-      return keys.map(function(key) {
+      return govtrack_ids.map(function(key) {
         return MoCs.find(function(member) {
           return member.govtrack_id === key;
         });
@@ -136,21 +136,21 @@
 
   function _lookupRepIds(key, value) {
     if (key === 'state') {
-        return firebasedb.ref('/mocByStateDistrict/' + value).once('value').then(function(snapshot) {
-            return [snapshot.val().junior.govtrack_id, snapshot.val().senior.govtrack_id];
-        });
+      return firebasedb.ref('/mocByStateDistrict/' + value).once('value').then(function(snapshot) {
+        return [snapshot.val().junior.govtrack_id, snapshot.val().senior.govtrack_id];
+      });
     } else if (key === 'zip') {
       return firebasedb.ref('/zipToDistrict/' + value).once('value').then(function(snapshot) {
-        let districts = snapshot.val();
+        var districts = snapshot.val();
 
         // Get all the district promises together
-        let districtLookups = [];
+        var districtLookups = [];
         Object.keys(districts).forEach(function(key, index, array) {
-          let obj = districts[key]
+          var obj = districts[key];
           if (index === 0) {
             districtLookups.push(
               firebasedb.ref('/mocByStateDistrict/' + obj.abr).once('value').then(function(snapshot) {
-                  return [snapshot.val().junior.govtrack_id, snapshot.val().senior.govtrack_id];
+                return [snapshot.val().junior.govtrack_id, snapshot.val().senior.govtrack_id];
               })
             );
           }
@@ -166,6 +166,10 @@
           // Flatten results
           return [].concat.apply([], values);
         });
+      });
+    } else {
+      return firebasedb.ref('/mocByStateDistrict/' + key + '-' + (value === '0' ? '00' : value)).once('value').then(function(snapshot) {
+        return [snapshot.val().govtrack_id];
       });
     }
   }

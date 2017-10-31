@@ -239,9 +239,9 @@
 
   // append additional reps for lookup by district
   eventHandler.addRepresentativeCards = function(representativePromise, $parent) {
-    representativePromise.success(function(representatives) {
+    representativePromise.then(function(representatives) {
       var compiledTemplate = Handlebars.getTemplate('representativeCard');
-      eventHandler.repCards(representatives.results, compiledTemplate, $parent);
+      eventHandler.repCards(representatives, compiledTemplate, $parent);
     });
   };
 
