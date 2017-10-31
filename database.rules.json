@@ -13,14 +13,14 @@
       		}
         }
      },
-      "capEvents" : {
-      ".indexOn": "lastUpdated",
+      "indivisible" : {
+      ".indexOn": "event_starts_at_date",
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$townHallID": {
         ".read": "true",
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true",
-      	"lastUpdated": {
+      	"event_starts_at_date": {
             ".indexOn": ".value"
       		}
         }
@@ -83,6 +83,15 @@
       ".read": "true",
       "$mocKey": {
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+     }
+   },
+    "mocByStateDistrict" : {
+      ".read": "true",
+      "$stateDistrict": {
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+          "$state_rank" : {
+            ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+          }
      }
    },
     "zips": {
