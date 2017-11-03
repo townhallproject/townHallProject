@@ -30,6 +30,8 @@ By default it will run on port 3000.
 ### Entry Point
 Our map is made with mapbox which uses webGL. For those users who do not have webGL enabled we display a googleMap. Both of these files have a `readData` function, which reads through all the events at the townHalls endpoint, makes a marker for them, and then displays the marker on the map. These functions are found in view/mapView.js and view/noWebGlMapView.js.
 
+[More information on the Mapbox map.](docs/MAP_WALKTHROUGH.md)
+
 ### Introduction to Firebase
 
 Firebase is a readtime database; so you can add listeners for `child_added` or `child_changed`. These are very useful for our case where the data is being added and changed on a pretty constant basis. We use this to read in the event data.
@@ -77,7 +79,7 @@ ex.
 To render to that template, you need to compile it, which returns a function you can then pass an object to. The function returns rendered HTML that you can then append to the DOM.
 
 ```JavaScript
-var $parent = $('[.element in the DOM]');
+var $parent = $('.[element in the DOM]');
 var compiledTemplate = Handlebars.getTemplate('[filename]');
 var $newEle = $(compiledTemplate(townhall));
 $panel.appendTo($parent);
