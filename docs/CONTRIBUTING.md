@@ -1,7 +1,7 @@
 # Contributing
 
 ## Communication
-Anyone who is contributing regularly to this project can become of member of this github group, and join our slack channel. Please contact us at info@townhallproject.com
+Anyone who is actively contributing to this project can become of member of this github group, and join our slack channel. Please contact us at info@townhallproject.com
 
 ## Development Process
 
@@ -25,26 +25,28 @@ By default it will run on port 3000.
 - Run `grunt watch`
 - Make changes to customboot.less
 - New changes will be written to bootstrap.min.css
+- if you make changes to customboot.less before you ran the watch function, you can run `grunt dist-css`, which will compile the css file and exit.
+
 ### Entry Point
-Our map is made with mapbox which uses webGL. For those users who do not have webGL enabled we display a googleMap. Both of these files have a `readData` function, which reads through all the events at the townHalls endpoint, makes a marker for them, and then displays the marker on the map. These functions are found in mapView and noWebGlMapView.
+Our map is made with mapbox which uses webGL. For those users who do not have webGL enabled we display a googleMap. Both of these files have a `readData` function, which reads through all the events at the townHalls endpoint, makes a marker for them, and then displays the marker on the map. These functions are found in view/mapView.js and view/noWebGlMapView.js.
 
 ### Introduction to Firebase
 
-Firebase is a readtime database, which means you can add listeners for `child_added` or `child_changed`. These are very useful for our case where the data is being added and changed on a pretty constant basis. We use this to read in the event data.
+Firebase is a readtime database; so you can add listeners for `child_added` or `child_changed`. These are very useful for our case where the data is being added and changed on a pretty constant basis. We use this to read in the event data.
 
 #### Reading Data
-```
+```JavaScript
 var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('dateObj');
 townHallsFB.on('child_added', function (snapshot) {
   //child_added iterates over every child node at the endpoint /townHalls/
   //snapshot has a key, in our case snapshot.key is the event id.
   //calling .val() on snapshot will unpack the object at this endpoint.
   var newtownhall = new TownHall (snapshot.val());
-}
-  ```
+})
+```
 Alternatively, sometimes it's important to be able to ensure a function is executed only after all the data is run. This is where `once` is useful.
 To read the data at an endpoint once, we chain `.ref()` with `.once()`. This returns a promise. We can do things with the data in the resolve function of the promise.
-```
+```JavaScript
 var townHallsFB = firebase.database().ref('/townHalls/').orderByChild('dateObj');
 townHallsFB.once('child_added').then(function(snapshot) {
   //once returns the data at the endpoint /townHalls/ as an array like object
@@ -52,8 +54,9 @@ townHallsFB.once('child_added').then(function(snapshot) {
     //ele here is now like the snapshot returned in the 'child_added' call.
     var newtownhall = new TownHall (ele.val());
     })
-  }
-  ```
+  })
+```
+
 #### Writing Data
 
 Writing data follows a similar pattern. We chain `.ref()` with `.update([object])` or `.set(value)`.
@@ -66,10 +69,19 @@ Right now we are using [Handlebars](http://handlebarsjs.com/) to template our ht
 To make a new template create a file in templates/[filename].handlebars.
 
 ex.
-```<div class="col-xs-6">
+```HTML
+<div class="col-xs-6">
   <p>{{meetingType}}</p>
 </div>
 ```
+To render to that template, you need to compile it, which returns a function you can then pass an object to. The function returns rendered HTML that you can then append to the DOM.
+
+```JavaScript
+var $parent = $('[.element in the DOM]');
+var compiledTemplate = Handlebars.getTemplate('[filename]');
+var $newEle = $(compiledTemplate(townhall));
+$panel.appendTo($parent);
+  ```
 
 ### Help
 If you need help on anything, or are unsure about how something is setup, please email meganrm@townhallproject.com.
