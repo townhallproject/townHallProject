@@ -1,5 +1,14 @@
 <div class="text-info">
   <h4>{{Member}}</h4>
   <p>{{Location}}</p>
-  <span>{{Time}}</span> on <span>{{Date}}</span> at <a href="{{addressLink}}" target="_blank">{{address}}</a>
+  <span>{{Time}}</span> on <span>
+    {{#if repeatingEvent}}
+      {{repeatingEvent}}
+    {{/if}}
+    {{#unless repeatingEvent}}
+      {{#if Date}}
+        {{Date}}
+      {{/if}}
+    {{/unless}}
+</span> at <a href="{{addressLink}}" target="_blank">{{address}}</a>
 </div>

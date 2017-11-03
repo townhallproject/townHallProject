@@ -36,7 +36,7 @@
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
         "$month" : {
-        	".indexOn": "meetingType",
+        ".indexOn": "dateObj",
           "$townHallID": {
            ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
 						"dateObj":{

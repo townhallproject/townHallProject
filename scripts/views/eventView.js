@@ -446,52 +446,7 @@
       });
     }
   }
-  function updateProgressBar($bar, total, $total){
-    current = Number($bar.attr('data-count'));
-    updated = current + 1;
-    $bar.attr('data-count', updated);
-    width = updated / total * 100;
-    $bar.width(width + '%');
-    $bar.text(updated);
 
-    currentNoEvents = Number($total.attr('data-count'));
-    updatedNoEvents = currentNoEvents - 1;
-    $total.attr('data-count', updatedNoEvents);
-    widthNoEvents = updatedNoEvents / total * 100;
-    $total.width(widthNoEvents + '%');
-    $total.text(updatedNoEvents);
-  }
-
-  eventHandler.membersEvents = new Set();
-  eventHandler.recessProgress = function (townhall) {
-    var total;
-    if (moment(townhall.dateObj).isBetween('2017-07-29', '2017-09-04', [])) {
-      if (!eventHandler.membersEvents.has(townhall.Member) && townhall.meetingType ==='Town Hall') {
-        if (townhall.District === 'Senate') {
-          total = 100;
-          if (townhall.Party === 'Republican') {
-            $bar = $('.rep-aug-progress-senate');
-            $total = $('.rep-senate');
-          } else {
-            $bar = $('.dem-aug-progress-senate');
-            $total = $('.dem-senate');
-          }
-        } else {
-          total = 434;
-          if (townhall.Party === 'Democratic') {
-            $bar = $('.dem-aug-progress-house');
-            $total = $('.dem-house');
-          } else {
-            $bar = $('.rep-aug-progress-house');
-            $total = $('.rep-house');
-          }
-        }
-        updateProgressBar($bar, total, $total);
-
-        eventHandler.membersEvents.add(townhall.Member);
-      }
-    }
-  };
 
   $(document).ready(function(){
     init();
@@ -520,6 +475,10 @@
     eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
     eventHandler.addFilter('meetingType', 'Tele-Town Hall');
 
+    dataviz.initalProgressBar(100, $('.dem-senate'));
+    dataviz.initalProgressBar(100, $('.rep-senate'));
+    dataviz.initalProgressBar(434, $('.dem-house'));
+    dataviz.initalProgressBar(434, $('.rep-house'));
     // Perform zip search on load
     var zipcode = getUrlParameter('zipcode');
     if (zipcode) {
