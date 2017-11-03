@@ -214,6 +214,9 @@
         break;
       }
       var termEnd = new Date(rep.term_end);
+      // Get the canon facebook and twitter accounts
+      rep.facebook_canon = rep.facebook_official_account || rep.facebook_account || rep.facebook;
+      rep.twitter_canon = rep.twitter_account || rep.twitter;
       // If term expires in janurary then assume the election is in the prior year
       rep.electionYear = termEnd.getMonth() === 0 ? termEnd.getFullYear() - 1 : termEnd.getFullYear();
       $parent.append(compiledTemplate(rep));
@@ -654,8 +657,8 @@
     // certain point past events table position
     var divTop = $('#all-events-table').offset().top + 380;
     $(window).scroll(function() {
-      if($(window).scrollTop() > divTop) { 
-        $('#scrollBtn').show(); 
+      if($(window).scrollTop() > divTop) {
+        $('#scrollBtn').show();
       } else {
         $('#scrollBtn').hide();
       }
