@@ -125,12 +125,13 @@
   };
 
   function _lookupRepObjs(govtrack_ids) {
-    return MoC.all.then(function(MoCs) {
-      return govtrack_ids.map(function(key) {
-        return MoCs.find(function(member) {
-          return member.govtrack_id === key;
-        });
+    var MoCPromiseArray = govtrack_ids.map(function(govtrack_id) {
+      return firebasedb.ref('mocData/' + govtrack_id).once('value').then(function(snapshot) {
+        return snapshot.val();
       });
+    });
+    return Promise.all(MoCPromiseArray).then(function(MoCs) {
+      return MoCs;
     });
   }
 
