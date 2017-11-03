@@ -30,7 +30,7 @@ By default it will run on port 3000.
 ### Entry Point
 Our map is made with mapbox which uses webGL. For those users who do not have webGL enabled we display a googleMap. Both of these files have a `readData` function, which reads through all the events at the townHalls endpoint, makes a marker for them, and then displays the marker on the map. These functions are found in view/mapView.js and view/noWebGlMapView.js.
 
-[More information on the Mapbox map.](docs/MAP_WALKTHROUGH.md)
+[More information on the Mapbox map.](MAP_WALKTHROUGH.md)
 
 ### Introduction to Firebase
 
