@@ -52,6 +52,23 @@
     });
   };
 
+  TownHall.lastUpdated = function(){
+    firebased.ref.on('value', function(events){
+      var sortedEvents = events.map(function(a,b){
+        if (a.lastUpdated > b.lastUpdated){
+          return a;
+        } else {
+          return b;
+        }
+      });
+      var newestEvent = sortedEvents[0];
+      console.log(newestEvent);
+    }, function (errorObject) {
+      console.log('The read failed: ' + errorObject.code);
+    }
+    );
+  };
+
   TownHall.prototype.isInFuture = function (){
     this.dateObj = new Date(this.Date);
     var now = new Date();
