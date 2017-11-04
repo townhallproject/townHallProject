@@ -52,21 +52,26 @@
     });
   };
 
+///Looks at everything in the database and returns last updated
   TownHall.lastUpdated = function(){
-    firebased.ref.on('value', function(events){
-      var sortedEvents = events.map(function(a,b){
-        if (a.lastUpdated > b.lastUpdated){
-          return a;
+    return new Promise (function(resolve, reject){
+      return firebasedb.ref('/townHalls/').once('value').then(function(snapshot){
+        var snapshotArray = Object.values(snapshot.val());
+        snapshotArray.sort(function(a,b){
+          aDate = new Date(a.lastUpdated);
+          bDate = new Date(b.lastUpdated);
+          return bDate - aDate;
+        });
+        if(snapshotArray.length > 0){
+          resolve(snapshotArray[0].lastUpdated);
         } else {
-          return b;
+          reject('Unable to retrieve events');
         }
-      });
-      var newestEvent = sortedEvents[0];
-      console.log(newestEvent);
-    }, function (errorObject) {
-      console.log('The read failed: ' + errorObject.code);
-    }
-    );
+      }, function (errorObject) {
+        console.log('The read failed: ' + errorObject.code);
+      }
+      );
+    });
   };
 
   TownHall.prototype.isInFuture = function (){
@@ -83,6 +88,11 @@
     var renderTemplate = Handlebars.compile(source);
     return renderTemplate(this);
   };
+
+  ///Handlebars helper to format the Last Updated
+  Handlebars.registerHelper('dateFormat', function(lastUpdated) {
+    return moment(lastUpdated).format('MMMM Do YYYY');
+  });
 
   // Takes an array of TownHalls and sorts by sortOn field
   TownHall.sortFunction = function(a, b) {
