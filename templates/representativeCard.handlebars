@@ -3,6 +3,9 @@
     <div class="card-header">
       <div class="row">
         <div class="col-xs-4 col-sm-3 no-padding p-0">
+          {{#if missingMember}}
+            <div class="missing-member weight-heavy">Missing Member</div>
+          {{/if}}
           <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-100px.jpeg" onerror="$(this).remove()" class="grayscale" />
         </div>
         <div class="col-xs-8 col-sm-9">
@@ -52,17 +55,22 @@
           <div>
             <label>Term Ends:</label> {{next_election}}
           </div>
-          {{#if swingLeft}}
-            <div>
-              <label>SwingLeft District:</label>
+          <div>
+            <label>SwingLeft District:</label>
+            {{#if swingLeft}}
               <a href="https://swingleft.org/district/{{state}}-{{district}}" target="_blank">Yes</a>
-            </div>
-          {{/if}}
-          {{#if ahca}}
-            <div>
-              <label>Voted for AHCA ("Trumpcare"):</label> Yes
-            </div>
-          {{/if}}
+            {{else}}
+              No
+            {{/if}}
+          </div>
+          <div>
+            <label>Voted for AHCA ("Trumpcare"):</label>
+              {{#if ahca}}
+                Yes
+              {{else}}
+                No
+              {{/if}}
+          </div>
         </div>
       </div>
     </div>
