@@ -65,7 +65,7 @@
 
       TownHall.isCurrentContext = true;
       TownHall.currentContext = selectedData;
-      eventHandler.renderTableWithArray(selectedData);
+      tableHandler.renderTableWithArray(selectedData);
 
       var counts = eventHandler.checkIfOnlySenate(selectedData);
       justSenate = counts[0];
@@ -90,7 +90,7 @@
       mapView.killSidebar();
       eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
 
-      eventHandler.resetTable();
+      tableHandler.resetTable();
     }
     if (mapView.webGL) {
       mapView.highlightDistrict(validSelections);
@@ -127,9 +127,9 @@
       TownHall.lookupZip(zipClean)
         .then(function(zipToDistricts){
           TownHall.zipQuery = zipClean;
-          eventHandler.setUrlParameter('district', false);
-          eventHandler.setUrlParameter('zipcode', zipClean);
-          eventHandler.resetFilters();
+          urlParamsHandler.setUrlParameter('district', false);
+          urlParamsHandler.setUrlParameter('zipcode', zipClean);
+          tableHandler.resetFilters();
           zipToDistricts.forEach(function(district){
             stateObj = eventHandler.getStateDataFromAbbr(district.abr);
             stateCode = stateObj[0].FIPS;
@@ -150,18 +150,18 @@
     }
   };
 
-  eventHandler.resetTable = function(){
-    TownHall.resetData();
-    eventHandler.initialFilters();
-    eventHandler.renderTableWithArray(eventHandler.getFilterState());
-  };
+  // eventHandler.resetTable = function(){
+  //   TownHall.resetData();
+  //   eventHandler.initialFilters();
+  //   eventHandler.renderTableWithArray(eventHandler.getFilterState());
+  // };
 
-  eventHandler.initialFilters = function() {
-    eventHandler.resetFilters();
-    eventHandler.addFilter('meetingType', 'Town Hall');
-    eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
-    eventHandler.addFilter('meetingType', 'Tele-Town Hall');
-  };
+  // eventHandler.initialFilters = function() {
+  //   eventHandler.resetFilters();
+  //   eventHandler.addFilter('meetingType', 'Town Hall');
+  //   eventHandler.addFilter('meetingType', 'Empty Chair Town Hall');
+  //   eventHandler.addFilter('meetingType', 'Tele-Town Hall');
+  // };
 
   // reset the home page to originial view
   eventHandler.resetHome = function () {
@@ -179,14 +179,14 @@
     $('#button-to-form').hide();
     $('.spacer').show();
     $('#look-up').appendTo($('.right-panels'));
-    eventHandler.resetTable();
+    tableHandler.resetTable();
     mapView.resetView();
     var $parent = $('#nearest');
     var $results = $('.selection-results_content');
     $parent.removeClass('nearest-with-results');
     $parent.empty();
     $results.empty();
-    eventHandler.initialFilters();
+    tableHandler.initialFilters();
     TownHall.sortOn = 'Date';
   };
 
@@ -246,118 +246,118 @@
     });
   };
 
-  eventHandler.renderTableWithArray = function (array) {
-    $('.event-row').remove();
-    $table = $('#all-events-table');
-    $currentState = $('#current-state');
-    var total = parseInt($currentState.attr('data-total'));
-    var cur = array.length;
-    array.forEach(function(ele){
-      eventHandler.renderTable(ele, $table);
-    });
-    $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
-  };
+  // eventHandler.renderTableWithArray = function (array) {
+  //   $('.event-row').remove();
+  //   $table = $('#all-events-table');
+  //   $currentState = $('#current-state');
+  //   var total = parseInt($currentState.attr('data-total'));
+  //   var cur = array.length;
+  //   array.forEach(function(ele){
+  //     eventHandler.renderTable(ele, $table);
+  //   });
+  //   $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
+  // };
 
   // render table row
-  eventHandler.renderTable = function (townhall, $tableid) {
-    if (townhall.dist) {
-      townhall.dist = Math.round(townhall.dist/1609.344);
-    }
-    townhall.addressLink = 'https://www.google.com/maps?q=' + escape(townhall.address);
-    var compiledTemplate = Handlebars.getTemplate('eventTableRow');
-    $($tableid).append(compiledTemplate(townhall));
-  };
+  // eventHandler.renderTable = function (townhall, $tableid) {
+  //   if (townhall.dist) {
+  //     townhall.dist = Math.round(townhall.dist/1609.344);
+  //   }
+  //   townhall.addressLink = 'https://www.google.com/maps?q=' + escape(townhall.address);
+  //   var compiledTemplate = Handlebars.getTemplate('eventTableRow');
+  //   $($tableid).append(compiledTemplate(townhall));
+  // };
 
-  eventHandler.getFilterState = function () {
-    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
-    return TownHall.getFilteredResults(data);
-  };
+  // eventHandler.getFilterState = function () {
+  //   var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
+  //   return TownHall.getFilteredResults(data);
+  // };
 
-  eventHandler.sortTable = function (e) {
-    e.preventDefault();
-    TownHall.sortOn = $(this).attr('data-filter');
-    eventHandler.renderTableWithArray(eventHandler.getFilterState());
-  };
+  // eventHandler.sortTable = function (e) {
+  //   e.preventDefault();
+  //   TownHall.sortOn = $(this).attr('data-filter');
+  //   eventHandler.renderTableWithArray(eventHandler.getFilterState());
+  // };
 
-  eventHandler.addFilter = function(filter, value) {
-    // Avoid duplicates
-    if (TownHall.filters.hasOwnProperty(filter) && TownHall.filters[filter].indexOf(value) !== -1) {
-      return;
-    } else if (value === 'All') {
-      eventHandler.removeFilterCategory(filter);
-    } else {
-      TownHall.addFilter(filter, value);
+  // eventHandler.addFilter = function(filter, value) {
+  //   // Avoid duplicates
+  //   if (TownHall.filters.hasOwnProperty(filter) && TownHall.filters[filter].indexOf(value) !== -1) {
+  //     return;
+  //   } else if (value === 'All') {
+  //     eventHandler.removeFilterCategory(filter);
+  //   } else {
+  //     TownHall.addFilter(filter, value);
 
-      var button = '<li><button class="btn btn-secondary btn-xs" ' +
-                   'data-filter="' + filter + '" data-value="' + value + '" >' +
-                      value + '<i class="fa fa-times" aria-hidden="true"></i>' +
-                    '</button></li>';
-      $('#filter-info').append(button);
-    }
-  };
+  //     var button = '<li><button class="btn btn-secondary btn-xs" ' +
+  //                  'data-filter="' + filter + '" data-value="' + value + '" >' +
+  //                     value + '<i class="fa fa-times" aria-hidden="true"></i>' +
+  //                   '</button></li>';
+  //     $('#filter-info').append(button);
+  //   }
+  // };
 
   //gets rid of whole filter category and removes the associated buttons
-  eventHandler.removeFilterCategory = function(category) {
-    TownHall.removeFilterCategory(category);
-    $('button[data-filter="' + category + '"]').remove();
-    eventHandler.renderTableWithArray(eventHandler.getFilterState());
-  };
+  // eventHandler.removeFilterCategory = function(category) {
+  //   TownHall.removeFilterCategory(category);
+  //   $('button[data-filter="' + category + '"]').remove();
+  //   eventHandler.renderTableWithArray(eventHandler.getFilterState());
+  // };
 
-  eventHandler.removeFilter = function() {
-    var $button = $(this);
-    TownHall.removeFilter($button.attr('data-filter'), $button.attr('data-value'));
-    eventHandler.renderTableWithArray(eventHandler.getFilterState());
-    $button.parent().remove();
-  };
+  // eventHandler.removeFilter = function() {
+  //   var $button = $(this);
+  //   TownHall.removeFilter($button.attr('data-filter'), $button.attr('data-value'));
+  //   eventHandler.renderTableWithArray(eventHandler.getFilterState());
+  //   $button.parent().remove();
+  // };
 
-  eventHandler.resetFilters = function() {
-    TownHall.resetFilters();
-    $('#filter-info li button').parent().remove();
-  };
+  // eventHandler.resetFilters = function() {
+  //   TownHall.resetFilters();
+  //   $('#filter-info li button').parent().remove();
+  // };
 
   // filters the table on click
-  eventHandler.filterTable = function (e) {
-    e.preventDefault();
-    var filter = this.getAttribute('data-filter');
-    eventHandler.addFilter(filter, this.id);
+  // eventHandler.filterTable = function (e) {
+  //   e.preventDefault();
+  //   var filter = this.getAttribute('data-filter');
+  //   eventHandler.addFilter(filter, this.id);
 
-    var filterID = this.id.slice(0,5);
-    var inputs = $('input[data-filter]');
-    eventHandler.renderTableWithArray(eventHandler.getFilterState());
-  };
+  //   var filterID = this.id.slice(0,5);
+  //   var inputs = $('input[data-filter]');
+  //   eventHandler.renderTableWithArray(eventHandler.getFilterState());
+  // };
 
   // When the user clicks on the button, scroll to the top of the events table
-  eventHandler.scrollToTopTable = function() {
-    $('html, body').animate({scrollTop:$('#events-table').offset().top}, 'fast');
-  };
+  // eventHandler.scrollToTopTable = function() {
+  //   $('html, body').animate({scrollTop:$('#events-table').offset().top}, 'fast');
+  // };
 
   // initial state of table
-  eventHandler.initialTable = function (townhall) {
-    $currentState = $('#current-state');
-    var total = parseInt($currentState.attr('data-total')) + 1;
-    var cur = parseInt($currentState.attr('data-current'));
-    $currentState.attr('data-total', total);
-    $table = $('#all-events-table');
-    var meetingTypes = TownHall.filters.meetingType;
-    if (meetingTypes.indexOf(townhall.meetingType) > -1) {
-      cur ++;
-      eventHandler.renderTable(townhall, $table);
-      $currentState.attr('data-current', cur);
-    }
-    $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
-  };
+  // eventHandler.initialTable = function (townhall) {
+  //   $currentState = $('#current-state');
+  //   var total = parseInt($currentState.attr('data-total')) + 1;
+  //   var cur = parseInt($currentState.attr('data-current'));
+  //   $currentState.attr('data-total', total);
+  //   $table = $('#all-events-table');
+  //   var meetingTypes = TownHall.filters.meetingType;
+  //   if (meetingTypes.indexOf(townhall.meetingType) > -1) {
+  //     cur ++;
+  //     eventHandler.renderTable(townhall, $table);
+  //     $currentState.attr('data-current', cur);
+  //   }
+  //   $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
+  // };
 
   eventHandler.populateEventModal = function(townhall) {
     var compiledTemplate = Handlebars.getTemplate('eventModal');
     $('.event-modal .modal-content').html(compiledTemplate(townhall));
-    eventHandler.setUrlParameter('eventId', townhall.eventId);
+    urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
     addtocalendar.load();
   };
 
  // Perform zip search on load
   eventHandler.zipSearchByParam = function(){
-    var zipcode = getUrlParameter('zipcode');
-    var district = getUrlParameter('district');
+    var zipcode = urlParamsHandler.getUrlParameter('zipcode');
+    var district = urlParamsHandler.getUrlParameter('district');
     if (zipcode) {
       $('#look-up input').val(zipcode);
       eventHandler.lookup(document.createEvent('Event'));
@@ -371,176 +371,176 @@
         };
         mapView.districtSelect(feature);
       } else {
-        eventHandler.setUrlParameter('district', false);
+        urlParamsHandler.setUrlParameter('district', false);
       }
     }
   };
 
-  eventHandler.validateSignup = function(e) {
-    e.preventDefault();
-    var first = $('#email-signup-form input[name=first]');
-    var last = $('#email-signup-form input[name=last]');
-    var email = $('#email-signup-form input[name=email]');
-    var zipcode = $('#email-signup-form input[name=zipcode]');
-    var partner = $('#email-signup-form input[name=partner]');
-    var districts = $('#email-signup-form input[name=districts]');
-    var errors = 0;
+  // eventHandler.validateSignup = function(e) {
+  //   e.preventDefault();
+  //   var first = $('#email-signup-form input[name=first]');
+  //   var last = $('#email-signup-form input[name=last]');
+  //   var email = $('#email-signup-form input[name=email]');
+  //   var zipcode = $('#email-signup-form input[name=zipcode]');
+  //   var partner = $('#email-signup-form input[name=partner]');
+  //   var districts = $('#email-signup-form input[name=districts]');
+  //   var errors = 0;
 
-    [first, email, zipcode].forEach(function(field) {
-      var name = field[0].name;
-      if (field[0].value.length === 0) {
-        field.addClass('has-error');
-        errors++;
-      } else if ((name === 'email' && !emailRegEx.test(field[0].value)) ||
-        (name === 'zipcode' && !zipcodeRegEx.test(field[0].value))) {
-        field.addClass('has-error');
-        errors++;
-      } else {
-        field.removeClass('has-error');
-      }
-    });
+  //   [first, email, zipcode].forEach(function(field) {
+  //     var name = field[0].name;
+  //     if (field[0].value.length === 0) {
+  //       field.addClass('has-error');
+  //       errors++;
+  //     } else if ((name === 'email' && !emailRegEx.test(field[0].value)) ||
+  //       (name === 'zipcode' && !zipcodeRegEx.test(field[0].value))) {
+  //       field.addClass('has-error');
+  //       errors++;
+  //     } else {
+  //       field.removeClass('has-error');
+  //     }
+  //   });
 
-    if (errors !== 0) {
-      return;
-    }
+  //   if (errors !== 0) {
+  //     return;
+  //   }
 
-    var zipClean = zipcode.val().split('-')[0];
-    var districtArray;
-    if (districts[0].value.length === 0) {
-      TownHall.zipToDistrict(zipClean)
-        .then(function(zipToDistricts){
-          submitSignup(first, last, zipClean, email, zipToDistricts, partner);
-        });
-    } else {
-      districtArray = JSON.parse($('#email-signup-form input[name=districts]').val());
-      districtArray =[];
-      submitSignup(first, last, zipClean, email, districtArray, partner);
-    }
-  };
+  //   var zipClean = zipcode.val().split('-')[0];
+  //   var districtArray;
+  //   if (districts[0].value.length === 0) {
+  //     TownHall.zipToDistrict(zipClean)
+  //       .then(function(zipToDistricts){
+  //         submitSignup(first, last, zipClean, email, zipToDistricts, partner);
+  //       });
+  //   } else {
+  //     districtArray = JSON.parse($('#email-signup-form input[name=districts]').val());
+  //     districtArray =[];
+  //     submitSignup(first, last, zipClean, email, districtArray, partner);
+  //   }
+  // };
 
-  eventHandler.uploadVideoStage2 = function(e) {
-    $('.upload-video-stage-1').addClass('hidden');
-    $('.upload-video-stage-2').removeClass('hidden');
-    authWithYoutube();
-  };
+  // eventHandler.uploadVideoStage2 = function(e) {
+  //   $('.upload-video-stage-1').addClass('hidden');
+  //   $('.upload-video-stage-2').removeClass('hidden');
+  //   authWithYoutube();
+  // };
 
-  eventHandler.uploadVideoStage3 = function(e) {
-    $('.upload-video-upload').unbind('click');
-    $('.upload-video-upload').click(eventHandler.uploadVideoStage4);
-    $('.upload-video-stage-2').addClass('hidden');
-    $('.upload-video-stage-3').removeClass('hidden');
-    $('.upload-video-stage-5').addClass('hidden');
-  };
+  // eventHandler.uploadVideoStage3 = function(e) {
+  //   $('.upload-video-upload').unbind('click');
+  //   $('.upload-video-upload').click(eventHandler.uploadVideoStage4);
+  //   $('.upload-video-stage-2').addClass('hidden');
+  //   $('.upload-video-stage-3').removeClass('hidden');
+  //   $('.upload-video-stage-5').addClass('hidden');
+  // };
 
-  eventHandler.resetVideoForm = function(e) {
-    $('#upload-video-form input[type=text]').val('');
-    $('#upload-video-form textarea').val('');
-  };
+  // eventHandler.resetVideoForm = function(e) {
+  //   $('#upload-video-form input[type=text]').val('');
+  //   $('#upload-video-form textarea').val('');
+  // };
 
-  eventHandler.uploadVideoStage4 = function(e) {
-    $('.upload-video-upload').attr('disabled', true);
-    uploadVideo.handleUploadClicked();
-    $('.upload-video-stage-3').addClass('hidden');
-    $('.upload-video-stage-4').removeClass('hidden');
-  };
+  // eventHandler.uploadVideoStage4 = function(e) {
+  //   $('.upload-video-upload').attr('disabled', true);
+  //   uploadVideo.handleUploadClicked();
+  //   $('.upload-video-stage-3').addClass('hidden');
+  //   $('.upload-video-stage-4').removeClass('hidden');
+  // };
 
-  eventHandler.uploadVideoStage5 = function(e) {
-    $('.upload-video-stage-4').addClass('hidden');
-    $('.upload-video-stage-5').removeClass('hidden');
-  };
+  // eventHandler.uploadVideoStage5 = function(e) {
+  //   $('.upload-video-stage-4').addClass('hidden');
+  //   $('.upload-video-stage-5').removeClass('hidden');
+  // };
 
-  function submitSignup(first, last, zipcode, email, districts, partner) {
-    var person = {
-      'person' : {
-        'family_name': last.val(),
-        'given_name': first.val(),
-        'postal_addresses': [{ 'postal_code' : zipcode}],
-        'email_addresses' : [{ 'address' : email.val() }],
-        'custom_fields': {
-          'districts': districts,
-          'partner': partner.prop('checked')
-        }
-      }
-    };
-    var userID = email.val().split('').reduce(function(a, b) {
-      a = ((a << 5) - a) + b.charCodeAt(0);
-      return a & a;
-    }, 0);
+  // function submitSignup(first, last, zipcode, email, districts, partner) {
+  //   var person = {
+  //     'person' : {
+  //       'family_name': last.val(),
+  //       'given_name': first.val(),
+  //       'postal_addresses': [{ 'postal_code' : zipcode}],
+  //       'email_addresses' : [{ 'address' : email.val() }],
+  //       'custom_fields': {
+  //         'districts': districts,
+  //         'partner': partner.prop('checked')
+  //       }
+  //     }
+  //   };
+  //   var userID = email.val().split('').reduce(function(a, b) {
+  //     a = ((a << 5) - a) + b.charCodeAt(0);
+  //     return a & a;
+  //   }, 0);
 
-    $.ajax({
-      url: 'https://actionnetwork.org/api/v2/forms/eafd3b2a-8c6b-42da-bec8-962da91b128c/submissions',
-      method: 'POST',
-      dataType: 'json',
-      contentType: 'application/json',
-      data: JSON.stringify(person),
-      success: function() {
-        localStorage.setItem('signedUp', true);
-        $('#email-signup').fadeOut(750);
-      },
-      error: function(error) {
-        console.log('error', error);
-        $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
-      }
-    });
-    return false;
-  }
+  //   $.ajax({
+  //     url: 'https://actionnetwork.org/api/v2/forms/eafd3b2a-8c6b-42da-bec8-962da91b128c/submissions',
+  //     method: 'POST',
+  //     dataType: 'json',
+  //     contentType: 'application/json',
+  //     data: JSON.stringify(person),
+  //     success: function() {
+  //       localStorage.setItem('signedUp', true);
+  //       $('#email-signup').fadeOut(750);
+  //     },
+  //     error: function(error) {
+  //       console.log('error', error);
+  //       $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
+  //     }
+  //   });
+  //   return false;
+  // }
 
 
-  function setupTypeaheads() {
-    var typeaheadConfig = {
-      fitToElement: true,
-      delay: 250,
-      highlighter: function(item) { return item; }, // Kill ugly highlight
-      updater: function(selection) {
-        eventHandler.addFilter(this.$element.attr('data-filter'), selection);
-        eventHandler.renderTableWithArray(eventHandler.getFilterState());
-      }
-    };
+  // function setupTypeaheads() {
+  //   var typeaheadConfig = {
+  //     fitToElement: true,
+  //     delay: 250,
+  //     highlighter: function(item) { return item; }, // Kill ugly highlight
+  //     updater: function(selection) {
+  //       tableHandler.addFilter(this.$element.attr('data-filter'), selection);
+  //       tableHandler.renderTableWithArray(tableHandler.getFilterState());
+  //     }
+  //   };
 
-    $('#stateTypeahead').typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
-    $('#memberTypeahead').typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
-  }
+  //   $('#stateTypeahead').typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
+  //   $('#memberTypeahead').typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
+  // }
 
-  function getUrlParameter(param) {
-    var query = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
-    if (query) {
-      return query[0].split('=')[1];
-    }
-    return false;
-  }
+  // function getUrlParameter(param) {
+  //   var query = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
+  //   if (query) {
+  //     return query[0].split('=')[1];
+  //   }
+  //   return false;
+  // }
 
-  eventHandler.setUrlParameter = function(param, value) {
-    // Get query params, and remove the matching param if it exists
-    var search = document.location.search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
-    // If there are no query params then we need to add the ? back
-    if (search.indexOf('?') === -1) {
-      search += '?';
-    } else {
-      search += '&';
-    }
+  // eventHandler.setUrlParameter = function(param, value) {
+  //   // Get query params, and remove the matching param if it exists
+  //   var search = document.location.search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
+  //   // If there are no query params then we need to add the ? back
+  //   if (search.indexOf('?') === -1) {
+  //     search += '?';
+  //   } else {
+  //     search += '&';
+  //   }
 
-    // Add the query param if we have a value
-    if (value !== false) {
-      search += param + '=' + value;
-    } else {
-      // Remove trailing ? or &
-      search = search.slice(0, -1);
-    }
+  //   // Add the query param if we have a value
+  //   if (value !== false) {
+  //     search += param + '=' + value;
+  //   } else {
+  //     // Remove trailing ? or &
+  //     search = search.slice(0, -1);
+  //   }
 
-    window.history.replaceState('', '', document.location.origin + '/' + search);
-  };
+  //   window.history.replaceState('', '', document.location.origin + '/' + search);
+  // };
 
-  function checkEventParam() {
-    var eventId = getUrlParameter('eventId');
-    if (eventId) {
-      firebase.database().ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
-        if (snapshot.val()) {
-          eventHandler.populateEventModal(snapshot.val());
-          $('.event-modal').modal('show');
-        }
-      });
-    }
-  }
+  // function checkEventParam() {
+  //   var eventId = getUrlParameter('eventId');
+  //   if (eventId) {
+  //     firebase.database().ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
+  //       if (snapshot.val()) {
+  //         eventHandler.populateEventModal(snapshot.val());
+  //         $('.event-modal').modal('show');
+  //       }
+  //     });
+  //   }
+  // }
 
 
   $(document).ready(function(){
@@ -548,24 +548,24 @@
   });
 
   function init() {
-    checkEventParam();
+    // checkEventParam();
     $('#button-to-form').hide();
     $('#save-event').on('submit', eventHandler.save);
     $('#look-up').on('submit', eventHandler.lookup);
-    $('#email-signup-form').on('submit', eventHandler.validateSignup);
+    // $('#email-signup-form').on('submit', eventHandler.validateSignup);
     $('#view-all').on('click', TownHall.viewAll);
-    $('.sort').on('click', 'a', eventHandler.sortTable);
-    setupTypeaheads();
+    // $('.sort').on('click', 'a', eventHandler.sortTable);
+    // setupTypeaheads();
 
-    $('#scrollBtn').on('click', eventHandler.scrollToTopTable);
-    $('.filter').on('click', 'a', eventHandler.filterTable);
-    $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
-    $('button.upload-video-begin').click(eventHandler.uploadVideoStage2);
-    $('#upload-another').on('click', eventHandler.resetVideoForm);
-    $('#video-file-field').change(function(){
-      $('.upload-video-upload').attr('disabled', false);
-    });
-    eventHandler.initialFilters();
+    // $('#scrollBtn').on('click', eventHandler.scrollToTopTable);
+    // $('.filter').on('click', 'a', eventHandler.filterTable);
+    // $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
+    // $('button.upload-video-begin').click(eventHandler.uploadVideoStage2);
+    // $('#upload-another').on('click', eventHandler.resetVideoForm);
+    // $('#video-file-field').change(function(){
+    //   $('.upload-video-upload').attr('disabled', false);
+    // });
+    // eventHandler.initialFilters();
 
 
     // url hash for direct links to subtabs
@@ -625,16 +625,16 @@
 
     // Remove query param when closing modal
     $('.event-modal').on('hide.bs.modal', function (e) {
-      eventHandler.setUrlParameter('eventId', false);
+      urlParamsHandler.setUrlParameter('eventId', false);
     });
     $('#close-email').on('click', function(e){
       localStorage.setItem('signedUp', true);
       $('#email-signup').fadeOut(750);
     });
     // Only show one popover at a time
-    $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
-      $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
-    });
+    // $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
+    //   $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
+    // });
 
     $('body').on('click', '.popover .popover-title a.close', function(e) {
       $('[data-toggle="popover"]').popover('hide');
@@ -654,14 +654,14 @@
 
     // Only show scroll button if user reaches
     // certain point past events table position
-    var divTop = $('#all-events-table').offset().top + 380;
-    $(window).scroll(function() {
-      if($(window).scrollTop() > divTop) { 
-        $('#scrollBtn').show(); 
-      } else {
-        $('#scrollBtn').hide();
-      }
-    });
+    // var divTop = $('#all-events-table').offset().top + 380;
+    // $(window).scroll(function() {
+    //   if($(window).scrollTop() > divTop) { 
+    //     $('#scrollBtn').show(); 
+    //   } else {
+    //     $('#scrollBtn').hide();
+    //   }
+    // });
   }
 
   window.onBeforeunload=null;
