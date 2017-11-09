@@ -21,7 +21,13 @@ Handlebars.registerHelper('json', function(context) {
 
 Handlebars.registerHelper('addressQuery', function(address) {
   return escape(address)
-  // return address.replace(/,/g, '').replace(/ /g, '+');
+});
+
+Handlebars.registerHelper('addressFormat', function(address, options) {
+  var out = "";
+  var items = address.split(',');
+  out = out + items.splice(0, 1)[0] + '<br>'
+  return out + items.join(', ');
 });
 
 // Adapted from http://stackoverflow.com/a/16315366
@@ -54,6 +60,11 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
   default:
     return options.inverse(this);
   }
+});
+
+///Handlebars helper to format the Last Updated
+Handlebars.registerHelper('dateFormat', function(lastUpdated) {
+  return moment(lastUpdated).fromNow();
 });
 
 Handlebars.registerHelper('shortDateTime', function(townhall) {
