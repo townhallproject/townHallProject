@@ -37,7 +37,6 @@
   });
 
   function init() {
-    
     $('button.upload-video-begin').click(eventHandler.uploadVideoStage2);
     $('#upload-another').on('click', eventHandler.resetVideoForm);
     $('#video-file-field').change(function(){
