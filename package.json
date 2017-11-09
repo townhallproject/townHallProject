@@ -20,6 +20,7 @@
   "dependencies": {
     "@google/maps": "^0.3.1",
     "body-parser": "^1.16.0",
+    "bower": "^1.8.2",
     "express": "^4.14.0",
     "express-request-proxy": "^2.0.0",
     "express-session": "^1.15.0",
