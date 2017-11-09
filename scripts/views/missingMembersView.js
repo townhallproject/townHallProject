@@ -1,6 +1,6 @@
 (function(module) {
   var missingMemberView = {};
-  missingMemberView.dataLoaded = false;
+  missingMemberView.loaded = false;
 
   missingMemberView.addFilter = function(filterObj, filterValue) {
     $currentState = $('#mm-current-state');
@@ -97,27 +97,29 @@
   }
 
   missingMemberView.init = function(){
-    Moc.loadAll().then(function(returnedData){
-      Moc.loaded = true;
+    MoC.all.then(function(MoCs) {
+      var missingMembers = MoCs.filter(function(member) {
+        return member.missingMember;
+      });
+
+      missingMemberView.loaded = true;
       $currentState = $('#mm-current-state');
       $copy = $('#mm-total-copy');
-      var total = parseInt($currentState.attr('data-total'));
-      var cur = parseInt($currentState.attr('data-current'));
+      $('#mm-current-state').attr('data-current', missingMembers.length);
+      $('#mm-current-state').attr('data-total', missingMembers.length);
       // inital report of data
-      $currentState.text('Viewing ' + cur + ' of ' + total + ' total missing members');
-      $copy.text(total);
+      $currentState.text('Viewing ' + missingMembers.length + ' of ' + missingMembers.length + ' total missing members');
+      $copy.text($currentState.attr('data-total'));
       // make cards
-      missingMemberView.renderAll('missingMemberCard', '.grid', returnedData);
+      missingMemberView.renderAll('missingMemberCard', '.grid', missingMembers);
       // add state buttons
-      allCategories = getAllCategories(returnedData);
+      allCategories = getAllCategories(missingMembers);
       missingMemberView.renderAll('missingMemberButton', '#state-buttons', allCategories);
       // initalize isotope
       startIsotope();
     });
-  }
-
-
-
+  };
 
   module.missingMemberView = missingMemberView;
 })(window);
+
