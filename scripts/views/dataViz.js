@@ -4,14 +4,14 @@
 
 
   dataviz.getPastEvents = function(path, dateStart, dateEnd){
-    var ref = firebase.database().ref(path);
+    var ref = firebasedb.ref(path);
     ref.orderByChild('dateObj').startAt(dateStart).endAt(dateEnd).on('child_added', function(snapshot) {
       dataviz.recessProgress(snapshot.val());
     });
   };
 
   dataviz.listenForRemove = function(path){
-    var ref = firebase.database().ref(path);
+    var ref = firebasedb.ref(path);
     ref.on('child_removed', function(snapshot) {
       remove = true
       dataviz.removeLiveEvent(snapshot.val(), remove);
@@ -73,12 +73,18 @@
       } else {
         party = 'dem';
       }
-      if (townhall.District === 'Senate') {
-        total = 100;
-        chamber = 'senate';
-      } else {
+      if (townhall.district) {
         total = 434;
         chamber = 'house';
+      } else if (townhall.District === 'Senate') {
+        total = 100;
+        chamber = 'senate';
+      } else if (townhall.District.split('-').length > 1){
+        total = 434;
+        chamber = 'house';
+      } else {
+        total = 100;
+        chamber = 'senate';
       }
       parseBars(party, chamber, newMember, total, removed);
     }
@@ -95,9 +101,13 @@
 
   var dateStart = new Date('2017-07-29').valueOf();
   var dateEnd = new Date('2017-09-04').valueOf();
-  dataviz.getPastEvents('townHallsOld/2017-8', dateStart, dateEnd);
-  dataviz.getPastEvents('townHallsOld/2017-7', dateStart, dateEnd);
-  dataviz.getPastEvents('townHallsOld/2017-6', dateStart, dateEnd);
+  // dataviz.getPastEvents('townHallsOld/2017-8', dateStart, dateEnd);
+  // dataviz.getPastEvents('townHallsOld/2017-7', dateStart, dateEnd);
+  // dataviz.getPastEvents('townHallsOld/2017-6', dateStart, dateEnd);
+  // dataviz.initalProgressBar(100, $('.dem-senate'));
+  // dataviz.initalProgressBar(100, $('.rep-senate'));
+  // dataviz.initalProgressBar(434, $('.dem-house'));
+  // dataviz.initalProgressBar(434, $('.rep-house'));
 
   module.dataviz = dataviz;
 })(window);

@@ -1,5 +1,6 @@
 (function(module) {
   var missingMemberView = {};
+  missingMemberView.loaded = false;
 
   missingMemberView.addFilter = function(filterObj, filterValue) {
     $currentState = $('#mm-current-state');
@@ -95,25 +96,30 @@
     });
   }
 
-  Moc.loadAll().then(function(returnedData){
-    $currentState = $('#mm-current-state');
-    $copy = $('#mm-total-copy');
+  missingMemberView.init = function(){
+    MoC.all.then(function(MoCs) {
+      var missingMembers = MoCs.filter(function(member) {
+        return member.missingMember;
+      });
 
-    var total = parseInt($currentState.attr('data-total'));
-    var cur = parseInt($currentState.attr('data-current'));
-    // inital report of data
-    $currentState.text('Viewing ' + cur + ' of ' + total + ' total missing members');
-    $copy.text(total);
-    // make cards
-    missingMemberView.renderAll('missingMemberCard', '.grid', returnedData);
-    // add state buttons
-    allCategories = getAllCategories(returnedData);
-    missingMemberView.renderAll('missingMemberButton', '#state-buttons', allCategories);
-    // initalize isotope
-    startIsotope();
-  });
-
-
+      missingMemberView.loaded = true;
+      $currentState = $('#mm-current-state');
+      $copy = $('#mm-total-copy');
+      $('#mm-current-state').attr('data-current', missingMembers.length);
+      $('#mm-current-state').attr('data-total', missingMembers.length);
+      // inital report of data
+      $currentState.text('Viewing ' + missingMembers.length + ' of ' + missingMembers.length + ' total missing members');
+      $copy.text($currentState.attr('data-total'));
+      // make cards
+      missingMemberView.renderAll('missingMemberCard', '.grid', missingMembers);
+      // add state buttons
+      allCategories = getAllCategories(missingMembers);
+      missingMemberView.renderAll('missingMemberButton', '#state-buttons', allCategories);
+      // initalize isotope
+      startIsotope();
+    });
+  };
 
   module.missingMemberView = missingMemberView;
 })(window);
+
