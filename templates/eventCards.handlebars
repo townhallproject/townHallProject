@@ -98,7 +98,9 @@
       </ul>
     </div>
     <div class="panel-footer">
-      <small>Last Updated: {{dateFormat lastUpdated}}</small>
+      {{#unless repeatingEvent}}
+        <small>Last Updated: {{dateFormat lastUpdated}}</small>
+      {{/unless}}
     </div>
   </div>
 </div>
