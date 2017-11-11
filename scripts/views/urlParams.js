@@ -30,17 +30,5 @@
     window.history.replaceState('', '', document.location.origin + '/' + search);
   };
 
-  function checkEventParam() {
-    var eventId = urlParamsHandler.getUrlParameter('eventId');
-    if (eventId) {
-      firebase.database().ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
-        if (snapshot.val()) {
-          eventHandler.populateEventModal(snapshot.val());
-          $('.event-modal').modal('show');
-        }
-      });
-    }
-  }
-
   module.urlParamsHandler = urlParamsHandler;
 })(window);
