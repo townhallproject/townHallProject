@@ -6,12 +6,6 @@
   // object to hold the front end view functions
   var eventHandler = {};
 
-  eventHandler.zipErrorResponse = function(errorMessage, error) {
-    console.warn(error);
-    var $text = $('.selection-results_content');
-    $text.text(errorMessage);
-  };
-
   eventHandler.whereToZoomMap = function(justSenate, thisState, validDistricts){
     if (justSenate) {
       bb = mapView.getBoundingBox(thisState);
@@ -137,15 +131,15 @@
             validDistricts.push(district.dis);
             validSelections.push(geoid);
           });
-          eventHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
+          repCardHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
           eventHandler.renderResults(thisState, validDistricts, validSelections);
         })
         .catch(function(error){
-          eventHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.', error);
+          zipLookUpHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.', error);
         });
 
     } else {
-      eventHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
+      zipLookUpHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
     }
   };
 
@@ -186,52 +180,6 @@
     $panel.appendTo($parent);
   };
 
-  // renders the results of rep response
-  eventHandler.repCards = function(results, compiledTemplate, $parent) {
-    results.forEach(function(rep) {
-      switch(rep.party) {
-      case 'R':
-        rep.party = 'Republican';
-        break;
-      case 'D':
-        rep.party = 'Democrat';
-        break;
-      case 'I':
-        rep.party = 'Independent';
-        break;
-      }
-      var termEnd = new Date(rep.term_end);
-      // If term expires in janurary then assume the election is in the prior year
-      rep.electionYear = termEnd.getMonth() === 0 ? termEnd.getFullYear() - 1 : termEnd.getFullYear();
-      $parent.append(compiledTemplate(rep));
-    });
-  };
-
-  // Display a list of reps with contact info
-  eventHandler.renderRepresentativeCards = function(representativePromise, $parent, state) {
-    $parent.empty(); // If they search for a new zipcode clear the old info
-    representativePromise.success(function(representatives) {
-      var compiledTemplate = Handlebars.getTemplate('representativeCard');
-      $parent.append('<h2 class="text-primary text-center">Your Representatives</h2>');
-      eventHandler.repCards(representatives.results, compiledTemplate, $parent);
-
-      if (representatives.results.length > 3) {
-        $parent.append('<h4 class="col-md-12 text-center">Your zip code encompasses more than one district.<br><small><a href="http://www.house.gov/representatives/find/">Learn More</a></small></h4>');
-      } else if (representatives.results.length === 1) {
-        eventHandler.addRepresentativeCards(TownHall.lookupReps('state', state), $('#representativeCards section'));
-      }
-      $parent.parent().show();
-    });
-  };
-
-  // append additional reps for lookup by district
-  eventHandler.addRepresentativeCards = function(representativePromise, $parent) {
-    representativePromise.success(function(representatives) {
-      var compiledTemplate = Handlebars.getTemplate('representativeCard');
-      eventHandler.repCards(representatives.results, compiledTemplate, $parent);
-    });
-  };
-
   eventHandler.populateEventModal = function(townhall) {
     var compiledTemplate = Handlebars.getTemplate('eventModal');
     $('.event-modal .modal-content').html(compiledTemplate(townhall));
@@ -239,37 +187,57 @@
     addtocalendar.load();
   };
 
- // Perform zip search on load
-  eventHandler.zipSearchByParam = function(){
-    var zipcode = urlParamsHandler.getUrlParameter('zipcode');
-    var district = urlParamsHandler.getUrlParameter('district');
-    if (zipcode) {
-      $('#look-up input').val(zipcode);
-      eventHandler.lookup(document.createEvent('Event'));
-    } else if (district) {
-      if (district.split('-').length === 3) {
-        //TODO: possible more checks to make sure this is a real district
-        var feature = {
-          state: district.split('-')[0],
-          district:district.split('-')[1],
-          geoID:district.split('-')[2],
-        };
-        mapView.districtSelect(feature);
-      } else {
-        urlParamsHandler.setUrlParameter('district', false);
+  function setupTypeaheads() {
+    var typeaheadConfig = {
+      fitToElement: true,
+      delay: 250,
+      highlighter: function(item) { return item; }, // Kill ugly highlight
+      updater: function(selection) {
+        tableHandler.addFilter(this.$element.attr('data-filter'), selection);
+        tableHandler.renderTableWithArray(tableHandler.getFilterState());
       }
+    };
+
+    $('#stateTypeahead').typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
+    $('#memberTypeahead').typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
+  }
+
+  function checkEventParam() {
+    var eventId = urlParamsHandler.getUrlParameter('eventId');
+    if (eventId) {
+      firebase.database().ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
+        if (snapshot.val()) {
+          eventHandler.populateEventModal(snapshot.val());
+          $('.event-modal').modal('show');
+        }
+      });
     }
-  };
+  }
 
   $(document).ready(function(){
     init();
   });
 
   function init() {
+    checkEventParam();
     $('#button-to-form').hide();
     $('#save-event').on('submit', eventHandler.save);
     $('#look-up').on('submit', eventHandler.lookup);
     $('#view-all').on('click', TownHall.viewAll);
+    $('.sort').on('click', 'a', tableHandler.sortTable);
+    setupTypeaheads();
+    
+    $('.filter').on('click', 'a', tableHandler.filterTable);
+    $('#filter-info').on('click', 'button.btn', tableHandler.removeFilter);
+    $('button.upload-video-begin').click(videoUploadHandler.uploadVideoStage2);
+    $('#upload-another').on('click', videoUploadHandler.resetVideoForm);
+    $('#video-file-field').change(function(){
+      $('.upload-video-upload').attr('disabled', false);
+    });
+    $('#scrollBtn').on('click', tableHandler.scrollToTopTable);
+
+    tableHandler.initialFilters();
+
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
@@ -339,14 +307,31 @@
     $('#missing-member-banner-btn').on('click', function(e){
       $('#missing-member-tab').click();
     });
-
     $('#view-missing-member-report').on('click', function(e) {
       $('.missing-members-modal').modal('show');
     });
-
     $('.privacy-policy-button').on('click', function(e){
       $('#privacy-policy-link').click();
       $('html,body').scrollTop(0);
+    });
+    $('#close-email').on('click', function(e){
+      localStorage.setItem('signedUp', true);
+      $('#email-signup').fadeOut(750);
+    });
+    $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
+      $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
+    });
+    $('#email-signup-form').on('submit', emailHandler.validateSignup);
+    if (localStorage.getItem('signedUp') === 'true') {
+      $('#email-signup').hide();
+    }
+    var divTop = $('#all-events-table').offset().top + 380;
+    $(window).scroll(function() {
+      if($(window).scrollTop() > divTop) { 
+        $('#scrollBtn').show(); 
+      } else {
+        $('#scrollBtn').hide();
+      }
     });
   }
 

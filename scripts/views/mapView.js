@@ -96,7 +96,7 @@
   mapView.districtSelect = function(feature) {
     if (feature.state) {
       eventHandler.renderResults(feature.state, [feature.district], feature.geoID);
-      eventHandler.renderRepresentativeCards(TownHall.lookupReps(feature.state, feature.district), $('#representativeCards section'), feature.state);
+      repCardHandler.renderRepresentativeCards(TownHall.lookupReps(feature.state, feature.district), $('#representativeCards section'), feature.state);
 
       urlParamsHandler.setUrlParameter('zipcode', false);
       urlParamsHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
@@ -417,7 +417,7 @@
         map.getSource('townhall-points').setData(featuresHome);
         mapView.initialView();
       }
-      eventHandler.zipSearchByParam();
+      zipLookUpHandler.zipSearchByParam();
     });
 
 
@@ -430,8 +430,8 @@
       if (e.which === 8) {
         if(!rx.test(e.target.tagName) || e.target.disabled || e.target.readOnly) {
           mapView.killSidebar();
-          eventHandler.setUrlParameter('zipcode', false);
-          eventHandler.setUrlParameter('district', false);
+          urlParamsHandler.setUrlParameter('zipcode', false);
+          urlParamsHandler.setUrlParameter('district', false);
 
           map.fitBounds(bounds);
           var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');

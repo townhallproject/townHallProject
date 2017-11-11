@@ -32,17 +32,5 @@
     $('.upload-video-stage-5').removeClass('hidden');
   };
 
-  $(document).ready(function() {
-    init();
-  });
-
-  function init() {
-    $('button.upload-video-begin').click(videoUploadHandler.uploadVideoStage2);
-    $('#upload-another').on('click', videoUploadHandler.resetVideoForm);
-    $('#video-file-field').change(function(){
-      $('.upload-video-upload').attr('disabled', false);
-    });
-  }
-
   module.videoUploadHandler = videoUploadHandler;
 })(window);

@@ -115,48 +115,6 @@
     $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
   };
 
-  function setupTypeaheads() {
-    var typeaheadConfig = {
-      fitToElement: true,
-      delay: 250,
-      highlighter: function(item) { return item; }, // Kill ugly highlight
-      updater: function(selection) {
-        tableHandler.addFilter(this.$element.attr('data-filter'), selection);
-        tableHandler.renderTableWithArray(tableHandler.getFilterState());
-      }
-    };
-
-    $('#stateTypeahead').typeahead($.extend({source: TownHall.allStates}, typeaheadConfig));
-    $('#memberTypeahead').typeahead($.extend({source: TownHall.allMoCs}, typeaheadConfig));
-  }
-
-  $(document).ready(function(){
-    init();
-  });
-
-  function init() {
-    $('.sort').on('click', 'a', tableHandler.sortTable);
-    $('.filter').on('click', 'a', tableHandler.filterTable);
-    $('#filter-info').on('click', 'button.btn', tableHandler.removeFilter);
-    $('#scrollBtn').on('click', tableHandler.scrollToTopTable);
-    setupTypeaheads();
-
-    tableHandler.initialFilters();
-
-    $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
-      $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
-    });
-
-    var divTop = $('#all-events-table').offset().top + 380;
-    $(window).scroll(function() {
-      if($(window).scrollTop() > divTop) { 
-        $('#scrollBtn').show(); 
-      } else {
-        $('#scrollBtn').hide();
-      }
-    });
-  }
-
   module.tableHandler = tableHandler;
   
 })(window);

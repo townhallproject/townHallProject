@@ -42,13 +42,5 @@
     }
   }
 
-  $(document).ready(function(){
-    init();
-  });
-
-  function init() {
-    checkEventParam();
-  }
-
   module.urlParamsHandler = urlParamsHandler;
 })(window);

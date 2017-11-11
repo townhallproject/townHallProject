@@ -85,22 +85,6 @@
     }
   };
 
-  $(document).ready(function() {
-    init();
-  })
-
-  function init() {
-    $('#email-signup-form').on('submit', eventHandler.validateSignup);
-
-    if (localStorage.getItem('signedUp') === 'true') {
-      $('#email-signup').hide();
-    }
-    $('#close-email').on('click', function(e){
-      localStorage.setItem('signedUp', true);
-      $('#email-signup').fadeOut(750);
-    });
-  }
-
   module.emailHandler = emailHandler;
 
 })(window);
