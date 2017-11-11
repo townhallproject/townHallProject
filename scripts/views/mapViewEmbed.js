@@ -21,7 +21,6 @@
   };
 
   firebase.initializeApp(config);
-  var firebasedb = firebase.database();
 
 //draws map
   window.initMapEmbed = function initMap() {
