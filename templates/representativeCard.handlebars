@@ -55,22 +55,15 @@
           <div>
             <label>Term Ends:</label> {{next_election}}
           </div>
-          <div>
-            <label>SwingLeft District:</label>
-            {{#if swingLeft}}
-              <a href="https://swingleft.org/district/{{state}}-{{district}}" target="_blank">Yes</a>
-            {{else}}
-              No
-            {{/if}}
-          </div>
-          <div>
-            <label>Voted for AHCA ("Trumpcare"):</label>
-              {{#if ahca}}
-                Yes
-              {{else}}
-                No
-              {{/if}}
-          </div>
+          {{#if swingLeft}}
+            <div>
+              <label>SwingLeft District:</label>
+                <a href="https://swingleft.org/district/{{state}}-{{district}}" target="_blank">Yes</a>
+            </div>
+          {{/if}}
+          {{#if ahca}}
+            <div><label>Voted for AHCA ("Trumpcare"):</label> Yes</div>
+          {{/if}}
         </div>
       </div>
     </div>
