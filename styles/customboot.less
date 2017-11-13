@@ -187,7 +187,6 @@
 }
 
 //## Define colors for form feedback states and, by default, alerts.
-
 @state-success-text:             @brand-success;
 @state-success-bg:               @brand-success;
 @state-success-border:           darken(spin(@state-success-bg, -10), 5%);
@@ -370,8 +369,13 @@ a.social-icon {
   border-left-width: 2px;
 }
 
+.panel-heading h3{
+  margin-top: 0;
+  text-align: right;
+}
+
 .panel-heading small{
-  color: #ccc;
+  color: @brand-gray;
 }
 
 .panel address{
@@ -379,9 +383,9 @@ a.social-icon {
 }
 
 .list-group-heading{
- padding-bottom: 0;
- padding-left: 0;
- padding-right: 0;
+   padding-bottom: 0;
+   padding-left: 0;
+   padding-right: 0;
  .navbar-right {
     margin-right: 0;
  }
@@ -389,9 +393,25 @@ a.social-icon {
    margin-left: 0;
  }
 }
-
+.inset-line{
+  border-width: 1px;
+  border-style: solid;
+  border-color: #333 #eee #ddd #333;
+  opacity: 0.2;
+  margin-bottom: 1em;
+}
 .list-group { margin-bottom: 0; }
 .event-card { margin-bottom: 1rem; }
+
+.event-card-icon {
+  -webkit-background-size: 38px 38px;
+  background-size: 38px;
+  background-position: top center;
+  background-repeat: no-repeat;
+  padding-top: 44px;
+  text-align: center;
+  margin: 2px 0 0;
+}
 
 .panel-heading_in-person  { background-color: #439cbf; }
 .panel-heading_staff      { background-color: #d0a8c1; }
@@ -400,38 +420,18 @@ a.social-icon {
 
 .event-icon__in-person {
   background-image: url('/Images/map/circle-in-person.svg');
-  background-size: 20px;
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 30px;
-  margin: 2px 0 0 0;
 }
 
 .event-icon__tele {
   background-image: url('/Images/map/circle-tele.svg');
-  background-size: 20px;
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 30px;
-  margin: 2px 0 0 0;
 }
 
 .event-icon__staff {
   background-image: url('/Images/map/circle-staff.svg');
-  background-size: 20px;
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 30px;
-  margin: 2px 0 0 0;
 }
 
 .event-icon__activism {
   background-image: url('/Images/map/circle-activism.svg');
-  background-size: 20px;
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 30px;
-  margin: 2px 0 0 0;
 }
 
 .event-icon__with-date { margin-top: 7px; }
@@ -1178,20 +1178,6 @@ img.grayscale {
   margin-left: 5px;
 }
 
-.Dem .panel-heading, .card-representative.Democratic .card-header{
-  color: white;
-  background-color: #66bdf4;
-}
-
-.Ind .panel-heading, .card-representative.Independent .card-header{
-  color: white;
-  background-color: darken(#705f8c, 20%);
-}
-
-.card-representative.Republican .card-header{
-  background-color: #f87773;
-}
-
 .state-button {
   display: inline-block;
   float: left;
@@ -1518,8 +1504,8 @@ img.grayscale {
   .nearest-with-results{
     height: inherit;
   }
-  .panel{
-    min-height: 500px;
+  .panel-body{
+    min-height: 300px;
   }
   .header-with-results .container{
     width: 100%;

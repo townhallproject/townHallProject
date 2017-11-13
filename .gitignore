@@ -41,3 +41,8 @@ bower_components
 
 #
 .env
+
+#dist css
+styles/css/bootstrap.css.map
+styles/css/bootstrapTH_v1_0.css
+styles/css/bootstrapTH_v1_0.min.css
