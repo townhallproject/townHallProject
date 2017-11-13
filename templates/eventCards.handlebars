@@ -2,11 +2,30 @@
   <div class="panel panel-secondary">
     <div class="panel-heading panel-heading_{{iconFlag}}">
       <div class="row">
-        <div class="col-xs-6">
-          <p class="event-icon__{{iconFlag}} {{#if dateValid}}event-icon__with-date{{/if}}">{{meetingType}}</p>
+        <div class="col-xs-4">
+          <div class="">
+
+          </div>
+          <p class="event-card-icon event-icon__{{iconFlag}} {{#if dateValid}}event-icon__with-date{{/if}}">{{meetingType}}</p>
+
         </div>
-        {{#if dateValid}}
-        <div class="col-xs-6 ">
+        <div class="col-xs-8">
+          {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
+            <h3 class="line-height-small">
+              <div class="row">
+                {{#ifCond District '===' 'Senate'}}
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>{{Member}} <small> ({{Party}}, {{District}})</small></span>
+                {{else}}
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>{{Member}} <small> ({{Party}}, {{District}})</small></span>
+                {{/ifCond}}
+
+                <span class="d-inline-block col-sm-6"><span class="small-white">Visiting MoC (will be present):<br></span>{{districtAdopter}} <small> ({{districtAdopterParty}}, {{districtAdopterDistrict}})</small></span>
+              </div>
+            </h3>
+          {{else}}
+            <h3>{{Member}} <small>({{Party}}, {{District}})</small></h3>
+          {{/ifCond}}
+          {{#if dateValid}}
           <span class="addtocalendar pull-right">
             <a class="atcb-link btn btn-white btn-md">
               <span class="calendarButton">Add to Calendar</span>
@@ -22,28 +41,10 @@
                 <var class="atc_organizer">{{Party}}</var>
               </var>
           </span>
-        </div>
-      {{/if}}
+          {{/if}}
+
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
-            <h3 class="line-height-small">
-              <div class="row">
-                {{#ifCond District '===' 'Senate'}}
-                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>{{Member}} <small> ({{Party}}, {{District}})</small></span>
-                {{else}}
-                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>{{Member}} <small> ({{Party}}, {{District}})</small></span>
-                {{/ifCond}}
-              <!-- </div>
-              <div class="row margin-top-5"> -->
-                <span class="d-inline-block col-sm-6"><span class="small-white">Visiting MoC (will be present):<br></span>{{districtAdopter}} <small> ({{districtAdopterParty}}, {{districtAdopterDistrict}})</small></span>
-              </div>
-            </h3>
-          {{else}}
-            <h3>{{Member}} <small>({{Party}}, {{District}})</small></h3>
-          {{/ifCond}}
-        </div>
+
       </div>
     </div>
     <div class="panel-body">
@@ -63,28 +64,31 @@
         </span>
       <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4></span>
       <ul class="list-group list-group-flush">
-        {{#if Notes}}
-        <li class="list-group-item list-item-no-border list-item-no-border">{{{Notes}}}
-        </li>
-        {{/if}}
         {{#if phoneNumber}}
         <li class="list-group-item list-item-no-border"> Call in number: {{phoneNumber}}
         </li>
         {{/if}}
         <div class="inset-line"></div>
         <li class="list-group-item list-item-no-border">
-          <address class="col-xs-8 col-xs-offset-2">
-            {{Location}}</br>
-            {{#if address}}{{#addressFormat address}}{{address}}{{/addressFormat}}<br>{{/if}}
-            {{#unless address}}
-            {{streetAddress}}<br>
-            {{#if City}}{{City}}, {{/if}}{{StateAb}} {{zip}}<br>
-            {{/unless}}
-            {{#if addressLink}}
-            <a href={{addressLink}} target="_blank">Directions</a></br>
-            {{/if}}
-          <address>
+          <div class="row">
+            <address class="col-xs-8 col-xs-offset-2">
+              {{Location}}</br>
+              {{#if address}}{{#addressFormat address}}{{address}}{{/addressFormat}}<br>{{/if}}
+              {{#unless address}}
+              {{streetAddress}}<br>
+              {{#if City}}{{City}}, {{/if}}{{StateAb}} {{zip}}<br>
+              {{/unless}}
+              {{#if addressLink}}
+              <a href={{addressLink}} target="_blank">Directions</a></br>
+              {{/if}}
+            <address>
+          </div>
         </li>
+        <div class="inset-line"></div>
+        {{#if Notes}}
+        <li class="list-group-item list-item-no-border list-item-no-border">{{{Notes}}}
+        </li>
+        {{/if}}
         {{#if link}}
         <li class="list-group-item list-item-no-border pull-right">
           <a href="{{link}}" target="_blank">{{#if linkName}}{{linkName}}    {{/if}}{{#unless linkName}}Find out more  {{/unless}}<i class="fa fa-chevron-right" aria-hidden="true"></i></a>
