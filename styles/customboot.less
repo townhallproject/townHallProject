@@ -370,8 +370,13 @@ a.social-icon {
   border-left-width: 2px;
 }
 
+.panel-heading h3{
+  margin-top: 0;
+  text-align: right;
+}
+
 .panel-heading small{
-  color: #ccc;
+  color: @brand-gray;
 }
 
 .panel address{
@@ -379,9 +384,9 @@ a.social-icon {
 }
 
 .list-group-heading{
- padding-bottom: 0;
- padding-left: 0;
- padding-right: 0;
+   padding-bottom: 0;
+   padding-left: 0;
+   padding-right: 0;
  .navbar-right {
     margin-right: 0;
  }
@@ -389,9 +394,25 @@ a.social-icon {
    margin-left: 0;
  }
 }
-
+.inset-line{
+  border-width: 1px;
+  border-style: solid;
+  border-color: #333 #eee #ddd #333;
+  opacity: 0.2;
+  margin-bottom: 1em;
+}
 .list-group { margin-bottom: 0; }
 .event-card { margin-bottom: 1rem; }
+
+.event-card-icon {
+  -webkit-background-size: 38px 38px;
+  background-size: 38px;
+  background-position: top center;
+  background-repeat: no-repeat;
+  padding-top: 44px;
+  text-align: center;
+  margin: 2px 0 0;
+}
 
 .panel-heading_in-person  { background-color: #439cbf; }
 .panel-heading_staff      { background-color: #d0a8c1; }
@@ -400,38 +421,18 @@ a.social-icon {
 
 .event-icon__in-person {
   background-image: url('/Images/map/circle-in-person.svg');
-  background-size: 20px;
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 30px;
-  margin: 2px 0 0 0;
 }
 
 .event-icon__tele {
   background-image: url('/Images/map/circle-tele.svg');
-  background-size: 20px;
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 30px;
-  margin: 2px 0 0 0;
 }
 
 .event-icon__staff {
   background-image: url('/Images/map/circle-staff.svg');
-  background-size: 20px;
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 30px;
-  margin: 2px 0 0 0;
 }
 
 .event-icon__activism {
   background-image: url('/Images/map/circle-activism.svg');
-  background-size: 20px;
-  background-position: left center;
-  background-repeat: no-repeat;
-  padding-left: 30px;
-  margin: 2px 0 0 0;
 }
 
 .event-icon__with-date { margin-top: 7px; }

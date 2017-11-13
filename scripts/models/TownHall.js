@@ -52,11 +52,6 @@
     return renderTemplate(this);
   };
 
-  ///Handlebars helper to format the Last Updated
-  Handlebars.registerHelper('dateFormat', function(lastUpdated) {
-    return moment(lastUpdated).format('MMMM Do YYYY');
-  });
-
   // Takes an array of TownHalls and sorts by sortOn field
   TownHall.sortFunction = function(a, b) {
     if (a[TownHall.sortOn] && b[TownHall.sortOn]) {
