@@ -55,6 +55,15 @@
        ".validate": "newData.hasChildren(['Member','eventId'])"
      }
    },
+    "state_legislators_user_submission" : {
+      "$state":{
+        ".read": "true",
+      	".write": "auth.uid !== null",
+      	"$townHallID": {
+       		".validate": "newData.hasChildren(['Member','eventId'])"
+      }
+     }
+   },
     "MOCs" : {
       ".read": "true",
       "$mocKey": {
@@ -82,6 +91,29 @@
     "mocID" : {
       ".read": "true",
       "$mocKey": {
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+     }
+   },
+    "state_legislators_data" : {
+      ".read": "true",
+      "$state": {
+          ".read": "true",
+        	".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
+        	"lastUpdatedBy": {
+        		".write": "auth.uid !== null"
+       		 },
+           "lastUpdated": {
+        		".write": "auth.uid !== null"
+       		 },
+        	"currentEvents" : {
+          	".write": "auth.uid !== null"
+        }
+     }
+   },
+    "state_legislators_id" : {
+      ".read": "true",
+      "$state": {
+        ".read": "true",
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
      }
    },
