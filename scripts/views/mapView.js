@@ -76,8 +76,8 @@
         onResizeMap();
       }, 50);
     }
-    eventHandler.setUrlParameter('zipcode', false);
-    eventHandler.setUrlParameter('district', false);
+    urlParamsHandler.setUrlParameter('zipcode', false);
+    urlParamsHandler.setUrlParameter('district', false);
   };
 
   // Creates the button in our zoom controls to go to the national view
@@ -96,10 +96,10 @@
   mapView.districtSelect = function(feature) {
     if (feature.state) {
       eventHandler.renderResults(feature.state, [feature.district], feature.geoID);
-      eventHandler.renderRepresentativeCards(TownHall.lookupReps(feature.state, feature.district), $('#representativeCards section'), feature.state);
+      repCardHandler.renderRepresentativeCards(TownHall.lookupReps(feature.state, feature.district), $('#representativeCards section'), feature.state);
 
-      eventHandler.setUrlParameter('zipcode', false);
-      eventHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
+      urlParamsHandler.setUrlParameter('zipcode', false);
+      urlParamsHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
     } else {
       var visibility = map.getLayoutProperty('selected-fill', 'visibility');
       if (visibility === 'visible') {
@@ -403,7 +403,7 @@
       var ele = new TownHall (snapshot.val());
       TownHall.allTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
-      eventHandler.initialTable(ele);
+      tableHandler.initialTable(ele);
 
       if (webgl) {
         filterMap(ele);
@@ -417,7 +417,7 @@
         map.getSource('townhall-points').setData(featuresHome);
         mapView.initialView();
       }
-      eventHandler.zipSearchByParam();
+      zipLookUpHandler.zipSearchByParam();
     });
 
 
@@ -430,8 +430,8 @@
       if (e.which === 8) {
         if(!rx.test(e.target.tagName) || e.target.disabled || e.target.readOnly) {
           mapView.killSidebar();
-          eventHandler.setUrlParameter('zipcode', false);
-          eventHandler.setUrlParameter('district', false);
+          urlParamsHandler.setUrlParameter('zipcode', false);
+          urlParamsHandler.setUrlParameter('district', false);
 
           map.fitBounds(bounds);
           var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
