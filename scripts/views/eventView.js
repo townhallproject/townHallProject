@@ -52,6 +52,7 @@
     });
     var justSenate = true;
     if (selectedData.length > 0) {
+      $('#no-events').hide();
       // set globals for filtering
       $parent.addClass('nearest-with-results');
 
@@ -78,10 +79,11 @@
       addtocalendar.load();
     } else {
       $text.html('There are no events for ' + districtText);
+      $('#no-events').show();
+      $('#no-events')[0].scrollIntoView();
       justSenate = false;
       mapView.killSidebar();
       eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
-
       tableHandler.resetTable();
     }
     if (mapView.webGL) {
@@ -149,6 +151,7 @@
     $('#look-up input').val('');
     $('#missing-member-banner').show();
     $('#email-signup-form input[name=zipcode]').val('');
+    $('#no-events').hide();
     $('#representativeCards section').empty();
     $('#representativeCards').hide();
     $('.form-text-results').removeClass('text-center');
