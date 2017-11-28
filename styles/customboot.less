@@ -67,46 +67,46 @@
 @brand-secondary-dark : darken(@brand-secondary, 20%);
 @brand-white: #ffffff;
 
-.text-white{
+.text-white {
   color: @brand-white;
 }
 
-.text-secondary{
+.text-secondary {
   color: @brand-secondary;
 }
 
-.text-secondary-dark{
+.text-secondary-dark {
   color: @brand-secondary-dark;
 }
 
 .background-gray {
     background-color: @brand-gray;
 }
-
+.background-dark-blue {
+  background-color: @brand-primary;
+  color: @brand-white;
+}
 .background-light-blue {
-   background-color: @brand-cool;
-   color: @brand-text;
- }
- .background-dark-blue {
-   background-color: @brand-primary;
-   color: @brand-white;
- }
+  background-color: @brand-cool;
+  color: @brand-text;
+}
+section.background-light-blue {
+  padding: 0.5em 0 2em;
+  border-bottom: solid @brand-primary 1px;
+}
 
- .outline-primary {
-   border:solid 1px @brand-primary
- }
-
- .outline-bright-blue {
-   border:solid 1px @brand-success
- }
-
- .outline-red {
-   border:solid 1px @brand-secondary
- }
-
- .outline-text-color {
-   border:solid 1px @brand-text
- }
+.outline-primary {
+  border:solid 1px @brand-primary
+}
+.outline-bright-blue {
+  border:solid 1px @brand-success
+}
+.outline-red {
+  border:solid 1px @brand-secondary
+}
+.outline-text-color {
+  border:solid 1px @brand-text
+}
 
 @link-color:                        @brand-secondary;
 @component-active-bg:               @brand-secondary;
@@ -142,45 +142,41 @@
 @grid-float-breakpoint: @screen-md-min;
 
 .weight-heavy {
-   font-weight: 700;
-   letter-spacing: 0.06em;
- }
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
 .line-height-small{
   line-height: .8em;
 }
 .line-height-medium {
   line-height: 1.5em;
- }
-
+}
 .line-height-large {
   line-height: 2em;
- }
-.margin-top-5{
+}
+
+.margin-top-5 {
   margin-top: .5em;
 }
 
 .navbar-brand img {
   width: 125px;
 }
-
 .navbar-brand {
   padding-top: 5px!important;
 }
-
 .navbar-left a {
   font-size: 18px;
 }
-
 .navbar-right .btn {
   font-size: 1.2em;
 }
-
 .navbar-right .social-icons {
   padding-right: 0px;
   padding-left: 5px;
   padding-top: 15px;
 }
-
 .navbar .dropdown-menu{
   min-width: 256px;
   padding: 10px;
@@ -519,6 +515,10 @@ a.social-icon {
 .Ind .panel-heading, .card-representative.Independent .card-header{
   color: white;
   background-color: darken(#705f8c, 20%);
+}
+
+#no-events {
+  display: none;
 }
 
 #representativeCards {
@@ -876,13 +876,10 @@ dt.key{
   width: 175px;
 }
 .email-signup--inline {
-   padding: 0.5em 0 2em;
    form {
      margin-top: 20px;
    }
-   border-bottom: solid @brand-primary 1px;
    .checkbox-inline {
-
      padding-left: 2em;
      display: block;
      text-align: center;
