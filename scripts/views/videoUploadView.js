@@ -74,7 +74,7 @@ var UploadVideo = function() {
 UploadVideo.prototype.ready = function(accessToken) {
   this.accessToken = accessToken;
   this.authenticated = true;
-  videoUploadHandler.uploadVideoStage3();
+  eventHandler.uploadVideoStage3();
 };
 
 UploadVideo.prototype.handleUploadClicked = function() {
@@ -141,7 +141,7 @@ UploadVideo.prototype.uploadFile = function(file) {
       $('#upload-video-seconds-remaining').text(estimatedMinutesRemaining.toFixed(0) + 'm' + estimatedSecondsRemaining.toFixed(0) + 's');
     }.bind(this),
     onComplete: function(data) {
-      videoUploadHandler.uploadVideoStage5();
+      eventHandler.uploadVideoStage5();
     }.bind(this)
   });
   // This won't correspond to the *exact* start of the upload, but it should be close enough.

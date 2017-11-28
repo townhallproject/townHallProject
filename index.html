@@ -92,7 +92,7 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane page active" id="home">
         <header class="site-header clearfix">
-           <section class="container container-fluid">
+           <section class=" container container-fluid">
              <div class="row">
                <div class="col-md-6 left-panels">
                   <div  class=" text-left site-header clearfix displayoff ">
@@ -304,25 +304,12 @@
              </div>
            </form>
          </div>
-        </section>
-
-        <!-- Call to action when no events are present -->
-        <section class="background-light-blue" id="no-events">
-          <div class="container container-fluid">
-            <div class="col-md-12">
-              <h2 class="weight-heavy">There are no events near you right now &mdash; but you can still make your voice heard!</h2>
-              <h3><a href="https://5calls.org/" target="_blank">Call</a>, write, or email your your Senators or Representative. Write a letter to the editor in your local newspaper. Join an <a href="https://www.indivisibleguide.com/act-locally/" target="_blank">Indivisible group</a> or other local activist organization to create change in your community.</h3>
-              <h3>If you hear of town halls or other events with your member of Congress, don’t hesitate to <a class="hash-link" data-toggle="tab" href="#submit">submit them</a> to us so we can spread the word.</h3>
-              <h3 class="weight-heavy">Show Up. Speak Out.</h3>
-            </div>
-          </div>
-        </section>
+       </section>
 
         <!-- Cards showing representatives and their contact info -->
         <div id="representativeCards">
           <section class="container container-fluid"></section>
         </div>
-
         <section class="scroll-to-form text-center">
             <p>
               <a href="#events-table" class="scroll-button btn btn-white btn-lg">
@@ -353,7 +340,7 @@
                 </ul>
               </small>
           </div>
-          <div>
+          <div>              
             <ul id="all-events-table" class="list-group">
               <li class="list-group-item list-group-heading">
                 <nav class="navbar navbar-default navbar-static-top ">
@@ -759,28 +746,19 @@
       return t;
     }(document, "script", "twitter-wjs"));</script>
     <!-- Script Files -->
-    <script src="/scripts/lib/firebasedb.js"></script>
-    <script src="/scripts/lib/urlParams.js"></script>
-
     <script src="/scripts/data/statePop.js"></script>
+    <script src="/scripts/firebasedb.js"></script>
 
     <script src="/scripts/models/MemberOfCongress.js"></script>
     <script src="/scripts/models/TownHall.js"></script>
-    <script src="/scripts/models/UploadVideo.js"></script>
-
-    <script src="/scripts/views/zipLookUpView.js"></script>
-    <script src="/scripts/views/repCardView.js"></script>
-    <script src="/scripts/views/emailSignUpView.js"></script>
-    <script src="/scripts/views/tableView.js"></script>
-    <script src="/scripts/views/videoView.js"></script>
-    <script src="/scripts/views/missingMembersView.js"></script>
 
     <script src="/scripts/views/eventView.js"></script>
+    <script src="/scripts/views/missingMembersView.js"></script>
     <script src="/scripts/views/mapView.js"></script>
     <script src="/scripts/views/noWebGlMap.js"></script>
 
     <script src="/scripts/views/dataViz.js"></script>
-    
+    <script src="/scripts/views/videoUploadView.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMap&libraries=visualization,geometry"></script>
   </body>
 </html>
