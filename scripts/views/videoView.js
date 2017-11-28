@@ -9,7 +9,7 @@
 
   videoUploadHandler.uploadVideoStage3 = function(e) {
     $('.upload-video-upload').unbind('click');
-    $('.upload-video-upload').click(eventHandler.uploadVideoStage4);
+    $('.upload-video-upload').click(videoUploadHandler.uploadVideoStage4);
     $('.upload-video-stage-2').addClass('hidden');
     $('.upload-video-stage-3').removeClass('hidden');
     $('.upload-video-stage-5').addClass('hidden');
