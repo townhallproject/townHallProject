@@ -1,7 +1,12 @@
 'use strict';
 
-let stateView = module.exports = {};
+(function(module){
+  let stateView = {};
 
-stateView.getState = function(){
-    console.log('In routing for states now');
-};
+  stateView.getState = function(ctx, next){
+    console.log(ctx.params.state);
+    alert('in getState: ' + ctx.params.state);
+  };
+
+  module.stateView = stateView;
+})(window);
