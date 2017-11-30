@@ -1,3 +1,5 @@
+var stateView = stateView;
+
 (function closure(module) {
 
   var townhallData;
@@ -9,13 +11,18 @@
 
   // Define an intial view for the US
   var continentalView = function(w,h) {
-    return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
+    if(stateView.stateCoords){
+      return geoViewport.viewport(stateView.stateCoords, [w, h]);
+    }else {
+      return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
+    }
   };
-  var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
-  var mainBB = [-128.8, 23.6, -65.4, 50.2];
-  var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
 
   function setMap(){
+    var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
+    var mainBB = [-128.8, 23.6, -65.4, 50.2];
+    var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+
     // Specify Mapbox default access token
     var accessToken = 'pk.eyJ1IjoidG93bmhhbGxwcm9qZWN0IiwiYSI6ImNqMnRwOG4wOTAwMnMycG1yMGZudHFxbWsifQ.FXyPo3-AD46IuWjjsGPJ3Q';
 
@@ -54,7 +61,12 @@
   }
 
   mapView.initialView = function setInitialView() {
-    bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+    if(stateView.stateCoords){
+      bounds = new mapboxgl.LngLatBounds(stateView.stateCoords);
+    } else {
+      bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+    }
+    
     if (mapView.webGL) {
       map.fitBounds(bounds);
     }
