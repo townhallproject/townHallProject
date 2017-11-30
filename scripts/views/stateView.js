@@ -3,16 +3,21 @@
 (function(module){
   let stateView = {};
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   stateView.getState = function(ctx, next){
     ///convert state name to necessary coordinates for mapbox url
-    switch(ctx.params.state.toLowerCase()){
-      case 'arizona':
-        alert('in getState: ' + ctx.params.state);
-        stateView.stateCoords = [-128.8, 23.6,-65.4, 50.2]
-        break;
-      default:
-        stateView.stateCoords = [-128.8, 23.6,-65.4, 50.2]; ///USA
-        break;
+    let state = $.grep(stateData, function(e){
+      return e.Name === capitalizeFirstLetter(ctx.params.state);
+    });
+
+    if(state.length > 0){
+      let stateUsps = state[0]['USPS'];
+      stateView.stateCoords = bboxes[stateUsps];
+    }else {
+      stateView.stateCoords = [-128.8, 23.6,-65.4, 50.2]; ///USA
     }
   };
 
