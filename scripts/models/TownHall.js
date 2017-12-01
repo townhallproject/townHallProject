@@ -169,7 +169,8 @@
         });
       });
     } else {
-      return firebasedb.ref('/mocByStateDistrict/' + key + '-' + (value === '0' ? '00' : value)).once('value').then(function(snapshot) {
+      var path = key + '-' + (value === '0' ? '00' : value);
+      return firebasedb.ref('/mocByStateDistrict/' + path).once('value').then(function(snapshot) {
         return [snapshot.val().govtrack_id];
       });
     }

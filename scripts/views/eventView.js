@@ -1,7 +1,7 @@
 (function(module) {
   var provider = new firebase.auth.GoogleAuthProvider();
   var zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
-  
+
   // object to hold the front end view functions
   var eventHandler = {};
 
@@ -181,157 +181,7 @@
     var $panel = $(compiledTemplate(townhall));
     $panel.appendTo($parent);
   };
-  
-  // renders the results of rep response
-  eventHandler.repCards = function(results, compiledTemplate, $parent) {
-    results.forEach(function(rep) {
-      switch(rep.party) {
-      case 'R':
-        rep.party = 'Republican';
-        break;
-      case 'D':
-        rep.party = 'Democrat';
-        break;
-      case 'I':
-        rep.party = 'Independent';
-        break;
-      }
-      var termEnd = new Date(rep.term_end);
-      // Get the canon facebook and twitter accounts
-      rep.facebook_canon = rep.facebook_official_account || rep.facebook_account || rep.facebook;
-      rep.twitter_canon = rep.twitter_account || rep.twitter;
-      // If term expires in janurary then assume the election is in the prior year
-      rep.electionYear = termEnd.getMonth() === 0 ? termEnd.getFullYear() - 1 : termEnd.getFullYear();
-      $parent.append(compiledTemplate(rep));
-    });
-  };
 
-  // Display a list of reps with contact info
-  eventHandler.renderRepresentativeCards = function(representativePromise, $parent, state) {
-    $parent.empty(); // If they search for a new zipcode clear the old info
-    representativePromise.then(function(representatives) {
-      var compiledTemplate = Handlebars.getTemplate('representativeCard');
-      $parent.append('<h2 class="text-primary text-center">Your Representatives</h2>');
-      eventHandler.repCards(representatives, compiledTemplate, $parent);
-
-      if (representatives.length > 3) {
-        $parent.append('<h4 class="col-md-12 text-center">Your zip code encompasses more than one district.<br><small><a href="http://www.house.gov/representatives/find/">Learn More</a></small></h4>');
-      } else if (representatives.length === 1) {
-        eventHandler.addRepresentativeCards(TownHall.lookupReps('state', state), $('#representativeCards section'));
-      }
-      $parent.parent().show();
-    });
-  };
-
-  // append additional reps for lookup by district
-  eventHandler.addRepresentativeCards = function(representativePromise, $parent) {
-    representativePromise.then(function(representatives) {
-      var compiledTemplate = Handlebars.getTemplate('representativeCard');
-      eventHandler.repCards(representatives, compiledTemplate, $parent);
-    });
-  };
-
-  eventHandler.renderTableWithArray = function (array) {
-    $('.event-row').remove();
-    $table = $('#all-events-table');
-    $currentState = $('#current-state');
-    var total = parseInt($currentState.attr('data-total'));
-    var cur = array.length;
-    array.forEach(function(ele){
-      eventHandler.renderTable(ele, $table);
-    });
-    $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
-  };
-
-  // render table row
-  eventHandler.renderTable = function (townhall, $tableid) {
-    if (townhall.dist) {
-      townhall.dist = Math.round(townhall.dist/1609.344);
-    }
-    townhall.addressLink = 'https://www.google.com/maps?q=' + escape(townhall.address);
-    var compiledTemplate = Handlebars.getTemplate('eventTableRow');
-    $($tableid).append(compiledTemplate(townhall));
-  };
-
-  eventHandler.getFilterState = function () {
-    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
-    return TownHall.getFilteredResults(data);
-  };
-
-  eventHandler.sortTable = function (e) {
-    e.preventDefault();
-    TownHall.sortOn = $(this).attr('data-filter');
-    eventHandler.renderTableWithArray(eventHandler.getFilterState());
-  };
-
-  eventHandler.addFilter = function(filter, value) {
-    // Avoid duplicates
-    if (TownHall.filters.hasOwnProperty(filter) && TownHall.filters[filter].indexOf(value) !== -1) {
-      return;
-    } else if (value === 'All') {
-      eventHandler.removeFilterCategory(filter);
-    } else {
-      TownHall.addFilter(filter, value);
-
-      var button = '<li><button class="btn btn-secondary btn-xs" ' +
-                   'data-filter="' + filter + '" data-value="' + value + '" >' +
-                      value + '<i class="fa fa-times" aria-hidden="true"></i>' +
-                    '</button></li>';
-      $('#filter-info').append(button);
-    }
-  };
-
-  //gets rid of whole filter category and removes the associated buttons
-  eventHandler.removeFilterCategory = function(category) {
-    TownHall.removeFilterCategory(category);
-    $('button[data-filter="' + category + '"]').remove();
-    eventHandler.renderTableWithArray(eventHandler.getFilterState());
-  };
-
-  eventHandler.removeFilter = function() {
-    var $button = $(this);
-    TownHall.removeFilter($button.attr('data-filter'), $button.attr('data-value'));
-    eventHandler.renderTableWithArray(eventHandler.getFilterState());
-    $button.parent().remove();
-  };
-
-  eventHandler.resetFilters = function() {
-    TownHall.resetFilters();
-    $('#filter-info li button').parent().remove();
-  };
-
-  // filters the table on click
-  eventHandler.filterTable = function (e) {
-    e.preventDefault();
-    var filter = this.getAttribute('data-filter');
-    eventHandler.addFilter(filter, this.id);
-
-    var filterID = this.id.slice(0,5);
-    var inputs = $('input[data-filter]');
-    eventHandler.renderTableWithArray(eventHandler.getFilterState());
-  };
-
-  // When the user clicks on the button, scroll to the top of the events table
-  eventHandler.scrollToTopTable = function() {
-    $('html, body').animate({scrollTop:$('#events-table').offset().top}, 'fast');
-  };
-
-  // initial state of table
-  eventHandler.initialTable = function (townhall) {
-    $currentState = $('#current-state');
-    var total = parseInt($currentState.attr('data-total')) + 1;
-    var cur = parseInt($currentState.attr('data-current'));
-    $currentState.attr('data-total', total);
-    $table = $('#all-events-table');
-    var meetingTypes = TownHall.filters.meetingType;
-    if (meetingTypes.indexOf(townhall.meetingType) > -1) {
-      cur ++;
-      eventHandler.renderTable(townhall, $table);
-      $currentState.attr('data-current', cur);
-    }
-    $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
-  };
-  
   eventHandler.populateEventModal = function(townhall) {
     var compiledTemplate = Handlebars.getTemplate('eventModal');
     $('.event-modal .modal-content').html(compiledTemplate(townhall));
@@ -378,7 +228,7 @@
     $('#view-all').on('click', TownHall.viewAll);
     $('.sort').on('click', 'a', tableHandler.sortTable);
     setupTypeaheads();
-    
+
     $('.filter').on('click', 'a', tableHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', tableHandler.removeFilter);
     $('button.upload-video-begin').click(videoUploadHandler.uploadVideoStage2);
@@ -390,7 +240,7 @@
 
 
     tableHandler.initialFilters();
-    
+
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
@@ -470,9 +320,6 @@
     $('#close-email').on('click', function(e){
       localStorage.setItem('signedUp', true);
       $('#email-signup').fadeOut(750);
-    });
-    $('#all-events-table').on('click', 'li[data-toggle="popover"]', function(e) {
-      $('#all-events-table [data-toggle="popover"]').not(this).popover('hide');
     });
     $('#email-signup-form').on('submit', emailHandler.validateSignup);
     if (localStorage.getItem('signedUp') === 'true') {
