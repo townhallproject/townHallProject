@@ -108,7 +108,13 @@ var stateView = stateView;
   mapView.districtSelect = function(feature) {
     if (feature.state) {
       eventHandler.renderResults(feature.state, [feature.district], feature.geoID);
+<<<<<<< HEAD
       eventHandler.renderRepresentativeCards(TownHall.lookupReps(feature.state, feature.district), $('#representativeCards section'), feature.state);
+=======
+      var firstArg = feature.district ? feature.state : 'state';
+      var secondArg = feature.district ? feature.district : feature.state;
+      repCardHandler.renderRepresentativeCards(TownHall.lookupReps(firstArg, secondArg), $('#representativeCards section'), feature.state);
+>>>>>>> 5cdff4f85a5cbc58584f73995723c0d4c5cc6fce
 
       eventHandler.setUrlParameter('zipcode', false);
       eventHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);

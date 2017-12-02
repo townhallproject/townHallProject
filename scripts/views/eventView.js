@@ -1,7 +1,10 @@
 (function(module) {
   var provider = new firebase.auth.GoogleAuthProvider();
   var zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
+<<<<<<< HEAD
   var emailRegEx = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+=======
+>>>>>>> 5cdff4f85a5cbc58584f73995723c0d4c5cc6fce
 
   // object to hold the front end view functions
   var eventHandler = {};
@@ -198,6 +201,7 @@
     var $panel = $(compiledTemplate(townhall));
     $panel.appendTo($parent);
   };
+<<<<<<< HEAD
 
   // renders the results of rep response
   eventHandler.repCards = function(results, compiledTemplate, $parent) {
@@ -349,6 +353,9 @@
     $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
   };
 
+=======
+
+>>>>>>> 5cdff4f85a5cbc58584f73995723c0d4c5cc6fce
   eventHandler.populateEventModal = function(townhall) {
     var compiledTemplate = Handlebars.getTemplate('eventModal');
     $('.event-modal .modal-content').html(compiledTemplate(townhall));
@@ -559,16 +566,28 @@
     $('.sort').on('click', 'a', eventHandler.sortTable);
     setupTypeaheads();
 
+<<<<<<< HEAD
     $('#scrollBtn').on('click', eventHandler.scrollToTopTable);
     $('.filter').on('click', 'a', eventHandler.filterTable);
     $('#filter-info').on('click', 'button.btn', eventHandler.removeFilter);
     $('button.upload-video-begin').click(eventHandler.uploadVideoStage2);
     $('#upload-another').on('click', eventHandler.resetVideoForm);
+=======
+    $('.filter').on('click', 'a', tableHandler.filterTable);
+    $('#filter-info').on('click', 'button.btn', tableHandler.removeFilter);
+    $('button.upload-video-begin').click(videoUploadHandler.uploadVideoStage2);
+    $('#upload-another').on('click', videoUploadHandler.resetVideoForm);
+>>>>>>> 5cdff4f85a5cbc58584f73995723c0d4c5cc6fce
     $('#video-file-field').change(function(){
       $('.upload-video-upload').attr('disabled', false);
     });
     eventHandler.initialFilters();
 
+<<<<<<< HEAD
+=======
+    tableHandler.initialFilters();
+
+>>>>>>> 5cdff4f85a5cbc58584f73995723c0d4c5cc6fce
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
@@ -652,9 +671,20 @@
       $('#privacy-policy-link').click();
       $('html,body').scrollTop(0);
     });
+<<<<<<< HEAD
 
     // Only show scroll button if user reaches
     // certain point past events table position
+=======
+    $('#close-email').on('click', function(e){
+      localStorage.setItem('signedUp', true);
+      $('#email-signup').fadeOut(750);
+    });
+    $('#email-signup-form').on('submit', emailHandler.validateSignup);
+    if (localStorage.getItem('signedUp') === 'true') {
+      $('#email-signup').hide();
+    }
+>>>>>>> 5cdff4f85a5cbc58584f73995723c0d4c5cc6fce
     var divTop = $('#all-events-table').offset().top + 380;
     $(window).scroll(function() {
       if($(window).scrollTop() > divTop) {
