@@ -1,11 +1,11 @@
 (function(module) {
-  
+
   var emailHandler = {};
 
   var zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
   var emailRegEx = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-  // submit email signup 
+  // submit email signup
   function submitSignup(first, last, zipcode, email, districts, partner) {
     var person = {
       'person' : {
@@ -74,7 +74,7 @@
     var zipClean = zipcode.val().split('-')[0];
     var districtArray;
     if (districts[0].value.length === 0) {
-      TownHall.zipToDistrict(zipClean)
+      TownHall.lookupZip(zipClean)
         .then(function(zipToDistricts){
           submitSignup(first, last, zipClean, email, zipToDistricts, partner);
         });
