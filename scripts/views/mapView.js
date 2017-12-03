@@ -1,3 +1,6 @@
+'use strict';
+var stateView = stateView;
+
 (function closure(module) {
 
   var townhallData;
@@ -9,7 +12,11 @@
 
   // Define an intial view for the US
   var continentalView = function(w,h) {
-    return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
+    if(stateView.stateCoords){
+      return geoViewport.viewport(stateView.stateCoords, [w, h]);
+    }else {
+      return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
+    }
   };
   var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
   var mainBB = [-128.8, 23.6, -65.4, 50.2];
@@ -54,11 +61,11 @@
   }
 
   mapView.initialView = function setInitialView() {
-    bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
-    if (mapView.webGL) {
-      map.fitBounds(bounds);
+    if(stateView.stateCoords){
+      bounds = new mapboxgl.LngLatBounds(stateView.stateCoords);
+    } else {
+      bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
     }
-  };
 
   mapView.resetView = function resetView() {
     mapView.killSidebar();
