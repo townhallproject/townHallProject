@@ -1,3 +1,5 @@
+var stateView = stateView;
+
 (function closure(module) {
 
   var townhallData;
@@ -9,13 +11,18 @@
 
   // Define an intial view for the US
   var continentalView = function(w,h) {
-    return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
+    if(stateView.stateCoords){
+      return geoViewport.viewport(stateView.stateCoords, [w, h]);
+    }else {
+      return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
+    }
   };
-  var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
-  var mainBB = [-128.8, 23.6, -65.4, 50.2];
-  var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
 
   function setMap(){
+    var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
+    var mainBB = [-128.8, 23.6, -65.4, 50.2];
+    var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+
     // Specify Mapbox default access token
     var accessToken = 'pk.eyJ1IjoidG93bmhhbGxwcm9qZWN0IiwiYSI6ImNqMnRwOG4wOTAwMnMycG1yMGZudHFxbWsifQ.FXyPo3-AD46IuWjjsGPJ3Q';
 
@@ -54,7 +61,12 @@
   }
 
   mapView.initialView = function setInitialView() {
-    bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+    if(stateView.stateCoords){
+      bounds = new mapboxgl.LngLatBounds(stateView.stateCoords);
+    } else {
+      bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+    }
+    
     if (mapView.webGL) {
       map.fitBounds(bounds);
     }
@@ -76,8 +88,8 @@
         onResizeMap();
       }, 50);
     }
-    urlParamsHandler.setUrlParameter('zipcode', false);
-    urlParamsHandler.setUrlParameter('district', false);
+    eventHandler.setUrlParameter('zipcode', false);
+    eventHandler.setUrlParameter('district', false);
   };
 
   // Creates the button in our zoom controls to go to the national view
@@ -96,12 +108,16 @@
   mapView.districtSelect = function(feature) {
     if (feature.state) {
       eventHandler.renderResults(feature.state, [feature.district], feature.geoID);
+<<<<<<< HEAD
+      eventHandler.renderRepresentativeCards(TownHall.lookupReps(feature.state, feature.district), $('#representativeCards section'), feature.state);
+=======
       var firstArg = feature.district ? feature.state : 'state';
       var secondArg = feature.district ? feature.district : feature.state;
       repCardHandler.renderRepresentativeCards(TownHall.lookupReps(firstArg, secondArg), $('#representativeCards section'), feature.state);
+>>>>>>> 5cdff4f85a5cbc58584f73995723c0d4c5cc6fce
 
-      urlParamsHandler.setUrlParameter('zipcode', false);
-      urlParamsHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
+      eventHandler.setUrlParameter('zipcode', false);
+      eventHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
     } else {
       var visibility = map.getLayoutProperty('selected-fill', 'visibility');
       if (visibility === 'visible') {
@@ -405,7 +421,7 @@
       var ele = new TownHall (snapshot.val());
       TownHall.allTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
-      tableHandler.initialTable(ele);
+      eventHandler.initialTable(ele);
 
       if (webgl) {
         filterMap(ele);
@@ -419,7 +435,7 @@
         map.getSource('townhall-points').setData(featuresHome);
         mapView.initialView();
       }
-      zipLookUpHandler.zipSearchByParam();
+      eventHandler.zipSearchByParam();
     });
 
 
@@ -432,8 +448,8 @@
       if (e.which === 8) {
         if(!rx.test(e.target.tagName) || e.target.disabled || e.target.readOnly) {
           mapView.killSidebar();
-          urlParamsHandler.setUrlParameter('zipcode', false);
-          urlParamsHandler.setUrlParameter('district', false);
+          eventHandler.setUrlParameter('zipcode', false);
+          eventHandler.setUrlParameter('district', false);
 
           map.fitBounds(bounds);
           var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');

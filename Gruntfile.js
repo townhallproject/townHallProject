@@ -1,12 +1,11 @@
 module.exports = function(grunt) {
   grunt.initConfig({
-    watch: {
+        watch: {
       scripts: {
         files: ['styles/customboot.less'],
         tasks: ['dist-css'],
         options: {
           spawn: false,
-          atBegin: true
         },
       },
     },
@@ -74,4 +73,5 @@ module.exports = function(grunt) {
 
   // CSS distribution task.
   grunt.registerTask('dist-css', ['less:compileCore', 'autoprefixer', 'cssmin']);
+
 };
