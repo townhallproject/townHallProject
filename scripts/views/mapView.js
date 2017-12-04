@@ -66,6 +66,10 @@ var stateView = stateView;
     } else {
       bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
     }
+    if (mapView.webGL) {
+      map.fitBounds(bounds);
+    }
+  };
 
   mapView.resetView = function resetView() {
     mapView.killSidebar();
