@@ -349,10 +349,18 @@
     };
 
     googleMap = new google.maps.Map(document.getElementById('map'), options);
-    var bounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(20, -124.39),
-      new google.maps.LatLng(49.38, -66.94)
-    );
+    if(stateView.stateCoords){
+      var bounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(stateView.stateCoords[1], stateView.stateCoords[0]),
+        new google.maps.LatLng(stateView.stateCoords[3], stateView.stateCoords[2])
+      );
+    }else {
+      var bounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(20, -124.39),
+        new google.maps.LatLng(49.38, -66.94)
+      );
+    }
+
     googleMap.fitBounds(bounds);
     google.maps.event.addDomListener(window, 'resize', onResizeMap);
   };
