@@ -109,6 +109,7 @@
       $('#mm-current-state').attr('data-total', missingMembers.length);
       // inital report of data
       $currentState.text('Viewing ' + missingMembers.length + ' of ' + missingMembers.length + ' total missing members');
+      $currentState.removeClass('transparent');
       $copy.text($currentState.attr('data-total'));
       // make cards
       missingMemberView.renderAll('missingMemberCard', '.grid', missingMembers);
