@@ -76,6 +76,8 @@ var stateView = stateView;
     mapView.zoomLocation = false;
     $('#representativeCards').hide();
     if (mapView.webGL && mapView.map) {
+      ///if in state view, sets coords back to all usa
+      stateView.stateCoords = [-128.8, 23.6,-65.4, 50.2];
       mapView.initialView();
       var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
       if (visibility === 'visible') {
