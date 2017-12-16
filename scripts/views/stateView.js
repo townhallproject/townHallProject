@@ -22,10 +22,13 @@
     var state = $.grep(stateData, function(e){
       return e.Name === parseState(ctx.params.state);
     });
-    if (state.length > 0){
+
+    ctx.params.stateName = state;
+    if(state.length > 0){
       var stateUsps = state[0]['USPS'];
       stateView.stateCoords = bboxes[stateUsps];
-    } else {
+      stateView.state = ctx.params.stateName[0].Name;
+    }else {
       page('/');
     }
   };

@@ -73,8 +73,6 @@
     mapView.zoomLocation = false;
     $('#representativeCards').hide();
     if (mapView.webGL && mapView.map) {
-      ///if in state view, sets coords back to all usa
-      stateView.stateCoords = [-128.8, 23.6,-65.4, 50.2];
       mapView.initialView();
       var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
       if (visibility === 'visible') {
@@ -387,16 +385,33 @@
     var townHallsFB = firebasedb.ref('/townHalls/');
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
-      TownHall.allTownHalls.push(ele);
-      TownHall.addFilterIndexes(ele);
-      tableHandler.initialTable(ele);
 
-      if (webgl) {
-        filterMap(ele);
-        makePoint(ele);
+///If in state view filter the results before they get displayed on the map and in the table
+      if(stateView.state){
+        if(ele.State === stateView.state){
+          TownHall.allTownHalls.push(ele);
+          TownHall.addFilterIndexes(ele);
+          tableHandler.initialTable(ele);
+          if (webgl) {
+            filterMap(ele);
+            makePoint(ele);
+          } else {
+            noWebGlMapView.setData(ele);
+          }
+        }
       } else {
-        noWebGlMapView.setData(ele);
+        ///If no state filter show all results
+        TownHall.allTownHalls.push(ele);
+        TownHall.addFilterIndexes(ele);
+        tableHandler.initialTable(ele);
+        if (webgl) {
+          filterMap(ele);
+          makePoint(ele);
+        } else {
+          noWebGlMapView.setData(ele);
+        }
       }
+
     });
     townHallsFB.once('value', function(snap) {
       if (webgl) {
