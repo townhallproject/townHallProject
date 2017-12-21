@@ -211,8 +211,8 @@ var stateView = stateView;
     var state = stateData.filter(function(ele){
       return ele.Name === townhall.State;
     });
-    stateAbbr = state[0].USPS;
-    stateCode = state[0].FIPS;
+    var stateAbbr = state[0].USPS;
+    var stateCode = state[0].FIPS;
     if (townhall.District && townhall.District !== 'Senate') {
       if (!townhall.District.split('-')[1]) {
         return;
@@ -414,16 +414,33 @@ var stateView = stateView;
     var townHallsFB = firebasedb.ref('/townHalls/');
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
-      TownHall.allTownHalls.push(ele);
-      TownHall.addFilterIndexes(ele);
-      tableHandler.initialTable(ele);
 
-      if (webgl) {
-        filterMap(ele);
-        makePoint(ele);
+///If in state view filter the results before they get displayed on the map and in the table
+      if(stateView.state){
+        if(ele.State === stateView.state){
+          TownHall.allTownHalls.push(ele);
+          TownHall.addFilterIndexes(ele);
+          tableHandler.initialTable(ele);
+          if (webgl) {
+            filterMap(ele);
+            makePoint(ele);
+          } else {
+            noWebGlMapView.setData(ele);
+          }
+        }
       } else {
-        noWebGlMapView.setData(ele);
+        ///If no state filter show all results
+        TownHall.allTownHalls.push(ele);
+        TownHall.addFilterIndexes(ele);
+        tableHandler.initialTable(ele);
+        if (webgl) {
+          filterMap(ele);
+          makePoint(ele);
+        } else {
+          noWebGlMapView.setData(ele);
+        }
       }
+
     });
     townHallsFB.once('value', function(snap) {
       if (webgl) {
