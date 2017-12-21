@@ -43,7 +43,7 @@
     });
   };
 
-    // append additional reps for lookup by district
+  // append additional reps for lookup by district
   repCardHandler.addRepresentativeCards = function(representativePromise, $parent) {
     representativePromise.then(function(representatives) {
       var compiledTemplate = Handlebars.getTemplate('representativeCard');
