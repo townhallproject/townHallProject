@@ -1,20 +1,17 @@
 'use strict';
-var stateView = stateView;
 
 (function closure(module) {
 
   var townhallData;
   var map;
   var mapView = {};
-  var weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   mapView.zoomLocation = false;
 
   // Define an intial view for the US
   var continentalView = function(w,h) {
     if(stateView.stateCoords){
       return geoViewport.viewport(stateView.stateCoords, [w, h]);
-    }else {
+    } else {
       return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
     }
   };
@@ -61,7 +58,7 @@ var stateView = stateView;
   }
 
   mapView.initialView = function setInitialView() {
-    if(stateView.stateCoords){
+    if (stateView.stateCoords) {
       bounds = new mapboxgl.LngLatBounds(stateView.stateCoords);
     } else {
       bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
@@ -211,8 +208,8 @@ var stateView = stateView;
     var state = stateData.filter(function(ele){
       return ele.Name === townhall.State;
     });
-    stateAbbr = state[0].USPS;
-    stateCode = state[0].FIPS;
+    var stateAbbr = state[0].USPS;
+    var stateCode = state[0].FIPS;
     if (townhall.District && townhall.District !== 'Senate') {
       if (!townhall.District.split('-')[1]) {
         return;
@@ -268,7 +265,6 @@ var stateView = stateView;
         'icon-image': '{icon}',
         'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
         'icon-ignore-placement': true,
-        'icon-ignore-placement': true,
         'icon-offset': {
           'base': 1,
           'stops': [
@@ -320,7 +316,7 @@ var stateView = stateView;
     var filterSenate = ['all', includedStates];
 
     // Fetch districts w/ town halls occuring
-    district = townHall.District;
+    var district = townHall.District;
 
     if (district && district !== 'Senate' && townHall.meetingType !== 'DC Event') {
       var districtId = district.split('-')[1];
@@ -502,6 +498,7 @@ var stateView = stateView;
       });
     }
   });
+
   module.mapView = mapView;
 
 }(window));

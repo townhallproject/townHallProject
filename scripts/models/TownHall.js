@@ -72,6 +72,9 @@
         // Currently some of the data is inconsistent.  Some parties are listed as "Democrat" and some are listed as "Democratic", etc
         // TODO:  Once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
         return TownHall.filters[key].some(function(filter) {
+          if (!townhall[key]) {
+            return;
+          }
           return filter.slice(0, 8) === townhall[key].slice(0, 8);
         });
       });

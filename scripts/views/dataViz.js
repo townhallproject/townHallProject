@@ -1,8 +1,6 @@
 (function(module) {
   var dataviz = {};
 
-
-
   dataviz.getPastEvents = function(path, dateStart, dateEnd){
     var ref = firebasedb.ref(path);
     ref.orderByChild('dateObj').startAt(dateStart).endAt(dateEnd).on('child_added', function(snapshot) {
@@ -13,13 +11,13 @@
   dataviz.listenForRemove = function(path){
     var ref = firebasedb.ref(path);
     ref.on('child_removed', function(snapshot) {
-      remove = true
+      remove = true;
       dataviz.removeLiveEvent(snapshot.val(), remove);
     });
   };
 
   function updateProgressBar($bar, total, $total, remove){
-    var increment = remove ? -1 : 1
+    var increment = remove ? -1 : 1;
 
     current = Number($bar.attr('data-count'));
     updated = current + increment;
@@ -37,7 +35,7 @@
   }
 
   function updateTotalEventsBar($bar, remove){
-    var increment = remove ? -1 : 1
+    var increment = remove ? -1 : 1;
     current = Number($bar.attr('data-count'));
     max = Number($bar.attr('data-max'));
     updated = current + increment;
