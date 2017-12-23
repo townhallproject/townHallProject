@@ -205,17 +205,10 @@
     }
     var iconKey = townhall.iconFlag;
     var districtId = '';
-    var state = stateData.filter(function(ele){
-      return ele.Name === townhall.State;
-    });
-    var stateAbbr = state[0].USPS;
-    var stateCode = state[0].FIPS;
-    if (townhall.District && townhall.District !== 'Senate') {
-      if (!townhall.District.split('-')[1]) {
-        return;
-      }
-      districtId = mapView.zeroPad(townhall.District.split('-')[1]);
-    }
+    var state = townhall.stateName;
+    var stateAbbr = townhall.state;
+    var stateCode = fips[stateAbbr];
+    var districtId = townhall.districtId ? townhall.district : '';
 
     if (iconKey === 'tele'){
       iconKey = 'phone-in';
@@ -224,8 +217,6 @@
         return;
       }
     }
-
-
 
     featuresHome.features.push({
       type: 'Feature',
@@ -309,33 +300,19 @@
   // TODO: Add in a data-driven style for the district layer that does a different fill if it's a local represenative vs. a Senator
   function filterMap (townHall) {
     // Fetch states with senators in em'
-    if (townHall.District === 'Senate' && townHall.State && townHall.meetingType !== 'DC Event') {
-      includedStates.push(townHall.State);
+    if (townHall.District === 'Senate' && townHall.stateName && townHall.meetingType !== 'DC Event') {
+      includedStates.push(townHall.stateName);
     }
 
     var filterSenate = ['all', includedStates];
 
     // Fetch districts w/ town halls occuring
-    var district = townHall.District;
+    var district = townHall.district;
 
-    if (district && district !== 'Senate' && townHall.meetingType !== 'DC Event') {
-      var districtId = district.split('-')[1];
-      var getFIPS;
-      if (!districtId) {
-        return;
-      }
-
-      if (districtId.length === 1){
-        districtId = '0' + districtId;
-      }
-
-      stateData.forEach(function(n){
-        if (n.Name === townHall.State) {
-          getFIPS = n.FIPS;
-        }
-      });
-
-      var geoid = getFIPS + districtId;
+    if (district && townHall.meetingType !== 'DC Event') {
+      var districtId = district;
+      var fipsId = fips[townHall.state];
+      var geoid = fipsId + districtId;
 
       filterDistrict.push(['==', 'GEOID', geoid]);
     }
