@@ -131,7 +131,6 @@
           feature.state = points[0].properties.stateAbbr;
           feature.district = points[0].properties.districtId;
           feature.geoID = points[0].properties.stateCode + feature.district;
-          console.log(feature.state, feature.district, feature.geoID);
           mapView.districtSelect(feature);
           return;
         }
