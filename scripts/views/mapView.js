@@ -131,6 +131,7 @@
           feature.state = points[0].properties.stateAbbr;
           feature.district = points[0].properties.districtId;
           feature.geoID = points[0].properties.stateCode + feature.district;
+          console.log(feature.state, feature.district, feature.geoID);
           mapView.districtSelect(feature);
           return;
         }
@@ -177,13 +178,7 @@
   // puts tele town halls by House members in the district.
   //TODO: geocode the data on the way in
   function teleTownHallMarker(townhall, state){
-    if (townhall.District !== 'Senate') {
-      var districtId = townhall.District.split('-')[1];
-      districtId = mapView.zeroPad(districtId);
-      key = townhall.District.split('-')[0] + districtId;
-    } else {
-      var key = state;
-    }
+    var key = townhall.district ? townhall.state + townhall.district: state;
     var bb = bboxes[key];
     if (!bb) {
       return townhall;
@@ -208,7 +203,7 @@
     var state = townhall.stateName;
     var stateAbbr = townhall.state;
     var stateCode = fips[stateAbbr];
-    var districtId = townhall.districtId ? townhall.district : '';
+    var districtId = townhall.district ? townhall.district : '';
 
     if (iconKey === 'tele'){
       iconKey = 'phone-in';
@@ -300,16 +295,20 @@
   // TODO: Add in a data-driven style for the district layer that does a different fill if it's a local represenative vs. a Senator
   function filterMap (townHall) {
     // Fetch states with senators in em'
-    if (townHall.District === 'Senate' && townHall.stateName && townHall.meetingType !== 'DC Event') {
+    if (townHall.meetingType === 'DC Event') {
+      return;
+    }
+
+    var district = townHall.district;
+
+    if (!district) {
       includedStates.push(townHall.stateName);
     }
 
     var filterSenate = ['all', includedStates];
 
     // Fetch districts w/ town halls occuring
-    var district = townHall.district;
-
-    if (district && townHall.meetingType !== 'DC Event') {
+    if (district) {
       var districtId = district;
       var fipsId = fips[townHall.state];
       var geoid = fipsId + districtId;
