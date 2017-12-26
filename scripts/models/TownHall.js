@@ -63,7 +63,6 @@
         this.displayDistrict = 'Senate';
       }
     }
-    console.log(this.District, this.displayDistrict);
   };
 
   TownHall.prototype.isInFuture = function (){
