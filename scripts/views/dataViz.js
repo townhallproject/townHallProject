@@ -74,12 +74,6 @@
       if (townhall.district) {
         total = 434;
         chamber = 'house';
-      } else if (townhall.District === 'Senate') {
-        total = 100;
-        chamber = 'senate';
-      } else if (townhall.District.split('-').length > 1){
-        total = 434;
-        chamber = 'house';
       } else {
         total = 100;
         chamber = 'senate';
