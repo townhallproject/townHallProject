@@ -26,7 +26,7 @@
       justSenate = false;
     }
     selectedData.forEach(function(ele){
-      if(ele.District !== 'Senate') {
+      if(ele.district) {
         numOfDistrictEvents ++;
         justSenate = false;
       }

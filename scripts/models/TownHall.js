@@ -3,6 +3,7 @@
     for (var key in opts) {
       this[key] = opts[key];
     }
+    this.makeDisplayDistrict();
   }
   //Global data state
   TownHall.allTownHalls = [];
@@ -35,6 +36,34 @@
       }
       return firebasedb.ref('/zipZeroResults/' + zip).set(newVal);
     });
+  };
+
+  TownHall.prototype.makeDisplayDistrict = function (){
+    if (this.thp_id){
+      //state leg or statewide office
+      if (this.district) {
+        //state leg
+        var districtType = this.district.split('-')[0];
+        var districtNo = this.district.split('-')[1];
+
+        var title = constants[districtType];
+        this.displayDistrict = title + ' ' + districtNo;
+      } else {
+        //statewide office, ie Governor
+        var office = this.thp_id.split('-')[1];
+        var title = constants[office];
+        this.displayDistrict = title;
+      }
+    } else {
+      if (this.district) {
+        //House
+        this.displayDistrict = this.state + '-' + parseInt(this.district);
+      } else {
+        //Senator
+        this.displayDistrict = 'Senate';
+      }
+    }
+    console.log(this.District, this.displayDistrict);
   };
 
   TownHall.prototype.isInFuture = function (){
@@ -200,24 +229,16 @@
   // Match the looked up zip code to district #
   TownHall.matchSelectionToZip = function (state, districts) {
     var fetchedData = [];
-    var stateName;
-
-    // Fetch full state name
-    stateData.forEach(function(n){
-      if (n.USPS === state) {
-        stateName = n.Name;
-      }
-    });
 
     fetchedData = TownHall.allTownHalls.filter(function(townhall){
-      return townhall.State === stateName && townhall.meetingType !== 'DC Event';
+      return townhall.state === state && townhall.meetingType !== 'DC Event';
     }).reduce(function(acc, curtownhall){
-      if (curtownhall.District === 'Senate') {
+      if (!curtownhall.district) {
         acc.push(curtownhall);
       } else {
         districts.forEach(function(d) {
           var districtMatcher = parseInt(d);
-          var dataMatcher = parseInt(curtownhall.District.split('-')[1]);
+          var dataMatcher = parseInt(curtownhall.district);
 
           if (districtMatcher === dataMatcher) {
             acc.push(curtownhall);
