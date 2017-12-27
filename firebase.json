@@ -4,6 +4,11 @@
   },
   "hosting": {
     "public": ".",
+    "rewrites": [
+      {
+        "source": "/Colorado", "function": "stateRouting"
+      }
+    ],
     "ignore": [
       "firebase.json",
       "database.rules.json",
