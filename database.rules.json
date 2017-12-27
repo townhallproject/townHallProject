@@ -48,6 +48,12 @@
      		}
      }
    },
+  	"deletedTownHalls" : {
+      "$userID": {
+      ".write": "auth.uid !== null",
+       ".validate": "newData.hasChildren(['user','reason'])"
+     }
+   },
     "UserSubmission" : {
       ".read": "true",
       ".write": "auth.uid !== null",
