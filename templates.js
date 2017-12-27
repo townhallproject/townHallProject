@@ -20,13 +20,13 @@ Handlebars.registerHelper('json', function(context) {
 });
 
 Handlebars.registerHelper('addressQuery', function(address) {
-  return escape(address)
+  return escape(address);
 });
 
 Handlebars.registerHelper('addressFormat', function(address, options) {
-  var out = "";
+  var out = '';
   var items = address.split(',');
-  out = out + items.splice(0, 1)[0] + '<br>'
+  out = out + items.splice(0, 1)[0] + '<br>';
   return out + items.join(', ');
 });
 

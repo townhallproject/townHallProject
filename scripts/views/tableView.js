@@ -106,15 +106,28 @@
     var cur = parseInt($currentState.attr('data-current'));
     $currentState.attr('data-total', total);
     $table = $('#all-events-table');
-    var meetingTypes = TownHall.filters.meetingType;
+    var meetingTypes;
+
+    if(stateView.state){
+      meetingTypes = [];
+    }else{
+      meetingTypes = TownHall.filters.meetingType;
+    }
+
     if (meetingTypes.indexOf(townhall.meetingType) > -1) {
       cur ++;
       tableHandler.renderTable(townhall, $table);
       $currentState.attr('data-current', cur);
+    } else if(meetingTypes.length === 0){
+      cur ++;
+      tableHandler.resetFilters();
+      tableHandler.renderTable(townhall, $table);
+      $currentState.attr('data-current', cur);
     }
+
     $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
   };
 
   module.tableHandler = tableHandler;
-  
+
 })(window);
