@@ -25,6 +25,8 @@
     "express-request-proxy": "^2.0.0",
     "express-session": "^1.15.0",
     "firebase": "^3.6.6",
+    "firebase-admin": "^5.5.1",
+    "firebase-functions": "^0.7.5",
     "geo-distance": "^0.1.2",
     "google-maps": "^3.2.1",
     "grunt-bower-install": "^1.6.0",
