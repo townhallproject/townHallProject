@@ -7,9 +7,9 @@
   var mapView = {};
   mapView.zoomLocation = false;
 
-  // Define an intial view for the US
+  // Define an intial view for the map
   var continentalView = function(w,h) {
-    if(stateView.stateCoords){
+    if (stateView.stateCoords) {
       return geoViewport.viewport(stateView.stateCoords, [w, h]);
     } else {
       return geoViewport.viewport([-128.8, 23.6, -65.4, 50.2], [w, h]);
@@ -17,7 +17,8 @@
   };
   var continental = continentalView(window.innerWidth/2, window.innerHeight/2);
   var mainBB = [-128.8, 23.6, -65.4, 50.2];
-  var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+  var bounds;
+  // var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
 
   mapView.setMap = function(){
     // Specify Mapbox default access token
@@ -31,8 +32,8 @@
     map = new mapboxgl.Map({
       container: 'map',
       style: styleURL,
-      center: continental.center,
       zoom: continental.zoom,
+      center: continental.center,
       minZoom: 1.5,
       attributionControl: false
     });

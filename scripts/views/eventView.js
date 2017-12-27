@@ -145,7 +145,10 @@
   };
 
   // reset the home page to originial view
-  eventHandler.resetHome = function () {
+  eventHandler.resetHome = function (event) {
+    if (event) {
+      event.preventDefault();
+    }
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
@@ -267,7 +270,7 @@
       $('ul .hash-link').parent().removeClass('active');
 
       if (hashid === '#home' && TownHall.isMap === false) {
-        history.replaceState({}, document.title, '.');
+        page('/');
         if (location.pathname ='/') {
           setTimeout(function () {
             eventHandler.resetHome();
@@ -275,7 +278,7 @@
           TownHall.isMap = true;
         }
       } else if (hashid === '#home' && TownHall.isMap === true) {
-        history.replaceState({}, document.title, '.');
+        page('/');
         setTimeout(function () {
           eventHandler.resetHome();
         }, 100);
