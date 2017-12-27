@@ -25,6 +25,9 @@
       		}
         }
      },
+    "indivisible_public_events" : {
+      ".read": "true"
+    },
   	"townHallIds" : {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",

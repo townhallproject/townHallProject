@@ -6,7 +6,20 @@
     "public": ".",
     "rewrites": [
       {
-        "source": "/Colorado", "function": "stateRouting"
+        "source": "/Colorado",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/Arizona",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/South-Carolina",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/Virgina",
+        "destination": "/index.html"
       }
     ],
     "ignore": [
@@ -21,6 +34,7 @@
       "styles/bootstrap.map",
       ".DS_Store",
       "**/node_modules/**",
+      "functions/node_modules/**",
       "**/bower_components/**",
       "/scripts/.eslint.rc"
     ]
