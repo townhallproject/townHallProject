@@ -145,10 +145,7 @@
   };
 
   // reset the home page to originial view
-  eventHandler.resetHome = function (event) {
-    if (event) {
-      event.preventDefault();
-    }
+  eventHandler.resetHome = function () {
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
