@@ -19,7 +19,7 @@
   var mainBB = [-128.8, 23.6, -65.4, 50.2];
   var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
 
-  function setMap(){
+  mapView.setMap = function(){
     // Specify Mapbox default access token
     var accessToken = 'pk.eyJ1IjoidG93bmhhbGxwcm9qZWN0IiwiYSI6ImNqMnRwOG4wOTAwMnMycG1yMGZudHFxbWsifQ.FXyPo3-AD46IuWjjsGPJ3Q';
 
@@ -44,18 +44,8 @@
     map.scrollZoom.disable();
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
-
-    map.on('load', function() {
-      backSpaceHack();
-      makeZoomToNationalButton();
-      addDistrictListener();
-      addPopups();
-      addLayer ();
-      readData(true);
-      TownHall.isMap = true;
-      mapView.map = map;
-    });
-  }
+    return map;
+  };
 
   mapView.initialView = function setInitialView() {
     if (stateView.stateCoords) {
@@ -72,12 +62,12 @@
     mapView.killSidebar();
     mapView.zoomLocation = false;
     $('#representativeCards').hide();
-    if (mapView.webGL && mapView.map) {
+    if (mapView.webGL && map) {
       mapView.initialView();
-      var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
+      var visibility = map.getLayoutProperty('selected-fill', 'visibility');
       if (visibility === 'visible') {
-        mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
-        mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
+        map.setLayoutProperty('selected-fill', 'visibility', 'none');
+        map.setLayoutProperty('selected-border', 'visibility', 'none');
       }
     } else {
       setTimeout(function () {
@@ -89,17 +79,19 @@
   };
 
   // Creates the button in our zoom controls to go to the national view
-  function makeZoomToNationalButton() {
+  mapView.makeZoomToNationalButton = function(state) {
     document.querySelector('.mapboxgl-ctrl-compass').remove();
-
     var usaButton = document.createElement('button');
-
     usaButton.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-usa';
-    usaButton.innerHTML = '<span class="usa-icon"></span>';
-    usaButton.addEventListener('click', eventHandler.resetHome);
 
+    if (state) {
+      usaButton.innerHTML = '<span class="">' + state + '</span>';
+    } else {
+      usaButton.innerHTML = '<span class="usa-icon"></span>';
+    }
+    usaButton.addEventListener('click', eventHandler.resetHome);
     document.querySelector('.mapboxgl-ctrl-group').appendChild(usaButton);
-  }
+  };
 
   mapView.districtSelect = function(feature) {
     if (feature.state) {
@@ -120,7 +112,7 @@
   };
   // Add click listener to each district. Used for creating the sidebar, drawing a 'selected' state to the district, & zooming in.
   // TODO: Plug into a sidebar to draw up the list of Town Halls.
-  function addDistrictListener() {
+  mapView.addDistrictListener = function() {
     map.on('click', function(e) {
       var feature = {};
 
@@ -160,7 +152,7 @@
         });
       }
     });
-  }
+  };
 
   // Offset points slightly to see events happening at same location.
   function jitterPoint(lng, lat) {
@@ -238,7 +230,7 @@
     });
   }
 
-  function addLayer () {
+  mapView.addLayer = function() {
     map.addLayer({
       'id': 'townhall-points',
       'type': 'symbol',
@@ -260,10 +252,10 @@
         }
       }
     }, 'district_interactive');
-  }
+  };
 
   // Adds a Popup listener to the point layer. TODO: Determine content for the popup.
-  function addPopups () {
+  mapView.addPopups = function() {
     var popup = new mapboxgl.Popup({
       closeButton: false,
       closeOnClick: false
@@ -285,7 +277,7 @@
           .setHTML(mapPopoverTemplate(townhall))
           .addTo(map);
     });
-  }
+  };
 
   var filterDistrict = ['any'];
   var includedStates = ['in', 'NAME'];
@@ -381,26 +373,36 @@
   };
   // Fetch data from Firebase, run map filter & point layers
   // listens for new data.
-  function readData (webgl) {
+  mapView.readData = function(webgl) {
     var townHallsFB = firebasedb.ref('/townHalls/');
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
-
-///If in state view filter the results before they get displayed on the map and in the table
-      if(stateView.state){
-        if(ele.State === stateView.state){
-          TownHall.allTownHalls.push(ele);
-          TownHall.addFilterIndexes(ele);
-          tableHandler.initialTable(ele);
-          if (webgl) {
-            filterMap(ele);
-            makePoint(ele);
-          } else {
-            noWebGlMapView.setData(ele);
-          }
-        }
-      } else {
         ///If no state filter show all results
+      TownHall.allTownHalls.push(ele);
+      TownHall.addFilterIndexes(ele);
+      tableHandler.initialTable(ele);
+      if (webgl) {
+        filterMap(ele);
+        makePoint(ele);
+      } else {
+        noWebGlMapView.setData(ele);
+      }
+    });
+    townHallsFB.once('value', function(snap) {
+      if (webgl) {
+        map.getSource('townhall-points').setData(featuresHome);
+        mapView.initialView();
+      }
+      zipLookUpHandler.zipSearchByParam();
+    });
+  };
+
+  mapView.readStateData = function(webgl, state) {
+    ///If in state view filter the results before they get displayed on the map and in the table
+    var townHallsFB = firebasedb.ref('/townHalls/');
+    townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
+      var ele = new TownHall (snapshot.val());
+      if (ele.state === state) {
         TownHall.allTownHalls.push(ele);
         TownHall.addFilterIndexes(ele);
         tableHandler.initialTable(ele);
@@ -411,7 +413,6 @@
           noWebGlMapView.setData(ele);
         }
       }
-
     });
     townHallsFB.once('value', function(snap) {
       if (webgl) {
@@ -420,11 +421,9 @@
       }
       zipLookUpHandler.zipSearchByParam();
     });
-
-
   };
 
-  function backSpaceHack () {
+  mapView.backSpaceHack = function() {
     var rx = /INPUT|SELECT|TEXTAREA/i;
 
     $(document).bind('keydown keypress', function(e) {
@@ -435,15 +434,15 @@
           urlParamsHandler.setUrlParameter('district', false);
 
           map.fitBounds(bounds);
-          var visibility = mapView.map.getLayoutProperty('selected-fill', 'visibility');
+          var visibility = map.getLayoutProperty('selected-fill', 'visibility');
           if (visibility === 'visible') {
-            mapView.map.setLayoutProperty('selected-fill', 'visibility', 'none');
-            mapView.map.setLayoutProperty('selected-border', 'visibility', 'none');
+            map.setLayoutProperty('selected-fill', 'visibility', 'none');
+            map.setLayoutProperty('selected-border', 'visibility', 'none');
           }
         }
       }
     });
-  }
+  };
 
   // Create a sidebar and map half view
   mapView.makeSidebar = function makeSidebar (selectedData) {
@@ -471,25 +470,23 @@
     }
   };
 
-  $(document).ready(function(){
-    if (!mapboxgl.supported()) {
-      $('.show-if-no-webgl').removeClass('hidden');
-      $('.hide-if-no-webgl').addClass('hidden');
-      $('.map-container-split').addClass('no-web-gl');
-      $('.webGL-kill').click(function(){
-        $('.webgl-banner').addClass('hidden');
-      });
-      mapView.webGL = false;
-      readData(false);
-    } else {
-      mapView.webGL = true;
-      setMap();
-      $( window ).resize(function() {
-        bounds = mapView.zoomLocation ? mapView.zoomLocation : mainBB;
-        mapView.focusMap(bounds);
-      });
-    }
-  });
+  mapView.noWebGlMapinit = function(){
+    $('.show-if-no-webgl').removeClass('hidden');
+    $('.hide-if-no-webgl').addClass('hidden');
+    $('.map-container-split').addClass('no-web-gl');
+    $('.webGL-kill').click(function(){
+      $('.webgl-banner').addClass('hidden');
+    });
+    mapView.webGL = false;
+  };
+
+  mapView.webGlinit = function(){
+    mapView.webGL = true;
+    $( window ).resize(function() {
+      bounds = mapView.zoomLocation ? mapView.zoomLocation : mainBB;
+      mapView.focusMap(bounds);
+    });
+  };
 
   module.mapView = mapView;
 
