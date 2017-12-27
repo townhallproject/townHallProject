@@ -85,7 +85,10 @@
     if (stateName.length > 0) {
       var stateUsps = stateName[0]['USPS'];
       ctx.state = stateUsps;
-      stateView.stateCoords = bboxes[stateUsps];
+      var bbox = bboxes[stateUsps];
+      var padding = 1;
+      var expandedbb = [bbox[0] - padding, bbox[1] - padding, bbox[2] + padding, bbox[3] + padding];
+      stateView.stateCoords = expandedbb;
       stateView.state = stateUsps;
       console.log(stateView);
       next();
