@@ -1,5 +1,3 @@
-'use strict';
-
 (function closure(module) {
 
   var townhallData;
@@ -321,7 +319,7 @@
   function masterBoundingBox (stateAbbr, districtCodes) {
     var masterBB = [0,0,0,0];
     districtCodes.forEach(function(district) {
-      newBB = bboxes[stateAbbr + district];
+      var newBB = bboxes[stateAbbr + district];
       masterBB[0] = Math.min(masterBB[0], newBB[0]);
       masterBB[2] = Math.min(masterBB[2], newBB[2]);
       masterBB[1] = Math.max(masterBB[1], newBB[1]);
