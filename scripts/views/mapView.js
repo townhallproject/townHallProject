@@ -1,5 +1,3 @@
-'use strict';
-
 (function closure(module) {
 
   var townhallData;
@@ -20,14 +18,14 @@
   var bounds;
   // var bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
 
-  mapView.setMap = function(){
+  mapView.setMap = function(ctxbounds){
     // Specify Mapbox default access token
     var accessToken = 'pk.eyJ1IjoidG93bmhhbGxwcm9qZWN0IiwiYSI6ImNqMnRwOG4wOTAwMnMycG1yMGZudHFxbWsifQ.FXyPo3-AD46IuWjjsGPJ3Q';
 
     // Specify uploaded Mapbox Studio style URL
     var styleURL = 'mapbox://styles/townhallproject/cj2tpe64q000y2spk1wjsrilw';
     var mapId = 'townhallproject.d46r2w4l'; // used by the click handler only
-
+    console.log(ctxbounds);
     mapboxgl.accessToken = accessToken;
     map = new mapboxgl.Map({
       container: 'map',
@@ -35,7 +33,8 @@
       zoom: continental.zoom,
       center: continental.center,
       minZoom: 1.5,
-      attributionControl: false
+      attributionControl: false,
+      // maxBounds: continental
     });
     map.addControl(new mapboxgl.AttributionControl(), 'top-left');
 
@@ -321,7 +320,7 @@
   function masterBoundingBox (stateAbbr, districtCodes) {
     var masterBB = [0,0,0,0];
     districtCodes.forEach(function(district) {
-      newBB = bboxes[stateAbbr + district];
+      var newBB = bboxes[stateAbbr + district];
       masterBB[0] = Math.min(masterBB[0], newBB[0]);
       masterBB[2] = Math.min(masterBB[2], newBB[2]);
       masterBB[1] = Math.max(masterBB[1], newBB[1]);

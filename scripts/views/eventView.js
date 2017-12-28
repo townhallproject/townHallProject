@@ -6,6 +6,7 @@
   var eventHandler = {};
 
   eventHandler.whereToZoomMap = function(justSenate, thisState, validDistricts){
+    var bb;
     if (justSenate) {
       bb = mapView.getBoundingBox(thisState);
     } else {
@@ -80,7 +81,6 @@
     } else {
       $text.html('There are no events for ' + districtText);
       $('#no-events').show();
-      $('#no-events')[0].scrollIntoView();
       justSenate = false;
       mapView.killSidebar();
       eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
@@ -120,6 +120,7 @@
       var stateCode;
       TownHall.lookupZip(zipClean)
         .then(function(zipToDistricts){
+          console.log('ziptodistrict', zipToDistricts);
           TownHall.zipQuery = zipClean;
           urlParamsHandler.setUrlParameter('district', false);
           urlParamsHandler.setUrlParameter('zipcode', zipClean);
@@ -136,6 +137,7 @@
           eventHandler.renderResults(thisState, validDistricts, validSelections);
         })
         .catch(function(error){
+          console.log(error);
           zipLookUpHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.', error);
         });
 

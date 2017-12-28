@@ -30,7 +30,7 @@
   mapController.setMap = function(ctx, next){
     if (ctx.webGL) {
       console.log('is webGL');
-      ctx.map = mapView.setMap();
+      ctx.map = mapView.setMap(ctx.bounds);
     }
     next();
   };
@@ -49,8 +49,8 @@
       mapView.readData(true);
       TownHall.isMap = true;
       mapView.map = map;
+      next();
     });
-    next();
   };
 
   mapController.readStateData = function(ctx, next) {
@@ -67,7 +67,14 @@
       mapView.readStateData(true, ctx.state);
       TownHall.isMap = true;
       mapView.map = map;
+      next();
     });
+  };
+
+  mapController.maskCountry = function(ctx, next) {
+    console.log(ctx.state);
+    stateView.maskCountry(ctx.map, ctx.state);
+    next();
   };
 
   mapController.reset = function(ctx, next) {
@@ -89,12 +96,21 @@
       var padding = 1;
       var expandedbb = [bbox[0] - padding, bbox[1] - padding, bbox[2] + padding, bbox[3] + padding];
       stateView.stateCoords = expandedbb;
+      ctx.stateCoords = expandedbb;
       stateView.state = stateUsps;
-      console.log(stateView);
       next();
     } else {
       page('/');
     }
+  };
+
+  mapController.setBounds = function(ctx, next) {
+    if (ctx.stateCoords) {
+      ctx.bounds = new mapboxgl.LngLatBounds(ctx.stateCoords);
+    } else {
+      ctx.bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+    }
+    next();
   };
 
   module.mapController = mapController;

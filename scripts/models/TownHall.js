@@ -119,6 +119,7 @@
           snapshot.forEach(function(ele){
             districts.push(ele.val());
           });
+          console.log(districts);
 
           resolve(districts);
         } else {

@@ -6,15 +6,18 @@ var stateView = stateView;
 page('/',
   mapController.reset,
   mapController.webGlsupported,
+  mapController.setBounds,
   mapController.setMap,
   mapController.readData
 );
 
 page('/:stateName',
   mapController.webGlsupported,
-  mapController.setMap,
   mapController.getState,
-  mapController.readStateData
+  mapController.setBounds,
+  mapController.setMap,
+  mapController.readStateData,
+  mapController.maskCountry
 );
 
 page();
