@@ -11,6 +11,14 @@
     "jquery": true,
     "node": true
   },
+  "globals": {
+    "mapboxgl":true,
+    "TownHall": true,
+    "geoViewport": true,
+    "stateView": true,
+    "mapView": true
+  },
+  "extends": "eslint:recommended",
   "rules": {
     "semi": 1,
     "strict": 0,
