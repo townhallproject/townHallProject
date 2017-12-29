@@ -12,11 +12,32 @@
     "node": true
   },
   "globals": {
+    "page": true,
+    "Handlebars": true,
     "mapboxgl":true,
+    "google": true,
+    "Promise": true,
     "TownHall": true,
+    "mapboxView": true,
+    "noWebGlMapView": true,
     "geoViewport": true,
     "stateView": true,
-    "mapView": true
+    "mapView": true,
+    "stateData": true,
+    "bboxes": true,
+    "tableHandler": true,
+    "mapHelperFunctions": true,
+    "urlParamsHandler": true,
+    "repCardHandler": true,
+    "zipLookUpHandler": true,
+    "firebasedb": true,
+    "missingMemberView": true,
+    "emailHandler":true,
+    "videoUploadHandler": true,
+    "eventHandler": true,
+    "fips":true,
+    "urlParamsHandler": true,
+    "constants": true
   },
   "extends": "eslint:recommended",
   "rules": {

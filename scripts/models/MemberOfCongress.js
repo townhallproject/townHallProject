@@ -16,7 +16,7 @@
 
   MoC.prototype.zeroPadding = function() {
     var zeros = '00';
-    district = this.district.toString();
+    var district = this.district.toString();
     return zeros.substring(0, zeros.length - district.length) + district;
   };
 

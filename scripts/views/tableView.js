@@ -16,8 +16,8 @@
 
   tableHandler.renderTableWithArray = function (array) {
     $('.event-row').remove();
-    $table = $('#all-events-table');
-    $currentState = $('#current-state');
+    var $table = $('#all-events-table');
+    var $currentState = $('#current-state');
     var total = parseInt($currentState.attr('data-total'));
     var cur = array.length;
     array.forEach(function(ele){
@@ -101,11 +101,11 @@
 
   // initial state of table
   tableHandler.initialTable = function (townhall) {
-    $currentState = $('#current-state');
+    var $currentState = $('#current-state');
     var total = parseInt($currentState.attr('data-total')) + 1;
     var cur = parseInt($currentState.attr('data-current'));
     $currentState.attr('data-total', total);
-    $table = $('#all-events-table');
+    var $table = $('#all-events-table');
     var meetingTypes;
 
     if(stateView.state){

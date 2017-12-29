@@ -3,7 +3,7 @@
   missingMemberView.loaded = false;
 
   missingMemberView.addFilter = function(filterObj, filterValue) {
-    $currentState = $('#mm-current-state');
+    var $currentState = $('#mm-current-state');
     var total = parseInt($currentState.attr('data-total'));
     var nofilters = true;
     Object.keys(filterObj).forEach(function(filter){
@@ -57,8 +57,8 @@
       }
       return acc;
     },[]).sort(function(a, b){
-      statea = a.categoryID;
-      stateb = b.categoryID;
+      var statea = a.categoryID;
+      var stateb = b.categoryID;
       if (statea > stateb) {
         return 1;
       } else if (stateb > statea) {
@@ -103,8 +103,8 @@
       });
 
       missingMemberView.loaded = true;
-      $currentState = $('#mm-current-state');
-      $copy = $('#mm-total-copy');
+      var $currentState = $('#mm-current-state');
+      var $copy = $('#mm-total-copy');
       $('#mm-current-state').attr('data-current', missingMembers.length);
       $('#mm-current-state').attr('data-total', missingMembers.length);
       // inital report of data
@@ -114,7 +114,7 @@
       // make cards
       missingMemberView.renderAll('missingMemberCard', '.grid', missingMembers);
       // add state buttons
-      allCategories = getAllCategories(missingMembers);
+      var allCategories = getAllCategories(missingMembers);
       missingMemberView.renderAll('missingMemberButton', '#state-buttons', allCategories);
       // initalize isotope
       startIsotope();
@@ -123,4 +123,3 @@
 
   module.missingMemberView = missingMemberView;
 })(window);
-

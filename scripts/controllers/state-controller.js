@@ -14,16 +14,15 @@
 
   mapController.webGlsupported = function(ctx, next){
     if (!mapboxgl.supported()) {
-      mapView.webGL = false;
       ctx.webGL = false;
-      mapView.noWebGlMapinit();
+      noWebGlMapView.noWebGlMapinit();
     } else {
       ctx.webGL = true;
-      mapView.webGL = true;
-      mapView.webGlinit(ctx.parentBB);
+      mapboxView.webGlinit(ctx.parentBB);
     }
     next();
   };
+
 
   mapController.getState = function(ctx, next){
     ///convert state name to necessary coordinates for mapbox url
@@ -62,7 +61,6 @@
       var style = null;
       if (ctx.stateUPSP) {
         style = 'mapbox://styles/townhallproject/cjbqzhc4b8c1x2trz43dk8spj';
-
       }
       ctx.map = mapView.setMap(style, ctx.parentBB, ctx.bounds);
     }
@@ -75,11 +73,7 @@
       return next();
     }
     ctx.map.on('load', function() {
-      mapView.backSpaceHack();
-      mapView.makeZoomToNationalButton();
-      mapView.addDistrictListener();
-      mapView.addPopups();
-      mapView.addLayer();
+      mapboxView.onLoad();
       mapView.readData(true);
       TownHall.isMap = true;
       next();
@@ -88,15 +82,11 @@
 
   mapController.readStateData = function(ctx, next) {
     if (!ctx.webGL) {
-      mapView.readStateData(false);
+      mapView.readStateData(false, ctx.stateUPSP);
       return next();
     }
     ctx.map.on('load', function() {
-      mapView.backSpaceHack();
-      mapView.makeZoomToNationalButton(ctx.stateUPSP);
-      mapView.addDistrictListener();
-      mapView.addPopups();
-      mapView.addLayer();
+      mapboxView.onLoad(ctx.stateUPSP);
       mapView.readStateData(true, ctx.stateUPSP);
       TownHall.isMap = true;
       next();
@@ -104,7 +94,9 @@
   };
 
   mapController.maskCountry = function(ctx, next) {
-    stateView.maskCountry(ctx.map, ctx.stateUPSP);
+    if (ctx.webGL) {
+      stateView.maskCountry(ctx.map, ctx.stateUPSP);
+    }
     next();
   };
 

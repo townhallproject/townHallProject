@@ -1,10 +1,20 @@
-(function closure(firebase) {
+(function closure(module) {
   var googleMap;
   var google;
   var infowindow;
+  var noWebGlMapView = {};
 
+  noWebGlMapView.noWebGlMapinit = function(){
+    $('.show-if-no-webgl').removeClass('hidden');
+    $('.hide-if-no-webgl').addClass('hidden');
+    $('.map-container-split').addClass('no-web-gl');
+    $('.webGL-kill').click(function(){
+      $('.webgl-banner').addClass('hidden');
+    });
+    mapView.webGL = false;
+  };
 //draws map
-  window.initMap = function initMap() {
+  module.initMap = function initMap() {
     if (mapView.webGL) {
       return;
     }
@@ -337,7 +347,6 @@
       }
     ];
     var minZoomLevel = 4;
-    var maxZoomLevel = 10;
 
     var options = {
       zoom: minZoomLevel,
@@ -349,35 +358,37 @@
     };
 
     googleMap = new google.maps.Map(document.getElementById('map'), options);
+    var bounds;
+    
     if (stateView.stateCoords){
-      var bounds = new google.maps.LatLngBounds(
+      bounds = new google.maps.LatLngBounds(
         new google.maps.LatLng(stateView.stateCoords[1], stateView.stateCoords[0]),
         new google.maps.LatLng(stateView.stateCoords[3], stateView.stateCoords[2])
       );
     } else {
-      var bounds = new google.maps.LatLngBounds(
+      bounds = new google.maps.LatLngBounds(
         new google.maps.LatLng(20, -124.39),
         new google.maps.LatLng(49.38, -66.94)
       );
     }
 
     googleMap.fitBounds(bounds);
-    google.maps.event.addDomListener(window, 'resize', onResizeMap);
+    google.maps.event.addDomListener(window, 'resize', noWebGlMapView.onResizeMap);
   };
-  noWebGlMapView = {};
 
-  window.onResizeMap = function onResizeMap() {
+  noWebGlMapView.onResizeMap = function() {
     google.maps.event.trigger(googleMap, 'resize');
+    var mainBB = [-128.8, 23.6, -65.4, 50.2];
     var data = TownHall.allTownHalls;
     var selection = mapView.zoomLocation;
     if (selection) {
-      bounds = mapView.zoomLocation ? mapView.zoomLocation : mainBB;
+      var bounds = mapView.zoomLocation ? mapView.zoomLocation : mainBB;
       noWebGlMapView.focusMap(bounds);
     } else {
       var resizeBounds = new google.maps.LatLngBounds();
       data.forEach(function(ele){
         if (ele.lat && ele.lng) {
-          marker = new google.maps.LatLng(ele.lat, ele.lng);
+          var marker = new google.maps.LatLng(ele.lat, ele.lng);
           resizeBounds.extend(marker);
         }
       });
@@ -405,12 +416,10 @@
     return path;
   }
 
-// listens for new events
 // Adds all events into main data array
 // Adds all events as markers
 // renders tables
   noWebGlMapView.setData = function (townhall){
-    var tableRowTemplate = Handlebars.getTemplate('eventTableRow');
     var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
     TownHall.addFilterIndexes(townhall);
     $('[data-toggle="popover"]').popover({
@@ -440,5 +449,11 @@
     });
   };
 
+  noWebGlMapView.resetMap = function() {
+    setTimeout(function () {
+      noWebGlMapView.onResizeMap();
+    }, 50);
+  };
 
-}(window.firebase));
+  module.noWebGlMapView = noWebGlMapView;
+}(window));
