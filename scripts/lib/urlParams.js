@@ -27,7 +27,7 @@
       search = search.slice(0, -1);
     }
 
-    window.history.replaceState('', '', document.location.href + search);
+    window.history.replaceState('', '', document.location.origin + document.location.pathname + search);
   };
 
   module.urlParamsHandler = urlParamsHandler;

@@ -1,22 +1,18 @@
 (function(module) {
-  var provider = new firebase.auth.GoogleAuthProvider();
   var zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
-
+  var addtocalendar = addtocalendar;
   // object to hold the front end view functions
   var eventHandler = {};
 
   eventHandler.whereToZoomMap = function(justSenate, thisState, validDistricts){
+    var bb;
     if (justSenate) {
-      bb = mapView.getBoundingBox(thisState);
+      bb = mapHelperFunctions.getBoundingBox(thisState);
     } else {
-      bb = mapView.getBoundingBox(thisState, validDistricts);
+      bb = mapHelperFunctions.getBoundingBox(thisState, validDistricts);
     }
     mapView.zoomLocation = bb;
-    if (mapView.webGL) {
-      mapView.focusMap(bb);
-    } else {
-      noWebGlMapView.focusMap(bb);
-    }
+    mapView.focusMap(bb);
   };
 
   eventHandler.checkIfOnlySenate = function(selectedData){
@@ -36,7 +32,6 @@
 
   eventHandler.renderResults = function(thisState, validDistricts, validSelections) {
     var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
-    var $zip = $('#look-up input').val();
     var $parent = $('#nearest');
     var $text = $('.selection-results_content');
     $('#missing-member-banner').hide();
@@ -80,14 +75,13 @@
     } else {
       $text.html('There are no events for ' + districtText);
       $('#no-events').show();
-      $('#no-events')[0].scrollIntoView();
       justSenate = false;
       mapView.killSidebar();
       eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
       tableHandler.resetTable();
     }
     if (mapView.webGL) {
-      mapView.highlightDistrict(validSelections);
+      mapboxView.highlightDistrict(validSelections);
     }
   };
 
@@ -115,7 +109,6 @@
       var zipClean = zip.split('-')[0];
       var validDistricts = [];
       var validSelections = [];
-      var callbackTrigger = 0;
       var thisState;
       var stateCode;
       TownHall.lookupZip(zipClean)
@@ -125,7 +118,7 @@
           urlParamsHandler.setUrlParameter('zipcode', zipClean);
           tableHandler.resetFilters();
           zipToDistricts.forEach(function(district){
-            stateObj = eventHandler.getStateDataFromAbbr(district.abr);
+            var stateObj = eventHandler.getStateDataFromAbbr(district.abr);
             stateCode = stateObj[0].FIPS;
             var geoid = stateCode + district.dis;
             thisState = district.abr;
@@ -138,7 +131,6 @@
         .catch(function(error){
           zipLookUpHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.', error);
         });
-
     } else {
       zipLookUpHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');
     }
@@ -176,7 +168,7 @@
   eventHandler.renderPanels = function(townhall, $parent) {
     if (townhall.address) {
       townhall.addressLink = 'https://www.google.com/maps/dir/Current+Location/' + escape(townhall.address);
-    };
+    }
     var compiledTemplate = Handlebars.getTemplate('eventCards');
     var $panel = $(compiledTemplate(townhall));
     $panel.appendTo($parent);
@@ -240,7 +232,7 @@
 
 
     tableHandler.initialFilters();
-
+    
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {
@@ -262,13 +254,13 @@
       $('#email-signup').hide();
     }
 
-    $('.hash-link').on('click', function onClickGethref(event) {
+    $('.hash-link').on('click', function onClickGethref() {
       var hashid = this.getAttribute('href');
       $('ul .hash-link').parent().removeClass('active');
 
       if (hashid === '#home' && TownHall.isMap === false) {
         page('/');
-        if (location.pathname ='/') {
+        if (location.pathname === '/') {
           setTimeout(function () {
             eventHandler.resetHome();
           }, 100);
@@ -297,27 +289,27 @@
     });
 
     // Remove query param when closing modal
-    $('.event-modal').on('hide.bs.modal', function (e) {
+    $('.event-modal').on('hide.bs.modal', function () {
       urlParamsHandler.setUrlParameter('eventId', false);
     });
-    $('#close-email').on('click', function(e){
+    $('#close-email').on('click', function(){
       localStorage.setItem('signedUp', true);
       $('#email-signup').fadeOut(750);
     });
-    $('body').on('click', '.popover .popover-title a.close', function(e) {
+    $('body').on('click', '.popover .popover-title a.close', function() {
       $('[data-toggle="popover"]').popover('hide');
     });
-    $('#missing-member-banner-btn').on('click', function(e){
+    $('#missing-member-banner-btn').on('click', function(){
       $('#missing-member-tab').click();
     });
-    $('#view-missing-member-report').on('click', function(e) {
+    $('#view-missing-member-report').on('click', function() {
       $('.missing-members-modal').modal('show');
     });
-    $('.privacy-policy-button').on('click', function(e){
+    $('.privacy-policy-button').on('click', function(){
       $('#privacy-policy-link').click();
       $('html,body').scrollTop(0);
     });
-    $('#close-email').on('click', function(e){
+    $('#close-email').on('click', function(){
       localStorage.setItem('signedUp', true);
       $('#email-signup').fadeOut(750);
     });

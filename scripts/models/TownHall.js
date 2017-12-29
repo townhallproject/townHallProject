@@ -28,6 +28,7 @@
 
   TownHall.saveZipLookup = function (zip) {
     firebasedb.ref('/zipZeroResults/' + zip).once('value').then(function(snapshot){
+      var newVal;
       if (snapshot.exists()) {
         newVal = snapshot.val() + 1;
       }
@@ -41,17 +42,18 @@
   TownHall.prototype.makeDisplayDistrict = function (){
     if (this.thp_id){
       //state leg or statewide office
+      var title;
       if (this.district) {
         //state leg
         var districtType = this.district.split('-')[0];
         var districtNo = this.district.split('-')[1];
 
-        var title = constants[districtType];
+        title = constants[districtType];
         this.displayDistrict = title + ' ' + districtNo;
       } else {
         //statewide office, ie Governor
         var office = this.thp_id.split('-')[1];
-        var title = constants[office];
+        title = constants[office];
         this.displayDistrict = title;
       }
     } else {
@@ -177,7 +179,7 @@
 
         // Get all the district promises together
         var districtLookups = [];
-        Object.keys(districts).forEach(function(key, index, array) {
+        Object.keys(districts).forEach(function(key, index) {
           var obj = districts[key];
           if (index === 0) {
             districtLookups.push(
