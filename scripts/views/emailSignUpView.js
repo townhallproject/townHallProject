@@ -34,8 +34,7 @@
         localStorage.setItem('signedUp', true);
         $('#email-signup').fadeOut(750);
       },
-      error: function(error) {
-        console.log('error', error);
+      error: function() {
         $('#email-signup-form button').before('<span class="error">An error has occured, please try again later.</span>');
       }
     });

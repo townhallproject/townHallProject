@@ -99,6 +99,16 @@
     return stateObj;
   };
 
+  eventHandler.checkStateName = function(state) {
+    if (stateView.state) {
+      if (stateView.state === state) {
+        return true;
+      }
+      return false;
+    }
+    return true;
+  };
+
   eventHandler.lookup = function (e) {
     e.preventDefault();
     TownHall.resetData();
@@ -120,11 +130,16 @@
           zipToDistricts.forEach(function(district){
             var stateObj = eventHandler.getStateDataFromAbbr(district.abr);
             stateCode = stateObj[0].FIPS;
+
             var geoid = stateCode + district.dis;
             thisState = district.abr;
+
             validDistricts.push(district.dis);
             validSelections.push(geoid);
           });
+          if (!eventHandler.checkStateName(thisState)) {
+            return zipLookUpHandler.zipErrorResponse('That zipcode is not in ' + stateView.state + '. Go back to <a href="/">Town Hall Project U.S.</a> to search for events.');
+          }
           repCardHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
           eventHandler.renderResults(thisState, validDistricts, validSelections);
         })
@@ -232,7 +247,7 @@
 
 
     tableHandler.initialFilters();
-    
+
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {

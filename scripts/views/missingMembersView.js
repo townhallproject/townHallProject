@@ -1,4 +1,5 @@
 (function(module) {
+  var statePopulation = statePopulation;
   var missingMemberView = {};
   missingMemberView.loaded = false;
 
