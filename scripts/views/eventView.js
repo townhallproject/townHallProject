@@ -138,7 +138,7 @@
             validSelections.push(geoid);
           });
           if (!eventHandler.checkStateName(thisState)) {
-            return zipLookUpHandler.zipErrorResponse('That zip code is not in ' + stateView.state + '. Go back to <a href="/">TownHall Project US</a> to search for that event.');
+            return zipLookUpHandler.zipErrorResponse('That zipcode is not in ' + stateView.state + '. Go back to <a href="/">Town Hall Project U.S.</a> to search for events.');
           }
           repCardHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zip), $('#representativeCards section'));
           eventHandler.renderResults(thisState, validDistricts, validSelections);
