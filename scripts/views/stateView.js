@@ -13,5 +13,10 @@
 
   };
 
+  stateView.renderHeader = function(state){
+    console.log(state);
+    $('#header-image').attr('src', location.origin + '/Images/' + state + '/THP_logo_inverse.png');
+  };
+
   module.stateView = stateView;
 })(window);
