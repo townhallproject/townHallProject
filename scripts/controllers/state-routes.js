@@ -1,5 +1,5 @@
 var page = page;
-var stateView = stateView;
+var mapController = mapController;
 
 page('/',
   mapController.reset,
@@ -11,6 +11,7 @@ page('/',
 
 page('/:stateName',
   mapController.getState,
+  mapController.renderHeader,
   mapController.setBounds,
   mapController.webGlsupported,
   mapController.setMap,

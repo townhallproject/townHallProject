@@ -40,6 +40,12 @@
     }
   };
 
+  mapController.renderHeader = function(ctx, next) {
+    console.log(ctx.stateUPSP);
+    stateView.renderHeader(ctx.stateUPSP);
+    next();
+  };
+
   mapController.setBounds = function(ctx, next) {
     if (ctx.stateUPSP) {
       var bbox = bboxes[ctx.stateUPSP];
