@@ -10,7 +10,15 @@
         "destination": "/index.html"
       },
       {
+        "source": "/colorado",
+        "destination": "/index.html"
+      },
+      {
         "source": "/Arizona",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/arizona",
         "destination": "/index.html"
       },
       {
@@ -18,7 +26,15 @@
         "destination": "/index.html"
       },
       {
-        "source": "/Virgina",
+        "source": "/south-carolina",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/Virginia",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/virginia",
         "destination": "/index.html"
       }
     ],
