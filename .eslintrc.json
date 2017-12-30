@@ -14,10 +14,12 @@
   "globals": {
     "page": true,
     "Handlebars": true,
+    "MediaUploader": true,
     "mapboxgl":true,
     "google": true,
     "Promise": true,
     "TownHall": true,
+    "MoC": true,
     "mapboxView": true,
     "noWebGlMapView": true,
     "geoViewport": true,

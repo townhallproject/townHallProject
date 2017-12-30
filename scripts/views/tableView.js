@@ -88,9 +88,6 @@
     e.preventDefault();
     var filter = this.getAttribute('data-filter');
     tableHandler.addFilter(filter, this.id);
-
-    var filterID = this.id.slice(0,5);
-    var inputs = $('input[data-filter]');
     tableHandler.renderTableWithArray(tableHandler.getFilterState());
   };
 

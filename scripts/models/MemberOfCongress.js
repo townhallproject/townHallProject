@@ -1,6 +1,6 @@
 (function(module) {
   function MoC(opts) {
-    for (keys in opts) {
+    for (var keys in opts) {
       this[keys] = opts[keys];
     }
     if (this.type === 'sen') {
