@@ -41,7 +41,6 @@
   };
 
   mapController.renderHeader = function(ctx, next) {
-    console.log(ctx.stateUPSP);
     stateView.renderHeader(ctx.stateUPSP);
     next();
   };

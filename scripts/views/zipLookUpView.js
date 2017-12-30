@@ -2,10 +2,9 @@
 
   zipLookUpHandler = {};
 
-  zipLookUpHandler.zipErrorResponse = function(errorMessage, error) {
-    console.warn(error);
+  zipLookUpHandler.zipErrorResponse = function(errorMessage) {
     var $text = $('.selection-results_content');
-    $text.text(errorMessage);
+    $text.html(errorMessage);
   };
 
   // Perform zip search on load
@@ -31,5 +30,5 @@
   };
 
   module.zipLookUpHandler = zipLookUpHandler;
-  
+
 })(window);

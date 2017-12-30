@@ -140,7 +140,7 @@ UploadVideo.prototype.uploadFile = function(file) {
       $('#upload-video-percent-transferred').text(percentageComplete.toFixed(2));
       $('#upload-video-seconds-remaining').text(estimatedMinutesRemaining.toFixed(0) + 'm' + estimatedSecondsRemaining.toFixed(0) + 's');
     }.bind(this),
-    onComplete: function(data) {
+    onComplete: function() {
       videoUploadHandler.uploadVideoStage5();
     }.bind(this)
   });
