@@ -113,7 +113,7 @@
     } else {
       usaButton.innerHTML = '<span class="usa-icon"></span>';
     }
-    usaButton.addEventListener('click', eventHandler.resetHome);
+    usaButton.addEventListener('click', indexView.resetHome);
     document.querySelector('.mapboxgl-ctrl-group').appendChild(usaButton);
   };
 

@@ -32,10 +32,9 @@
 
   eventHandler.renderResults = function(thisState, validDistricts, validSelections) {
     var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
-    var $parent = $('#nearest');
     var $text = $('.selection-results_content');
-    $('#missing-member-banner').hide();
-    $parent.empty();
+    var $parent = $('#nearest');
+    resultsView.render();
     //render table
     var districtText = ' ';
     validDistricts.forEach(function(district){
@@ -151,34 +150,6 @@
     }
   };
 
-  // reset the home page to originial view
-  eventHandler.resetHome = function () {
-    $('.header-small').hide();
-    $('.header-large').fadeIn();
-    $('#look-up input').val('');
-    $('#missing-member-banner').show();
-    $('#email-signup-form input[name=zipcode]').val('');
-    $('#no-events').hide();
-    $('#representativeCards section').empty();
-    $('#representativeCards').hide();
-    $('.form-text-results').removeClass('text-center');
-    $('.header-with-results .results').removeClass('multipleResults');
-    $('.left-panels').removeClass('left-panels-border');
-    $('#email-title').text('Sign up to get updates about local events.');
-    $('#button-to-form').hide();
-    $('.spacer').show();
-    $('#look-up').appendTo($('.right-panels'));
-    tableHandler.resetTable();
-    mapView.resetView();
-    var $parent = $('#nearest');
-    var $results = $('.selection-results_content');
-    $parent.removeClass('nearest-with-results');
-    $parent.empty();
-    $results.empty();
-    tableHandler.initialFilters();
-    TownHall.sortOn = 'Date';
-  };
-
   // Renders one panel, assumes data processing has happened
   eventHandler.renderPanels = function(townhall, $parent) {
     if (townhall.address) {
@@ -277,14 +248,14 @@
         page('/');
         if (location.pathname === '/') {
           setTimeout(function () {
-            eventHandler.resetHome();
+            indexView.resetHome();
           }, 100);
           TownHall.isMap = true;
         }
       } else if (hashid === '#home' && TownHall.isMap === true) {
         page('/');
         setTimeout(function () {
-          eventHandler.resetHome();
+          indexView.resetHome();
         }, 100);
       } else if (hashid === '#missing-members') {
         if (!missingMemberView.loaded) {
