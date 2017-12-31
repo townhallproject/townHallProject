@@ -19,10 +19,10 @@
         }
       }
     };
-    var userID = email.val().split('').reduce(function(a, b) {
-      a = ((a << 5) - a) + b.charCodeAt(0);
-      return a & a;
-    }, 0);
+    // var userID = email.val().split('').reduce(function(a, b) {
+    //   a = ((a << 5) - a) + b.charCodeAt(0);
+    //   return a & a;
+    // }, 0);
 
     $.ajax({
       url: 'https://actionnetwork.org/api/v2/forms/eafd3b2a-8c6b-42da-bec8-962da91b128c/submissions',

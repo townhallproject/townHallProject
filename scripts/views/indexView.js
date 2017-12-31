@@ -12,6 +12,7 @@
 
   // reset the home page to originial view
   indexView.resetHome = function () {
+    $('#awards-banner').show();
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');

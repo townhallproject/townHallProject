@@ -1,6 +1,5 @@
 (function(module) {
   var zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
-  var addtocalendar = addtocalendar;
   // object to hold the front end view functions
   var eventHandler = {};
 
