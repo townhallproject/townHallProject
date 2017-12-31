@@ -38,7 +38,7 @@
         ///If no state filter show all results
       TownHall.allTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
-      tableHandler.initialTable(ele);
+      tableHandler.initialMainTable(ele);
       if (webgl) {
         mapboxView.filterMap(ele);
         mapboxView.makePoint(ele);
@@ -62,7 +62,7 @@
       if (ele.state === state) {
         TownHall.allTownHalls.push(ele);
         TownHall.addFilterIndexes(ele);
-        tableHandler.initialTable(ele);
+        tableHandler.initialStateTable(ele);
         if (webgl) {
           mapboxView.filterMap(ele);
           mapboxView.makePoint(ele);

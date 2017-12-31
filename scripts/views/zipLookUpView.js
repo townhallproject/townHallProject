@@ -22,7 +22,7 @@
           district:district.split('-')[1],
           geoID:district.split('-')[2],
         };
-        mapView.districtSelect(feature);
+        mapboxView.districtSelect(feature);
       } else {
         urlParamsHandler.setUrlParameter('district', false);
       }

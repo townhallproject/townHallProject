@@ -3,12 +3,17 @@
 
   tableHandler.resetTable = function(){
     TownHall.resetData();
-    tableHandler.initialFilters();
+    if (stateView.state) {
+      tableHandler.resetFilters();
+    } else {
+      tableHandler.initialFilters();
+    }
     tableHandler.renderTableWithArray(tableHandler.getFilterState());
   };
 
   tableHandler.initialFilters = function() {
     tableHandler.resetFilters();
+
     tableHandler.addFilter('meetingType', 'Town Hall');
     tableHandler.addFilter('meetingType', 'Empty Chair Town Hall');
     tableHandler.addFilter('meetingType', 'Tele-Town Hall');
@@ -97,31 +102,31 @@
   };
 
   // initial state of table
-  tableHandler.initialTable = function (townhall) {
+  tableHandler.initialMainTable = function (townhall) {
     var $currentState = $('#current-state');
     var total = parseInt($currentState.attr('data-total')) + 1;
     var cur = parseInt($currentState.attr('data-current'));
     $currentState.attr('data-total', total);
     var $table = $('#all-events-table');
-    var meetingTypes;
-
-    if(stateView.state){
-      meetingTypes = [];
-    }else{
-      meetingTypes = TownHall.filters.meetingType;
-    }
-
+    var meetingTypes = TownHall.filters.meetingType;
     if (meetingTypes.indexOf(townhall.meetingType) > -1) {
       cur ++;
       tableHandler.renderTable(townhall, $table);
       $currentState.attr('data-current', cur);
-    } else if(meetingTypes.length === 0){
-      cur ++;
-      tableHandler.resetFilters();
-      tableHandler.renderTable(townhall, $table);
-      $currentState.attr('data-current', cur);
     }
+    $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
+  };
 
+  // initial state of table
+  tableHandler.initialStateTable = function (townhall) {
+    var $currentState = $('#current-state');
+    var total = parseInt($currentState.attr('data-total')) + 1;
+    var cur = parseInt($currentState.attr('data-current'));
+    $currentState.attr('data-total', total);
+    var $table = $('#all-events-table');
+    cur ++;
+    tableHandler.renderTable(townhall, $table);
+    $currentState.attr('data-current', cur);
     $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
   };
 

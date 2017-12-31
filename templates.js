@@ -23,7 +23,7 @@ Handlebars.registerHelper('addressQuery', function(address) {
   return escape(address);
 });
 
-Handlebars.registerHelper('addressFormat', function(address, options) {
+Handlebars.registerHelper('addressFormat', function(address) {
   var out = '';
   var items = address.split(',');
   out = out + items.splice(0, 1)[0] + '<br>';

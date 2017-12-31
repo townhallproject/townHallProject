@@ -216,8 +216,6 @@
     $('#scrollBtn').on('click', tableHandler.scrollToTopTable);
 
 
-    tableHandler.initialFilters();
-
     // url hash for direct links to subtabs
     // slightly hacky routing
     if (location.hash) {

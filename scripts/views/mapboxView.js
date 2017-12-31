@@ -105,6 +105,9 @@
     if (document.querySelector('.state-icon')) {
       document.querySelector('.state-icon').remove();
     }
+    if (document.querySelector('.mapboxgl-ctrl-usa')) {
+      document.querySelector('.mapboxgl-ctrl-usa').remove();
+    }
     var usaButton = document.createElement('button');
     usaButton.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-usa';
 
