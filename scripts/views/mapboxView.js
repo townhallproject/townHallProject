@@ -113,7 +113,7 @@
     } else {
       usaButton.innerHTML = '<span class="usa-icon"></span>';
     }
-    usaButton.addEventListener('click', eventHandler.resetHome);
+    usaButton.addEventListener('click', indexView.resetHome);
     document.querySelector('.mapboxgl-ctrl-group').appendChild(usaButton);
   };
 
@@ -218,7 +218,6 @@
     });
   };
   // Add click listener to each district. Used for creating the sidebar, drawing a 'selected' state to the district, & zooming in.
-  // TODO: Plug into a sidebar to draw up the list of Town Halls.
   mapboxView.addDistrictListener = function() {
     map.on('click', function(e) {
       var feature = {};
@@ -229,7 +228,7 @@
         feature.state = points[0].properties.stateAbbr;
         feature.district = points[0].properties.districtId;
         feature.geoID = points[0].properties.stateCode + feature.district;
-        mapView.districtSelect(feature);
+        mapboxView.districtSelect(feature);
         return;
       }
       var features = map.queryRenderedFeatures(
@@ -241,7 +240,7 @@
         feature.state = features[0].properties.ABR;
         feature.district = features[0].properties.GEOID.substring(2,4);
         feature.geoID = features[0].properties.GEOID;
-        mapView.districtSelect(feature);
+        mapboxView.districtSelect(feature);
       }
 
     });

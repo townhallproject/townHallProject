@@ -1,7 +1,7 @@
 (function(module) {
-  var statePopulation = statePopulation;
   var missingMemberView = {};
   missingMemberView.loaded = false;
+  missingMemberView.statePopulation = statePopulation;
 
   missingMemberView.addFilter = function(filterObj, filterValue) {
     var $currentState = $('#mm-current-state');
@@ -50,10 +50,10 @@
     }).reduce(function(acc, cur){
       if (acc.map(function(mapItem){return mapItem['categoryID']; }).indexOf(cur['categoryID']) > -1) {
         acc[acc.map(function(mapItem){return mapItem['categoryID']; }).indexOf(cur['categoryID'])].count ++;
-        cur.perCapita = parseInt(statePopulation[cur.categoryID])/cur.count;
+        cur.perCapita = parseInt(missingMemberView.statePopulation[cur.categoryID])/cur.count;
       } else {
         cur.count = 1;
-        cur.perCapita = parseInt(statePopulation[cur.categoryID])/cur.count;
+        cur.perCapita = parseInt(missingMemberView.statePopulation[cur.categoryID])/cur.count;
         acc.push(cur);
       }
       return acc;

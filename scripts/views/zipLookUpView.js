@@ -1,6 +1,6 @@
 (function(module) {
 
-  zipLookUpHandler = {};
+  var zipLookUpHandler = {};
 
   zipLookUpHandler.zipErrorResponse = function(errorMessage) {
     var $text = $('.selection-results_content');
