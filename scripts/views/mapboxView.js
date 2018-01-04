@@ -263,6 +263,9 @@
     var district = townHall.district;
 
     if (!district) {
+      if (!townHall.stateName) {
+        return;
+      }
       includedStates.push(townHall.stateName);
     }
 

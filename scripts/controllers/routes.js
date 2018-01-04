@@ -5,7 +5,6 @@ var indexController = indexController;
 page('/',
   mapController.reset,
   indexController.renderMainIndex,
-  indexController.renderMainTable
   mapController.setBounds,
   mapController.webGlsupported,
   mapController.setMap,

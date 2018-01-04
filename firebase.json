@@ -30,6 +30,14 @@
         "destination": "/index.html"
       },
       {
+        "source": "/North-Carolina",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/north-carolina",
+        "destination": "/index.html"
+      },
+      {
         "source": "/Virginia",
         "destination": "/index.html"
       },
