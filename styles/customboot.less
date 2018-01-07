@@ -1093,6 +1093,22 @@ img.grayscale {
   filter: grayscale(100%);
 }
 
+// End of Year graphic page
+#EOY {
+  .container {
+    background-image: url("/Images/EOY_2017_Report_Desktop.png");
+    height: 8136px;
+    background-size: contain;
+  }
+
+  @media screen and (max-width: 767px) {
+    .container {
+      background-image: url("/Images/EOY_2017_Report_Mobile.png");
+      height: 7500px;
+    }
+  }
+}
+
 // Missing Members
 .missing-member-report{
   color: @brand-success;
