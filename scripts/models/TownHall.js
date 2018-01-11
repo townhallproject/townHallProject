@@ -45,11 +45,7 @@
       var title;
       if (this.district) {
         //state leg
-        var districtType = this.district.split('-')[0];
-        var districtNo = this.district.split('-')[1];
-
-        title = constants[districtType];
-        this.displayDistrict = title + ' ' + districtNo;
+        this.displayDistrict = this.District;
       } else {
         //statewide office, ie Governor
         var office = this.thp_id.split('-')[1];
