@@ -35,10 +35,12 @@
     var townHallsFB = firebasedb.ref('/townHalls/');
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
-        ///If no state filter show all results
+      ///If no state filter show all results
       TownHall.allTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
-      tableHandler.initialMainTable(ele);
+      if (!TownHall.isStateEvent(ele)) {
+        tableHandler.initialMainTable(ele);
+      }
       if (webgl) {
         mapboxView.filterMap(ele);
         mapboxView.makePoint(ele);
