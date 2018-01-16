@@ -92,7 +92,7 @@
 
       var numOfSateEvents = selectedData.length - numOfDistrictEvents;
       var message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
-      var message = message + '<p>' + numOfSateEvents + ' event(s) for ' + thisState + ' senators</p>';
+      message = message + '<p>' + numOfSateEvents + ' event(s) for ' + thisState + ' senators</p>';
       if (numOfLower) {
         message = message + '<p>' + numOfLower + ' event(s) for the ' + lowerText + ' state representative(s)</p>';
       }
@@ -221,7 +221,6 @@
           eventHandler.renderResults(locationData);
         })
         .catch(function(error){
-          console.log(error);
           zipLookUpHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.', error);
         });
     } else {
