@@ -352,6 +352,14 @@
     });
   };
 
+  mapboxView.addLoader = function(){
+    $('#map-loader').show();
+  };
+
+  mapboxView.removeLoader = function(){
+    $('#map-loader').hide();
+  };
+
   mapboxView.setData = function(){
     map.getSource('townhall-points').setData(featuresHome);
   };

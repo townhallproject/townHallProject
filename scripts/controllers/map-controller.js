@@ -100,6 +100,20 @@
     next();
   };
 
+  mapController.addLoader = function(ctx, next) {
+    if (ctx.webGL) {
+      mapboxView.addLoader();
+    }
+    next();
+  };
+
+  mapController.removeLoader = function(ctx, next) {
+    if (ctx.webGL) {
+      mapboxView.removeLoader();
+    }
+    next();
+  };
+
   mapController.reset = function(ctx, next) {
     stateView.stateCoords = undefined;
     next();
