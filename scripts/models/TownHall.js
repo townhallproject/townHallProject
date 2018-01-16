@@ -113,9 +113,10 @@
 
   // METHODS IN RESPONSE TO lookup
   // Converts zip to lat lng google obj
-  TownHall.lookupZip = function (zip) {
+  TownHall.lookupZip = function (zip, path) {
+    var lookupPath = path || '/zipToDistrict/';
     return new Promise(function (resolve, reject) {
-      firebasedb.ref('/zipToDistrict/' + zip).once('value').then(function(snapshot) {
+      firebasedb.ref(lookupPath + zip).once('value').then(function(snapshot) {
         if (snapshot.exists()) {
           var districts = [];
           snapshot.forEach(function(ele){
