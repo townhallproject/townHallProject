@@ -12,16 +12,16 @@
     {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
       <h4 class="line-height-medium">
         {{#ifCond District '===' 'Senate'}}
-          <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{Member}} <small> ({{Party}}) {{State}}, {{displayDistrict}}</small>
+          <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{Member}} <small> ({{party}}) {{state}}, {{displayDistrict}}</small>
         {{else}}
-          <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{Member}} <small> ({{Party}}) {{State}}, {{displayDistrict}}</small>
+          <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{Member}} <small> ({{party}}) {{state}}, {{displayDistrict}}</small>
         {{/ifCond}}
         <a data-toggle="modal" data-target=".event-modal" onclick="eventHandler.populateEventModal({{{json this}}})">Details</a>
         <br/><span class="discriptor-text d-inline-block">Visiting MoC (will be present): </span>{{districtAdopter}} <small> ({{districtAdopterParty}}) {{districtAdopterState}}, {{districtAdopterDistrict}}</small>
       </h4>
     {{else}}
       <h4>
-        {{Member}} <small> ({{Party}}) {{State}}, {{displayDistrict}}</small>
+        {{Member}} <small> ({{party}}) {{state}}, {{displayDistrict}}</small>
         <a data-toggle="modal" data-target=".event-modal" onclick="eventHandler.populateEventModal({{{json this}}})">Details</a>
       </h4>
     {{/ifCond}}

@@ -122,7 +122,14 @@
 
   mapboxView.districtSelect = function(feature) {
     if (feature.state) {
-      eventHandler.renderResults(feature.state, [feature.district], feature.geoID);
+      var locationData = {
+        federal: {
+          thisState: feature.state,
+          validDistricts: [feature.district],
+          validSelections: feature.geoID
+        }
+      };
+      eventHandler.renderResults(locationData);
       var firstArg = feature.district ? feature.state : 'state';
       var secondArg = feature.district ? feature.district : feature.state;
       repCardHandler.renderRepresentativeCards(TownHall.lookupReps(firstArg, secondArg), $('#representativeCards section'), feature.state);
