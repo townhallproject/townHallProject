@@ -12,15 +12,13 @@ page('/',
 );
 
 page('/:stateName',
-  mapController.addLoader,
   mapController.getState,
   indexController.renderStateIndex,
   mapController.setBounds,
   mapController.webGlsupported,
   mapController.setMap,
   mapController.readStateData,
-  mapController.maskCountry,
-  mapController.removeLoader
+  mapController.maskCountry
 );
 
 page();
