@@ -29,11 +29,25 @@
     return [justSenate, numOfDistrictEvents];
   };
 
-  eventHandler.renderResults = function(thisState, validDistricts, validSelections) {
+  function makeReporterText(stateDistricts, chamber) {
+    var stateText = ' ';
+    var mapping = {
+      lower: 'HD',
+      upper: 'SD',
+    };
+    stateDistricts.forEach(function(district){
+      if (district) {
+        stateText = stateText + mapping[chamber] + '-' + district + ' ';
+      }
+    });
+    return stateText;
+  }
+
+  eventHandler.renderResults = function(locationData) {
+    var thisState = locationData.federal.thisState;
+    var validDistricts = locationData.federal.validDistricts;
+    var validSelections = locationData.federal.validSelections;
     var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
-    var $text = $('.selection-results_content');
-    var $parent = $('#nearest');
-    resultsView.render();
     //render table
     var districtText = ' ';
     validDistricts.forEach(function(district){
@@ -43,6 +57,25 @@
         districtText = districtText + thisState;
       }
     });
+    if (locationData.upper ) {
+      var upperText = makeReporterText(locationData.upper.validDistricts, 'upper');
+      var upperDistricts = locationData.upper.validDistricts;
+      var upperEvents = TownHall.matchSelectionToZipStateEvents(thisState, upperDistricts, 'upper');
+      var numOfUpper = upperEvents.length;
+      selectedData = selectedData.concat(upperEvents);
+    }
+    if (locationData.lower) {
+      var lowerText = makeReporterText(locationData.upper.validDistricts, 'lower');
+      var lowerDistricts = locationData.lower.validDistricts;
+      var lowerEvents = TownHall.matchSelectionToZipStateEvents(thisState, lowerDistricts, 'lower');
+      var numOfLower = lowerEvents.length;
+      selectedData = selectedData.concat(lowerEvents);
+    }
+
+    var $text = $('.selection-results_content');
+    var $parent = $('#nearest');
+    resultsView.render();
+
     var justSenate = true;
     if (selectedData.length > 0) {
       $('#no-events').hide();
@@ -59,9 +92,15 @@
 
       var numOfSateEvents = selectedData.length - numOfDistrictEvents;
       var message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
-      var messageState = '<p>and ' + numOfSateEvents + ' event(s) for ' + thisState + ' senators</p>';
+      var message = message + '<p>' + numOfSateEvents + ' event(s) for ' + thisState + ' senators</p>';
+      if (numOfLower) {
+        message = message + '<p>' + numOfLower + ' event(s) for the ' + lowerText + ' state representative(s)</p>';
+      }
+      if (numOfUpper >= 0 ) {
+        message = message + '<p>' + numOfUpper + ' event(s) for the ' + upperText + ' state senator(s)</p>';
+      }
 
-      $text.html(message + messageState);
+      $text.html(message);
       selectedData.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       });
@@ -78,7 +117,7 @@
       eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
       tableHandler.resetTable();
     }
-    if (mapView.webGL) {
+    if (mapView.webGL && validSelections) {
       mapboxView.highlightDistrict(validSelections);
     }
   };
@@ -115,31 +154,46 @@
   }
 
   function handleZipToDistrict(zipToDistrictArray){
-    var validDistricts = [];
-    var validSelections = [];
-    var thisState;
-    var stateCode;
 
-    zipToDistrictArray[0].forEach(function(district){
-      var stateObj = eventHandler.getStateDataFromAbbr(district.abr);
-      stateCode = stateObj[0].FIPS;
+    var federal = zipToDistrictArray[0].reduce(function(acc, cur){
+      if (!acc.validDistricts) {
+        acc.validDistricts = [];
+        acc.validSelections = [];
+      }
+      var stateObj = eventHandler.getStateDataFromAbbr(cur.abr);
+      var geoid = stateObj[0].FIPS + cur.dis;
+      acc.thisState = cur.abr;
+      acc.validDistricts.push(cur.dis);
+      acc.validSelections.push(geoid);
+      return acc;
+    }, {});
 
-      var geoid = stateCode + district.dis;
-      thisState = district.abr;
-
-      validDistricts.push(district.dis);
-      validSelections.push(geoid);
-    });
-    if (!eventHandler.checkStateName(thisState)) {
+    if (!eventHandler.checkStateName(federal.thisState)) {
       return zipLookUpHandler.zipErrorResponse('That zipcode is not in ' + stateView.state + '. Go back to <a href="/">Town Hall Project U.S.</a> to search for events.');
     }
-    var federal = {
-      thisState: thisState,
-      validDistricts: validDistricts,
-      validSelections: validSelections,
-    };
+
+    if (zipToDistrictArray.length > 0) {
+      var lower = zipToDistrictArray[1].reduce(function(acc, cur){
+        if (!acc.validDistricts) {
+          acc.validDistricts = [];
+        }
+        acc.thisState = cur.abr;
+        acc.validDistricts.push(cur.dis);
+        return acc;
+      }, {});
+      var upper = zipToDistrictArray[2].reduce(function(acc, cur){
+        if (!acc.validDistricts) {
+          acc.validDistricts = [];
+        }
+        acc.thisState = cur.abr;
+        acc.validDistricts.push(cur.dis);
+        return acc;
+      }, {});
+    }
     return {
-      federal: federal
+      federal: federal,
+      upper: upper,
+      lower: lower,
     };
   }
 
@@ -163,13 +217,12 @@
           urlParamsHandler.setUrlParameter('district', false);
           urlParamsHandler.setUrlParameter('zipcode', zipClean);
           tableHandler.resetFilters();
-          console.log(zipToDistrictArray);
 
           var locationData = handleZipToDistrict(zipToDistrictArray);
-          eventHandler.renderResults(locationData.federal.thisState, locationData.federal.validDistricts, locationData.federal.validSelections);
+          eventHandler.renderResults(locationData);
         })
         .catch(function(error){
-          zipLookUpHandler.zipErrorResponse(error, 'That zip code is not in our database, if you think this is an error please email us.', error);
+          zipLookUpHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.', error);
         });
     } else {
       zipLookUpHandler.zipErrorResponse('Zip codes are 5 or 9 digits long.');

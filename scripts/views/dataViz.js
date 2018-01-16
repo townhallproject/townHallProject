@@ -66,7 +66,7 @@
         newMember = true;
         dataviz.membersEvents.add(townhall.Member);
       }
-      if (townhall.Party === 'Republican') {
+      if (townhall.party === 'Republican') {
         party = 'rep';
       } else {
         party = 'dem';

@@ -1,7 +1,7 @@
 (function(module) {
   var constants = {
-    HD: 'State House district',
-    SD: 'State Senate district',
+    HD: 'HD-',
+    SD: 'SD-',
     GOV: 'Governor',
     LTGOV: 'Lt. Governor'
   };

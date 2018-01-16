@@ -16,6 +16,7 @@
   TownHall.isCurrentContext = false;
   TownHall.isMap = false;
   TownHall.zipQuery;
+  TownHall.allStateTownHalls = [];
 
   // Lookup dictionaries
   TownHall.timeZones = {
@@ -45,11 +46,7 @@
       var title;
       if (this.district) {
         //state leg
-        var districtType = this.district.split('-')[0];
-        var districtNo = this.district.split('-')[1];
-
-        title = constants[districtType];
-        this.displayDistrict = title + ' ' + districtNo;
+        this.displayDistrict = this.district;
       } else {
         //statewide office, ie Governor
         var office = this.thp_id.split('-')[1];
@@ -226,6 +223,31 @@
       });
       return sorted;
     });
+  };
+
+  TownHall.getStateEvents = function(state) {
+    return firebasedb.ref('/state_townhalls/' + state + '/').once('value');
+  };
+
+  TownHall.matchSelectionToZipStateEvents = function(state, districts, chamber) {
+    return TownHall.allStateTownHalls.reduce(function (acc, townhall) {
+      if (townhall.chamber === 'statewide') {
+        acc.push(townhall);
+      } else {
+        districts.forEach(function(district){
+          var checkdistrict;
+          if (chamber === 'upper') {
+            checkdistrict = 'SD-' + district;
+          } else if (chamber === 'lower') {
+            checkdistrict = 'HD-' + district;
+          }
+          if (checkdistrict === townhall.district) {
+            acc.push(townhall);
+          }
+        });
+      }
+      return acc;
+    }, []);
   };
 
   // Match the looked up zip code to district #

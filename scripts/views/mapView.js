@@ -56,11 +56,11 @@
 
   mapView.readStateData = function(webgl, state) {
     ///If in state view filter the results before they get displayed on the map and in the table
-    var townHallsFB = firebasedb.ref('/townHalls/');
+    var townHallsFB = firebasedb.ref('/state_townhalls/' + state + '/');
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
       if (ele.state === state) {
-        TownHall.allTownHalls.push(ele);
+        TownHall.allStateTownHalls.push(ele);
         TownHall.addFilterIndexes(ele);
         tableHandler.initialStateTable(ele);
         if (webgl) {
