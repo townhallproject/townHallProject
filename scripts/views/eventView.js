@@ -154,7 +154,6 @@
   }
 
   function handleZipToDistrict(zipToDistrictArray){
-
     var federal = zipToDistrictArray[0].reduce(function(acc, cur){
       if (!acc.validDistricts) {
         acc.validDistricts = [];
@@ -172,7 +171,7 @@
       return zipLookUpHandler.zipErrorResponse('That zipcode is not in ' + stateView.state + '. Go back to <a href="/">Town Hall Project U.S.</a> to search for events.');
     }
 
-    if (zipToDistrictArray.length > 0) {
+    if (zipToDistrictArray.length > 1) {
       var lower = zipToDistrictArray[1].reduce(function(acc, cur){
         if (!acc.validDistricts) {
           acc.validDistricts = [];
@@ -222,6 +221,7 @@
           eventHandler.renderResults(locationData);
         })
         .catch(function(error){
+          console.log(error);
           zipLookUpHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.', error);
         });
     } else {
