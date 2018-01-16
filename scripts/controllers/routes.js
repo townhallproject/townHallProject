@@ -8,7 +8,8 @@ page('/',
   mapController.setBounds,
   mapController.webGlsupported,
   mapController.setMap,
-  mapController.readData
+  mapController.readData,
+  mapController.addDistrictListener
 );
 
 page('/:stateName',

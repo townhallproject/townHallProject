@@ -100,6 +100,12 @@
     next();
   };
 
+  mapController.addDistrictListener = function(ctx, next) {
+    if (ctx.webGL) {
+      mapboxView.addDistrictListener();
+    }
+  };
+
   mapController.reset = function(ctx, next) {
     stateView.stateCoords = undefined;
     next();
