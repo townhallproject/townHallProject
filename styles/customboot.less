@@ -142,6 +142,13 @@ section.background-light-blue {
 @navbar-border-radius:                     none;
 @grid-float-breakpoint: @screen-md-min;
 
+//event color key
+@main-in-person:#439cbf;
+@main-staff:#d0a8c1;
+@main-activism: #ec955a;
+@main-tele:#73b94c;
+@main-campaign: #d7bd40;
+
 .weight-heavy {
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -418,10 +425,11 @@ a.social-icon {
   margin: 2px 0 0;
 }
 
-.panel-heading_in-person  { background-color: #439cbf; }
-.panel-heading_staff      { background-color: #d0a8c1; }
-.panel-heading_activism   { background-color: #ec955a; }
-.panel-heading_tele       { background-color: #73b94c; }
+.panel-heading_in-person  { background-color: @main-in-person; }
+.panel-heading_staff      { background-color: @main-staff; }
+.panel-heading_activism   { background-color: @main-activism; }
+.panel-heading_tele       { background-color: @main-tele; }
+.panel-heading_campaign   { background-color: @main-campaign; }
 
 .event-icon__in-person {
   background-image: url('/Images/map/circle-in-person.svg');
@@ -1534,6 +1542,10 @@ img.grayscale {
 
 .map-legend .map-legend__activ {
   background-image: url('/Images/map/activism.svg');
+}
+
+.map-legend .map-legend__campaign {
+  background-image: url('/Images/map/campaign.svg');
 }
 
 .map-small .map-legend {
