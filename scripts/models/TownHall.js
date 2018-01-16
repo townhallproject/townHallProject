@@ -111,6 +111,17 @@
     }, data).sort(TownHall.sortFunction);
   };
 
+  // TODO: replace this with a flag on the model from the server
+  TownHall.isStateEvent = function(townhall) {
+    // State events all have thp_ids
+    if (!townhall.hasOwnProperty('thp_id')) {
+      return false;
+    }
+    return ['HD', 'SD', 'GOV', 'LTGOV'].some(function(term) {
+      return townhall.thp_id.indexOf('-' + term + '-') !== -1;
+    });
+  };
+
   // METHODS IN RESPONSE TO lookup
   // Converts zip to lat lng google obj
   TownHall.lookupZip = function (zip) {
