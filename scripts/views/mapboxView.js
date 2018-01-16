@@ -85,7 +85,6 @@
   mapboxView.onLoad = function(state) {
     mapboxView.backSpaceHack();
     mapboxView.makeZoomToNationalButton(state);
-    mapboxView.addDistrictListener();
     mapboxView.addPopups();
     mapboxView.addLayer();
   };
