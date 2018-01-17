@@ -104,6 +104,7 @@
     if (ctx.webGL) {
       mapboxView.addDistrictListener();
     }
+    next();
   };
 
   mapController.reset = function(ctx, next) {
