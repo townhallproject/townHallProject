@@ -313,10 +313,6 @@ input{
    }
  }
 
- .header-large {
-   height: 319.547px;
- }
-
 #upload-video-form {
   div {
     margin-bottom: 1em;
@@ -445,6 +441,10 @@ a.social-icon {
 
 .event-icon__activism {
   background-image: url('/Images/map/circle-activism.svg');
+}
+
+.event-icon__campaign {
+  background-image: url('/Images/map/circle-campaign.svg');
 }
 
 .event-icon__with-date { margin-top: 7px; }
@@ -887,6 +887,11 @@ dt.key{
 .btn-white {
   background-color: white;
   color: @brand-info;
+}
+
+.btn-transparent{
+  background-color: transparent;
+  text-align: left;
 }
 
 #nearest {
@@ -1513,7 +1518,19 @@ img.grayscale {
     margin-bottom: 0px;
   }
 }
+.border-toggle:focus {
+  outline: none!important;
+}
 
+.border-toggle.active {
+  box-shadow: inset 0 0px 5px 1px rgba(0,0,0,.125)
+}
+
+.state-lines {
+  border-top: dotted 0.5px @brand-gray;
+  margin-top: 0.7em;
+  padding-top: 0.7em;
+}
 .map-legend__senate {
   border: 1px solid black;
   width: 15px;
@@ -1526,6 +1543,24 @@ img.grayscale {
   width: 15px;
   height: 15px;
   background-color: hsl(185, 77%, 46%);
+}
+
+.map-legend-line {
+  width: 15px;
+  height: 9px;
+}
+
+.map-legend__state_upper {
+  border-bottom: 1.5px solid #abbfcb;
+
+}
+
+.map-legend__state_lower {
+  border-bottom: 1.5px solid #a4a4a4;
+}
+
+.map-legend__federal{
+  border-bottom: 1.5px solid @brand-gray;
 }
 
 .map-legend .map-legend__person {
