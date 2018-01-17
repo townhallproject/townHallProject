@@ -107,6 +107,27 @@
     next();
   };
 
+  mapController.showStateLegend = function(ctx, next) {
+    if (ctx.webGL) {
+      mapboxView.showStateLegend();
+    }
+    next();
+  };
+
+  mapController.hideStateLegend = function(ctx, next) {
+    if (ctx.webGL) {
+      mapboxView.hideStateLegend();
+    }
+    next();
+  };
+
+  mapController.setborderListeners = function(ctx, next) {
+    if (ctx.webGL) {
+      mapboxView.setborderListeners();
+    }
+    next();
+  };
+
   mapController.reset = function(ctx, next) {
     stateView.stateCoords = undefined;
     next();

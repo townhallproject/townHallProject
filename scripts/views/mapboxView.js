@@ -362,5 +362,34 @@
     map.getSource('townhall-points').setData(featuresHome);
   };
 
+  mapboxView.showStateLegend = function(){
+    $('.state-lines').removeClass('hidden').show();
+  };
+
+  mapboxView.hideStateLegend = function(){
+    $('.state-lines').hide();
+  };
+
+  mapboxView.toggleBorders = function () {
+    $('.border-toggle').removeClass('active');
+    $(this).addClass('active');
+
+    if (this.id === 'show-federal-borders') {
+      map.setLayoutProperty('district_border', 'visibility', 'visible');
+
+      map.setLayoutProperty('states-house-districts', 'visibility', 'none');
+      map.setLayoutProperty('states-senate-districts', 'visibility', 'none');
+    } else if (this.id === 'show-state-borders') {
+      map.setLayoutProperty('district_border', 'visibility', 'none');
+
+      map.setLayoutProperty('states-house-districts', 'visibility', 'visible');
+      map.setLayoutProperty('states-senate-districts', 'visibility', 'visible');
+    }
+  };
+
+  mapboxView.setborderListeners = function(){
+    $('.border-toggle').on('click', mapboxView.toggleBorders);
+  };
+
   module.mapboxView = mapboxView;
 }(window));
