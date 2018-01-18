@@ -144,6 +144,53 @@
     }
   };
 
+  // add state legislature district select
+  mapboxView.stateDistrictSelect = function(feature) {
+    console.log(feature);
+    if (feature) {
+      // clear district highlight
+      map.setLayoutProperty('states-house-districts-selected', 'visibility', 'none');
+      map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'none');
+
+      // set district highlight
+      var filter_house = ['all', ['==', 'GEOID', feature.house_geoId]];
+      var filter_senate = ['all', ['==', 'GEOID', feature.senate_geoId]];
+
+      // set filters
+      map.setFilter('states-house-districts-selected', filter_house);
+      map.setFilter('states-senate-districts-selected', filter_senate);
+
+      // make districts visible
+      map.setLayoutProperty('states-house-districts-selected', 'visibility', 'visible');
+      map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'visible');
+    }
+  };
+
+  mapboxView.stateAddDistrictListener = function() {
+    map.on('click', function(e) {
+      var feature = {};
+
+      var features = map.queryRenderedFeatures(
+        e.point,
+        {
+          layers: ['states-house-districts-interactive', 'states-senate-districts-interactive']
+        });
+      console.log(features);
+      if (features.length > 0) {
+        feature.state = Object.keys(fips).filter(function(key) { return fips[key] === features[0].properties.STATEFP })[0];
+        feature.house_district = mapHelperFunctions.zeroPad(features[0].properties.SLDLST);
+        feature.house_geoId = features[0].properties.GEOID;
+        if (features[1].properties.SLDUST) {
+          feature.senate_district = mapHelperFunctions.zeroPad(features[1].properties.SLDUST);
+        }
+        if (features[1].properties.GEOID) {
+          feature.senate_geoId = features[1].properties.GEOID;
+        }
+        mapboxView.stateDistrictSelect(feature);
+      }
+    });
+  };
+
   // Offset points slightly to see events happening at same location.
   function jitterPoint(lng, lat) {
     var jitter = Math.random() * .001;

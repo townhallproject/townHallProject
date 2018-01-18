@@ -2,6 +2,9 @@
   var mapHelperFunctions = {};
 
   mapHelperFunctions.zeroPad = function zeroPad(districtID) {
+    if (districtID.length = 3) {
+      return districtID.substring(1,districtID.length);
+    }
     var padding = '00';
     return padding.substring(0, padding.length - districtID.length) + districtID;
   };

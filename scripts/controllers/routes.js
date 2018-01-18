@@ -19,7 +19,9 @@ page('/:stateName',
   mapController.webGlsupported,
   mapController.setMap,
   mapController.readStateData,
-  mapController.maskCountry
+  mapController.maskCountry,
+  // add state legislature district listener
+  mapController.addStateDistrictListener
 );
 
 page();

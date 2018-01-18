@@ -106,6 +106,13 @@
     }
   };
 
+  // add state legislature district listener
+  mapController.addStateDistrictListener = function(ctx, next) {
+    if (ctx.webGL) {
+      mapboxView.stateAddDistrictListener();
+    }
+  };
+
   mapController.reset = function(ctx, next) {
     stateView.stateCoords = undefined;
     next();
