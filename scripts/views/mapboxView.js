@@ -146,7 +146,6 @@
 
   // add state legislature district select
   mapboxView.stateDistrictSelect = function(feature) {
-    console.log(feature);
     if (feature) {
       // clear district highlight
       map.setLayoutProperty('states-house-districts-selected', 'visibility', 'none');
@@ -175,16 +174,16 @@
         {
           layers: ['states-house-districts-interactive', 'states-senate-districts-interactive']
         });
-      console.log(features);
       if (features.length > 0) {
         feature.state = Object.keys(fips).filter(function(key) { return fips[key] === features[0].properties.STATEFP })[0];
-        feature.house_district = mapHelperFunctions.zeroPad(features[0].properties.SLDLST);
-        feature.house_geoId = features[0].properties.GEOID;
-        if (features[1].properties.SLDUST) {
-          feature.senate_district = mapHelperFunctions.zeroPad(features[1].properties.SLDUST);
-        }
-        if (features[1].properties.GEOID) {
-          feature.senate_geoId = features[1].properties.GEOID;
+        for (var i = 0; i < features.length; i++) {
+          if (features[i].layer.id.includes('house')) {
+            feature.house_district = mapHelperFunctions.zeroPad(features[i].properties.SLDLST);
+            feature.house_geoId = features[i].properties.GEOID;
+          } else if (features[i].layer.id.includes('senate')) {
+            feature.senate_district = mapHelperFunctions.zeroPad(features[i].properties.SLDUST);
+            feature.senate_geoId = features[i].properties.GEOID;
+          }
         }
         mapboxView.stateDistrictSelect(feature);
       }
