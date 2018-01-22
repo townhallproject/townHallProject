@@ -144,11 +144,8 @@
     }
   };
 
-  // add state legislature district select
   mapboxView.stateDistrictSelect = function(feature) {
-    if (feature) {
-      // clear district highlight
-      map.setLayoutProperty('states-house-districts-selected', 'visibility', 'none');
+    map.setLayoutProperty('states-house-districts-selected', 'visibility', 'none');
       map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'none');
 
       // set district highlight
@@ -162,6 +159,23 @@
       // make districts visible
       map.setLayoutProperty('states-house-districts-selected', 'visibility', 'visible');
       map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'visible');
+    if (feature.state) {
+      var locationData = {
+        federal: {
+          thisState: feature.state,
+          validDistricts: [feature.senate_district,feature.house_district],
+          validSelections: [],
+        },
+        upper: {
+          validDistricts: [feature.senate_district],
+          upperEvents: []
+        },
+        lower : {
+          validDistricts: [feature.house_district],
+          lowerEvents: []
+        }
+      };
+      eventHandler.renderResults(locationData);
     }
   };
 
