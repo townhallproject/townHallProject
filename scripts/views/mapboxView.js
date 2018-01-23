@@ -369,6 +369,19 @@
     toggleFilters('selected-border', filter);
   };
 
+  // cleares all selections and district visibility - used in toggle
+  mapboxView.removeSelections = function()  {
+    map.setLayoutProperty('states-house-districts-selected', 'visibility', 'none');
+    map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'none');
+
+    map.setLayoutProperty('states-house-districts', 'visibility', 'none');
+    map.setLayoutProperty('states-senate-districts', 'visibility', 'none');
+
+    map.setLayoutProperty('selected-fill', 'visibility', 'none');
+    map.setLayoutProperty('selected-border', 'visibility', 'none');
+    map.setLayoutProperty('district_border', 'visibility', 'none');
+  };
+
   // Creates the point layer.
   mapboxView.makePoint = function (townhall) {
     if (townhall.meetingType === 'DC Event' || !townhall.iconFlag) {
@@ -428,18 +441,14 @@
   mapboxView.toggleBorders = function () {
     $('.border-toggle').removeClass('active');
     $(this).addClass('active');
-    // turn off any selected layers and remove listeners 
-    map.setLayoutProperty('states-house-districts-selected', 'visibility', 'none');
-    map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'none');
+    mapboxView.removeSelections();
     mapboxView.removeListeners();
-
     if (this.id === 'show-federal-borders') {
+      mapboxView.removeSelections();
       map.setLayoutProperty('district_border', 'visibility', 'visible');
-      map.setLayoutProperty('states-house-districts', 'visibility', 'none');
-      map.setLayoutProperty('states-senate-districts', 'visibility', 'none');
       mapboxView.addDistrictListener();
     } else if (this.id === 'show-state-borders') {
-      map.setLayoutProperty('district_border', 'visibility', 'none');
+      mapboxView.removeSelections();
       map.setLayoutProperty('states-house-districts', 'visibility', 'visible');
       map.setLayoutProperty('states-senate-districts', 'visibility', 'visible');
       mapboxView.addStateDistrictListener();
