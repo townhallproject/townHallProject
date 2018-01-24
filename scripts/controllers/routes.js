@@ -22,7 +22,8 @@ page('/:stateName',
   mapController.setborderListeners,
   mapController.setMap,
   mapController.readStateData,
-  mapController.maskCountry
+  mapController.maskCountry,
+  mapController.addStateDistrictListener
 );
 
 page();
