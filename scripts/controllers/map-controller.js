@@ -104,13 +104,36 @@
     if (ctx.webGL) {
       mapboxView.addDistrictListener();
     }
+    next();
+  };
+
+  mapController.showStateLegend = function(ctx, next) {
+    if (ctx.webGL) {
+      mapboxView.showStateLegend();
+    }
+    next();
+  };
+
+  mapController.hideStateLegend = function(ctx, next) {
+    if (ctx.webGL) {
+      mapboxView.hideStateLegend();
+    }
+    next();
+  };
+
+  mapController.setborderListeners = function(ctx, next) {
+    if (ctx.webGL) {
+      mapboxView.setborderListeners();
+    }
+    next();
   };
 
   // add state legislature district listener
   mapController.addStateDistrictListener = function(ctx, next) {
     if (ctx.webGL) {
-      mapboxView.stateAddDistrictListener();
+      mapboxView.addStateDistrictListener();
     }
+    next();
   };
 
   mapController.reset = function(ctx, next) {
