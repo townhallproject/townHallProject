@@ -48,6 +48,7 @@
     var validDistricts = locationData.federal.validDistricts;
     var validSelections = locationData.federal.validSelections;
     var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
+    var zoomMap = true;
     //render table
     var districtText = ' ';
     validDistricts.forEach(function(district){
@@ -63,6 +64,7 @@
       var upperEvents = TownHall.matchSelectionToZipStateEvents(thisState, upperDistricts, 'upper');
       var numOfUpper = upperEvents.length;
       selectedData = selectedData.concat(upperEvents);
+      zoomMap = false;
     }
     if (locationData.lower) {
       var lowerText = makeReporterText(locationData.upper.validDistricts, 'lower');
@@ -70,6 +72,7 @@
       var lowerEvents = TownHall.matchSelectionToZipStateEvents(thisState, lowerDistricts, 'lower');
       var numOfLower = lowerEvents.length;
       selectedData = selectedData.concat(lowerEvents);
+      zoomMap = false;
     }
 
     var $text = $('.selection-results_content');
@@ -106,16 +109,17 @@
       });
 
       mapView.makeSidebar(selectedData);
-      eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
-
       addtocalendar.load();
+
     } else {
       $text.html('There are no events for ' + districtText);
       $('#no-events').show();
       justSenate = false;
       mapView.killSidebar();
-      eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
       tableHandler.resetTable();
+    }
+    if (zoomMap) {
+      eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
     }
     if (mapView.webGL && validSelections) {
       mapboxView.highlightDistrict(validSelections);
