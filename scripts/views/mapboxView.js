@@ -444,6 +444,7 @@
       map.setLayoutProperty('district_border', 'visibility', 'visible');
       mapboxView.addDistrictListener();
     } else if (this.id === 'show-state-borders') {
+      map.setLayoutProperty('district_border', 'visibility', 'none');
       map.setLayoutProperty('states-house-districts', 'visibility', 'visible');
       map.setLayoutProperty('states-senate-districts', 'visibility', 'visible');
       mapboxView.addStateDistrictListener();
