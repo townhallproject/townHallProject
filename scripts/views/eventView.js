@@ -43,7 +43,8 @@
     return stateText;
   }
 
-  eventHandler.renderResults = function(locationData) {
+  eventHandler.renderResults = function(locationData, stateDistricts) {
+    var needZoom = (stateDistricts) ? false : true;
     var thisState = locationData.federal.thisState;
     var validDistricts = locationData.federal.validDistricts;
     var validSelections = locationData.federal.validSelections;
@@ -106,7 +107,10 @@
       });
 
       mapView.makeSidebar(selectedData);
-      eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
+      // only zoom map if not state legislative districts
+      if (needZoom) {
+        eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
+      }
 
       addtocalendar.load();
     } else {
@@ -114,7 +118,10 @@
       $('#no-events').show();
       justSenate = false;
       mapView.killSidebar();
-      eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
+      // only zoom map if not state legislative districts
+      if (needZoom) {
+        eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
+      }
       tableHandler.resetTable();
     }
     if (mapView.webGL && validSelections) {

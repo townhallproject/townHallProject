@@ -145,14 +145,10 @@
   };
 
   mapboxView.stateDistrictSelect = function(feature) {
-<<<<<<< HEAD
-    map.setLayoutProperty('states-house-districts-selected', 'visibility', 'none');
-      map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'none');
-=======
+    var isStateDistricts = true;
     if (feature) {
       // clear district highlight
       mapboxView.removeSelections();
->>>>>>> 10bda5315b335825057527e54ffc96fa51c97e3f
 
       // set district highlight
       var filter_house = ['all', ['==', 'GEOID', feature.house_geoId]];
@@ -181,7 +177,8 @@
           lowerEvents: []
         }
       };
-      eventHandler.renderResults(locationData);
+      eventHandler.renderResults(locationData, isStateDistricts);
+    }
     }
   };
 
