@@ -178,6 +178,7 @@
       };
       eventHandler.renderResults(locationData);
     }
+    }
   };
 
   // Offset points slightly to see events happening at same location.
