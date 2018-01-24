@@ -148,8 +148,7 @@
   mapboxView.stateDistrictSelect = function(feature) {
     if (feature) {
       // clear district highlight
-      map.setLayoutProperty('states-house-districts-selected', 'visibility', 'none');
-      map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'none');
+      mapboxView.removeSelections();
 
       // set district highlight
       var filter_house = ['all', ['==', 'GEOID', feature.house_geoId]];
@@ -374,12 +373,8 @@
     map.setLayoutProperty('states-house-districts-selected', 'visibility', 'none');
     map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'none');
 
-    map.setLayoutProperty('states-house-districts', 'visibility', 'none');
-    map.setLayoutProperty('states-senate-districts', 'visibility', 'none');
-
     map.setLayoutProperty('selected-fill', 'visibility', 'none');
     map.setLayoutProperty('selected-border', 'visibility', 'none');
-    map.setLayoutProperty('district_border', 'visibility', 'none');
   };
 
   // Creates the point layer.
@@ -444,11 +439,11 @@
     mapboxView.removeSelections();
     mapboxView.removeListeners();
     if (this.id === 'show-federal-borders') {
-      mapboxView.removeSelections();
+      map.setLayoutProperty('states-house-districts', 'visibility', 'none');
+      map.setLayoutProperty('states-senate-districts', 'visibility', 'none');
       map.setLayoutProperty('district_border', 'visibility', 'visible');
       mapboxView.addDistrictListener();
     } else if (this.id === 'show-state-borders') {
-      mapboxView.removeSelections();
       map.setLayoutProperty('states-house-districts', 'visibility', 'visible');
       map.setLayoutProperty('states-senate-districts', 'visibility', 'visible');
       mapboxView.addStateDistrictListener();
