@@ -160,6 +160,7 @@
       // make districts visible
       map.setLayoutProperty('states-house-districts-selected', 'visibility', 'visible');
       map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'visible');
+    }
     if (feature.state) {
       var locationData = {
         federal: {
@@ -217,7 +218,7 @@
     }, 'district_interactive');
   };
 
-  // Adds a Popup listener to the point layer. TODO: Determine content for the popup.
+  // Adds a Popup listener to the point layer.
   mapboxView.addPopups = function() {
     var popup = new mapboxgl.Popup({
       closeButton: false,
@@ -265,6 +266,23 @@
 
   function stateDistristListener(e) {
     var feature = {};
+    var points = map.queryRenderedFeatures(e.point, { layers: ['townhall-points'] });
+      // selected a marker
+    if (points.length > 0) {
+      feature.state = Object.keys(fips).filter(function(key) { return fips[key] === points[0].properties.STATEFP; })[0];
+      for (var j = 0; j < points.length; j++) {
+        if (points[j].properties.chamber === 'HD') {
+          // TODO: make the feature from point data
+          // feature.house_district = mapHelperFunctions.zeroPad(points[j].properties.SLDLST);
+          // feature.house_geoId = points[j].properties.GEOID;
+        } else if (points[j].properties.chamber === 'SD') {
+          // TODO: make the feature from point data
+          // feature.senate_district = mapHelperFunctions.zeroPad(points[j].properties.SLDUST);
+          // feature.senate_geoId = points[j].properties.GEOID;
+        }
+      }
+      return mapboxView.stateDistrictSelect(feature);
+    }
 
     var features = map.queryRenderedFeatures(
       e.point,
@@ -410,7 +428,9 @@
         return;
       }
     }
-
+    if (townhall.thp_id) {
+      townhall.chamber = townhall.district.split('-')[0];
+    }
     featuresHome.features.push({
       type: 'Feature',
       geometry: {
@@ -423,6 +443,7 @@
         date: townhall.Date,
         Date: townhall.Date,
         Time: townhall.Time,
+        chamber: townhall.chamber || null,
         district: townhall.district,
         displayDistrict: townhall.displayDistrict,
         districtId: districtId,
