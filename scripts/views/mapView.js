@@ -64,7 +64,7 @@
       tableHandler.initialStateTable(ele);
       if (webgl) {
         mapboxView.filterMap(ele);
-        mapboxView.makePoint(ele);
+        mapboxView.makePoint(ele, true);
       } else {
         noWebGlMapView.setData(ele);
       }
@@ -76,7 +76,7 @@
       if (ele.state === state) {
         TownHall.allTownHalls.push(ele);
         TownHall.addFilterIndexes(ele);
-        tableHandler.initialMainTable(ele);
+        tableHandler.initialStateTable(ele);
         if (webgl) {
           mapboxView.filterMap(ele);
           mapboxView.makePoint(ele);
