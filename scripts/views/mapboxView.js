@@ -269,19 +269,23 @@
     var points = map.queryRenderedFeatures(e.point, { layers: ['townhall-points'] });
       // selected a marker
     if (points.length > 0) {
-      feature.state = Object.keys(fips).filter(function(key) { return fips[key] === points[0].properties.STATEFP; })[0];
+      feature.state = points[0].properties.stateAbbr;
       for (var j = 0; j < points.length; j++) {
+        console.log(points[j]);
+        var district = points[j].properties.district;
+        var pointDistrict = district.substring(district.lastIndexOf('-') + 1, district.length);
         if (points[j].properties.chamber === 'HD') {
           // TODO: make the feature from point data
-          // feature.house_district = mapHelperFunctions.zeroPad(points[j].properties.SLDLST);
-          // feature.house_geoId = points[j].properties.GEOID;
+          feature.house_district = mapHelperFunctions.zeroPad(pointDistrict);
+          feature.house_geoId = points[j].properties.stateCode + '0' + feature.house_district;
         } else if (points[j].properties.chamber === 'SD') {
           // TODO: make the feature from point data
-          // feature.senate_district = mapHelperFunctions.zeroPad(points[j].properties.SLDUST);
-          // feature.senate_geoId = points[j].properties.GEOID;
+          feature.senate_district = mapHelperFunctions.zeroPad(pointDistrict);
+          feature.senate_geoId = points[j].properties.stateCode + '0' + feature.senate_district ;
         }
       }
-      return mapboxView.stateDistrictSelect(feature);
+      console.log(feature);
+      // mapboxView.stateDistrictSelect(feature);
     }
 
     var features = map.queryRenderedFeatures(
@@ -300,8 +304,10 @@
           feature.senate_geoId = features[i].properties.GEOID;
         }
       }
-      mapboxView.stateDistrictSelect(feature);
+      console.log(feature);
+      // mapboxView.stateDistrictSelect(feature);
     }
+    mapboxView.stateDistrictSelect(feature);
   }
 
   function districtLister(e) {
