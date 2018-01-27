@@ -1,5 +1,10 @@
 <div class="text-info map-popup">
-  <h4 class="mapbox-popup-title">{{Member}}</h4>
+
+  <h4 class="mapbox-popup-title">
+    {{#if stateIcon}}
+    <span class="pull-left state-icon state-icon__{{stateAbbr}}">
+    {{/if}}
+    </span>{{Member}} <small>{{displayDistrict}}</small></h4>
   <p>{{Location}}</p>
   <span>{{Time}} </span>
   <span>
