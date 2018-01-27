@@ -49,8 +49,8 @@
         //"VA HD-08" (Virginia House District 8)
         var chamber = this.district.split('-')[0];
         var number = this.district.split('-')[1];
-        var sentance = [this.district, '(' + this.stateName, constants[chamber], parseInt(number) + ')'];
-        this.displayDistrict = sentance.join(' ');
+        var sentence = [this.district, '(' + this.stateName, constants[chamber], parseInt(number) + ')'];
+        this.displayDistrict = sentence.join(' ');
       } else {
         //statewide office, ie Governor
         var office = this.thp_id.split('-')[1];
