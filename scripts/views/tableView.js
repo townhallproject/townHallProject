@@ -108,8 +108,8 @@
     var cur = parseInt($currentState.attr('data-current'));
     $currentState.attr('data-total', total);
     var $table = $('#all-events-table');
-    var meetingTypes = TownHall.filters.meetingType;
-    if (meetingTypes.indexOf(townhall.meetingType) > -1) {
+    var meetingTypesToShow = TownHall.filters.meetingType;
+    if (meetingTypesToShow.indexOf(townhall.meetingType) > -1) {
       cur ++;
       tableHandler.renderTable(townhall, $table);
       $currentState.attr('data-current', cur);

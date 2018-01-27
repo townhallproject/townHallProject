@@ -219,9 +219,8 @@
       }
       var feature = features[0];
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
-      var townhall = new TownHall(feature.properties);
       popup.setLngLat(feature.geometry.coordinates)
-          .setHTML(mapPopoverTemplate(townhall))
+          .setHTML(mapPopoverTemplate(feature.properties))
           .addTo(map);
     });
   };
@@ -378,7 +377,7 @@
   };
 
   // Creates the point layer.
-  mapboxView.makePoint = function (townhall) {
+  mapboxView.makePoint = function (townhall, stateIcon) {
     if (townhall.meetingType === 'DC Event' || !townhall.iconFlag) {
       return;
     }
@@ -408,7 +407,7 @@
         Date: townhall.Date,
         Time: townhall.Time,
         district: townhall.district,
-        displayDistrict: townhall.displayDistrict,
+        displayDistrict: townhall.displayDistrict.split(' ')[0],
         districtId: districtId,
         stateCode: stateCode,
         stateAbbr: stateAbbr,
@@ -416,7 +415,8 @@
         Member: townhall.Member,
         address: townhall.address,
         meetingType: townhall.meetingType,
-        icon: iconKey
+        icon: iconKey,
+        stateIcon: stateIcon || undefined
       },
     });
   };
