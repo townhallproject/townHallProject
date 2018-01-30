@@ -89,6 +89,7 @@
     townHallsFBFederal.once('value', function() {
       if (webgl) {
         mapboxView.setData();
+        mapboxView.setStateData();
       }
       zipLookUpHandler.zipSearchByParam();
     });

@@ -47,7 +47,9 @@
     var thisState = locationData.federal.thisState;
     var validDistricts = locationData.federal.validDistricts;
     var validSelections = locationData.federal.validSelections;
-    var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
+    var federalEvents = TownHall.matchSelectionToZip(thisState, validDistricts);
+    var numFederal = federalEvents.length;
+    var zoomMap = true;
     //render table
     var districtText = ' ';
     validDistricts.forEach(function(district){
@@ -57,12 +59,14 @@
         districtText = districtText + thisState;
       }
     });
+    var selectedData = federalEvents;
     if (locationData.upper ) {
       var upperText = makeReporterText(locationData.upper.validDistricts, 'upper');
       var upperDistricts = locationData.upper.validDistricts;
       var upperEvents = TownHall.matchSelectionToZipStateEvents(thisState, upperDistricts, 'upper');
       var numOfUpper = upperEvents.length;
       selectedData = selectedData.concat(upperEvents);
+      zoomMap = false;
     }
     if (locationData.lower) {
       var lowerText = makeReporterText(locationData.upper.validDistricts, 'lower');
@@ -70,6 +74,7 @@
       var lowerEvents = TownHall.matchSelectionToZipStateEvents(thisState, lowerDistricts, 'lower');
       var numOfLower = lowerEvents.length;
       selectedData = selectedData.concat(lowerEvents);
+      zoomMap = false;
     }
 
     var $text = $('.selection-results_content');
@@ -86,13 +91,13 @@
       TownHall.currentContext = selectedData;
       tableHandler.renderTableWithArray(selectedData);
 
-      var counts = eventHandler.checkIfOnlySenate(selectedData);
+      var counts = eventHandler.checkIfOnlySenate(federalEvents);
       justSenate = counts[0];
       var numOfDistrictEvents = counts[1];
 
-      var numOfSateEvents = selectedData.length - numOfDistrictEvents;
+      var numOfUSSenateEvents = numFederal - numOfDistrictEvents;
       var message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
-      message = message + '<p>' + numOfSateEvents + ' event(s) for ' + thisState + ' senators</p>';
+      message = message + '<p>' + numOfUSSenateEvents + ' event(s) for ' + thisState + ' senators</p>';
       if (numOfLower) {
         message = message + '<p>' + numOfLower + ' event(s) for the ' + lowerText + ' state representative(s)</p>';
       }
@@ -106,16 +111,17 @@
       });
 
       mapView.makeSidebar(selectedData);
-      eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
-
       addtocalendar.load();
+
     } else {
       $text.html('There are no events for ' + districtText);
       $('#no-events').show();
       justSenate = false;
       mapView.killSidebar();
-      eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
       tableHandler.resetTable();
+    }
+    if (zoomMap) {
+      eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
     }
     if (mapView.webGL && validSelections) {
       mapboxView.highlightDistrict(validSelections);

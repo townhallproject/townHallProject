@@ -26,7 +26,7 @@
   };
 
   function masterBoundingBox(stateAbbr, districtCodes) {
-    var masterBB = [0,0,0,0];
+    var masterBB = [0, 0, 0, 0];
     districtCodes.forEach(function(district) {
       var newBB = bboxes[stateAbbr + district];
       masterBB[0] = Math.min(masterBB[0], newBB[0]);
