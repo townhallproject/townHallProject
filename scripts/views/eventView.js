@@ -399,7 +399,7 @@
     if (window.innerWidth < 768) {
       $('#year-one img').attr('src', 'Images/EOY_2017_Report_Mobile.png');
     } else {
-      $('#year-one img').attr('src', 'Images/EOY_2017_Report_Desktop.png');
+      $('#year-one img').attr('src', 'Images/EOY_Report_Layout_noBG-01-01.png');
 
     }
   }
