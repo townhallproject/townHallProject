@@ -47,7 +47,8 @@
     var thisState = locationData.federal.thisState;
     var validDistricts = locationData.federal.validDistricts;
     var validSelections = locationData.federal.validSelections;
-    var selectedData = TownHall.matchSelectionToZip(thisState, validDistricts);
+    var federalEvents = TownHall.matchSelectionToZip(thisState, validDistricts);
+    var numFederal = federalEvents.length;
     var zoomMap = true;
     //render table
     var districtText = ' ';
@@ -58,6 +59,7 @@
         districtText = districtText + thisState;
       }
     });
+    var selectedData = federalEvents;
     if (locationData.upper ) {
       var upperText = makeReporterText(locationData.upper.validDistricts, 'upper');
       var upperDistricts = locationData.upper.validDistricts;
@@ -89,13 +91,13 @@
       TownHall.currentContext = selectedData;
       tableHandler.renderTableWithArray(selectedData);
 
-      var counts = eventHandler.checkIfOnlySenate(selectedData);
+      var counts = eventHandler.checkIfOnlySenate(federalEvents);
       justSenate = counts[0];
       var numOfDistrictEvents = counts[1];
 
-      var numOfSateEvents = selectedData.length - numOfDistrictEvents;
+      var numOfUSSenateEvents = numFederal - numOfDistrictEvents;
       var message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
-      message = message + '<p>' + numOfSateEvents + ' event(s) for ' + thisState + ' senators</p>';
+      message = message + '<p>' + numOfUSSenateEvents + ' event(s) for ' + thisState + ' senators</p>';
       if (numOfLower) {
         message = message + '<p>' + numOfLower + ' event(s) for the ' + lowerText + ' state representative(s)</p>';
       }

@@ -64,15 +64,32 @@
       tableHandler.initialStateTable(ele);
       if (webgl) {
         mapboxView.filterMap(ele);
-        mapboxView.makePoint(ele);
+        mapboxView.makePoint(ele, true);
       } else {
         noWebGlMapView.setData(ele);
       }
-      
+
     });
-    townHallsFB.once('value', function() {
+    var townHallsFBFederal = firebasedb.ref('/townHalls/');
+    townHallsFBFederal.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
+      var ele = new TownHall (snapshot.val());
+      if (ele.state === state) {
+        TownHall.allTownHalls.push(ele);
+        TownHall.addFilterIndexes(ele);
+        tableHandler.initialStateTable(ele);
+        if (webgl) {
+          mapboxView.filterMap(ele);
+          mapboxView.makePoint(ele);
+        } else {
+          noWebGlMapView.setData(ele);
+        }
+      }
+
+    });
+    townHallsFBFederal.once('value', function() {
       if (webgl) {
         mapboxView.setData();
+        mapboxView.setStateData();
       }
       zipLookUpHandler.zipSearchByParam();
     });

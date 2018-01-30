@@ -28,6 +28,9 @@
 
   // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
   mapboxView.focusMap = function focusMap (bb) {
+    if (!bb) {
+      return;
+    }
     var height = window.innerHeight,
       width = window.innerWidth,
       view = geoViewport.viewport(bb, [width/2, height/2]);
@@ -85,7 +88,7 @@
   mapboxView.onLoad = function(state) {
     mapboxView.backSpaceHack();
     mapboxView.makeZoomToNationalButton(state);
-    mapboxView.addPopups();
+    mapboxView.addPopups(state);
     mapboxView.addLayer();
   };
 
@@ -145,22 +148,23 @@
   };
 
   mapboxView.stateDistrictSelect = function(feature) {
-    if (feature) {
-      // clear district highlight
-      mapboxView.removeSelections();
+    // clear district highlight
+    mapboxView.removeSelections();
 
-      // set district highlight
-      var filter_house = ['all', ['==', 'GEOID', feature.house_geoId]];
-      var filter_senate = ['all', ['==', 'GEOID', feature.senate_geoId]];
-
+    // set district highlight
+    var filterHouse = ['all', ['==', 'GEOID', feature.house_geoId]];
+    var filterSenate = ['all', ['==', 'GEOID', feature.senate_geoId]];
+    var stateOutline = map.getLayoutProperty('states-house-districts', 'visibility');
+    if (stateOutline === 'visible') {
       // set filters
-      map.setFilter('states-house-districts-selected', filter_house);
-      map.setFilter('states-senate-districts-selected', filter_senate);
+      map.setFilter('states-house-districts-selected', filterHouse);
+      map.setFilter('states-senate-districts-selected', filterSenate);
 
       // make districts visible
       map.setLayoutProperty('states-house-districts-selected', 'visibility', 'visible');
       map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'visible');
     }
+
     if (feature.state) {
       var locationData = {
         federal: {
@@ -181,6 +185,44 @@
     }
   };
 
+  mapboxView.pointSelect = function(feature) {
+    var locationData = {
+      federal: {
+        thisState: feature.state,
+        validDistricts: [],
+        validSelections: []
+      },
+      upper: {
+        validDistricts: [],
+        upperEvents: []
+      },
+      lower : {
+        validDistricts: [],
+        lowerEvents: []
+      }
+    };
+    // clear district highlight
+    mapboxView.removeSelections();
+
+    if (feature.house_geoId) {
+      var filter_house = ['all', ['==', 'GEOID', feature.house_geoId]];
+      map.setFilter('states-house-districts-selected', filter_house);
+      map.setLayoutProperty('states-house-districts-selected', 'visibility', 'visible');
+      locationData.federal.validDistricts.push(feature.house_district);
+      locationData.lower.validDistricts.push(feature.house_district);
+
+    } else if (feature.senate_geoId) {
+
+      var filter_senate = ['all', ['==', 'GEOID', feature.senate_geoId]];
+      map.setFilter('states-senate-districts-selected', filter_senate);
+      map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'visible');
+      locationData.federal.validDistricts.push(feature.senate_district);
+      locationData.upper.validDistricts.push(feature.senate_district);
+
+    }
+    eventHandler.renderResults(locationData);
+  };
+
   // Offset points slightly to see events happening at same location.
   function jitterPoint(lng, lat) {
     var jitter = Math.random() * .001;
@@ -190,6 +232,11 @@
   }
 
   var featuresHome = {
+    type: 'FeatureCollection',
+    features: []
+  };
+
+  var featuresHomeState = {
     type: 'FeatureCollection',
     features: []
   };
@@ -218,8 +265,32 @@
     }, 'district_interactive');
   };
 
+  mapboxView.addStateLayer = function() {
+    map.addLayer({
+      'id': 'townhall-points-state',
+      'type': 'symbol',
+      'source': {
+        'type': 'geojson',
+        'data': featuresHomeState
+      },
+      'layout': {
+        'icon-image': '{icon}',
+        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+        'icon-ignore-placement': true,
+        'icon-offset': {
+          'base': 1,
+          'stops': [
+              [0, [0, -15]],
+              [10, [0, -10]],
+              [12, [0, 0]]
+          ]
+        }
+      }
+    }, 'district_interactive');
+  };
+
   // Adds a Popup listener to the point layer.
-  mapboxView.addPopups = function() {
+  mapboxView.addPopups = function(state) {
     var popup = new mapboxgl.Popup({
       closeButton: false,
       closeOnClick: false
@@ -227,6 +298,10 @@
 
     map.on('mousemove', function(e) {
       var features = map.queryRenderedFeatures(e.point, { layers: ['townhall-points'] });
+      if (state) {
+        var featuresState = map.queryRenderedFeatures(e.point, { layers: ['townhall-points-state'] });
+        features = features.concat(featuresState);
+      }
       // Change the cursor style as a UI indicator.
       map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 
@@ -236,9 +311,8 @@
       }
       var feature = features[0];
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
-      var townhall = new TownHall(feature.properties);
       popup.setLngLat(feature.geometry.coordinates)
-          .setHTML(mapPopoverTemplate(townhall))
+          .setHTML(mapPopoverTemplate(feature.properties))
           .addTo(map);
     });
   };
@@ -265,54 +339,55 @@
   };
 
   function stateDistristListener(e) {
-    var feature = {};
-    var points = map.queryRenderedFeatures(e.point, { layers: ['townhall-points'] });
-      // selected a marker
-    if (points.length > 0) {
-      feature.state = points[0].properties.stateAbbr;
-      for (var j = 0; j < points.length; j++) {
-        console.log(points[j]);
-        var district = points[j].properties.district;
-        var pointDistrict = district.substring(district.lastIndexOf('-') + 1, district.length);
-        if (points[j].properties.chamber === 'HD') {
-          // TODO: make the feature from point data
-          feature.house_district = mapHelperFunctions.zeroPad(pointDistrict);
-          feature.house_geoId = points[j].properties.stateCode + '0' + feature.house_district;
-        } else if (points[j].properties.chamber === 'SD') {
-          // TODO: make the feature from point data
-          feature.senate_district = mapHelperFunctions.zeroPad(pointDistrict);
-          feature.senate_geoId = points[j].properties.stateCode + '0' + feature.senate_district ;
-        }
+    // when selecting a point
+    var pointFeature = {};
+
+    var points = map.queryRenderedFeatures(e.point, { layers: ['townhall-points-state'] });
+    if (points && points.length > 0) {
+      var clickedPoint = points[0];
+      pointFeature.state = clickedPoint.properties.stateAbbr;
+      var district = clickedPoint.properties.district;
+      var pointDistrict = district.substring(district.lastIndexOf('-') + 1, district.length);
+
+      if (clickedPoint.properties.chamber === 'HD') {
+        pointFeature.house_district = mapHelperFunctions.zeroPad(pointDistrict);
+        pointFeature.house_geoId = clickedPoint.properties.stateCode + '0' + pointFeature.house_district;
+      } else if (clickedPoint.properties.chamber === 'SD') {
+        pointFeature.senate_district = mapHelperFunctions.zeroPad(pointDistrict);
+        pointFeature.senate_geoId = clickedPoint.properties.stateCode + '0' + pointFeature.senate_district;
       }
-      console.log(feature);
-      // mapboxView.stateDistrictSelect(feature);
+
+      return mapboxView.pointSelect(pointFeature);
     }
 
+    // when selecting a location on map
+    var districtFeature = {};
+    var checkIfValidState =  map.queryRenderedFeatures(e.point, { layers: ['state-mask'] });
+    if (checkIfValidState.length > 0 && checkIfValidState[0].layer.id === 'state-mask') {
+      return;
+    }
     var features = map.queryRenderedFeatures(
       e.point,
       {
         layers: ['states-house-districts-interactive', 'states-senate-districts-interactive']
       });
     if (features.length > 0) {
-      feature.state = Object.keys(fips).filter(function(key) { return fips[key] === features[0].properties.STATEFP; })[0];
+      districtFeature.state = Object.keys(fips).filter(function(key) { return fips[key] === features[0].properties.STATEFP; })[0];
       for (var i = 0; i < features.length; i++) {
         if (features[i].layer.id.includes('house')) {
-          feature.house_district = mapHelperFunctions.zeroPad(features[i].properties.SLDLST);
-          feature.house_geoId = features[i].properties.GEOID;
+          districtFeature.house_district = mapHelperFunctions.zeroPad(features[i].properties.SLDLST);
+          districtFeature.house_geoId = features[i].properties.GEOID;
         } else if (features[i].layer.id.includes('senate')) {
-          feature.senate_district = mapHelperFunctions.zeroPad(features[i].properties.SLDUST);
-          feature.senate_geoId = features[i].properties.GEOID;
+          districtFeature.senate_district = mapHelperFunctions.zeroPad(features[i].properties.SLDUST);
+          districtFeature.senate_geoId = features[i].properties.GEOID;
         }
       }
-      console.log(feature);
-      // mapboxView.stateDistrictSelect(feature);
+      mapboxView.stateDistrictSelect(districtFeature);
     }
-    mapboxView.stateDistrictSelect(feature);
   }
 
-  function districtLister(e) {
+  function districtListener(e) {
     var feature = {};
-
     var points = map.queryRenderedFeatures(e.point, { layers: ['townhall-points'] });
       // selected a marker
     if (points.length > 0) {
@@ -335,9 +410,10 @@
     }
 
   }
+
   // Add click listener to each district. Used for creating the sidebar, drawing a 'selected' state to the district, & zooming in.
   mapboxView.addDistrictListener = function() {
-    map.on('click', districtLister);
+    map.on('click', districtListener);
   };
 
   mapboxView.addStateDistrictListener = function() {
@@ -345,7 +421,7 @@
   };
 
   mapboxView.removeListeners = function() {
-    map.off('click', districtLister);
+    map.off('click', districtListener);
     map.off('click', stateDistristListener);
   };
 
@@ -418,7 +494,7 @@
   };
 
   // Creates the point layer.
-  mapboxView.makePoint = function (townhall) {
+  mapboxView.makePoint = function (townhall, stateIcon) {
     if (townhall.meetingType === 'DC Event' || !townhall.iconFlag) {
       return;
     }
@@ -426,6 +502,7 @@
     var stateAbbr = townhall.state;
     var stateCode = fips[stateAbbr];
     var districtId = townhall.district ? townhall.district : '';
+    var array = featuresHome;
 
     if (iconKey === 'tele'){
       iconKey = 'phone-in';
@@ -437,7 +514,11 @@
     if (townhall.thp_id) {
       townhall.chamber = townhall.district.split('-')[0];
     }
-    featuresHome.features.push({
+
+    if (stateIcon) {
+      array = featuresHomeState;
+    }
+    array.features.push({
       type: 'Feature',
       geometry: {
         type: 'Point',
@@ -451,7 +532,7 @@
         Time: townhall.Time,
         chamber: townhall.chamber || null,
         district: townhall.district,
-        displayDistrict: townhall.displayDistrict,
+        displayDistrict: townhall.displayDistrict.split(' ')[0],
         districtId: districtId,
         stateCode: stateCode,
         stateAbbr: stateAbbr,
@@ -459,9 +540,14 @@
         Member: townhall.Member,
         address: townhall.address,
         meetingType: townhall.meetingType,
-        icon: iconKey
+        icon: iconKey,
+        stateIcon: stateIcon || undefined
       },
     });
+  };
+
+  mapboxView.setStateData = function(){
+    map.getSource('townhall-points-state').setData(featuresHomeState);
   };
 
   mapboxView.setData = function(){

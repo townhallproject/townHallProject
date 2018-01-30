@@ -87,6 +87,7 @@
     }
     ctx.map.on('load', function() {
       mapboxView.onLoad(ctx.stateUPSP);
+      mapboxView.addStateLayer();
       mapView.readStateData(true, ctx.stateUPSP);
       TownHall.isMap = true;
       next();
