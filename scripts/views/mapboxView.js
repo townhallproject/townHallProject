@@ -28,6 +28,9 @@
 
   // Refocuses the map to predetermined bounding boxes based on a state code & (optionally) a district #.
   mapboxView.focusMap = function focusMap (bb) {
+    if (!bb) {
+      return;
+    }
     var height = window.innerHeight,
       width = window.innerWidth,
       view = geoViewport.viewport(bb, [width/2, height/2]);
@@ -85,7 +88,7 @@
   mapboxView.onLoad = function(state) {
     mapboxView.backSpaceHack();
     mapboxView.makeZoomToNationalButton(state);
-    mapboxView.addPopups();
+    mapboxView.addPopups(state);
     mapboxView.addLayer();
   };
 
@@ -149,16 +152,19 @@
     mapboxView.removeSelections();
 
     // set district highlight
-    var filter_house = ['all', ['==', 'GEOID', feature.house_geoId]];
-    var filter_senate = ['all', ['==', 'GEOID', feature.senate_geoId]];
+    var filterHouse = ['all', ['==', 'GEOID', feature.house_geoId]];
+    var filterSenate = ['all', ['==', 'GEOID', feature.senate_geoId]];
+    var stateOutline = map.getLayoutProperty('states-house-districts', 'visibility');
+    if (stateOutline === 'visible') {
+      // set filters
+      map.setFilter('states-house-districts-selected', filterHouse);
+      map.setFilter('states-senate-districts-selected', filterSenate);
 
-    // set filters
-    map.setFilter('states-house-districts-selected', filter_house);
-    map.setFilter('states-senate-districts-selected', filter_senate);
+      // make districts visible
+      map.setLayoutProperty('states-house-districts-selected', 'visibility', 'visible');
+      map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'visible');
+    }
 
-    // make districts visible
-    map.setLayoutProperty('states-house-districts-selected', 'visibility', 'visible');
-    map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'visible');
     if (feature.state) {
       var locationData = {
         federal: {
@@ -204,12 +210,15 @@
       map.setLayoutProperty('states-house-districts-selected', 'visibility', 'visible');
       locationData.federal.validDistricts.push(feature.house_district);
       locationData.lower.validDistricts.push(feature.house_district);
+
     } else if (feature.senate_geoId) {
+
       var filter_senate = ['all', ['==', 'GEOID', feature.senate_geoId]];
       map.setFilter('states-senate-districts-selected', filter_senate);
       map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'visible');
       locationData.federal.validDistricts.push(feature.senate_district);
       locationData.upper.validDistricts.push(feature.senate_district);
+
     }
     eventHandler.renderResults(locationData);
   };
@@ -223,6 +232,11 @@
   }
 
   var featuresHome = {
+    type: 'FeatureCollection',
+    features: []
+  };
+
+  var featuresHomeState = {
     type: 'FeatureCollection',
     features: []
   };
@@ -251,8 +265,32 @@
     }, 'district_interactive');
   };
 
+  mapboxView.addStateLayer = function() {
+    map.addLayer({
+      'id': 'townhall-points-state',
+      'type': 'symbol',
+      'source': {
+        'type': 'geojson',
+        'data': featuresHomeState
+      },
+      'layout': {
+        'icon-image': '{icon}',
+        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+        'icon-ignore-placement': true,
+        'icon-offset': {
+          'base': 1,
+          'stops': [
+              [0, [0, -15]],
+              [10, [0, -10]],
+              [12, [0, 0]]
+          ]
+        }
+      }
+    }, 'district_interactive');
+  };
+
   // Adds a Popup listener to the point layer.
-  mapboxView.addPopups = function() {
+  mapboxView.addPopups = function(state) {
     var popup = new mapboxgl.Popup({
       closeButton: false,
       closeOnClick: false
@@ -260,6 +298,10 @@
 
     map.on('mousemove', function(e) {
       var features = map.queryRenderedFeatures(e.point, { layers: ['townhall-points'] });
+      if (state) {
+        var featuresState = map.queryRenderedFeatures(e.point, { layers: ['townhall-points-state'] });
+        features = features.concat(featuresState);
+      }
       // Change the cursor style as a UI indicator.
       map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 
@@ -300,16 +342,12 @@
     // when selecting a point
     var pointFeature = {};
 
-    var points = map.queryRenderedFeatures(e.point, { layers: ['townhall-points'] });
-    if (points.length > 0) {
+    var points = map.queryRenderedFeatures(e.point, { layers: ['townhall-points-state'] });
+    if (points && points.length > 0) {
       var clickedPoint = points[0];
       pointFeature.state = clickedPoint.properties.stateAbbr;
       var district = clickedPoint.properties.district;
       var pointDistrict = district.substring(district.lastIndexOf('-') + 1, district.length);
-
-      clickedPoint.properties.Member = pointFeature.Member;
-      clickedPoint.properties.date = pointFeature.date;
-      clickedPoint.properties.Time = pointFeature.Time;
 
       if (clickedPoint.properties.chamber === 'HD') {
         pointFeature.house_district = mapHelperFunctions.zeroPad(pointDistrict);
@@ -318,8 +356,8 @@
         pointFeature.senate_district = mapHelperFunctions.zeroPad(pointDistrict);
         pointFeature.senate_geoId = clickedPoint.properties.stateCode + '0' + pointFeature.senate_district;
       }
-      mapboxView.pointSelect(pointFeature);
-      return;
+
+      return mapboxView.pointSelect(pointFeature);
     }
 
     // when selecting a location on map
@@ -328,9 +366,6 @@
     if (checkIfValidState.length > 0 && checkIfValidState[0].layer.id === 'state-mask') {
       return;
     }
-
-    var feature = {};
-
     var features = map.queryRenderedFeatures(
       e.point,
       {
@@ -353,7 +388,6 @@
 
   function districtListener(e) {
     var feature = {};
-
     var points = map.queryRenderedFeatures(e.point, { layers: ['townhall-points'] });
       // selected a marker
     if (points.length > 0) {
@@ -468,6 +502,7 @@
     var stateAbbr = townhall.state;
     var stateCode = fips[stateAbbr];
     var districtId = townhall.district ? townhall.district : '';
+    var array = featuresHome;
 
     if (iconKey === 'tele'){
       iconKey = 'phone-in';
@@ -479,7 +514,11 @@
     if (townhall.thp_id) {
       townhall.chamber = townhall.district.split('-')[0];
     }
-    featuresHome.features.push({
+
+    if (stateIcon) {
+      array = featuresHomeState;
+    }
+    array.features.push({
       type: 'Feature',
       geometry: {
         type: 'Point',
@@ -505,6 +544,10 @@
         stateIcon: stateIcon || undefined
       },
     });
+  };
+
+  mapboxView.setStateData = function(){
+    map.getSource('townhall-points-state').setData(featuresHomeState);
   };
 
   mapboxView.setData = function(){
