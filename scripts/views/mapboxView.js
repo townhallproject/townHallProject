@@ -269,9 +269,8 @@
       }
       var feature = features[0];
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
-      var townhall = new TownHall(feature.properties);
       popup.setLngLat(feature.geometry.coordinates)
-          .setHTML(mapPopoverTemplate(townhall))
+          .setHTML(mapPopoverTemplate(feature.properties))
           .addTo(map);
     });
   };
@@ -300,7 +299,7 @@
   function stateDistristListener(e) {
     // when selecting a point
     var pointFeature = {};
-    
+
     var points = map.queryRenderedFeatures(e.point, { layers: ['townhall-points'] });
     if (points.length > 0) {
       var clickedPoint = points[0];
@@ -322,9 +321,16 @@
       mapboxView.pointSelect(pointFeature);
       return;
     }
-    
-    // when selecting a location on map 
+
+    // when selecting a location on map
     var districtFeature = {};
+    var checkIfValidState =  map.queryRenderedFeatures(e.point, { layers: ['state-mask'] });
+    if (checkIfValidState.length > 0 && checkIfValidState[0].layer.id === 'state-mask') {
+      return;
+    }
+
+    var feature = {};
+
     var features = map.queryRenderedFeatures(
       e.point,
       {
@@ -454,7 +460,7 @@
   };
 
   // Creates the point layer.
-  mapboxView.makePoint = function (townhall) {
+  mapboxView.makePoint = function (townhall, stateIcon) {
     if (townhall.meetingType === 'DC Event' || !townhall.iconFlag) {
       return;
     }
@@ -487,7 +493,7 @@
         Time: townhall.Time,
         chamber: townhall.chamber || null,
         district: townhall.district,
-        displayDistrict: townhall.displayDistrict,
+        displayDistrict: townhall.displayDistrict.split(' ')[0],
         districtId: districtId,
         stateCode: stateCode,
         stateAbbr: stateAbbr,
@@ -495,7 +501,8 @@
         Member: townhall.Member,
         address: townhall.address,
         meetingType: townhall.meetingType,
-        icon: iconKey
+        icon: iconKey,
+        stateIcon: stateIcon || undefined
       },
     });
   };
