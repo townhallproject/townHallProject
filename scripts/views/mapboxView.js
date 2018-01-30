@@ -247,6 +247,11 @@
   };
 
   function stateDistristListener(e) {
+    var checkIfValidState =  map.queryRenderedFeatures(e.point, { layers: ['state-mask'] });
+    if (checkIfValidState.length > 0 && checkIfValidState[0].layer.id === 'state-mask') {
+      return;
+    }
+    
     var feature = {};
 
     var features = map.queryRenderedFeatures(
