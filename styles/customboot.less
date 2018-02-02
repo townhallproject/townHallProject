@@ -1676,10 +1676,14 @@ img.grayscale {
 }
 
 @media screen and (max-width: 767px){
-  .navbar-left {
+  .nav.navbar-left {
     margin-bottom: 0;
+
+    li.dropdown.open {
+      max-height: initial;
+    }
   }
-  .navbar-right {
+  .nav.navbar-right {
     margin-top: 0;
     & li:first-of-type {
       width: 60%;
