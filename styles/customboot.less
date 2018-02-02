@@ -1676,6 +1676,29 @@ img.grayscale {
 }
 
 @media screen and (max-width: 767px){
+  .navbar-left {
+    margin-bottom: 0;
+  }
+  .navbar-right {
+    margin-top: 0;
+    & li:first-of-type {
+      width: 60%;
+      display: inline-block;
+      font-size: 18px;
+      vertical-align: middle;
+      bottom: 2px;
+      a {
+        padding: 0 15px;
+      }
+    }
+    & li:not(:first-of-type) {
+      width: 12%;
+      display: inline-block;
+      a.social-icons {
+        padding-top: 5px;
+      }
+    }
+  }
   .footer {
     padding: 0px;
     padding-top: 20px;
