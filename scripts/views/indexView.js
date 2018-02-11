@@ -14,6 +14,11 @@
     $('#awards-banner').addClass('hidden');
   };
 
+  indexView.setStateDropdown = function() {
+    $('.dropdown--stateSelection button.dropdown-toggle span.button-text').text('State Legislatures');
+    $('.dropdown--stateSelection .stateNav-federal').hide();
+  };
+
   // reset the home page to originial view
   indexView.resetHome = function () {
     $('#awards-banner').show();
