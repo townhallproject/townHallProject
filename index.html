@@ -65,7 +65,19 @@
         </div>
         <div class="collapse navbar-collapse" id="main-nav">
           <ul class="nav navbar-nav navbar-left" roll="tablists">
-            <li></li>
+            <li class="dropdown dropdown--stateSelection">
+              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span class="button-text">State Legislatures</span>
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="/" class="stateNav-federal">Federal</a></li>
+                <!-- <li><a href="/arizona" class="stateNav-arizona">Arizona</a></li> -->
+                <li><a href="/colorado" class="stateNav-colorado">Colorado</a></li>
+                <!-- <li><a href="/north-carolina" class="stateNav-north-carolina">North Carolina</a></li> -->
+                <li><a href="/virginia" class="stateNav-virginia">Virginia</a></li>
+              </ul>
+            </li>
             <li><a class="hash-link"  data-toggle="tab" href="#about">About</a></li>
             <li><a class="hash-link" href="#missing-members" data-toggle="tab" id="missing-member-tab">Missing Members</a></li>
             <li><a class="hash-link" href="#join" data-toggle="tab">Join us</a></li>
