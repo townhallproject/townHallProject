@@ -48,16 +48,25 @@
     </div>
     <div class="mm card-footer no-padding container-flex">
       <div class="row">
-
-      <div class="footer-icon type-holder col-4 ">
+      <div class="footer-icon type-holder col-4 vertical-align ">
         <div class="footer-text"><small>Member of the</small> <span class="highlight">{{displayType}}</span></div>
       </div>
         <div class="footer-icon col-4 swingleft-holder less-padding">
         {{#if swingLeft}}
         <div class="footer-text"><small>In </small><span class="highlight">SwingLeft</span> <small> district</small></div> {{/if}}
       </div>
-        <div class="footer-icon  col-4 {{#if ahca}}ahca-holder {{/if}}">
-          {{#if ahca}} <div class="footer-text ahca-text"><small>Voted for </small><span class="highlight">AHCA</div></div>{{/if}}
+        <div class="footer-icon  col-4">
+          {{#ifCond ahca '||' taxBill }}
+            <div class="footer-text ahca-text">
+            <small>Voted for </small>
+            {{#if ahca}}<div><span class="highlight">AHCA</span></div>{{/if}}
+            {{#ifCond ahca '&&' taxBill }}<div>and</div>{{/ifCond}}
+            {{#if taxBill}}
+              <div><span class="highlight">GOP Tax Bill</span></div>
+            {{/if}}
+           {{/ifCond}}
+          </div>
+        </div>  
         </div>
       </div>
    </div>
