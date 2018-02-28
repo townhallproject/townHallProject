@@ -44,8 +44,12 @@
     },
     "indivisible_groups" : {
       ".read": "true",
-      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true",
-
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+			".indexOn":"id",
+    },
+    "indivisible_group_emails" : {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
     },
   	"townHallIds" : {
       ".read": "true",
