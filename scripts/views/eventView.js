@@ -395,6 +395,16 @@
     });
   }
 
+  function setYearEndImage(){
+    if (window.innerWidth < 768) {
+      $('#year-one img').attr('src', 'Images/EOY_2017_Report_Mobile.png');
+    } else {
+      $('#year-one img').attr('src', 'Images/EOY_Report_Layout_noBG-01-01.png');
+
+    }
+  }
+
+  window.addEventListener('resize', setYearEndImage);
   window.onBeforeunload=null;
 
   module.eventHandler = eventHandler;

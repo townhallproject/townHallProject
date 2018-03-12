@@ -1159,16 +1159,15 @@ img.grayscale {
 
 // End of Year graphic page
 #year-one {
+  background-color: @brand-success;
   .container {
-    background-image: url("/Images/EOY_2017_Report_Desktop.png");
-    height: 8136px;
-    background-size: contain;
-  }
-
-  @media screen and (max-width: 767px) {
-    .container {
-      background-image: url("/Images/EOY_2017_Report_Mobile.png");
-      height: 7500px;
+    @media (min-width: 1200px) {
+      width: 1440px
+    }
+    img{
+      max-width: 1440px;
+      width: 100%;
+      margin-bottom: 100px;
     }
   }
 }
@@ -1847,4 +1846,14 @@ img.grayscale {
 }
 .d-inline {
   display: inline;
+}
+
+#town-hall-pledge{
+  .container{
+    margin-top: 18px;
+    margin-bottom: 220px;
+  }
+  .img-holder{
+    padding: 20px;
+  }
 }

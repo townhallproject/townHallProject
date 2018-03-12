@@ -42,6 +42,15 @@
     "indivisible_public_events" : {
       ".read": "true"
     },
+    "indivisible_groups" : {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+			".indexOn":"id",
+    },
+    "indivisible_group_emails" : {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+    },
   	"townHallIds" : {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
@@ -64,6 +73,24 @@
             }
      		}
      }
+   },
+    "state_townhalls_archive" : {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+       	"$state": {
+          "$month" : {
+          ".indexOn": "dateObj",
+            "$townHallID": {
+             ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+              "dateObj":{
+                ".indexOn": ".value"
+              },
+             "meetingType": {
+                ".indexOn": ".value"
+              }
+          }
+       }
+      }
    },
   	"deletedTownHalls" : {
       "$userID": {
