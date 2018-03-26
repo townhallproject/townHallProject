@@ -353,6 +353,7 @@
         location.hash = hashid;
       } else if (hashid === '#mfol-submit-event') {
         newEventView.render();
+        location.hash = hashid;
       }
       else {
         location.hash = hashid;
