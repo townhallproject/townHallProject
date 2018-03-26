@@ -1,22 +1,22 @@
 (function (module) {
   function MfolEvent(opts) {
     this.organizer_name = opts.ogranizerName;
-    this.organizer_phone= opts.orgainzerPhone || null;
-    this.organizer_email= opts.orgainzerEmail || null;
-    this.location = opts.location || null;
-    this.address = opts.address || null;
+    this.organizer_phone= opts.orgainzerPhone || false;
+    this.organizer_email= opts.orgainzerEmail;
+    this.location = opts.location || false;
+    this.address = opts.address || false;
     this.state = opts.state;
-    this.district = opts.district || null;
+    this.district = opts.district || false;
     this.chamber = opts.chamber || 'lower';
     this.level = 'federal';
     this.eventType = 'Town Hall';
-    this.members = opts.members || null;
+    this.members = opts.members || 'none';
     this.yearMonthDay = opts.yearMonthDay;
     this.time = opts.Time;
-    this.organization = opts.organization || null;
+    this.organization = opts.organization || false;
     this.connect_with_others = opts.connectWithOthers || false;
-    this.lat = opts.lat || null;
-    this.lng = opts.lng || null;
+    this.lat = opts.lat || false;
+    this.lng = opts.lng || false;
   }
 
   MfolEvent.getMocByStateAndDistrict = function(){
