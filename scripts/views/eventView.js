@@ -1,3 +1,4 @@
+/*globals newEventView*/
 (function(module) {
   var zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
   // object to hold the front end view functions
@@ -314,6 +315,8 @@
             $('.grid').isotope();
           }, 1500);
         }
+      } else if (hashLocation === '#mfol-submit-event') {
+        newEventView.render();
       }
     } else {
       TownHall.isMap = true;
@@ -347,6 +350,9 @@
             $('.grid').isotope();
           }, 1500);
         }
+        location.hash = hashid;
+      } else if (hashid === '#mfol-submit-event') {
+        newEventView.render();
         location.hash = hashid;
       }
       else {
