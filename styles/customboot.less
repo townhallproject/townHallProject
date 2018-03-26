@@ -68,6 +68,9 @@
 @brand-secondary-dark : darken(@brand-secondary, 20%);
 @brand-white: #ffffff;
 
+.text-main {
+  color: @brand-text;
+}
 .text-white {
   color: @brand-white;
 }
@@ -93,6 +96,10 @@
 }
 section.background-light-blue {
   padding: 0.5em 0 2em;
+  border-bottom: solid @brand-primary 1px;
+}
+
+section.border{
   border-bottom: solid @brand-primary 1px;
 }
 
@@ -343,6 +350,16 @@ input{
          color: @brand-success;
          opacity: 0.9;
        }
+     }
+   }
+ }
+
+ #mfol-banner {
+   padding: 40px;
+   .image-holder{
+     margin-top: 40px;
+     img {
+       max-width: 220px;
      }
    }
  }

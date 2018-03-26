@@ -309,6 +309,23 @@
             </div>
           </div>
         </section>
+
+        <!-- MFOL banner -->
+        <section class="home-page-only border" id="mfol-banner">
+         <div class="container container-fluid">
+           <div class="col-sm-2 image-holder">
+             <img src="../Images/march-for-our-lives.svg"/>
+           </div>
+           <div class="col-sm-9 col-sm-offset-1">
+             <a target="_blank" href="https://docs.google.com/document/d/1SzEhCm34FuT9xQCFmwYSfHhxXfxV51nDfIM9H0LtiNc/edit?usp=sharing">
+               <h1 id="email-title" class=" extra-large">How to organize a<br><span class="text-main">TOWN HALL FOR OUR LIVES</span><br>on April 7
+                 <i class="fa fa-external-link-square"></i>
+               </h1>
+             </a>
+           </div>
+         </div>
+        </section>
+
         <section class="background-light-blue email-signup--inline" id="email-signup">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-email"><span aria-hidden="true">&times;</span></button>
          <div class="container container-fluid">
@@ -857,6 +874,206 @@
         </div>
       </div>
 
+    </div>
+    <div class="new-event-form hidden">
+      <h3 class="text-success">Enter a new town hall event</h3>
+      <form class="hidden" id="new-event-form-element">
+        <section class="member-info text-info">
+          <h4 id="member-title">Member of Congress Information<br>
+            <small>Enter their name and we will auto-fill the information</small>
+          </h4>
+          <div class="form-group col-md-12 col-sm-12" id="member-form-group">
+            <label class="sr-only" for="Member">Member</label>
+            <input type="text" class="form-control input-underline" id="Member" placeholder="Full name" value="" autocomplete="off">
+            <span id="member-help-block" class="help-block">Only first name and last name, not titles</span>
+          </div>
+          <div class="hidden" id="advanced-moc-options">
+            <div class="form-group col-sm-6">
+              <label  for="state"class="sr-only">State (abbrivation)</label>
+              <input type="text" class="form-control input-underline" id="state" placeholder="State (abbrivation)" value="">
+            </div>
+            <div class="form-group col-sm-6 col-md-6 district-group federal-district-group" id="federal-district-group">
+              <label  for="district" class="sr-only">District</label>
+              <input type="text" class="form-control input-underline" id="district" placeholder="District" value="">
+              <span id="helpBlock" class="help-block">Zero padded number, ex '09', leave blank for senate</span>
+            </div>
+            <div class="form-group col-sm-6 col-md-6 district-group" id="state-district-group">
+              <label  for="district" class="sr-only">District</label>
+              <input type="text" class="form-control input-underline" id="district" placeholder="District" value="">
+              <span id="helpBlock" class="help-block">ex HD-02</span>
+            </div>
+            <div class="form-group chamber col-md-12 col-sm-12">
+              <label class="" for="chamber">Chamber</label>
+              <div class="input-group">
+                <input type="text" class="form-control" aria-label="..." id="chamber" value="" placeholder="Chamber" readonly>
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></button>
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a data-value="upper" href="#">Upper (Senate)</a></li>
+                    <li><a data-value="lower" href="#">Lower (House)</a></li>
+                    <li><a data-value="statewide" href="#">Statewide (executive)</a></li>
+                  </ul>
+                </div><!-- /btn-group -->
+              </div><!-- /input-group -->
+            </div><!-- /form-group -->
+            <div class="col-md-12">
+              <!-- <button class="btn btn-blue " type="button" name="button">(Optional) Save candidate</button> -->
+            </div>
+          </div>
+          <div class="form-group col-md-12 col-sm-12">
+            <label  for="stateName" class="sr-only" readonly>Home State</label>
+            <input type="text" class="form-control input-underline" id="stateName" placeholder="Home State" value="">
+          </div>
+          <div class="form-group col-md-12 col-sm-12 district-group federal-district-group" id="federal-district-group">
+            <label  for="District" class="sr-only">Federal District</label>
+            <input type="text" class="form-control input-underline" id="District" placeholder="District" value="" readonly>
+            <span id="helpBlock" class="help-block">How the district will be displayed</span>
+          </div>
+
+          <div class="form-group party col-sm-12">
+            <label class="sr-only " for="party">Party</label>
+            <div class="input-group">
+              <input type="text" class="form-control" aria-label="..." id="party" value="" placeholder="Party" readonly>
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a data-value="Democratic" href="#">Democratic</a></li>
+                  <li><a data-value="Republican" href="#">Republican</a></li>
+                  <li><a data-value="Independent" href="#">Independent</a></li>
+                </ul>
+              </div><!-- /btn-group -->
+            </div><!-- /input-group -->
+          </div><!-- /form-group -->
+
+        </section>
+
+        <section class="meeting infomation">
+          <h4 class="text-info">Information about the Event</h4>
+          <div class="form-group col-sm-12">
+            <label class="sr-only" for="eventName">Event name</label>
+            <input type="text" class="form-control input-underline" id="eventName" value="" placeholder="Name of the event">
+          </div>
+          <div class="form-group col-sm-12">
+            <label class="sr-only" for="meetingType">Meeting Type</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="meetingType" value="" readonly placeholder="Meeting Type">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><a data-value="Town Hall" href="#">Town Hall</a></li>
+                  <li><a data-value="Tele-Town Hall" href="#">Tele-Town Hall</a></li>
+                  <li><a data-value="Ticketed Event" href="#">Ticketed Event</a></li>
+                  <li><a data-value="Campaign Town Hall" href="#">Campaign Town Hall</a></li>
+                  <li><a data-value="Adopt-A-District/State" href="#">Adopt-A-District/State</a></li>
+                  <li><a data-value="Empty Chair Town Hall" href="#">Empty Chair Town Hall</a></li>
+                  <li><a data-value="Hearing" href="#">Hearing</a></li>
+                  <li><a data-value="DC Event" href="#">DC Event</a></li>
+                  <li><a data-value="Office Hours" href="#">Office Hours</a></li>
+                  <li><a data-value="Other" href="#">Other</a></li>
+                  <li><a class="text-secondary" data-value="No Events" href="#">No new events</a></li>
+                </ul>
+              </div><!-- /btn-group -->
+            </div><!-- /input-group -->
+            <span id="meetingType-error" class="help-block error-message hidden">Please select type of event</span>
+          </div><!-- /form-group -->
+        </section>
+        <section class="adopter-data non-standard hidden">
+          <div class="form-group col-sm-12" id="adopter-member-form-group">
+            <label for="districtAdopter">MOC appearing at event (adopter)</label>
+            <input type="text" class="form-control input-underline" id="districtAdopter" placeholder="Full name" value="" autocomplete="off">
+            <span id="adopter-member-help-block" class="help-block">Only first name and last name, not titles</span>
+          </div>
+        </section>
+        <section class="location-data event-details">
+          <div class="form-group col-sm-12 general-inputs">
+            <label class="sr-only" for="Location">Location</label>
+            <input type="text" class="form-control input-underline" id="Location" placeholder="Name of location (eg. Gary Recreation Center)" value="">
+          </div>
+          <div class="form-group col-sm-12 general-inputs" id=location-form-group>
+              <input type="text" class="form-control" placeholder="Street address" id="address">
+              <span id="address-feedback" class="help-block">Enter a valid street address, if there isn't one, leave this blank</span>
+          </div><!-- /form-group -->
+          <div class="form-group col-sm-12 general-inputs">
+            <label class="sr-only" for="addressType">Address Type</label>
+            <input class="sr-only" type="text" class="" id="addressType" placeholder="Address type" value="street" readonly>
+          </div>
+          <div class="form-group col-sm-12 general-inputs">
+            <label class="sr-only" for="locationCheck">Location Check</label>
+            <input class="sr-only" type="text" class="text-success" id="locationCheck" placeholder="please geocode" readonly>
+          </div>
+          <div class="text-info non-standard tele-inputs hidden">
+            <div class="form-group col-sm-12">
+              <label class="" for="phoneNumber">Phone Number format: (555) 555-5555</label>
+              <input type="tel" class="form-control" id="phoneNumber" placeholder="Phone Number" value="">
+              <span id="phoneNumber-error" class="help-block error-message hidden">Please enter a valid phone number</span>
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="addressType">Address Type</label>
+              <input type="text" class="sr-only" id="addressType" placeholder="Address type" value="state" readonly>
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="locationCheck">Location Check</label>
+              <input type="text" class="text-success sr-only" id="locationCheck" placeholder="please geocode" readonly>
+            </div>
+          </div>
+        </section>
+        <section class="time-data event-details">
+          <div class="checkbox col-sm-12">
+            <label>
+              <input type="checkbox" class="date-string">
+              <span class="checkbox-label">Click for repeating event (eg. 'First Wed')</span>
+            </label>
+          </div>
+          <div class="form-group col-sm-12">
+            <label  for="yearMonthDay">Date</label>
+            <input type="date" class="form-control datetime date " id="yearMonthDay" placeholder="MM/DD/YYYY">
+            <span id="yearMonthDay-error" class="help-block error-message hidden">Please enter a valid date</span>
+          </div>
+          <div class="form-group hidden repeating">
+            <label  for="repeatingString">Repeating Event</label>
+            <input type="text" class="form-control input-underline " id="repeatingEvent" placeholder="Eg. First Tuesday of the month">
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="Time">Start Time (HH:MM AM/PM)</label>
+            <input type="time" class="form-control datetime " id="timeStart24" placeholder="HH:MM AM/PM">
+            <span id="timeStart24-error" class="help-block error-message hidden">Please enter a valid time</span>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="endTime">End Time (HH:MM AM/PM)</label>
+            <input type="time" class="form-control datetime " id="timeEnd24" placeholder="HH:MM AM/PM">
+          </div>
+        </section>
+        <section class="extra-data event-details">
+          <div class="form-group col-sm-12">
+            <label for="link">URL related to event (optional)</label>
+            <input type="url" class="form-control input-underline" id="link" placeholder="Link" value="">
+          </div>
+          <div class="form-group col-sm-12">
+            <label  for="linkName">Link display name (optional)</label>
+            <input type="text" class="form-control input-underline" id="linkName" placeholder="Link Name" value="">
+          </div>
+          <div class="checkbox col-sm-12">
+            <label>
+              <input type="checkbox" class="general-checkbox" id="ada_accessible">
+              <span class="checkbox-label">ADA accessible?</span>
+            </label>
+          </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <div class="form-group col-sm-12">
+                <label for="Notes">Public Notes</label>
+                <textarea class="form-control" id="Notes" placeholder="Notes about event that cannot be entered anywhere else." rows=3></textarea>
+              </div>
+              <div class="form-group col-sm-12">
+                <label for="Internal-Notes">Internal Notes to THP Team</label>
+                <textarea class="form-control" id="Internal-Notes" placeholder="Notes for Town Hall Project team." rows=3></textarea>
+              </div>
+            </div>
+          </div>
+        </section>
+        <button class="btn btn-default btn-secondary" type="submit" name="button">Submit</button>
+        <span id="general-error" class="help-block error-message hidden"></span>
+      </form>
     </div>
     <div class="modal fade event-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
       <div class="modal-dialog modal-lg" role="document">
