@@ -286,7 +286,7 @@
             toSubmit.submit().then(function () {
               newEventView.resetData();
             }).catch(function(error){
-              $('general-error').text('Please open your console (View>Developer>JavaScript console)and email meganrm@townhallproject.com a screenshot:', error).removeClass('hidden');
+              $('#general-error').text('Please open your console (View>Developer>JavaScript console)and email meganrm@townhallproject.com a screenshot:', error).removeClass('hidden');
             });
           }
         })
@@ -294,7 +294,7 @@
           var toSubmit = new MfolEvent(newMfolEvent);
           toSubmit.submit()
           .catch(function(error){
-            $('general-error').text('Please open your console (View>Developer>JavaScript console)and email meganrm@townhallproject.com a screenshot:', error).removeClass('hidden');
+            $('#general-error').text('Please open your console (View>Developer>JavaScript console)and email meganrm@townhallproject.com a screenshot:', error).removeClass('hidden');
           });
         });
     } else {

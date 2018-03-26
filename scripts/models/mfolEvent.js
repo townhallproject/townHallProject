@@ -2,6 +2,7 @@
   function MfolEvent(opts) {
     this.organizer_name = opts.ogranizerName;
     this.organizer_phone= opts.orgainzerPhone || null;
+    this.organizer_email= opts.orgainzerEmail || null;
     this.location = opts.location || null;
     this.address = opts.address || null;
     this.state = opts.state;
