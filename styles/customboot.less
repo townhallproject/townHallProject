@@ -68,6 +68,9 @@
 @brand-secondary-dark : darken(@brand-secondary, 20%);
 @brand-white: #ffffff;
 
+.text-main {
+  color: @brand-text;
+}
 .text-white {
   color: @brand-white;
 }
@@ -93,6 +96,10 @@
 }
 section.background-light-blue {
   padding: 0.5em 0 2em;
+  border-bottom: solid @brand-primary 1px;
+}
+
+section.border{
   border-bottom: solid @brand-primary 1px;
 }
 
@@ -342,6 +349,25 @@ input{
        &:-moz-placeholder { /* Firefox 4 - 18 */
          color: @brand-success;
          opacity: 0.9;
+       }
+     }
+   }
+ }
+
+ #mfol-banner {
+   .image-holder{
+     margin-top: 40px;
+     img {
+       max-width: 75px;
+     }
+   }
+ }
+
+ @media (min-width: @screen-sm-min){
+   #mfol-banner {
+     .image-holder{
+       img {
+         max-width: 220px;
        }
      }
    }
@@ -1098,6 +1124,14 @@ li[data-toggle='popover']:hover {
       }
     }
   }
+}
+//mfol form
+.new-event-form-mfol {
+  margin-bottom: 200px
+}
+
+.member-name.form-control[readonly] {
+  color: @brand-success;
 }
 
 // google forms
