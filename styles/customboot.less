@@ -155,6 +155,7 @@ section.border{
 @main-activism: #ec955a;
 @main-tele:#73b94c;
 @main-campaign: #d7bd40;
+@main-mfol: #1b4886;
 
 .weight-heavy {
   font-weight: 700;
@@ -496,6 +497,14 @@ a.social-icon {
 .panel-heading_activism   { background-color: @main-activism; }
 .panel-heading_tele       { background-color: @main-tele; }
 .panel-heading_campaign   { background-color: @main-campaign; }
+.panel-heading_mfol       {
+  background-color: #d5d8d2;
+  color: #302f2e;
+  border: 6px solid @main-mfol;
+  small {
+    color: @main-mfol;
+  }
+}
 
 .event-icon__in-person {
   background-image: url('/Images/map/circle-in-person.svg');
@@ -516,10 +525,13 @@ a.social-icon {
 .event-icon__campaign {
   background-image: url('/Images/map/circle-campaign.svg');
 }
+.event-icon__mfol {
+  background-image: url('/Images/map/circle-mfol.svg');
+}
+
 .state-icon__CO {
   background-image: url('/Images/CO/state-icon.png');
 }
-
 .event-icon__with-date { margin-top: 7px; }
 
 .calendarButton {
@@ -1649,6 +1661,10 @@ img.grayscale {
 
 .map-legend .map-legend__person {
   background-image: url('/Images/map/in-person.svg');
+}
+
+.map-legend .map-legend__mfol {
+  background-image: url('/Images/map/mfol.svg');
 }
 
 .map-legend .map-legend__tele {
