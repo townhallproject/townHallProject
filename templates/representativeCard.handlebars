@@ -4,7 +4,10 @@
       <div class="row">
         <div class="col-xs-4 col-sm-3 no-padding p-0">
           {{#if missingMember}}
-            <div class="missing-member weight-heavy">Missing Member</div>
+            <a href="https://jacksonmaxfield.github.io/flyer_gen/#/m={{id}}" target="_blank"
+               title="Print a milk-carton like poster for your missing member of congress.">
+              <div class="missing-member weight-heavy">Missing Member</div>
+            </a>
           {{/if}}
           <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-100px.jpeg" onerror="$(this).remove()" class="grayscale" />
         </div>

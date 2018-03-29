@@ -30,6 +30,7 @@
   repCardHandler.renderRepresentativeCards = function(representativePromise, $parent, state) {
     $parent.empty(); // If they search for a new zipcode clear the old info
     representativePromise.then(function(representatives) {
+      console.log(representatives);
       var compiledTemplate = Handlebars.getTemplate('representativeCard');
       $parent.append('<h2 class="text-primary text-center">Your Federal Representatives</h2>');
       repCardHandler.repCards(representatives, compiledTemplate, $parent);
