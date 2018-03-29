@@ -1234,11 +1234,20 @@ img.grayscale {
 
 #missing-members {
   background-color: @brand-gray;
-  .missing-member-cards-container{
+  .missing-member-cards-container {
     padding-bottom: 130px;
     -webkit-box-shadow: inset 0px 12px 29px -13px rgba(0,0,0,1);
        -moz-box-shadow: inset 0px 12px 29px -13px rgba(0,0,0,1);
             box-shadow: inset 0px 12px 29px -13px  rgba(0,0,0,1);
+
+    .card-representative {
+      .fa-address-book {
+        position: absolute;
+        right: 15px;
+        opacity: 0.65;
+        color: #ffffff;
+      }
+    }
   }
   .navbar {
     border-bottom: @brand-cool;
