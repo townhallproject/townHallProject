@@ -34,8 +34,8 @@
   mapView.readData = function(webgl) {
     var townHallsFB = firebasedb.ref('/townHalls/');
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
-      var ele = new TownHall (snapshot.val());
-        ///If no state filter show all results
+      var ele = new TownHall(snapshot.val());
+      ///If no state filter show all results
       TownHall.allTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
       tableHandler.initialMainTable(ele);
@@ -58,7 +58,7 @@
     ///If in state view filter the results before they get displayed on the map and in the table
     var townHallsFB = firebasedb.ref('/state_townhalls/' + state + '/');
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
-      var ele = new TownHall (snapshot.val());
+      var ele = new TownHall(snapshot.val());
       TownHall.allStateTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
       tableHandler.initialStateTable(ele);
@@ -68,7 +68,6 @@
       } else {
         noWebGlMapView.setData(ele);
       }
-
     });
     var townHallsFBFederal = firebasedb.ref('/townHalls/');
     townHallsFBFederal.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
