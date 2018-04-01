@@ -37,6 +37,7 @@
       townhall.dist = Math.round(townhall.dist/1609.344);
     }
     townhall.addressLink = 'https://www.google.com/maps?q=' + escape(townhall.address);
+    townhall.makeFormattedMember();
     var compiledTemplate = Handlebars.getTemplate('eventTableRow');
     $($tableid).append(compiledTemplate(townhall));
   };

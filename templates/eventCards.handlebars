@@ -14,16 +14,16 @@
             <h3 class="line-height-small">
               <div class="row">
                 {{#ifCond District '===' 'Senate'}}
-                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>{{Member}} <small> ({{party}}, {{displayDistrict}})</small></span>
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>{{Member}} <small> ({{displayDistrict}})</small></span>
                 {{else}}
-                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>{{Member}} <small> ({{party}}, {{displayDistrict}})</small></span>
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>{{Member}} <small> ({{displayDistrict}})</small></span>
                 {{/ifCond}}
 
                 <span class="d-inline-block col-sm-6"><span class="small-white">Visiting MoC (will be present):<br></span>{{districtAdopter}} <small> ({{districtAdopterParty}}, {{districtAdopterDistrict}})</small></span>
               </div>
             </h3>
           {{else}}
-            <h3>{{Member}} <small>{{party}}, {{displayDistrict}}</small></h3>
+            <h3>{{formattedMember}} <small>{{displayDistrict}}</small></h3>
           {{/ifCond}}
           {{#if dateValid}}
           <span class="addtocalendar pull-right">
@@ -35,7 +35,7 @@
               <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
                 <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
                 <var class="atc_timezone">{{zoneString}}</var>
-                <var class="atc_title">{{meetingType}}: {{Member}}</var>
+                <var class="atc_title">{{meetingType}}: {{formattedMember}}</var>
                 <var class="atc_description">{{{Notes}}}</var>
                 <var class="atc_location">{{address}}</var>
                 <var class="atc_organizer">{{party}}</var>
