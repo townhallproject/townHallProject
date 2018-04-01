@@ -59,9 +59,6 @@
       }
     } else {
       var state = this.state ? this.state : this.stateAbbr;
-      if(!state){
-        console.log(this)
-      }
       if (this.district) {
         //House
         this.displayDistrict = state + '-' + parseInt(this.district);
@@ -74,7 +71,6 @@
 
   TownHall.prototype.makeFormattedMember = function () {
       var formattedMember;
-      console.log(this);
       var icon = this.iconFlag ? this.iconFlag : this.icon;
       var prefix = '';
     if ((this.chamber) && (icon) && (icon !== 'campaign')) {
