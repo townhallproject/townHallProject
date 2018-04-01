@@ -58,14 +58,35 @@
         this.displayDistrict = title;
       }
     } else {
+      var state = this.state ? this.state : this.stateAbbr;
+      if(!state){
+        console.log(this)
+      }
       if (this.district) {
         //House
-        this.displayDistrict = this.state + '-' + parseInt(this.district);
+        this.displayDistrict = state + '-' + parseInt(this.district);
       } else {
         //Senator
-        this.displayDistrict = 'Senate';
+        this.displayDistrict = state + ', ' + 'Senate';
       }
     }
+  };
+
+  TownHall.prototype.makeFormattedMember = function () {
+      var formattedMember;
+      console.log(this);
+      var icon = this.iconFlag ? this.iconFlag : this.icon;
+      var prefix = '';
+    if ((this.chamber) && (icon) && (icon !== 'campaign')) {
+        prefix = constants[this.chamber];
+      } 
+      if (this.meetingType === 'Empty Chair Town Hall') {
+        var sentence = [prefix, this.Member, '(invited)'];
+        this.formattedMember = sentence.join(' ');
+      } else {
+        var sentence = [prefix, this.Member];
+        this.formattedMember = sentence.join(' ');
+      }
   };
 
   TownHall.prototype.isInFuture = function (){

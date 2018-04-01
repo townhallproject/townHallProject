@@ -240,6 +240,7 @@
     if (townhall.address) {
       townhall.addressLink = 'https://www.google.com/maps/dir/Current+Location/' + escape(townhall.address);
     }
+    townhall.makeFormattedMember();
     var compiledTemplate = Handlebars.getTemplate('eventCards');
     var $panel = $(compiledTemplate(townhall));
     $panel.appendTo($parent);

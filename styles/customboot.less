@@ -135,7 +135,7 @@ section.border{
 @navbar-collapse-max-height:       340px;
 
 @navbar-default-color:             #777;
-@navbar-default-bg:                #@brand-white;
+@navbar-default-bg:                @brand-white;
 @navbar-default-border:            darken(@navbar-default-bg, 6.5%);
 
 // Navbar links
@@ -498,9 +498,10 @@ a.social-icon {
 .panel-heading_tele       { background-color: @main-tele; }
 .panel-heading_campaign   { background-color: @main-campaign; }
 .panel-heading_mfol       {
-  background-color: #d5d8d2;
+  background-color: #ededed;
   color: #302f2e;
-  border: 6px solid @main-mfol;
+  border-top: 0.5px solid @main-mfol;
+  border-bottom: 4px solid @main-mfol;
   small {
     color: @main-mfol;
   }

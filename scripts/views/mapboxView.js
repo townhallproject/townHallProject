@@ -308,9 +308,11 @@
         return;
       }
       var feature = features[0];
+      var townhall = new TownHall(feature.properties);
+      townhall.makeFormattedMember();
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
       popup.setLngLat(feature.geometry.coordinates)
-          .setHTML(mapPopoverTemplate(feature.properties))
+        .setHTML(mapPopoverTemplate(townhall))
           .addTo(map);
     });
   };

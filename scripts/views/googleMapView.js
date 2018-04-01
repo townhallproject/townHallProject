@@ -420,6 +420,7 @@
 // Adds all events as markers
 // renders tables
   noWebGlMapView.setData = function (townhall){
+    this.townhall.makeFormattedMember();
     var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
     TownHall.addFilterIndexes(townhall);
     $('[data-toggle="popover"]').popover({
