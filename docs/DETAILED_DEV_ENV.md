@@ -1,10 +1,10 @@
 1. install node and npm:
-  [follow these instructions](http://blog.teamtreehouse.com/install-node-js-npm-mac)
+  * [follow these instructions](http://blog.teamtreehouse.com/install-node-js-npm-mac)
 2. install grunt: 
-  * `npm install -g grunt-cli`
+  * in a terminal window:
+    * `npm install -g grunt-cli`
 3. clone this repo:
-  * open a terminal window
-  * type:
+  * in a termial window type:
     * `mkdir townhall-dev`
     * `git clone https://github.com/townhallproject/townHallProject` (will download the project)
     * `cd townHallProject`
