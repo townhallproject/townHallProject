@@ -5,10 +5,10 @@
     * `npm install -g grunt-cli`
 3. clone this repo:
   * in a termial window type:
-    * `mkdir townhall-dev`
-    * `cd townhall-dev`
+    * `mkdir townhall-dev` (makes a new folder called townhall-dev)
+    * `cd townhall-dev` (moves you into this new folder, so the repo will be cloned here)
     * `git clone https://github.com/townhallproject/townHallProject` (will download the project)
-    * `cd townHallProject`
+    * `cd townHallProject` (moves you into the repo folder)
     * `npm i` (a bunch of stuff will download)
     * `bower i`
 4. open a new terminal tab (command + T)
