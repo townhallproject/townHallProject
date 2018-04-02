@@ -6,6 +6,7 @@
 3. clone this repo:
   * in a termial window type:
     * `mkdir townhall-dev`
+    * `cd townhall-dev`
     * `git clone https://github.com/townhallproject/townHallProject` (will download the project)
     * `cd townHallProject`
     * `npm i` (a bunch of stuff will download)
