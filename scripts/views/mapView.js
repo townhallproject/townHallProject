@@ -33,6 +33,7 @@
   // listens for new data.
   mapView.readData = function(webgl) {
     var townHallsFB = firebasedb.ref('/townHalls/');
+    tableHandler.clearTableData();
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall(snapshot.val());
       ///If no state filter show all results
@@ -58,10 +59,7 @@
     ///If in state view filter the results before they get displayed on the map and in the table
     var townHallsFB = firebasedb.ref('/state_townhalls/' + state + '/');
     ///clear previous table if it exists
-    $('#all-events-table').children().slice(1).remove();
-    $('#current-state').attr('data-total', 0);
-    $('#current-state').attr('data-current', 0);
-
+    tableHandler.clearTableData();
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall(snapshot.val());
       TownHall.allStateTownHalls.push(ele);
@@ -128,3 +126,4 @@
   module.mapView = mapView;
 
 }(window));
+
