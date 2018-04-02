@@ -59,6 +59,9 @@
     var townHallsFB = firebasedb.ref('/state_townhalls/' + state + '/');
     ///clear previous table if it exists
     $('#all-events-table').children().slice(1).remove();
+    $('#current-state').attr('data-total', 0);
+    $('#current-state').attr('data-current', 0);
+
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall(snapshot.val());
       TownHall.allStateTownHalls.push(ele);
