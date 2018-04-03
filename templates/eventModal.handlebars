@@ -19,15 +19,19 @@
     {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
       <h3 class="col-xs-10 col-md-9 line-height-medium">
         {{#ifCond District '===' 'Senate'}}
-          <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{Member}} <small> ({{party}}) {{state}}, {{displayDistrict}}</small>
+          <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{Member}} <small>  {{#if party}} ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
         {{else}}
-          <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{Member}} <small> ({{party}}) {{state}}, {{displayDistrict}}</small>
+          <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{Member}} <small>  {{#if party}} ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
         {{/ifCond}}
         <br>
         <span class="discriptor-text d-inline-block">Visiting MoC (will be present): </span>{{districtAdopter}} <small> ({{districtAdopterParty}}) {{districtAdopterState}}, {{districtAdopterDistrict}}</small>
       </h3>
     {{else}}
-      <h3 class="col-xs-10 col-md-9">{{formattedMember}} <small>({{party}}) {{displayDistrict}}</small></h3>
+      <h3 class="col-xs-10 col-md-9">{{formattedMember}} <small>
+        {{#if party}}
+        ({{party}}) 
+        {{/if}}
+        {{displayDistrict}}</small></h3>
     {{/ifCond}}
     <h3 class="col-xs-2 col-md-3">
       <span class="addtocalendar pull-right">
