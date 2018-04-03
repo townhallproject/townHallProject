@@ -273,7 +273,7 @@
     if (eventId) {
       firebasedb.ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
         if (snapshot.val()) {
-          var townhall = new TownHall(snapshot.val())
+          var townhall = new TownHall(snapshot.val());
           townhall.makeFormattedMember();
           eventHandler.populateEventModal(townhall);
           $('.event-modal').modal('show');
