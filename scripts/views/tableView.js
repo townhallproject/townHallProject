@@ -55,7 +55,8 @@
 
   tableHandler.sortTable = function (e) {
     e.preventDefault();
-    TownHall.sortOn = $(this).attr('data-filter');
+    TownHall.sortOn = $(this).attr('data-filter');   
+    TownHall.isCurrentContext = $('.stateNav-federal').attr('style') ? false : true;
     tableHandler.renderTableWithArray(tableHandler.getFilterState());
   };
 
@@ -132,6 +133,7 @@
     $currentState.attr('data-total', total);
     var $table = $('#all-events-table');
     cur ++;
+    TownHall.currentContext.push(townhall);
     tableHandler.renderTable(townhall, $table);
     $currentState.attr('data-current', cur);
     $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
