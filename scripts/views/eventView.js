@@ -310,6 +310,8 @@
     if (location.hash) {
       var hashLocation = location.hash.split('?')[0];
       $("a[href='" + hashLocation + "']").tab('show');
+      $('.home-page-only').removeClass('hidden');
+
       if (hashLocation === '#missing-members') {
         if (!missingMemberView.loaded) {
           missingMemberView.init();
@@ -320,6 +322,9 @@
         }
       } else if (hashLocation === '#mfol-submit-event') {
         newEventView.render();
+      } else if (hashLocation === '#thfol-guide') {
+        $('.home-page-only').addClass('hidden');
+        location.hash = hashLocation;
       }
     } else {
       TownHall.isMap = true;
@@ -331,6 +336,7 @@
     $('.hash-link').on('click', function onClickGethref() {
       var hashid = this.getAttribute('href');
       $('ul .hash-link').parent().removeClass('active');
+      $('.home-page-only').removeClass('hidden');
 
       if (hashid === '#home' && TownHall.isMap === false) {
         page('/');
@@ -357,7 +363,11 @@
       } else if (hashid === '#mfol-submit-event') {
         newEventView.render();
         location.hash = hashid;
+      } else if (hashid === '#thfol-guide') {
+        $('.home-page-only').addClass('hidden');
+        location.hash = hashid;
       }
+
       else {
         location.hash = hashid;
       }
