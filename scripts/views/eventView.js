@@ -310,7 +310,7 @@
     if (location.hash) {
       var hashLocation = location.hash.split('?')[0];
       $("a[href='" + hashLocation + "']").tab('show');
-      $('.home-page-only').addClass('hidden');
+      $('.home-page-only').removeClass('hidden');
 
       if (hashLocation === '#missing-members') {
         if (!missingMemberView.loaded) {
@@ -336,7 +336,7 @@
     $('.hash-link').on('click', function onClickGethref() {
       var hashid = this.getAttribute('href');
       $('ul .hash-link').parent().removeClass('active');
-      $('.home-page-only').addClass('hidden');
+      $('.home-page-only').removeClass('hidden');
 
       if (hashid === '#home' && TownHall.isMap === false) {
         page('/');
