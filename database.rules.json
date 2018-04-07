@@ -45,11 +45,11 @@
     "indivisible_groups": {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-      ".indexOn": "id",
+      ".indexOn": "id"
     },
     "indivisible_group_emails": {
       ".read": "true",
-      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
     },
     "townHallIds": {
       ".read": "true",
@@ -237,7 +237,7 @@
     "townHallsErrors": {
       "$townHallID": {
         ".read": "true",
-        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
       }
     },
     "geolocate": {
@@ -288,7 +288,7 @@
       ".read": "false",
       "$user_id": {
         ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
-        ".write": "$user_id === auth.uid",
+        ".write": "$user_id === auth.uid"
       }
     }
   }
