@@ -59,30 +59,37 @@
       }
     } else {
       var state = this.state ? this.state : this.stateAbbr;
-      if (this.district) {
+      if (this.district && parseInt(this.district)) {
         //House
         this.displayDistrict = state + '-' + parseInt(this.district);
-      } else {
+      } else if (this.chamber === 'upper'){
         //Senator
         this.displayDistrict = state + ', ' + 'Senate';
+      } else if (this.chamber === 'statewide' && this.office){
+        this.displayDistrict = this.office.toUpperCase() + ' ' + state;
+      } else {
+        this.displayDistrict = state;
+      }
+      if (this.meetingType === 'Campaign Town Hall'){
+        this.displayDistrict = 'Running for: ' + this.displayDistrict;
       }
     }
   };
 
   TownHall.prototype.makeFormattedMember = function () {
-      var formattedMember;
-      var icon = this.iconFlag ? this.iconFlag : this.icon;
-      var prefix = '';
+    var sentence;
+    var icon = this.iconFlag ? this.iconFlag : this.icon;
+    var prefix = '';
     if ((this.chamber) && (icon) && (icon !== 'campaign')) {
-        prefix = constants[this.chamber];
-      } 
-      if (this.meetingType === 'Empty Chair Town Hall') {
-        var sentence = [prefix, this.Member, '(invited)'];
-        this.formattedMember = sentence.join(' ');
-      } else {
-        var sentence = [prefix, this.Member];
-        this.formattedMember = sentence.join(' ');
-      }
+      prefix = constants[this.chamber];
+    } 
+    if (this.meetingType === 'Empty Chair Town Hall') {
+      sentence = [prefix, this.Member, '(invited)'];
+      this.formattedMember = sentence.join(' ');
+    } else {
+      sentence = [prefix, this.Member];
+      this.formattedMember = sentence.join(' ');
+    }
   };
 
   TownHall.prototype.isInFuture = function (){

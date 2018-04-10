@@ -1,276 +1,295 @@
 {
   "rules": {
-     ".write": "false",
-     "townHalls" : {
+    ".write": "false",
+    "townHalls": {
       ".indexOn": "lastUpdated",
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$townHallID": {
         ".read": "true",
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true",
-      	"lastUpdated": {
-            ".indexOn": ".value"
-      		}
+        "lastUpdated": {
+          ".indexOn": ".value"
         }
-     },
-       "state_townhalls" : {
-         "$state": {
-          ".indexOn": "lastUpdated",
+      }
+    },
+    "state_townhalls": {
+      "$state": {
+        ".indexOn": "lastUpdated",
+        ".read": "true",
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        "$townHallID": {
           ".read": "true",
-          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-          "$townHallID": {
-            ".read": "true",
-            ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true",
-            "lastUpdated": {
-                ".indexOn": ".value"
-              }
-            }
-         }
-       },
-      "indivisible" : {
+          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true",
+          "lastUpdated": {
+            ".indexOn": ".value"
+          }
+        }
+      }
+    },
+    "indivisible": {
       ".indexOn": "event_starts_at_date",
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$townHallID": {
         ".read": "true",
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true",
-      	"event_starts_at_date": {
-            ".indexOn": ".value"
-      		}
+        "event_starts_at_date": {
+          ".indexOn": ".value"
         }
-     },
-    "indivisible_public_events" : {
+      }
+    },
+    "indivisible_public_events": {
       ".read": "true"
     },
-    "indivisible_groups" : {
+    "indivisible_groups": {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-			".indexOn":"id",
+      ".indexOn": "id"
     },
-    "indivisible_group_emails" : {
+    "indivisible_group_emails": {
       ".read": "true",
-      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
     },
-  	"townHallIds" : {
+    "townHallIds": {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$townHallID": {
-       ".validate": "newData.hasChildren(['eventId','lastUpdated'])"
-     }
-   },
-    "townHallsOld" : {
+        ".validate": "newData.hasChildren(['eventId','lastUpdated'])"
+      }
+    },
+    "townHallsOld": {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-        "$month" : {
+      "$month": {
         ".indexOn": "dateObj",
+        "$townHallID": {
+          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+          "dateObj": {
+            ".indexOn": ".value"
+          },
+          "meetingType": {
+            ".indexOn": ".value"
+          }
+        }
+      }
+    },
+    "state_townhalls_archive": {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      "$state": {
+        "$month": {
+          ".indexOn": "dateObj",
           "$townHallID": {
-           ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-						"dateObj":{
+            ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+            "dateObj": {
               ".indexOn": ".value"
             },
-           "meetingType": {
+            "meetingType": {
               ".indexOn": ".value"
             }
-     		}
-     }
-   },
-    "state_townhalls_archive" : {
-      ".read": "true",
-      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-       	"$state": {
-          "$month" : {
-          ".indexOn": "dateObj",
-            "$townHallID": {
-             ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-              "dateObj":{
-                ".indexOn": ".value"
-              },
-             "meetingType": {
-                ".indexOn": ".value"
-              }
           }
-       }
+        }
       }
-   },
-  	"deletedTownHalls" : {
+    },
+    "deletedTownHalls": {
       "$userID": {
-      ".write": "auth.uid !== null",
-       ".validate": "newData.hasChildren(['user','reason'])"
-     }
-   },
-    "UserSubmission" : {
+        ".write": "auth.uid !== null",
+        ".validate": "newData.hasChildren(['user','reason'])"
+      }
+    },
+    "UserSubmission": {
       ".read": "true",
       ".write": "auth.uid !== null",
       "$townHallID": {
-       ".validate": "newData.hasChildren(['Member', 'eventId'])"
-     }
-   },
-    "state_legislators_user_submission" : {
-      "$state":{
-        ".read": "true",
-      	".write": "auth.uid !== null",
-      	"$townHallID": {
-       		".validate": "newData.hasChildren(['Member', 'eventId'])"
+        ".validate": "newData.hasChildren(['Member', 'eventId'])"
       }
-     }
-   },
-    "MOCs" : {
+    },
+    "state_legislators_user_submission": {
+      "$state": {
+        ".read": "true",
+        ".write": "auth.uid !== null",
+        "$townHallID": {
+          ".validate": "newData.hasChildren(['Member', 'eventId'])"
+        }
+      }
+    },
+    "MOCs": {
       ".read": "true",
       "$mocKey": {
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-        "currentEvents" : {
+        "currentEvents": {
           ".write": "auth.uid !== null"
         }
-     }
-   },
-  	"mocData" : {
+      }
+    },
+    "mocData": {
       ".read": "true",
       "$mocKey": {
-        	".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
-        	"lastUpdatedBy": {
-        		".write": "auth.uid !== null"
-       		 },
-           "lastUpdated": {
-        		".write": "auth.uid !== null"
-       		 },
-        	"currentEvents" : {
-          	".write": "auth.uid !== null"
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
+        "lastUpdatedBy": {
+          ".write": "auth.uid !== null"
+        },
+        "lastUpdated": {
+          ".write": "auth.uid !== null"
+        },
+        "currentEvents": {
+          ".write": "auth.uid !== null"
         }
-     }
-   },
-    "candidate_data" : {
+      }
+    },
+    "candidate_data": {
       ".read": "true",
       "$mocKey": {
-        	".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
-        	"lastUpdatedBy": {
-        		".write": "auth.uid !== null"
-       		 },
-           "lastUpdated": {
-        		".write": "auth.uid !== null"
-       		 },
-        	"currentEvents" : {
-          	".write": "auth.uid !== null"
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
+        "lastUpdatedBy": {
+          ".write": "auth.uid !== null"
+        },
+        "lastUpdated": {
+          ".write": "auth.uid !== null"
+        },
+        "currentEvents": {
+          ".write": "auth.uid !== null"
         }
-     }
-   },
-    "mocID" : {
+      }
+    },
+    "candidate_keys": {
+      ".read": "true",
+      "$mocKey": {
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
+        "lastUpdatedBy": {
+          ".write": "auth.uid !== null"
+        },
+        "lastUpdated": {
+          ".write": "auth.uid !== null"
+        },
+        "currentEvents": {
+          ".write": "auth.uid !== null"
+        }
+      }
+    },
+    "mocID": {
       ".read": "true",
       "$mocKey": {
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
-     }
-   },
-    "state_legislators_data" : {
+      }
+    },
+    "state_legislators_data": {
       ".read": "true",
       "$state": {
-          ".read": "true",
-        		".write": "auth.uid !== null",
-        	"lastUpdatedBy": {
-        		".write": "auth.uid !== null"
-       		 },
-           "lastUpdated": {
-        		".write": "auth.uid !== null"
-       		 },
-        	"currentEvents" : {
-          	".write": "auth.uid !== null"
+        ".read": "true",
+        ".write": "auth.uid !== null",
+        "lastUpdatedBy": {
+          ".write": "auth.uid !== null"
+        },
+        "lastUpdated": {
+          ".write": "auth.uid !== null"
+        },
+        "currentEvents": {
+          ".write": "auth.uid !== null"
         }
-     }
-   },
-    "state_legislators_id" : {
+      }
+    },
+    "state_legislators_id": {
       ".read": "true",
       "$state": {
         ".read": "true",
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
-     }
-   },
-    "mocByStateDistrict" : {
+      }
+    },
+    "mocByStateDistrict": {
       ".read": "true",
       "$stateDistrict": {
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-          "$state_rank" : {
-            ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
-          }
-     }
-   },
+        "$state_rank": {
+          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+        }
+      }
+    },
     "zips": {
       ".read": "true"
     },
-   "zipToDistrict": {
+    "zipToDistrict": {
       ".read": "true",
-        "$zip":{
-          ".read": "true",
-                    ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
-
-        }
+      "$zip": {
+        ".read": "true",
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+      }
     },
-  	"state_zip_to_district_upper": {
+    "state_zip_to_district_upper": {
       ".read": "true",
-        "$state":{
-          "$zip":{
-            ".read": "true",
-                      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataEditor').val() == true"
-
-          }
+      "$state": {
+        "$zip": {
+          ".read": "true",
+          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataEditor').val() == true"
         }
+      }
     },
     "state_zip_to_district_lower": {
       ".read": "true",
-    	"$state":{
-          "$zip":{
-            ".read": "true",
-                      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataEditor').val() == true"
-
-          }
-        }
-    },
-   "townHallsErrors" : {
-     "$townHallID": {
-       ".read": "true",
-        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-    }
-  },
-  "geolocate" : {
-    ".read": "true",
-    "state": {
       "$state": {
-        ".write": "auth.uid !== null",
-    	 ".validate": "newData.hasChildren(['lat','lng'])"
-      	}
-   		},
-     "street": {
-       "$street":{
-        ".write": "auth.uid !== null",
-   	  		".validate": "newData.hasChildren(['lat','lng'])"
-       }
-   	}
- },
-	"zipZeroResults" : {
-         ".read": "false",
-    	 		".write": "true",
-        	"$zip" : {
-           ".read": "false",
-    	 			".write": "true",
-       	 	  ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000"
+        "$zip": {
+          ".read": "true",
+          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataEditor').val() == true"
         }
-    	},
-  "emailSignUps" : {
-         ".read": "false",
-    	 		".write": "true",
-        	"$user" : {
-           ".read": "false",
-    	 			".write": "true",
-            ".validate": "newData.hasChildren(['person'])"
+      }
+    },
+    "townHallsErrors": {
+      "$townHallID": {
+        ".read": "true",
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+      }
+    },
+    "geolocate": {
+      ".read": "true",
+      "state": {
+        "$state": {
+          ".write": "auth.uid !== null",
+          ".validate": "newData.hasChildren(['lat','lng'])"
         }
-    	},
-  "users": {
+      },
+      "street": {
+        "$street": {
+          ".write": "auth.uid !== null",
+          ".validate": "newData.hasChildren(['lat','lng'])"
+        }
+      }
+    },
+    "zipZeroResults": {
+      ".read": "false",
+      ".write": "true",
+      "$zip": {
+        ".read": "false",
+        ".write": "true",
+        ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000"
+      }
+    },
+    "emailSignUps": {
+      ".read": "false",
+      ".write": "true",
+      "$user": {
+        ".read": "false",
+        ".write": "true",
+        ".validate": "newData.hasChildren(['person'])"
+      }
+    },
+    "users": {
       "$user_id": {
         ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
         ".write": "$user_id === auth.uid",
-      	"mocs" : {
-          "$mocID" : {
-          	".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true"
+        "mocs": {
+          "$mocID": {
+            ".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true"
           }
         }
-       }
+      }
+    },
+    "sms-users": {
+      ".read": "false",
+      "$user_id": {
+        ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        ".write": "$user_id === auth.uid"
+      }
     }
   }
 }
