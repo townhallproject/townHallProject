@@ -50,13 +50,14 @@
 
   tableHandler.getFilterState = function () {
     var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
+    TownHall.currentContext = [];
     return TownHall.getFilteredResults(data);
   };
 
   tableHandler.sortTable = function (e) {
     e.preventDefault();
     TownHall.sortOn = $(this).attr('data-filter');   
-    TownHall.isCurrentContext = $('.stateNav-federal').attr('style') ? false : true;
+    TownHall.isCurrentContext = $('.stateNav-federal').attr('style') !== 'display: none;' ? true : false;
     tableHandler.renderTableWithArray(tableHandler.getFilterState());
   };
 
