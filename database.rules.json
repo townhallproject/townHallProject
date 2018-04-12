@@ -197,6 +197,29 @@
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
       }
     },
+    "state_candidates_data": {
+      ".read": "true",
+      "$state": {
+        ".read": "true",
+        ".write": "auth.uid !== null",
+        "lastUpdatedBy": {
+          ".write": "auth.uid !== null"
+        },
+        "lastUpdated": {
+          ".write": "auth.uid !== null"
+        },
+        "currentEvents": {
+          ".write": "auth.uid !== null"
+        }
+      }
+    },
+    "state_candidates_id": {
+      ".read": "true",
+      "$state": {
+        ".read": "true",
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+      }
+    },
     "mocByStateDistrict": {
       ".read": "true",
       "$stateDistrict": {
