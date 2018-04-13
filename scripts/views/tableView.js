@@ -11,6 +11,12 @@
     tableHandler.renderTableWithArray(tableHandler.getFilterState());
   };
 
+  tableHandler.clearTableData= function() {
+    $('#all-events-table').children().slice(1).remove();
+    $('#current-state').attr('data-total', 0);
+    $('#current-state').attr('data-current', 0);
+  }
+
   tableHandler.initialFilters = function() {
     tableHandler.resetFilters();
 
@@ -44,12 +50,14 @@
 
   tableHandler.getFilterState = function () {
     var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
+    TownHall.currentContext = [];
     return TownHall.getFilteredResults(data);
   };
 
   tableHandler.sortTable = function (e) {
     e.preventDefault();
-    TownHall.sortOn = $(this).attr('data-filter');
+    TownHall.sortOn = $(this).attr('data-filter');   
+    TownHall.isCurrentContext = $('.stateNav-federal').attr('style') !== 'display: none;' ? true : false;
     tableHandler.renderTableWithArray(tableHandler.getFilterState());
   };
 
@@ -126,6 +134,7 @@
     $currentState.attr('data-total', total);
     var $table = $('#all-events-table');
     cur ++;
+    TownHall.currentContext.push(townhall);
     tableHandler.renderTable(townhall, $table);
     $currentState.attr('data-current', cur);
     $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
