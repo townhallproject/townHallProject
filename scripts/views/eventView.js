@@ -45,6 +45,7 @@
   }
 
   eventHandler.renderResults = function(locationData) {
+    tableHandler.resetFilters();
     var thisState = locationData.federal.thisState;
     var validDistricts = locationData.federal.validDistricts;
     var validSelections = locationData.federal.validSelections;
@@ -222,7 +223,6 @@
           TownHall.zipQuery = zipClean;
           urlParamsHandler.setUrlParameter('district', false);
           urlParamsHandler.setUrlParameter('zipcode', zipClean);
-          tableHandler.resetFilters();
 
           var locationData = handleZipToDistrict(zipToDistrictArray);
           eventHandler.renderResults(locationData);
