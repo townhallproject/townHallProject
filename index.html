@@ -500,7 +500,7 @@
                         <li class="downdown-title">Sort Table</li>
                         <li role="separator" class="divider"></li>
                         <li><a data-filter="dateObj" id="byDate" class="dropdown-item" href="#">By Date</a></li>
-                        <li><a data-filter="State" id="byState" class="dropdown-item" href="#">By State</a></li>
+                        <li><a data-filter="stateName" id="byState" class="dropdown-item" href="#">By State</a></li>
                       </ul>
                     </li>
                   </ul>
@@ -858,7 +858,6 @@
           </div>
         </section>
       </div>
-
       <div role="tabpanel" class="tab-pane" id="privacy-policy">
         <header class="margin-bottom">
           <section class="container ">
@@ -900,17 +899,10 @@
       </div>
 
       <div role="tabpanel" class="tab-pane" id="year-one">
-        <div class='container'>
+        <div class="container">
           <img src="/Images/EOY_Report_Layout_noBG-01-01.png" alt="" />
         </div> <!-- Background becomes EOY graphic -->
       </div>
-
-        <div role="tabpanel" class="tab-pane" id="thfol-guide">
-          <div class='embed-container embed-container-guide'>
-            <iframe style='border:0' src="https://docs.google.com/document/u/1/d/e/2PACX-1vSorDmXHT4DHFgp6KYH8d4NMT7WtJoP6AGKaRyNY2PHscZibC8oIWu4RUit02y0OB8-4c90ultd-6Ea/pub" alt="" />
-          </div>
-          <!-- Background becomes EOY graphic -->
-        </div>
 
       <div role="tabpanel" class="tab-pane" id="town-hall-pledge">
         <div class="container">
@@ -921,109 +913,6 @@
             <div class="col-md-6 img-holder">
               <img src="../Images/svgs/THP_Pledge_Senate.svg"/>
             </div>
-          </div>
-        </div>
-      </div>
-      <div role="tabpanel" class="tab-pane" id="mfol-submit-event">
-        <div class="container new-event-form-mfol">
-          <div class="row">
-            <h3 class="text-success">March For Our Lives Town Hall submission form
-            </h3>
-            <small>March For Our Lives is calling for people across the country to hold town halls in each Congressional district on gun violence. Sign up to host and organize an event in your district!</small>
-            <form class="col-sm-8 col-sm-offset-2" id="new-event-form-element">
-              <section class="member-info text-info row">
-                <h4 id="member-title">Organizer information<br>
-                </h4>
-                <div class="form-group col-sm-12">
-                  <label class="sr-only" for="organizer-name">Organizer's Full Name</label>
-                  <input type="text" class="form-control input-underline" id="ogranizerName" placeholder="Organizer's Full Name" value="" autocomplete="off" required="true">
-                </div>
-                <div class="form-group col-sm-12">
-                  <label class="sr-only" for="organizer-phone">Organizer's Phone Number</label>
-                  <input type="phone" class="form-control input-underline" id="organizerPhone" placeholder="Organizer's Phone Number" value="" autocomplete="off" >
-                </div>
-                <div class="form-group col-md-12 col-sm-12">
-                  <label class="sr-only" for="organizer-email">Organizer's Email</label>
-                  <input type="email" class="form-control input-underline" id="organizerEmail" placeholder="Organizer's Email" value="" autocomplete="off" required="true">
-                </div>
-              </section>
-              <section class="time-data event-details row">
-                <h4 class="text-info">Information about the Event</h4>
-                <div class="col-sm-12" id="state-district-info">
-                  <div class="row">
-                    <div class="form-group col-sm-6">
-                      <label  for="state"class="sr-only">State (abbrivation)</label>
-                      <input type="text" class="form-control input-underline" id="state" placeholder="State (abbrivation)" value="" autocomplete="off" required="true">
-                    </div>
-                    <div class="form-group col-sm-6 district-group federal-district-group" id="federal-district">
-                      <label  for="district" class="sr-only">District</label>
-                      <div class="input-group">
-                        <input type="text" class="form-control" aria-label="..." id="district" value="" placeholder="District" >
-                        <div class="input-group-btn">
-                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="caret"></span></button>
-                          <ul class="dropdown-menu dropdown-menu-right" id="district-dropdown-list">
-                          </ul>
-                        </div><!-- /btn-group -->
-                      </div><!-- /input-group -->
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12">
-                  <div class="row">
-                    <div class="form-group col-sm-6">
-                      <label  for="yearMonthDay col-sm-6">Date</label>
-                      <input type="date" class="form-control datetime date " id="yearMonthDay" placeholder="MM/DD/YYYY" value="2018-04-07">
-                      <span id="yearMonthDay-error" class="help-block error-message hidden">Please enter a valid date</span>
-                    </div>
-                    <div class="form-group col-sm-6">
-                      <label for="Time">Start Time (HH:MM AM/PM)</label>
-                      <input type="time" class="form-control datetime " id="timeStart24" placeholder="HH:MM AM/PM">
-                      <span id="timeStart24-error" class="help-block error-message hidden">Please enter a valid time</span>
-                    </div>
-                  </div>
-                </div>
-              </section>
-              <section class="location-data event-details row">
-                <div class="form-group col-sm-12 general-inputs">
-                  <label class="" for="Location">Location</label>
-                  <input type="text" class="form-control input-underline" id="Location" placeholder="Name of location/venue" value="">
-                  <span id="location-feedback" class="help-block">Venue name, if available. If you haven't selected one, write N/A and let us know if you need assistance.</span>
-                </div>
-                <div class="form-group col-sm-12 general-inputs" id=location-form-group>
-                  <input type="text" class="form-control" placeholder="Street address" id="address">
-                  <span id="address-feedback" class="help-block">Venue address, if available. If you haven't selected one, write N/A and let us know if you need assistance.</span>
-                </div><!-- /form-group -->
-                <div class="form-group members col-sm-12">
-                  <label for="">Have you invited your member of Congress or others? Please note below.</label>
-                  <div class="" id="your-rep">
-
-                  </div>
-                  <div class="input-group other-member">
-                   <span class="input-group-addon">
-                     <input class=" member-checkbox" type="checkbox" id="otherMember" aria-label="...">
-                   </span>
-                   <input type="text" class="form-control member-name" aria-label="..."  placeholder="Invited speaker's name">
-                 </div><!-- /input-group -->
-                </div>
-              </section>
-              <section class="extra-data event-details row">
-                <div class="form-group checkbox col-sm-12">
-                  <label for="connect-to-others">Would you like to be connected to other organizers in your district?
-                  <input type="checkbox" class="general-checkbox" id="connectToOthers" placeholder="Link" value="">
-                  <span class="checkbox-label">Yes</span>
-                  </label>
-                </div>
-                <div class="form-group col-sm-12">
-                  <label  for="linkName">Are you part of a local grassroots group? If so, who?</label>
-                  <input type="text" class="form-control input-underline" id="grassRoots" placeholder="Organization's name" value="">
-                </div>
-              </section>
-              <section class="row">
-
-                <button class="btn btn-default btn-secondary" type="submit" name="button">Submit</button>
-                <span id="general-error" class="help-block error-message hidden"></span>
-              </section>
-            </form>
           </div>
         </div>
       </div>
