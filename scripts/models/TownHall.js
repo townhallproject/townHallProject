@@ -331,8 +331,8 @@
   };
 
   TownHall.addFilterIndexes = function(townhall) {
-    if (TownHall.allStates.indexOf(townhall.State) === -1) {
-      TownHall.allStates.push(townhall.State);
+    if (TownHall.allStates.indexOf(townhall.stateName) === -1) {
+      TownHall.allStates.push(townhall.stateName);
     }
     if (TownHall.allMoCs.indexOf(townhall.Member) === -1) {
       TownHall.allMoCs.push(townhall.Member);

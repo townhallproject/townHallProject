@@ -229,12 +229,7 @@
     return [lng + jitter * plusOrMinus, lat + jitter * plusOrMinus1];
   }
 
-  var featuresHome = {
-    type: 'FeatureCollection',
-    features: []
-  };
-
-  var featuresHomeState = {
+  mapboxView.featuresHome = {
     type: 'FeatureCollection',
     features: []
   };
@@ -245,7 +240,7 @@
       'type': 'symbol',
       'source': {
         'type': 'geojson',
-        'data': featuresHome
+        'data': mapboxView.featuresHome
       },
       'layout': {
         'icon-image': '{icon}',
@@ -269,7 +264,7 @@
       'type': 'symbol',
       'source': {
         'type': 'geojson',
-        'data': featuresHomeState
+        'data': mapboxView.featuresHome
       },
       'layout': {
         'icon-image': '{icon}',
@@ -502,7 +497,7 @@
     var stateAbbr = townhall.state;
     var stateCode = fips[stateAbbr];
     var districtId = townhall.district ? townhall.district : '';
-    var array = featuresHome;
+    var array = mapboxView.featuresHome;
 
     if (iconKey === 'tele'){
       iconKey = 'phone-in';
@@ -517,9 +512,6 @@
       townhall.chamber = townhall.district.split('-')[0];
     }
 
-    if (stateIcon) {
-      array = featuresHomeState;
-    }
     array.features.push({
       type: 'Feature',
       geometry: {
@@ -530,7 +522,6 @@
         //TODO: normalize this.
         repeatingEvent: townhall.repeatingEvent,
         date: townhall.Date,
-        Date: townhall.Date,
         Time: townhall.Time,
         chamber: townhall.chamber || null,
         district: townhall.district,
@@ -549,11 +540,12 @@
   };
 
   mapboxView.setStateData = function(){
-    map.getSource('townhall-points-state').setData(featuresHomeState);
+    map.setLayoutProperty('townhall-points', 'visibility', 'none');
+    map.getSource('townhall-points-state').setData(mapboxView.featuresHome);
   };
 
   mapboxView.setData = function(){
-    map.getSource('townhall-points').setData(featuresHome);
+    map.getSource('townhall-points').setData(mapboxView.featuresHome);
   };
 
   mapboxView.showStateLegend = function(){

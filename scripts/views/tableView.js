@@ -22,7 +22,7 @@
 
     tableHandler.addFilter('meetingType', 'Town Hall');
     tableHandler.addFilter('meetingType', 'Empty Chair Town Hall');
-    tableHandler.addFilter('meetingType', 'Tele-Town Hall');
+    tableHandler.addFilter('meetingType', 'Campaign Town Hall');
   };
 
   tableHandler.renderTableWithArray = function (array) {
@@ -49,15 +49,13 @@
   };
 
   tableHandler.getFilterState = function () {
-    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
-    TownHall.currentContext = [];
+    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;    
     return TownHall.getFilteredResults(data);
   };
 
   tableHandler.sortTable = function (e) {
     e.preventDefault();
     TownHall.sortOn = $(this).attr('data-filter');   
-    TownHall.isCurrentContext = $('.stateNav-federal').attr('style') !== 'display: none;' ? true : false;
     tableHandler.renderTableWithArray(tableHandler.getFilterState());
   };
 

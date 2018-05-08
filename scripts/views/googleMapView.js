@@ -451,6 +451,9 @@
   };
 
   noWebGlMapView.resetMap = function() {
+    if (!google.map){
+      return;
+    }
     setTimeout(function () {
       noWebGlMapView.onResizeMap();
     }, 50);
