@@ -344,11 +344,11 @@
       var district = clickedPoint.properties.district;
       var pointDistrict = district.substring(district.lastIndexOf('-') + 1, district.length);
 
-      if (clickedPoint.properties.chamber === 'HD') {
+      if (clickedPoint.properties.chamber === 'lower') {
         pointFeature.house_district = mapHelperFunctions.zeroPad(pointDistrict);
         pointFeature.house_geoId = clickedPoint.properties.stateCode + '0' + pointFeature.house_district;
 
-      } else if (clickedPoint.properties.chamber === 'SD') {
+      } else if (clickedPoint.properties.chamber === 'upper') {
         pointFeature.senate_district = mapHelperFunctions.zeroPad(pointDistrict);
         pointFeature.senate_geoId = clickedPoint.properties.stateCode + '0' + pointFeature.senate_district;
       }
@@ -509,9 +509,8 @@
     // makes staff icon smaller
     iconKey = iconKey === 'staff' ? 'staff-small' : iconKey;
     if (townhall.thp_id) {
-      townhall.chamber = townhall.district.split('-')[0];
+      townhall.chamber = townhall.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
     }
-
     array.features.push({
       type: 'Feature',
       geometry: {
@@ -525,7 +524,7 @@
         Time: townhall.Time,
         chamber: townhall.chamber || null,
         district: townhall.district,
-        displayDistrict: townhall.displayDistrict.split(' ')[0],
+        displayDistrict: townhall.displayDistrict.split(' (')[0],
         districtId: districtId,
         stateCode: stateCode,
         stateAbbr: stateAbbr,
@@ -534,6 +533,7 @@
         address: townhall.address,
         meetingType: townhall.meetingType,
         icon: iconKey,
+        level: townhall.level,
         stateIcon: stateIcon || undefined
       },
     });

@@ -65,6 +65,10 @@
     tableHandler.clearTableData();
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall(snapshot.val());
+      
+      ele.chamber = ele.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
+      ele.level = 'state';
+      ele.makeDisplayDistrict();
       TownHall.allStateTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
       tableHandler.initialStateTable(ele);
@@ -78,6 +82,8 @@
     var townHallsFBFederal = firebasedb.ref('/townHalls/');
     townHallsFBFederal.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
+      ele.level = 'federal';
+      ele.makeDisplayDistrict();
       if (ele.state === state) {
         TownHall.allTownHalls.push(ele);
         TownHall.addFilterIndexes(ele);

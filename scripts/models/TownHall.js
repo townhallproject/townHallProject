@@ -3,7 +3,6 @@
     for (var key in opts) {
       this[key] = opts[key];
     }
-    this.makeDisplayDistrict();
   }
   //Global data state
   TownHall.allTownHalls = [];
@@ -40,8 +39,10 @@
     });
   };
 
+  // for state leg: HD-01 (North Caroline House District 1)
+  // for federal: NC-6
   TownHall.prototype.makeDisplayDistrict = function (){
-    if (this.thp_id){
+    if (this.level === 'state'){
       //state leg or statewide office
       var title;
       if (this.district) {
@@ -76,13 +77,14 @@
     }
   };
 
+  // 
   TownHall.prototype.makeFormattedMember = function () {
     var sentence;
     var icon = this.iconFlag ? this.iconFlag : this.icon;
     var prefix = '';
     if ((this.chamber) && (icon) && (icon !== 'campaign')) {
       prefix = constants[this.chamber];
-    } 
+    }
     if (this.meetingType === 'Empty Chair Town Hall') {
       sentence = [prefix, this.Member, '(invited)'];
       this.formattedMember = sentence.join(' ');
