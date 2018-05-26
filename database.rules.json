@@ -114,6 +114,10 @@
         }
       }
     },
+    "town_hall_pledges": {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+    },
     "MOCs": {
       ".read": "true",
       "$mocKey": {
