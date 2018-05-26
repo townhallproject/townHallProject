@@ -90,7 +90,7 @@
       $parent.addClass('nearest-with-results');
 
       TownHall.isCurrentContext = true;
-      TownHall.currentContext = selectedData;
+      TownHall.currentContext = selectedData.map(function(ele){return ele;});
       tableHandler.renderTableWithArray(selectedData);
 
       var counts = eventHandler.checkIfOnlySenate(federalEvents);

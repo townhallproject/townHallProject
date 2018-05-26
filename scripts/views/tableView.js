@@ -49,7 +49,7 @@
   };
 
   tableHandler.getFilterState = function () {
-    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;    
+    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls.concat(TownHall.allStateTownHalls);
     return TownHall.getFilteredResults(data);
   };
 
@@ -132,7 +132,6 @@
     $currentState.attr('data-total', total);
     var $table = $('#all-events-table');
     cur ++;
-    TownHall.currentContext.push(townhall);
     tableHandler.renderTable(townhall, $table);
     $currentState.attr('data-current', cur);
     $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');

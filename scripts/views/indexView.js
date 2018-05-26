@@ -19,9 +19,21 @@
     $('.dropdown--stateSelection .stateNav-federal').hide();
   };
 
+  // originial view
+  indexView.initialHome = function () {
+    tableHandler.resetTable();
+    mapView.initialView();
+    var $parent = $('#nearest');
+    var $results = $('.selection-results_content');
+    $parent.removeClass('nearest-with-results');
+    $parent.empty();
+    $results.empty();
+    tableHandler.initialFilters();
+    TownHall.sortOn = 'Date';
+  };
+
   // reset the home page to originial view
   indexView.resetHome = function () {
-    $('#awards-banner').show();
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');

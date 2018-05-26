@@ -8,6 +8,18 @@
     return map;
   };
 
+  mapView.initialView = function resetView() {
+    mapView.killSidebar();
+    mapView.zoomLocation = false;
+    $('#representativeCards').hide();
+    if (mapView.webGL && map) {
+      mapboxView.resetMap(map);
+    } else if (window.google) {
+      noWebGlMapView.resetMap();
+    }
+  };
+
+
   mapView.resetView = function resetView() {
     mapView.killSidebar();
     mapView.zoomLocation = false;
@@ -38,6 +50,8 @@
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall(snapshot.val());
       ///If no state filter show all results
+      ele.level = 'federal';
+      ele.makeDisplayDistrict();
       TownHall.allTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
       tableHandler.initialMainTable(ele);
@@ -58,6 +72,9 @@
 
   mapView.readStateData = function(webgl, state) {
     mapboxView.featuresHome.features = [];
+    TownHall.allTownHalls = [];
+    TownHall.allStateTownHalls = [];
+
     var numberDone = 0;
     ///If in state view filter the results before they get displayed on the map and in the table
     var townHallsFB = firebasedb.ref('/state_townhalls/' + state + '/');
@@ -103,8 +120,6 @@
         if (webgl) {
           mapboxView.setStateData();
         }
-        TownHall.isCurrentContext = true;
-        TownHall.currentContext = TownHall.allStateTownHalls;
         zipLookUpHandler.zipSearchByParam();
       }
     });
@@ -114,8 +129,6 @@
         if (webgl) {
           mapboxView.setStateData();
         }
-        TownHall.isCurrentContext = true;
-        TownHall.currentContext = TownHall.allStateTownHalls;
         zipLookUpHandler.zipSearchByParam();
       }
     });
