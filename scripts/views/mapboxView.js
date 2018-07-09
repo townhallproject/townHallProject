@@ -79,7 +79,6 @@
 
     // Set Mapbox map controls
     map.addControl(new mapboxgl.NavigationControl());
-    map.scrollZoom.disable();
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
     return map;
