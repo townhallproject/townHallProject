@@ -1,5 +1,4 @@
 (function closure(module) {
-
   var mapboxView = {};
   var map;
   // Define an intial view for the map
@@ -79,6 +78,11 @@
 
     // Set Mapbox map controls
     map.addControl(new mapboxgl.NavigationControl());
+    // Disable mousescroll zoom except after clicking map.
+    // Using jQuery because this mapbox api doesn't support focus or blur 
+    map.scrollZoom.disable();
+    $('canvas.mapboxgl-canvas').on('focus', (function() { map.scrollZoom.enable(); }));
+    $('canvas.mapboxgl-canvas').on('blur', (function() { map.scrollZoom.disable(); }));
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
     return map;
