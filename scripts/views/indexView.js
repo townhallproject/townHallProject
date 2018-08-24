@@ -39,6 +39,8 @@
     $('#look-up input').val('');
     $('#missing-member-banner').show();
     $('#email-signup-form input[name=zipcode]').val('');
+    $('#email-signup-form input[name=zipcode]').removeClass('hidden');
+    $('#email-signup-form #district-subscribe').addClass('hidden');
     $('#no-events').hide();
     $('#representativeCards section').empty();
     $('#representativeCards').hide();
@@ -57,6 +59,7 @@
     $parent.empty();
     $results.empty();
     tableHandler.initialFilters();
+    emailHandler.clearDistricts();
     TownHall.sortOn = 'Date';
   };
 

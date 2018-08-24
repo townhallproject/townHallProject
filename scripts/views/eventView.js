@@ -54,9 +54,11 @@
     var zoomMap = true;
     //render table
     var districtText = ' ';
+    emailHandler.clearDistricts();
     validDistricts.forEach(function(district){
       if (district) {
         districtText = districtText + thisState + '-' + district + ' ';
+        emailHandler.addDistrict(thisState + '-' + district)
       } else {
         districtText = districtText + thisState;
       }
@@ -330,7 +332,7 @@
       TownHall.isMap = true;
     }
     if (localStorage.getItem('signedUp') === 'true') {
-      $('#email-signup').hide();
+      emailHandler.hideEmailForm();
     }
 
     $('.hash-link').on('click', function onClickGethref() {
@@ -381,7 +383,7 @@
     });
     $('#close-email').on('click', function(){
       localStorage.setItem('signedUp', true);
-      $('#email-signup').fadeOut(750);
+      emailHandler.closeEmailForm();
     });
     $('body').on('click', '.popover .popover-title a.close', function() {
       $('[data-toggle="popover"]').popover('hide');
@@ -398,11 +400,11 @@
     });
     $('#close-email').on('click', function(){
       localStorage.setItem('signedUp', true);
-      $('#email-signup').fadeOut(750);
+      emailHandler.closeEmailForm();
     });
     $('#email-signup-form').on('submit', emailHandler.validateSignup);
     if (localStorage.getItem('signedUp') === 'true') {
-      $('#email-signup').hide();
+      emailHandler.hideEmailForm();
     }
     var divTop = $('#all-events-table').offset().top + 380;
     $(window).scroll(function() {
