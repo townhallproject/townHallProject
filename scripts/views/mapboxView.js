@@ -135,7 +135,8 @@
       var firstArg = feature.district ? feature.state : 'state';
       var secondArg = feature.district ? feature.district : feature.state;
       repCardHandler.renderRepresentativeCards(TownHall.lookupReps(firstArg, secondArg), $('#representativeCards section'), feature.state);
-
+      emailHandler.clearDistricts();
+      emailHandler.addDistrict(feature.state + '-' + feature.district);
       urlParamsHandler.setUrlParameter('zipcode', false);
       urlParamsHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
     } else {

@@ -8,7 +8,7 @@
       <h3 class="text-center">{{meetingType}}</h3>
     {{/unless}}
     <span class="text-center">
-      <h4 class="hidden-xs">{{Date}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4>
+      <h4 class="hidden-xs">{{dateString}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4>
       <h4 class="visible-xs-block">{{#shortDateTime this}}{{/shortDateTime}}</h4>
       {{#if Location}}<h4>{{Location}}</h4>{{/if}}
     </span>
