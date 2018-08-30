@@ -1,5 +1,4 @@
 (function closure(module) {
-
   var mapboxView = {};
   var map;
   // Define an intial view for the map
@@ -79,7 +78,11 @@
 
     // Set Mapbox map controls
     map.addControl(new mapboxgl.NavigationControl());
+    // Disable mousescroll zoom except after clicking map.
+    // Using jQuery because this mapbox api doesn't support focus or blur 
     map.scrollZoom.disable();
+    $('canvas.mapboxgl-canvas').on('focus', (function() { map.scrollZoom.enable(); }));
+    $('canvas.mapboxgl-canvas').on('blur', (function() { map.scrollZoom.disable(); }));
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
     return map;
@@ -135,7 +138,8 @@
       var firstArg = feature.district ? feature.state : 'state';
       var secondArg = feature.district ? feature.district : feature.state;
       repCardHandler.renderRepresentativeCards(TownHall.lookupReps(firstArg, secondArg), $('#representativeCards section'), feature.state);
-
+      emailHandler.clearDistricts();
+      emailHandler.addDistrict(feature.state + '-' + feature.district);
       urlParamsHandler.setUrlParameter('zipcode', false);
       urlParamsHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
     } else {
