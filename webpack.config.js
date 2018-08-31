@@ -1,24 +1,131 @@
-var webpack = require('webpack');
+require('dotenv').config();
+const HTMLPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const { ProvidePlugin } = require('webpack');
+
+const plugins = [
+  new ProvidePlugin({
+    jQuery: 'jquery',
+    $: 'jquery',
+    jquery: 'jquery',
+  }),
+  new MiniCssExtractPlugin({
+    // Options similar to the same options in webpackOptions.output
+    // both options are optional
+    chunkFilename: '[id].css',
+    filename: '[name].css',
+  }),
+
+  new HTMLPlugin({
+    template: `${__dirname}/src/index.html`,
+  }),
+  // new ExtractPlugin('bundle.[hash].css'),
+  new CopyWebpackPlugin([
+    // {
+    //   from: 'src/CNAME',
+    // },
+    {
+      flatten: true,
+      from: 'src/images',
+      to: 'images',
+    },
+  ]),
+];
+
 module.exports = {
-  entry: {
-    entry: __dirname + '/scripts/app.js'
-  },
+  mode: 'development',
+
+  plugins,
+
+  // Load this and everythning it cares about
+  entry: `${__dirname}/src/main.js`,
+
+  devtool: 'source-map',
+
+  // Stick it into the "path" folder with that file name
   output: {
-    filename: 'build/[name].bundle.js'
+    filename: 'bundle.[hash].js',
+    path: `${__dirname}/build`,
   },
   module: {
-    loaders: [
+    rules: [
+      // If it's a .js file not in node_modules, use the babel-loader
       {
         test: /\.js$/,
-        loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
-          presets: ['es2015']
-        }
-      }
-    ]
+        loader: 'babel-loader',
+      },
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
+      },
+      // If it's a .scss file
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          'resolve-url-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.less$/,
+        use: [
+
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'less-loader',
+          },
+        ],
+      },
+      {
+        test: /\.(woff|woff2|ttf|eot|glyph|\.svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: 'font/[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(jpg|jpeg|gif|png|tiff|svg)$/,
+        exclude: /\.glyph.svg/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 6000,
+              name: 'images/[name].[ext]',
+            },
+          },
+        ],
+      },
+
+    ],
   },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin()
-  ]
-}
+  devServer: {
+    historyApiFallback: true,
+  },
+
+};

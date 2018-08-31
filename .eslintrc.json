@@ -46,6 +46,10 @@
     "constants": true
   },
   "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
   "rules": {
     "semi": 1,
     "strict": 0,
