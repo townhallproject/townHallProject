@@ -1,9 +1,10 @@
 (function(module) {
   var missingMemberView = {};
   missingMemberView.loaded = false;
+  missingMemberView.statePopulation = statePopulation;
 
   missingMemberView.addFilter = function(filterObj, filterValue) {
-    $currentState = $('#mm-current-state');
+    var $currentState = $('#mm-current-state');
     var total = parseInt($currentState.attr('data-total'));
     var nofilters = true;
     Object.keys(filterObj).forEach(function(filter){
@@ -49,16 +50,16 @@
     }).reduce(function(acc, cur){
       if (acc.map(function(mapItem){return mapItem['categoryID']; }).indexOf(cur['categoryID']) > -1) {
         acc[acc.map(function(mapItem){return mapItem['categoryID']; }).indexOf(cur['categoryID'])].count ++;
-        cur.perCapita = parseInt(statePopulation[cur.categoryID])/cur.count;
+        cur.perCapita = parseInt(missingMemberView.statePopulation[cur.categoryID])/cur.count;
       } else {
         cur.count = 1;
-        cur.perCapita = parseInt(statePopulation[cur.categoryID])/cur.count;
+        cur.perCapita = parseInt(missingMemberView.statePopulation[cur.categoryID])/cur.count;
         acc.push(cur);
       }
       return acc;
     },[]).sort(function(a, b){
-      statea = a.categoryID;
-      stateb = b.categoryID;
+      var statea = a.categoryID;
+      var stateb = b.categoryID;
       if (statea > stateb) {
         return 1;
       } else if (stateb > statea) {
@@ -103,17 +104,18 @@
       });
 
       missingMemberView.loaded = true;
-      $currentState = $('#mm-current-state');
-      $copy = $('#mm-total-copy');
+      var $currentState = $('#mm-current-state');
+      var $copy = $('#mm-total-copy');
       $('#mm-current-state').attr('data-current', missingMembers.length);
       $('#mm-current-state').attr('data-total', missingMembers.length);
       // inital report of data
       $currentState.text('Viewing ' + missingMembers.length + ' of ' + missingMembers.length + ' total missing members');
+      $currentState.removeClass('transparent');
       $copy.text($currentState.attr('data-total'));
       // make cards
       missingMemberView.renderAll('missingMemberCard', '.grid', missingMembers);
       // add state buttons
-      allCategories = getAllCategories(missingMembers);
+      var allCategories = getAllCategories(missingMembers);
       missingMemberView.renderAll('missingMemberButton', '#state-buttons', allCategories);
       // initalize isotope
       startIsotope();
@@ -122,4 +124,3 @@
 
   module.missingMemberView = missingMemberView;
 })(window);
-

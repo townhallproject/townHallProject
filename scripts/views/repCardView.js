@@ -31,7 +31,7 @@
     $parent.empty(); // If they search for a new zipcode clear the old info
     representativePromise.then(function(representatives) {
       var compiledTemplate = Handlebars.getTemplate('representativeCard');
-      $parent.append('<h2 class="text-primary text-center">Your Representatives</h2>');
+      $parent.append('<h2 class="text-primary text-center">Your Federal Representatives</h2>');
       repCardHandler.repCards(representatives, compiledTemplate, $parent);
 
       if (representatives.length > 3) {
@@ -43,7 +43,7 @@
     });
   };
 
-    // append additional reps for lookup by district
+  // append additional reps for lookup by district
   repCardHandler.addRepresentativeCards = function(representativePromise, $parent) {
     representativePromise.then(function(representatives) {
       var compiledTemplate = Handlebars.getTemplate('representativeCard');

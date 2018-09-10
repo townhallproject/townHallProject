@@ -15,6 +15,7 @@
   TownHall.isCurrentContext = false;
   TownHall.isMap = false;
   TownHall.zipQuery;
+  TownHall.allStateTownHalls = [];
 
   // Lookup dictionaries
   TownHall.timeZones = {
@@ -27,6 +28,7 @@
 
   TownHall.saveZipLookup = function (zip) {
     firebasedb.ref('/zipZeroResults/' + zip).once('value').then(function(snapshot){
+      var newVal;
       if (snapshot.exists()) {
         newVal = snapshot.val() + 1;
       }
@@ -35,6 +37,61 @@
       }
       return firebasedb.ref('/zipZeroResults/' + zip).set(newVal);
     });
+  };
+
+  // for state leg: HD-01 (North Caroline House District 1)
+  // for federal: NC-6
+  TownHall.prototype.makeDisplayDistrict = function (){
+    if (this.level === 'state'){
+      //state leg or statewide office
+      var title;
+      if (this.district) {
+        //state leg
+        //"VA HD-08" (Virginia House District 8)
+        var chamber = this.district.split('-')[0];
+        var number = this.district.split('-')[1];
+        var sentence = [this.district, '(' + this.stateName, constants[chamber], parseInt(number) + ')'];
+        this.displayDistrict = sentence.join(' ');
+      } else {
+        //statewide office, ie Governor
+        var office = this.thp_id.split('-')[1];
+        title = constants[office];
+        this.displayDistrict = title;
+      }
+    } else {
+      var state = this.state ? this.state : this.stateAbbr;
+      if (this.district && parseInt(this.district)) {
+        //House
+        this.displayDistrict = state + '-' + parseInt(this.district);
+      } else if (this.chamber === 'upper'){
+        //Senator
+        this.displayDistrict = state + ', ' + 'Senate';
+      } else if (this.chamber === 'statewide' && this.office){
+        this.displayDistrict = this.office.toUpperCase() + ' ' + state;
+      } else {
+        this.displayDistrict = state;
+      }
+      if (this.meetingType === 'Campaign Town Hall'){
+        this.displayDistrict = 'Running for: ' + this.displayDistrict;
+      }
+    }
+  };
+
+  // 
+  TownHall.prototype.makeFormattedMember = function () {
+    var sentence;
+    var icon = this.iconFlag ? this.iconFlag : this.icon;
+    var prefix = '';
+    if ((this.chamber) && (icon) && (icon !== 'campaign')) {
+      prefix = constants[this.chamber];
+    }
+    if (this.meetingType === 'Empty Chair Town Hall') {
+      sentence = [prefix, this.Member, '(invited)'];
+      this.formattedMember = sentence.join(' ');
+    } else {
+      sentence = [prefix, this.Member];
+      this.formattedMember = sentence.join(' ');
+    }
   };
 
   TownHall.prototype.isInFuture = function (){
@@ -72,6 +129,9 @@
         // Currently some of the data is inconsistent.  Some parties are listed as "Democrat" and some are listed as "Democratic", etc
         // TODO:  Once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
         return TownHall.filters[key].some(function(filter) {
+          if (!townhall[key]) {
+            return;
+          }
           return filter.slice(0, 8) === townhall[key].slice(0, 8);
         });
       });
@@ -80,9 +140,10 @@
 
   // METHODS IN RESPONSE TO lookup
   // Converts zip to lat lng google obj
-  TownHall.lookupZip = function (zip) {
+  TownHall.lookupZip = function (zip, path) {
+    var lookupPath = path || '/zipToDistrict/';
     return new Promise(function (resolve, reject) {
-      firebasedb.ref('/zipToDistrict/' + zip).once('value').then(function(snapshot) {
+      firebasedb.ref(lookupPath + zip).once('value').then(function(snapshot) {
         if (snapshot.exists()) {
           var districts = [];
           snapshot.forEach(function(ele){
@@ -146,7 +207,7 @@
 
         // Get all the district promises together
         var districtLookups = [];
-        Object.keys(districts).forEach(function(key, index, array) {
+        Object.keys(districts).forEach(function(key, index) {
           var obj = districts[key];
           if (index === 0) {
             districtLookups.push(
@@ -194,27 +255,44 @@
     });
   };
 
+  TownHall.getStateEvents = function(state) {
+    return firebasedb.ref('/state_townhalls/' + state + '/').once('value');
+  };
+
+  TownHall.matchSelectionToZipStateEvents = function(state, districts, chamber) {
+    return TownHall.allStateTownHalls.reduce(function (acc, townhall) {
+      if (townhall.chamber === 'statewide') {
+        acc.push(townhall);
+      } else {
+        districts.forEach(function(district){
+          var checkdistrict;
+          if (chamber === 'upper') {
+            checkdistrict = 'SD-' + district;
+          } else if (chamber === 'lower') {
+            checkdistrict = 'HD-' + district;
+          }
+          if (checkdistrict === townhall.district) {
+            acc.push(townhall);
+          }
+        });
+      }
+      return acc;
+    }, []);
+  };
+
   // Match the looked up zip code to district #
   TownHall.matchSelectionToZip = function (state, districts) {
     var fetchedData = [];
-    var stateName;
-
-    // Fetch full state name
-    stateData.forEach(function(n){
-      if (n.USPS === state) {
-        stateName = n.Name;
-      }
-    });
 
     fetchedData = TownHall.allTownHalls.filter(function(townhall){
-      return townhall.State === stateName && townhall.meetingType !== 'DC Event';
+      return townhall.state === state && townhall.meetingType !== 'DC Event';
     }).reduce(function(acc, curtownhall){
-      if (curtownhall.District === 'Senate') {
+      if (!curtownhall.district) {
         acc.push(curtownhall);
       } else {
         districts.forEach(function(d) {
           var districtMatcher = parseInt(d);
-          var dataMatcher = parseInt(curtownhall.District.split('-')[1]);
+          var dataMatcher = parseInt(curtownhall.district);
 
           if (districtMatcher === dataMatcher) {
             acc.push(curtownhall);
@@ -255,8 +333,8 @@
   };
 
   TownHall.addFilterIndexes = function(townhall) {
-    if (TownHall.allStates.indexOf(townhall.State) === -1) {
-      TownHall.allStates.push(townhall.State);
+    if (TownHall.allStates.indexOf(townhall.stateName) === -1) {
+      TownHall.allStates.push(townhall.stateName);
     }
     if (TownHall.allMoCs.indexOf(townhall.Member) === -1) {
       TownHall.allMoCs.push(townhall.Member);

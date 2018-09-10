@@ -1,11 +1,10 @@
 (function(module) {
 
-  zipLookUpHandler = {};
+  var zipLookUpHandler = {};
 
-  zipLookUpHandler.zipErrorResponse = function(errorMessage, error) {
-    console.warn(error);
+  zipLookUpHandler.zipErrorResponse = function(errorMessage) {
     var $text = $('.selection-results_content');
-    $text.text(errorMessage);
+    $text.html(errorMessage);
   };
 
   // Perform zip search on load
@@ -23,7 +22,7 @@
           district:district.split('-')[1],
           geoID:district.split('-')[2],
         };
-        mapView.districtSelect(feature);
+        mapboxView.districtSelect(feature);
       } else {
         urlParamsHandler.setUrlParameter('district', false);
       }
@@ -31,5 +30,5 @@
   };
 
   module.zipLookUpHandler = zipLookUpHandler;
-  
+
 })(window);

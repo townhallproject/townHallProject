@@ -8,7 +8,7 @@
       <h3 class="text-center">{{meetingType}}</h3>
     {{/unless}}
     <span class="text-center">
-      <h4 class="hidden-xs">{{Date}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4>
+      <h4 class="hidden-xs">{{dateString}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4>
       <h4 class="visible-xs-block">{{#shortDateTime this}}{{/shortDateTime}}</h4>
       {{#if Location}}<h4>{{Location}}</h4>{{/if}}
     </span>
@@ -19,15 +19,19 @@
     {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
       <h3 class="col-xs-10 col-md-9 line-height-medium">
         {{#ifCond District '===' 'Senate'}}
-          <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{Member}} <small> ({{Party}}) {{State}}, {{District}}</small>
+          <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{Member}} <small>  {{#if party}} ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
         {{else}}
-          <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{Member}} <small> ({{Party}}) {{State}}, {{District}}</small>
+          <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{Member}} <small>  {{#if party}} ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
         {{/ifCond}}
         <br>
         <span class="discriptor-text d-inline-block">Visiting MoC (will be present): </span>{{districtAdopter}} <small> ({{districtAdopterParty}}) {{districtAdopterState}}, {{districtAdopterDistrict}}</small>
       </h3>
     {{else}}
-      <h3 class="col-xs-10 col-md-9">{{Member}} <small>({{Party}}) {{State}}, {{District}}</small></h3>
+      <h3 class="col-xs-10 col-md-9">{{formattedMember}} <small>
+        {{#if party}}
+        ({{party}}) 
+        {{/if}}
+        {{displayDistrict}}</small></h3>
     {{/ifCond}}
     <h3 class="col-xs-2 col-md-3">
       <span class="addtocalendar pull-right">
@@ -39,7 +43,7 @@
             <var class="atc_title">{{meetingType}}: {{Member}}</var>
             <var class="atc_description">{{{Notes}}}</var>
             <var class="atc_location">{{address}}</var>
-            <var class="atc_organizer">{{Party}}</var>
+            <var class="atc_organizer">{{party}}</var>
           </var>
         </var>
       </span>

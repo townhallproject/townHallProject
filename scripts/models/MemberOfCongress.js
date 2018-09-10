@@ -1,6 +1,6 @@
 (function(module) {
   function MoC(opts) {
-    for (keys in opts) {
+    for (var keys in opts) {
       this[keys] = opts[keys];
     }
     if (this.type === 'sen') {
@@ -16,7 +16,7 @@
 
   MoC.prototype.zeroPadding = function() {
     var zeros = '00';
-    district = this.district.toString();
+    var district = this.district.toString();
     return zeros.substring(0, zeros.length - district.length) + district;
   };
 
