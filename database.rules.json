@@ -39,6 +39,10 @@
         }
       }
     },
+    "do_your_job_districts": {
+      ".read": "true",
+      ".write": "false"
+    },
     "indivisible_public_events": {
       ".read": "true"
     },
