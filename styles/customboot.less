@@ -378,7 +378,7 @@ input{
    h3{
      margin-top: 0;
    }
-   .image-holder{
+   .image-holder {
      margin-top: 40px;
      img {
       //  max-width: 350px;
@@ -386,7 +386,7 @@ input{
    }
  }
 
- @media (min-width: @screen-sm-min){
+ @media (max-width: @screen-sm-min){
    #mfol-banner {
      .image-holder{
        img {
@@ -739,16 +739,58 @@ a.social-icon {
   }
 }
 .time-sensitive {
-  padding-bottom: 1em;
-  .do-your-job-logo {
-    background-image: url('/Images/svgs/do-your-job-logo.svg');
+  display: flex;
+  .display-flex {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+  }
+  h1 {
+    display: inline-block;
+
+  }
+
+  .first-row {
+    border-bottom: 1px solid @brand-white;
+    width: 100%;
+    margin: auto;
+  }
+  .happening-now-title {
+    .break {
+      display: block;
+    }
+    i {
+      color: #b14038;
+      font-size: 3em;
+    }
+    background: #ed6c64;
+    color: white;
+    height: 100%;
+    flex: 1;
+    padding-left: 20px 
+  }
+  .happening-now-content {
+    flex: 2;
+  }
+  .logo {
     height: 80px;
     background-size: 80px 80px;
     background-repeat: no-repeat;
     width: 80px;
     vertical-align: middle;
     float:left;
-    margin-left: 65px;
+    margin-left: 25px;   
+  }
+  .mfol-logo {
+    background-size: 100px 100px;
+    background-image: url('/Images/town-hall-for-our-lives.svg');
+    margin-right: 25px;
+    margin-left: 30px;   
+    width: 100px;
+
+  }
+  .do-your-job-logo {
+    background-image: url('/Images/svgs/do-your-job-logo.svg');
   }
 }
 .time-sensitive .container{
@@ -1888,6 +1930,25 @@ img.grayscale {
 
 .webGl-warning {
   max-width: 750px;
+}
+
+@media screen and (max-width: 850px){
+    .time-sensitive {
+    .happening-now-title {
+      .break{
+
+        display: inline;
+      }
+      flex: 1 100%;
+      height: initial!important;
+      i {
+        font-size: 1em;
+      }
+    }
+    .happening-now-content {
+      flex: 1 100%;
+    }
+  }
 }
 
 @media screen and (max-width: 800px){
