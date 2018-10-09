@@ -1,3 +1,7 @@
+import TownHall from '../models/TownHall';
+import stateView from './stateView';
+
+
 const tableHandler = {};
 
 tableHandler.resetTable = function () {

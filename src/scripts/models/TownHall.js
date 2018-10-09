@@ -326,7 +326,7 @@ TownHall.removeFilterCategory = (category) => {
 };
 
 TownHall.resetFilters = () => {
-  Object.keys(TownHall.filters).forEach(function (key) {
+  Object.keys(TownHall.filters).forEach(key => {
     delete TownHall.filters[key];
   });
 };

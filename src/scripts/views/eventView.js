@@ -1,6 +1,10 @@
 /*globals newEventView*/
-import { stateData } from '../../data/states';
-import { urlParamsHandler } from '../lib/urlParams';
+import $ from 'jquery';
+import stateData from '../../data/states';
+import urlParamsHandler from '../lib/urlParams';
+import TownHall from '../models/TownHall';
+import newEventView from './mfolSubmitForm';
+import tableHandler from './tableView';
 
 const zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
 // object to hold the front end view functions
@@ -273,7 +277,7 @@ function setupTypeaheads() {
 }
 
 function checkEventParam() {
-  var eventId = urlParamsHandler.getUrlParameter('eventId');
+  let eventId = urlParamsHandler.getUrlParameter('eventId');
   if (eventId) {
     firebasedb.ref('/townHalls/' + eventId).once('value').then(function (snapshot) {
       if (snapshot.val()) {
@@ -290,7 +294,7 @@ $(document).ready(function () {
   init();
 });
 
-function init() {
+export const init = () => {
   checkEventParam();
   $('#button-to-form').hide();
   $('#save-event').on('submit', eventHandler.save);

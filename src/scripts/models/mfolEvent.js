@@ -97,11 +97,11 @@ MfolEvent.getLatandLog = (address) => {
       dataType: 'json',
       success: function (r) {
         if (r.results[0]) {
-          var currentEvent = {};
+          let currentEvent = {};
           currentEvent.lat = r.results[0].geometry.location.lat;
           currentEvent.lng = r.results[0].geometry.location.lng;
           currentEvent.address = r.results[0].formatted_address.split(', USA')[0];
-          var addresskey = address.replace(/\W/g, '');
+          let addresskey = address.replace(/\W/g, '');
           addresskey.trim();
           resolve(currentEvent);
         } else {

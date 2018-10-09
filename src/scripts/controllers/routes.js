@@ -1,6 +1,10 @@
-var page = page;
-var mapController = mapController;
-var indexController = indexController;
+// let page = page;
+// let mapController = mapController;
+// let indexController = indexController;
+import page from 'page';
+import mapController from './map-controller';
+import indexController from './index-controller';
+
 
 page('/',
   mapController.reset,

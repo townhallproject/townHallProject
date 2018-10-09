@@ -1,3 +1,5 @@
+import tableHandler from './tableView';
+
 const indexView = {};
 
 indexView.renderAwards = function () {

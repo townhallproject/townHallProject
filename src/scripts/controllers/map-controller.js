@@ -1,5 +1,7 @@
-import { stateData } from '../../data/states';
-import { bboxes } from '../../data/bboxes';
+import stateData from '../../data/states';
+import bboxes from '../../data/bboxes';
+import TownHall from '../models/TownHall';
+import stateView from '../views/stateView';
 
 const mapController = {};
 

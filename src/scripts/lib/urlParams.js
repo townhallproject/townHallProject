@@ -1,16 +1,16 @@
 const urlParamsHandler = {};
 
-urlParamsHandler.getUrlParameter = function(param) {
-  var query = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
+urlParamsHandler.getUrlParameter = (param) => {
+  let query = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
   if (query) {
     return query[0].split('=')[1];
   }
   return false;
 };
 
-urlParamsHandler.setUrlParameter = function(param, value) {
+urlParamsHandler.setUrlParameter = (param, value) => {
   // Get query params, and remove the matching param if it exists
-  var search = document.location.search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
+  let search = document.location.search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
   // If there are no query params then we need to add the ? back
   if (search.indexOf('?') === -1) {
     search += '?';

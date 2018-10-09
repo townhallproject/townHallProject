@@ -1,3 +1,5 @@
+import indexView from '../views/indexView';
+
 const indexController = {};
 
 indexController.renderMainIndex = function (ctx, next) {

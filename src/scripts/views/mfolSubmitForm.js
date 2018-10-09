@@ -1,9 +1,9 @@
 // For handling user submitted events.
 /*global Handlebars regEx:true*/
 
-import { fips } from '../../data/fips-lookup';
+import fips from '../../data/fips-lookup';
 import moment from 'moment';
-import { MfolEvent } from '../models/mfolEvent';
+import MfolEvent from '../models/mfolEvent';
 import { firebasedb } from '../lib/firebasedb';
 
 const newEventView = {};

@@ -1,3 +1,5 @@
+import stateView from '../views/stateView';
+
 (function closure(module) {
   var googleMap;
   var google;

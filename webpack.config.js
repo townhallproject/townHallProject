@@ -116,7 +116,7 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 6000,
-              name: 'images/[name].[ext]',
+              name: 'Images/[name].[ext]',
             },
           },
         ],
