@@ -1,3 +1,4 @@
+/*globals newEventView*/
 (function(module) {
   var zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
   // object to hold the front end view functions
@@ -44,6 +45,7 @@
   }
 
   eventHandler.renderResults = function(locationData) {
+    tableHandler.resetFilters();
     var thisState = locationData.federal.thisState;
     var validDistricts = locationData.federal.validDistricts;
     var validSelections = locationData.federal.validSelections;
@@ -52,9 +54,11 @@
     var zoomMap = true;
     //render table
     var districtText = ' ';
+    emailHandler.clearDistricts();
     validDistricts.forEach(function(district){
       if (district) {
         districtText = districtText + thisState + '-' + district + ' ';
+        emailHandler.addDistrict(thisState + '-' + district)
       } else {
         districtText = districtText + thisState;
       }
@@ -88,7 +92,7 @@
       $parent.addClass('nearest-with-results');
 
       TownHall.isCurrentContext = true;
-      TownHall.currentContext = selectedData;
+      TownHall.currentContext = selectedData.map(function(ele){return ele;});
       tableHandler.renderTableWithArray(selectedData);
 
       var counts = eventHandler.checkIfOnlySenate(federalEvents);
@@ -221,7 +225,6 @@
           TownHall.zipQuery = zipClean;
           urlParamsHandler.setUrlParameter('district', false);
           urlParamsHandler.setUrlParameter('zipcode', zipClean);
-          tableHandler.resetFilters();
 
           var locationData = handleZipToDistrict(zipToDistrictArray);
           eventHandler.renderResults(locationData);
@@ -239,6 +242,7 @@
     if (townhall.address) {
       townhall.addressLink = 'https://www.google.com/maps/dir/Current+Location/' + escape(townhall.address);
     }
+    townhall.makeFormattedMember();
     var compiledTemplate = Handlebars.getTemplate('eventCards');
     var $panel = $(compiledTemplate(townhall));
     $panel.appendTo($parent);
@@ -271,7 +275,9 @@
     if (eventId) {
       firebasedb.ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
         if (snapshot.val()) {
-          eventHandler.populateEventModal(snapshot.val());
+          var townhall = new TownHall(snapshot.val());
+          townhall.makeFormattedMember();
+          eventHandler.populateEventModal(townhall);
           $('.event-modal').modal('show');
         }
       });
@@ -306,6 +312,8 @@
     if (location.hash) {
       var hashLocation = location.hash.split('?')[0];
       $("a[href='" + hashLocation + "']").tab('show');
+      $('.home-page-only').removeClass('hidden');
+
       if (hashLocation === '#missing-members') {
         if (!missingMemberView.loaded) {
           missingMemberView.init();
@@ -314,17 +322,23 @@
             $('.grid').isotope();
           }, 1500);
         }
+      } else if (hashLocation === '#mfol-submit-event') {
+        newEventView.render();
+      } else if (hashLocation === '#thfol-guide') {
+        $('.home-page-only').addClass('hidden');
+        location.hash = hashLocation;
       }
     } else {
       TownHall.isMap = true;
     }
     if (localStorage.getItem('signedUp') === 'true') {
-      $('#email-signup').hide();
+      emailHandler.hideEmailForm();
     }
 
     $('.hash-link').on('click', function onClickGethref() {
       var hashid = this.getAttribute('href');
       $('ul .hash-link').parent().removeClass('active');
+      $('.home-page-only').removeClass('hidden');
 
       if (hashid === '#home' && TownHall.isMap === false) {
         page('/');
@@ -348,7 +362,14 @@
           }, 1500);
         }
         location.hash = hashid;
+      } else if (hashid === '#mfol-submit-event') {
+        newEventView.render();
+        location.hash = hashid;
+      } else if (hashid === '#thfol-guide') {
+        $('.home-page-only').addClass('hidden');
+        location.hash = hashid;
       }
+
       else {
         location.hash = hashid;
       }
@@ -362,7 +383,7 @@
     });
     $('#close-email').on('click', function(){
       localStorage.setItem('signedUp', true);
-      $('#email-signup').fadeOut(750);
+      emailHandler.closeEmailForm();
     });
     $('body').on('click', '.popover .popover-title a.close', function() {
       $('[data-toggle="popover"]').popover('hide');
@@ -379,11 +400,11 @@
     });
     $('#close-email').on('click', function(){
       localStorage.setItem('signedUp', true);
-      $('#email-signup').fadeOut(750);
+      emailHandler.closeEmailForm();
     });
     $('#email-signup-form').on('submit', emailHandler.validateSignup);
     if (localStorage.getItem('signedUp') === 'true') {
-      $('#email-signup').hide();
+      emailHandler.hideEmailForm();
     }
     var divTop = $('#all-events-table').offset().top + 380;
     $(window).scroll(function() {

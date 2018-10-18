@@ -1,5 +1,4 @@
 (function closure(module) {
-
   var mapboxView = {};
   var map;
   // Define an intial view for the map
@@ -79,7 +78,11 @@
 
     // Set Mapbox map controls
     map.addControl(new mapboxgl.NavigationControl());
+    // Disable mousescroll zoom except after clicking map.
+    // Using jQuery because this mapbox api doesn't support focus or blur 
     map.scrollZoom.disable();
+    $('canvas.mapboxgl-canvas').on('focus', (function() { map.scrollZoom.enable(); }));
+    $('canvas.mapboxgl-canvas').on('blur', (function() { map.scrollZoom.disable(); }));
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
     return map;
@@ -135,7 +138,8 @@
       var firstArg = feature.district ? feature.state : 'state';
       var secondArg = feature.district ? feature.district : feature.state;
       repCardHandler.renderRepresentativeCards(TownHall.lookupReps(firstArg, secondArg), $('#representativeCards section'), feature.state);
-
+      emailHandler.clearDistricts();
+      emailHandler.addDistrict(feature.state + '-' + feature.district);
       urlParamsHandler.setUrlParameter('zipcode', false);
       urlParamsHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
     } else {
@@ -229,12 +233,7 @@
     return [lng + jitter * plusOrMinus, lat + jitter * plusOrMinus1];
   }
 
-  var featuresHome = {
-    type: 'FeatureCollection',
-    features: []
-  };
-
-  var featuresHomeState = {
+  mapboxView.featuresHome = {
     type: 'FeatureCollection',
     features: []
   };
@@ -245,7 +244,7 @@
       'type': 'symbol',
       'source': {
         'type': 'geojson',
-        'data': featuresHome
+        'data': mapboxView.featuresHome
       },
       'layout': {
         'icon-image': '{icon}',
@@ -269,7 +268,7 @@
       'type': 'symbol',
       'source': {
         'type': 'geojson',
-        'data': featuresHomeState
+        'data': mapboxView.featuresHome
       },
       'layout': {
         'icon-image': '{icon}',
@@ -308,9 +307,11 @@
         return;
       }
       var feature = features[0];
+      var townhall = new TownHall(feature.properties);
+      townhall.makeFormattedMember();
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
       popup.setLngLat(feature.geometry.coordinates)
-          .setHTML(mapPopoverTemplate(feature.properties))
+        .setHTML(mapPopoverTemplate(townhall))
           .addTo(map);
     });
   };
@@ -347,11 +348,11 @@
       var district = clickedPoint.properties.district;
       var pointDistrict = district.substring(district.lastIndexOf('-') + 1, district.length);
 
-      if (clickedPoint.properties.chamber === 'HD') {
+      if (clickedPoint.properties.chamber === 'lower') {
         pointFeature.house_district = mapHelperFunctions.zeroPad(pointDistrict);
         pointFeature.house_geoId = clickedPoint.properties.stateCode + '0' + pointFeature.house_district;
 
-      } else if (clickedPoint.properties.chamber === 'SD') {
+      } else if (clickedPoint.properties.chamber === 'upper') {
         pointFeature.senate_district = mapHelperFunctions.zeroPad(pointDistrict);
         pointFeature.senate_geoId = clickedPoint.properties.stateCode + '0' + pointFeature.senate_district;
       }
@@ -500,7 +501,7 @@
     var stateAbbr = townhall.state;
     var stateCode = fips[stateAbbr];
     var districtId = townhall.district ? townhall.district : '';
-    var array = featuresHome;
+    var array = mapboxView.featuresHome;
 
     if (iconKey === 'tele'){
       iconKey = 'phone-in';
@@ -509,12 +510,10 @@
         return;
       }
     }
+    // makes staff icon smaller
+    iconKey = iconKey === 'staff' ? 'staff-small' : iconKey;
     if (townhall.thp_id) {
-      townhall.chamber = townhall.district.split('-')[0];
-    }
-
-    if (stateIcon) {
-      array = featuresHomeState;
+      townhall.chamber = townhall.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
     }
     array.features.push({
       type: 'Feature',
@@ -525,12 +524,11 @@
       properties: {
         //TODO: normalize this.
         repeatingEvent: townhall.repeatingEvent,
-        date: townhall.Date,
-        Date: townhall.Date,
+        date: townhall.dateString,
         Time: townhall.Time,
         chamber: townhall.chamber || null,
         district: townhall.district,
-        displayDistrict: townhall.displayDistrict.split(' ')[0],
+        displayDistrict: townhall.displayDistrict.split(' (')[0],
         districtId: districtId,
         stateCode: stateCode,
         stateAbbr: stateAbbr,
@@ -539,17 +537,19 @@
         address: townhall.address,
         meetingType: townhall.meetingType,
         icon: iconKey,
+        level: townhall.level,
         stateIcon: stateIcon || undefined
       },
     });
   };
 
   mapboxView.setStateData = function(){
-    map.getSource('townhall-points-state').setData(featuresHomeState);
+    map.setLayoutProperty('townhall-points', 'visibility', 'none');
+    map.getSource('townhall-points-state').setData(mapboxView.featuresHome);
   };
 
   mapboxView.setData = function(){
-    map.getSource('townhall-points').setData(featuresHome);
+    map.getSource('townhall-points').setData(mapboxView.featuresHome);
   };
 
   mapboxView.showStateLegend = function(){

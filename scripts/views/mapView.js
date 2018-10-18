@@ -8,13 +8,25 @@
     return map;
   };
 
+  mapView.initialView = function resetView() {
+    mapView.killSidebar();
+    mapView.zoomLocation = false;
+    $('#representativeCards').hide();
+    if (mapView.webGL && map) {
+      mapboxView.resetMap(map);
+    } else if (window.google) {
+      noWebGlMapView.resetMap();
+    }
+  };
+
+
   mapView.resetView = function resetView() {
     mapView.killSidebar();
     mapView.zoomLocation = false;
     $('#representativeCards').hide();
     if (mapView.webGL && map) {
       mapboxView.resetMap(map);
-    } else {
+    } else if (window.google) {
       noWebGlMapView.resetMap();
     }
     urlParamsHandler.setUrlParameter('zipcode', false);
@@ -32,10 +44,14 @@
   // Fetch data from Firebase, run map filter & point layers
   // listens for new data.
   mapView.readData = function(webgl) {
+    mapboxView.featuresHome.features = [];
     var townHallsFB = firebasedb.ref('/townHalls/');
+    tableHandler.clearTableData();
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
-      var ele = new TownHall (snapshot.val());
-        ///If no state filter show all results
+      var ele = new TownHall(snapshot.val());
+      ///If no state filter show all results
+      ele.level = 'federal';
+      ele.makeDisplayDistrict();
       TownHall.allTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
       tableHandler.initialMainTable(ele);
@@ -55,10 +71,21 @@
   };
 
   mapView.readStateData = function(webgl, state) {
+    mapboxView.featuresHome.features = [];
+    TownHall.allTownHalls = [];
+    TownHall.allStateTownHalls = [];
+
+    var numberDone = 0;
     ///If in state view filter the results before they get displayed on the map and in the table
     var townHallsFB = firebasedb.ref('/state_townhalls/' + state + '/');
+    ///clear previous table if it exists
+    tableHandler.clearTableData();
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
-      var ele = new TownHall (snapshot.val());
+      var ele = new TownHall(snapshot.val());
+      
+      ele.chamber = ele.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
+      ele.level = 'state';
+      ele.makeDisplayDistrict();
       TownHall.allStateTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
       tableHandler.initialStateTable(ele);
@@ -68,11 +95,12 @@
       } else {
         noWebGlMapView.setData(ele);
       }
-
     });
     var townHallsFBFederal = firebasedb.ref('/townHalls/');
     townHallsFBFederal.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall (snapshot.val());
+      ele.level = 'federal';
+      ele.makeDisplayDistrict();
       if (ele.state === state) {
         TownHall.allTownHalls.push(ele);
         TownHall.addFilterIndexes(ele);
@@ -87,11 +115,22 @@
 
     });
     townHallsFBFederal.once('value', function() {
-      if (webgl) {
-        mapboxView.setData();
-        mapboxView.setStateData();
+      numberDone++;
+      if (numberDone === 2){
+        if (webgl) {
+          mapboxView.setStateData();
+        }
+        zipLookUpHandler.zipSearchByParam();
       }
-      zipLookUpHandler.zipSearchByParam();
+    });
+    townHallsFB.once('value', function () {
+      numberDone++;
+      if (numberDone === 2) {
+        if (webgl) {
+          mapboxView.setStateData();
+        }
+        zipLookUpHandler.zipSearchByParam();
+      }
     });
   };
 
@@ -124,3 +163,4 @@
   module.mapView = mapView;
 
 }(window));
+

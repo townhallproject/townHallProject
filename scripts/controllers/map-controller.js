@@ -138,6 +138,9 @@
   };
 
   mapController.reset = function(ctx, next) {
+    TownHall.allTownHalls = [];
+    TownHall.currentContext = [];
+    TownHall.isCurrentContext = false;
     stateView.stateCoords = undefined;
     next();
   };

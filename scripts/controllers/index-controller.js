@@ -2,7 +2,7 @@
   var indexController = {};
 
   indexController.renderMainIndex = function(ctx, next) {
-    indexView.renderAwards();
+    indexView.initialHome();
     indexView.renderHeader();
     indexView.setStateDropdown();
     tableHandler.initialFilters();
@@ -10,7 +10,7 @@
   };
 
   indexController.renderStateIndex = function(ctx, next) {
-    indexView.hideAwards();
+    indexView.initialHome();
     stateView.renderHeader(ctx.stateUPSP);
     stateView.setStateDropdown(ctx.stateUPSP);
     tableHandler.resetFilters();

@@ -3,7 +3,7 @@
     {{#if stateIcon}}
     <span class="pull-left state-icon state-icon__{{stateAbbr}}">
     {{/if}}
-    </span>{{Member}} <small>{{displayDistrict}}</small></h4>
+    </span>{{formattedMember}} <small>{{displayDistrict}}</small></h4>
   <p>{{Location}}</p>
   <span>{{Time}} </span>
   <span>
@@ -11,8 +11,8 @@
       on {{repeatingEvent}}
     {{/if}}
     {{#unless repeatingEvent}}
-      {{#if Date}}
-        on {{Date}}
+      {{#if date}}
+        on {{date}}
       {{/if}}
     {{/unless}}
   </span><br>

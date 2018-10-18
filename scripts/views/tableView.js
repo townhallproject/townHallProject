@@ -11,12 +11,18 @@
     tableHandler.renderTableWithArray(tableHandler.getFilterState());
   };
 
+  tableHandler.clearTableData= function() {
+    $('#all-events-table').children().slice(1).remove();
+    $('#current-state').attr('data-total', 0);
+    $('#current-state').attr('data-current', 0);
+  }
+
   tableHandler.initialFilters = function() {
     tableHandler.resetFilters();
 
     tableHandler.addFilter('meetingType', 'Town Hall');
     tableHandler.addFilter('meetingType', 'Empty Chair Town Hall');
-    tableHandler.addFilter('meetingType', 'Tele-Town Hall');
+    tableHandler.addFilter('meetingType', 'Campaign Town Hall');
   };
 
   tableHandler.renderTableWithArray = function (array) {
@@ -37,18 +43,19 @@
       townhall.dist = Math.round(townhall.dist/1609.344);
     }
     townhall.addressLink = 'https://www.google.com/maps?q=' + escape(townhall.address);
+    townhall.makeFormattedMember();
     var compiledTemplate = Handlebars.getTemplate('eventTableRow');
     $($tableid).append(compiledTemplate(townhall));
   };
 
   tableHandler.getFilterState = function () {
-    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls;
+    var data = TownHall.isCurrentContext ? TownHall.currentContext : TownHall.allTownHalls.concat(TownHall.allStateTownHalls);
     return TownHall.getFilteredResults(data);
   };
 
   tableHandler.sortTable = function (e) {
     e.preventDefault();
-    TownHall.sortOn = $(this).attr('data-filter');
+    TownHall.sortOn = $(this).attr('data-filter');   
     tableHandler.renderTableWithArray(tableHandler.getFilterState());
   };
 

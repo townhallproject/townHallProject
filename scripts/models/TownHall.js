@@ -3,7 +3,6 @@
     for (var key in opts) {
       this[key] = opts[key];
     }
-    this.makeDisplayDistrict();
   }
   //Global data state
   TownHall.allTownHalls = [];
@@ -40,8 +39,10 @@
     });
   };
 
+  // for state leg: HD-01 (North Caroline House District 1)
+  // for federal: NC-6
   TownHall.prototype.makeDisplayDistrict = function (){
-    if (this.thp_id){
+    if (this.level === 'state'){
       //state leg or statewide office
       var title;
       if (this.district) {
@@ -58,13 +59,38 @@
         this.displayDistrict = title;
       }
     } else {
-      if (this.district) {
+      var state = this.state ? this.state : this.stateAbbr;
+      if (this.district && parseInt(this.district)) {
         //House
-        this.displayDistrict = this.state + '-' + parseInt(this.district);
-      } else {
+        this.displayDistrict = state + '-' + parseInt(this.district);
+      } else if (this.chamber === 'upper'){
         //Senator
-        this.displayDistrict = 'Senate';
+        this.displayDistrict = state + ', ' + 'Senate';
+      } else if (this.chamber === 'statewide' && this.office){
+        this.displayDistrict = this.office.toUpperCase() + ' ' + state;
+      } else {
+        this.displayDistrict = state;
       }
+      if (this.meetingType === 'Campaign Town Hall'){
+        this.displayDistrict = 'Running for: ' + this.displayDistrict;
+      }
+    }
+  };
+
+  // 
+  TownHall.prototype.makeFormattedMember = function () {
+    var sentence;
+    var icon = this.iconFlag ? this.iconFlag : this.icon;
+    var prefix = '';
+    if ((this.chamber) && (icon) && (icon !== 'campaign')) {
+      prefix = constants[this.chamber];
+    }
+    if (this.meetingType === 'Empty Chair Town Hall') {
+      sentence = [prefix, this.Member, '(invited)'];
+      this.formattedMember = sentence.join(' ');
+    } else {
+      sentence = [prefix, this.Member];
+      this.formattedMember = sentence.join(' ');
     }
   };
 
@@ -307,8 +333,8 @@
   };
 
   TownHall.addFilterIndexes = function(townhall) {
-    if (TownHall.allStates.indexOf(townhall.State) === -1) {
-      TownHall.allStates.push(townhall.State);
+    if (TownHall.allStates.indexOf(townhall.stateName) === -1) {
+      TownHall.allStates.push(townhall.stateName);
     }
     if (TownHall.allMoCs.indexOf(townhall.Member) === -1) {
       TownHall.allMoCs.push(townhall.Member);

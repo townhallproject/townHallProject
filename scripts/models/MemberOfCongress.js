@@ -7,7 +7,7 @@
       this.repOf = 'Sen. ' + this.state;
       this.displayType = 'Senate';
       this.subtitle = 'Senator';
-    } else {
+    } else if (this.type === 'rep') {
       this.repOf = this.state + '-' + this.zeroPadding();
       this.displayType = 'House';
       this.subtitle = this.state + '-' + this.district;

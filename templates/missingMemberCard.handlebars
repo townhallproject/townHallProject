@@ -1,4 +1,4 @@
-<div class="element-item {{party}} {{state}} {{displayType}} {{#if swingLeft}} swingLeft {{/if}} {{#if ahca}}ahca{{/if}} {{#if taxBill}}taxBill{{/if}} {{#if missingMember}}missingMember{{/if}}">
+<div class="element-item {{party}} {{state}} {{displayType}} {{#if ahca}}ahca{{/if}} {{#if taxBill}}taxBill{{/if}} {{#if missingMember}}missingMember{{/if}}">
   <div class="card card-representative {{party}}">
     <div class="card-header">
       <div class="row">
@@ -8,6 +8,12 @@
       <div class="col-xs-8 col-sm-9">
         <h4>{{title}} {{displayName}}</h4>
         <small class="rep-card-subtitle">{{repOf}}</small>
+        <div>
+            <a href="https://jacksonmaxfield.github.io/flyer_gen/#/m={{id}}" target="_blank"
+               title="Print a milk-carton like poster for your Missing Member of Congress.">
+              <i class="fa fa-2x fa-address-book" aria-hidden="true"></i>
+            </a>
+        </div>
       </div>
     </div>
     </div>
@@ -50,17 +56,12 @@
       <div class="row">
       <div class="footer-icon type-holder col-4 vertical-align ">
          {{#if taxBill}}
-        <div class="footer-text"><small>Voted for</small> <span class="highlight">GOP Tax Bill</span></div>{{/if}}
-        </div>
-        <div class="footer-icon col-4 swingleft-holder less-padding vertical-align">
-        {{#if swingLeft}}
-          <div class="footer-text"><small>In </small><span class="highlight">SwingLeft</span> <small> district</small></div> 
-        {{/if}}
+        <div class="footer-text"><small>Voted for</small> <span class="highlight">2017 Tax Bill</span></div>{{/if}}
         </div>
         <div class="footer-icon  col-4">
             {{#if ahca}}<div class="footer-text ahca-text  vertical-align">
               <small>Voted for </small><span class="highlight">AHCA</span></div>{{/if}}
-        </div>  
+        </div>
         </div>
       </div>
    </div>

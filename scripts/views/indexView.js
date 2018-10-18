@@ -19,14 +19,28 @@
     $('.dropdown--stateSelection .stateNav-federal').hide();
   };
 
+  // originial view
+  indexView.initialHome = function () {
+    tableHandler.resetTable();
+    mapView.initialView();
+    var $parent = $('#nearest');
+    var $results = $('.selection-results_content');
+    $parent.removeClass('nearest-with-results');
+    $parent.empty();
+    $results.empty();
+    tableHandler.initialFilters();
+    TownHall.sortOn = 'Date';
+  };
+
   // reset the home page to originial view
   indexView.resetHome = function () {
-    $('#awards-banner').show();
     $('.header-small').hide();
     $('.header-large').fadeIn();
     $('#look-up input').val('');
     $('#missing-member-banner').show();
     $('#email-signup-form input[name=zipcode]').val('');
+    $('#email-signup-form input[name=zipcode]').removeClass('hidden');
+    $('#email-signup-form #district-subscribe').addClass('hidden');
     $('#no-events').hide();
     $('#representativeCards section').empty();
     $('#representativeCards').hide();
@@ -45,6 +59,7 @@
     $parent.empty();
     $results.empty();
     tableHandler.initialFilters();
+    emailHandler.clearDistricts();
     TownHall.sortOn = 'Date';
   };
 
