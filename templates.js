@@ -1,7 +1,7 @@
 Handlebars.getTemplate = function(name) {
   if (Handlebars.templates === undefined || Handlebars.templates[name] === undefined) {
     $.ajax({
-      url : 'templates/' + name + '.handlebars',
+      url : location.origin + '/templates/' + name + '.handlebars',
       mimeType: 'text/x-handlebars-template',
       success : function(data) {
         if (Handlebars.templates === undefined) {
@@ -20,13 +20,13 @@ Handlebars.registerHelper('json', function(context) {
 });
 
 Handlebars.registerHelper('addressQuery', function(address) {
-  return escape(address)
+  return escape(address);
 });
 
-Handlebars.registerHelper('addressFormat', function(address, options) {
-  var out = "";
+Handlebars.registerHelper('addressFormat', function(address) {
+  var out = '';
   var items = address.split(',');
-  out = out + items.splice(0, 1)[0] + '<br>'
+  out = out + items.splice(0, 1)[0] + '<br>';
   return out + items.join(', ');
 });
 

@@ -7,7 +7,7 @@
       return query[0].split('=')[1];
     }
     return false;
-  }
+  };
 
   urlParamsHandler.setUrlParameter = function(param, value) {
     // Get query params, and remove the matching param if it exists
@@ -27,7 +27,7 @@
       search = search.slice(0, -1);
     }
 
-    window.history.replaceState('', '', document.location.origin + '/' + search);
+    window.history.replaceState('', '', document.location.origin + document.location.pathname + search);
   };
 
   module.urlParamsHandler = urlParamsHandler;

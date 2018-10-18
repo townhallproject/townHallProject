@@ -4,6 +4,48 @@
   },
   "hosting": {
     "public": ".",
+    "rewrites": [
+      {
+        "source": "/Colorado",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/colorado",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/Arizona",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/arizona",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/South-Carolina",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/south-carolina",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/North-Carolina",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/north-carolina",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/Virginia",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/virginia",
+        "destination": "/index.html"
+      }
+    ],
     "ignore": [
       "firebase.json",
       "database.rules.json",
@@ -16,6 +58,7 @@
       "styles/bootstrap.map",
       ".DS_Store",
       "**/node_modules/**",
+      "functions/node_modules/**",
       "**/bower_components/**",
       "/scripts/.eslint.rc"
     ]

@@ -13,6 +13,20 @@
       		}
         }
      },
+       "state_townhalls" : {
+         "$state": {
+          ".indexOn": "lastUpdated",
+          ".read": "true",
+          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+          "$townHallID": {
+            ".read": "true",
+            ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('isVerifier').val() == true",
+            "lastUpdated": {
+                ".indexOn": ".value"
+              }
+            }
+         }
+       },
       "indivisible" : {
       ".indexOn": "event_starts_at_date",
       ".read": "true",
@@ -25,6 +39,18 @@
       		}
         }
      },
+    "indivisible_public_events" : {
+      ".read": "true"
+    },
+    "indivisible_groups" : {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+			".indexOn":"id",
+    },
+    "indivisible_group_emails" : {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+    },
   	"townHallIds" : {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
@@ -48,11 +74,35 @@
      		}
      }
    },
+    "state_townhalls_archive" : {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+       	"$state": {
+          "$month" : {
+          ".indexOn": "dateObj",
+            "$townHallID": {
+             ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+              "dateObj":{
+                ".indexOn": ".value"
+              },
+             "meetingType": {
+                ".indexOn": ".value"
+              }
+          }
+       }
+      }
+   },
+  	"deletedTownHalls" : {
+      "$userID": {
+      ".write": "auth.uid !== null",
+       ".validate": "newData.hasChildren(['user','reason'])"
+     }
+   },
     "UserSubmission" : {
       ".read": "true",
       ".write": "auth.uid !== null",
       "$townHallID": {
-       ".validate": "newData.hasChildren(['Member','eventId'])"
+       ".validate": "newData.hasChildren(['Member', 'eventId'])"
      }
    },
     "state_legislators_user_submission" : {
@@ -60,7 +110,7 @@
         ".read": "true",
       	".write": "auth.uid !== null",
       	"$townHallID": {
-       		".validate": "newData.hasChildren(['Member','eventId'])"
+       		".validate": "newData.hasChildren(['Member', 'eventId'])"
       }
      }
    },
@@ -98,7 +148,7 @@
       ".read": "true",
       "$state": {
           ".read": "true",
-        	".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
+        		".write": "auth.uid !== null",
         	"lastUpdatedBy": {
         		".write": "auth.uid !== null"
        		 },
@@ -137,11 +187,30 @@
 
         }
     },
+  	"state_zip_to_district_upper": {
+      ".read": "true",
+        "$state":{
+          "$zip":{
+            ".read": "true",
+                      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataEditor').val() == true"
+
+          }
+        }
+    },
+    "state_zip_to_district_lower": {
+      ".read": "true",
+    	"$state":{
+          "$zip":{
+            ".read": "true",
+                      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataEditor').val() == true"
+
+          }
+        }
+    },
    "townHallsErrors" : {
      "$townHallID": {
        ".read": "true",
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-        ".validate": "newData.hasChildren(['Member','Party','State'])"
     }
   },
   "geolocate" : {
