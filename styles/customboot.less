@@ -492,7 +492,13 @@ a.social-icon {
   margin-bottom: 1em;
 }
 .list-group { margin-bottom: 0; }
-.event-card { margin-bottom: 1rem; }
+.event-card { 
+  margin-bottom: 1rem; 
+  .panel-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+}
 
 .event-card-icon {
   -webkit-background-size: 38px 38px;
@@ -720,9 +726,16 @@ a.social-icon {
     }
   }
   .card-footer {
-    padding: 0 2.5em 1.25em;
+    // padding: 0 2.5em 1.25em;
     label {
       font-weight: 500;
+    }
+    .challenger {
+      padding: 20px;
+      background: @brand-primary;
+      color: @brand-white;
+      height: 80px;
+    
     }
   }
 
@@ -737,7 +750,42 @@ a.social-icon {
     font-weight: 700;
     letter-spacing: 0.05em;
   }
+
 }
+
+.logo {
+  height: 80px;
+  background-size: 80px 80px;
+  background-repeat: no-repeat;
+  width: 80px;
+  vertical-align: middle;
+  float:left;
+  margin-left: 25px;   
+}
+.logo-right{
+  float: right;
+}
+.logo-small{
+  height: 45px;
+  background-size: 45px 45px;
+  background-repeat: no-repeat;
+  width: 45px;
+}
+.mfol-logo {
+  background-size: 100px 100px;
+  background-image: url('/Images/town-hall-for-our-lives.svg');
+  margin-right: 25px;
+  margin-left: 30px;   
+  width: 100px;
+
+}
+.do-your-job-logo {
+  background-image: url('/Images/svgs/do-your-job-logo.svg');
+}
+.pledger-logo {
+  background-image: url('/Images/svgs/town-hall-pledge-logo.svg');
+}
+
 .time-sensitive {
   display: flex;
   .display-flex {
@@ -772,26 +820,7 @@ a.social-icon {
   .happening-now-content {
     flex: 2;
   }
-  .logo {
-    height: 80px;
-    background-size: 80px 80px;
-    background-repeat: no-repeat;
-    width: 80px;
-    vertical-align: middle;
-    float:left;
-    margin-left: 25px;   
-  }
-  .mfol-logo {
-    background-size: 100px 100px;
-    background-image: url('/Images/town-hall-for-our-lives.svg');
-    margin-right: 25px;
-    margin-left: 30px;   
-    width: 100px;
 
-  }
-  .do-your-job-logo {
-    background-image: url('/Images/svgs/do-your-job-logo.svg');
-  }
 }
 .time-sensitive .container{
   max-width: 950px;
@@ -1337,6 +1366,9 @@ img.grayscale {
         right: 15px;
         opacity: 0.65;
         color: #ffffff;
+      }
+      .do-your-job-logo {
+        margin-top: 20px;
       }
     }
   }

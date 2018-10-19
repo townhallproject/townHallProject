@@ -77,6 +77,30 @@
     }
   };
 
+  TownHall.prototype.getIsPledger = function () {
+    var townhall = this;
+    townhall.isPledger = false;
+    var townHallMember = this.displayName;
+    if (townhall.state && townhall.displayName) {
+
+      return firebasedb.ref('town_hall_pledges/' + townhall.state)
+        .once('value')
+        .then(function(snapshot) {
+          snapshot.forEach(function(personData){
+            var person = personData.val();
+            if (person.displayName === townHallMember && person.pledged) {
+              townhall.isPledger = true;
+              return townhall;
+
+            } 
+          });
+          return Promise.resolve(townhall);
+
+        });
+    }
+    return Promise.resolve(townhall);
+  };
+
   // 
   TownHall.prototype.makeFormattedMember = function () {
     var sentence;
@@ -185,10 +209,12 @@
     });
   };
 
-  function _lookupRepObjs(govtrack_ids) {
-    var MoCPromiseArray = govtrack_ids.map(function(govtrack_id) {
-      return firebasedb.ref('mocData/' + govtrack_id).once('value').then(function(snapshot) {
-        return snapshot.val();
+  function _lookupRepObjs(reps) {
+    var MoCPromiseArray = reps.map(function (rep) {
+      return firebasedb.ref('mocData/' + rep.govtrackId).once('value').then(function (snapshot) {
+        var data = snapshot.val();
+        data.dyjd = rep.dyjd;
+        return data;
       });
     });
     return Promise.all(MoCPromiseArray).then(function(MoCs) {
@@ -200,7 +226,21 @@
     if (key === 'state') {
       return firebasedb.ref('/mocByStateDistrict/' + value).once('value').then(function(snapshot) {
         return [snapshot.val().junior.govtrack_id, snapshot.val().senior.govtrack_id];
-      });
+      })
+      .then(function (govtrackArray) {
+        return firebasedb.ref('do_your_job_districts/' + value + '-junior').once('value')
+          .then(function (snapshot) {
+            var junior = {
+              dyjd: snapshot.exists() ? snapshot.val() : false,
+              govtrackId: govtrackArray[0]
+            };
+            var senior = {
+              dyjd: false,
+              govtrackId: govtrackArray[1]
+            };
+            return [junior, senior];
+          });
+      })
     } else if (key === 'zip') {
       return firebasedb.ref('/zipToDistrict/' + value).once('value').then(function(snapshot) {
         var districts = snapshot.val();
@@ -211,14 +251,38 @@
           var obj = districts[key];
           if (index === 0) {
             districtLookups.push(
-              firebasedb.ref('/mocByStateDistrict/' + obj.abr).once('value').then(function(snapshot) {
+              firebasedb.ref('/mocByStateDistrict/' + obj.abr).once('value')
+              .then(function(snapshot) {
                 return [snapshot.val().junior.govtrack_id, snapshot.val().senior.govtrack_id];
+              })
+              .then(function(govtrackArray) {
+                return firebasedb.ref('do_your_job_districts/' + obj.abr + '-junior').once('value')
+                .then(function(snapshot){
+                  var junior =  {
+                    dyjd: snapshot.exists() ? snapshot.val() : false,
+                    govtrackId: govtrackArray[0]
+                  };
+                  var senior = {
+                    dyjd: false,
+                    govtrackId: govtrackArray[1]
+                  };
+                  return [junior, senior];
+                });
               })
             );
           }
           districtLookups.push(
             firebasedb.ref('/mocByStateDistrict/' + obj.abr + '-' + (obj.dis === '0' ? '00' : obj.dis)).once('value').then(function(snapshot) {
-              return [snapshot.val().govtrack_id];
+              return snapshot.val().govtrack_id;
+            })
+            .then(function (govtrackId) {
+              return firebasedb.ref('do_your_job_districts/' + path).once('value')
+                .then(function (snapshot) {
+                  return [{
+                    dyjd: snapshot.exists() ? snapshot.val() : false,
+                    govtrackId: govtrackId,
+                  }];
+                });
             })
           );
         });
@@ -230,9 +294,18 @@
         });
       });
     } else {
-      var path = key + '-' + (value === '0' ? '00' : value);
+      var path = key + '-' + (value === '0' ? '00' : mapHelperFunctions.zeroPad(value));
       return firebasedb.ref('/mocByStateDistrict/' + path).once('value').then(function(snapshot) {
-        return [snapshot.val().govtrack_id];
+        return snapshot.val().govtrack_id;
+      })
+      .then(function(govtrackId){
+        return firebasedb.ref('do_your_job_districts/' + path).once('value')
+          .then(function(snapshot){
+            return [{
+              dyjd: snapshot.exists() ? snapshot.val() : false,
+              govtrackId: govtrackId,
+            }];
+          });
       });
     }
   }

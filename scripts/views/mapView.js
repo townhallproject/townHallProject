@@ -52,7 +52,11 @@
       ///If no state filter show all results
       ele.level = 'federal';
       ele.makeDisplayDistrict();
+      var index = TownHall.allTownHalls.length;
       TownHall.allTownHalls.push(ele);
+      ele.getIsPledger().then(function(updated){
+        TownHall.allTownHalls[index] = updated;
+      });
       TownHall.addFilterIndexes(ele);
       tableHandler.initialMainTable(ele);
       if (webgl) {
