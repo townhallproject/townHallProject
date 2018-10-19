@@ -110,6 +110,7 @@
       }
 
       $text.html(message);
+      selectedData = prioritizeMeetingType(selectedData);
       selectedData.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       });
@@ -161,6 +162,13 @@
       return ['/zipToDistrict/', '/state_zip_to_district_lower/' + stateView.state + '/', '/state_zip_to_district_upper/' + stateView.state + '/'];
     }
     return ['/zipToDistrict/'];
+  }
+
+  function prioritizeMeetingType(arr) {
+    var orderKeys = ['Town Hall', 'Empty Chair', 'Campaign Town Hall', 'Other', 'Tele-TH', 'Office Hours'];
+    return arr.sort(function(a,b) {
+      return orderKeys.indexOf(a.meetingType) > orderKeys.indexOf(b.meetingType);
+    });
   }
 
   function handleZipToDistrict(zipToDistrictArray){
