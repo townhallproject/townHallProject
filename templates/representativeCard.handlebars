@@ -14,18 +14,27 @@
         <div class="col-xs-8 col-sm-9">
           {{#if dyjd}}
             <div class="col-sm-9">
-
             <h3>{{formattedMember}}</h3>
             <h4>{{party}}</h4>
             </div>
             <div class="col-sm-3">
-              <span class="logo logo-right do-your-job-logo" data-toggle="popover" title="Do your job race" data-content="This member has not held town halls, and their challenger has taken the town hall pledge. Visit townhallpledge.com to find out more."></span>
-
+              <a href="https://www.townhallpledge.com/" target="_blank" class="logo logo-right do-your-job-logo" data-toggle="popover" title="Do your job race" data-content="This member has not held town halls, and their challenger has taken the town hall pledge. Visit townhallpledge.com to find out more."></a>
             </div>
           {{/if}}
           {{#unless dyjd}}
-              <h3>{{formattedMember}}</h3>
-              <h4>{{party}}</h4>
+              {{#if pledged}}
+                <div class="col-sm-9">
+                  <h3>{{formattedMember}}</h3>
+                  <h4>{{party}}</h4>
+                </div>
+                <div class="col-sm-3">
+                  <a href="https://www.townhallpledge.com/" target="_blank" class="logo logo-right pledger-logo"></a>
+                </div>
+              {{/if}}
+              {{#unless pledged}}
+                  <h3>{{formattedMember}}</h3>
+                  <h4>{{party}}</h4>
+              {{/unless}}
           {{/unless}}
         </div>
       </div>
@@ -85,9 +94,11 @@
       {{#if dyjd}}
       <div class="challenger">
         <div class="col-sm-9 ">Challenger <strong>{{pledger}}</strong> has taken the <strong>Town Hall Pledge</strong></div>
-        <div class="col-sm-3 logo logo-small logo-right pledger-logo"></div>
+        <div class="col-sm-3 ">
+          <a href="https://www.townhallpledge.com/" target="_blank" class="logo logo-small logo-right pledger-logo"></a>
+        </div>
       </div>
-        {{/if}}
+      {{/if}}
     </div>
   </div>
 </div>
