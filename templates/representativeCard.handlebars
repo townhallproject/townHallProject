@@ -12,8 +12,30 @@
           <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-100px.jpeg" onerror="$(this).remove()" class="grayscale" />
         </div>
         <div class="col-xs-8 col-sm-9">
-          <h3>{{title}} {{displayName}}</h3>
-          <h4>{{party}}</h4>
+          {{#if dyjd}}
+            <div class="col-sm-9">
+            <h3>{{formattedMember}}</h3>
+            <h4>{{party}}</h4>
+            </div>
+            <div class="col-sm-3">
+              <a href="https://www.townhallpledge.com/" target="_blank" class="logo logo-right do-your-job-logo" data-toggle="popover" title="Do your job race" data-content="This member has not held town halls, and their challenger has taken the town hall pledge. Visit townhallpledge.com to find out more."></a>
+            </div>
+          {{/if}}
+          {{#unless dyjd}}
+              {{#if pledged}}
+                <div class="col-sm-9">
+                  <h3>{{formattedMember}}</h3>
+                  <h4>{{party}}</h4>
+                </div>
+                <div class="col-sm-3">
+                  <a href="https://www.townhallpledge.com/" target="_blank" class="logo logo-right pledger-logo"></a>
+                </div>
+              {{/if}}
+              {{#unless pledged}}
+                  <h3>{{formattedMember}}</h3>
+                  <h4>{{party}}</h4>
+              {{/unless}}
+          {{/unless}}
         </div>
       </div>
     </div>
@@ -53,17 +75,30 @@
       </div>
     </div>
     <div class="card-footer">
-      <div class="card-text row">
-        <div class="col-xs-12 no-padding p-0">
-          <div><label>Term Ends:</label> {{next_election}}</div>
-          {{#if ahca}}
-            <div><label>Voted for AHCA ("Trumpcare")</label></div>
-          {{/if}}
+    <div class="mm card-footer no-padding container-flex">
+      <div class="row">
+        <div class="footer-icon type-holder col-4 vertical-align ">
+          {{#if next_election}}
+          <div class="footer-text"><small>Term ends:</small> <span class="highlight">{{next_election}}</span></div>{{/if}}
+        </div>
+        <div class="footer-icon type-holder col-4 vertical-align ">
           {{#if taxBill}}
-            <div><label>Voted for 2017 Tax Bill</label></div>
-          {{/if}}
+          <div class="footer-text"><small>Voted for</small> <span class="highlight">2017 Tax Bill</span></div>{{/if}}
+        </div>
+        <div class="footer-icon  col-4">
+          {{#if ahca}}<div class="footer-text ahca-text  vertical-align">
+            <small>Voted for </small><span class="highlight">AHCA</span></div>{{/if}}
         </div>
       </div>
+    </div>
+      {{#if dyjd}}
+      <div class="challenger">
+        <div class="col-sm-9 ">Challenger <strong>{{pledger}}</strong> has taken the <strong>Town Hall Pledge</strong></div>
+        <div class="col-sm-3 ">
+          <a href="https://www.townhallpledge.com/" target="_blank" class="logo logo-small logo-right pledger-logo"></a>
+        </div>
+      </div>
+      {{/if}}
     </div>
   </div>
 </div>

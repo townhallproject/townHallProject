@@ -44,6 +44,37 @@
     return stateText;
   }
 
+  function _isDoYourJobDistrict(thisState, validDistricts) {
+    var promises = validDistricts.map(function(districtNo) {
+      var district = thisState + '-' + mapHelperFunctions.zeroPad(districtNo)
+      return firebasedb.ref('do_your_job_districts/' + district)
+        .once('value')
+        .then(function(snapshot){
+          if (snapshot.exists()){
+            return snapshot.val();
+          }
+          return;
+        })
+    });
+    promises.push(
+        firebasedb.ref('do_your_job_districts/' + thisState + '-junior')
+          .once('value')
+          .then(function (snapshot) {
+            if (snapshot.exists()) {
+              return snapshot.val();
+            }
+            return;
+          })
+    )
+    return Promise.all(promises).then(function(returned){
+      return returned.filter(function(ele){
+        return !!ele;
+      })
+    })
+
+
+  }
+
   eventHandler.renderResults = function(locationData) {
     tableHandler.resetFilters();
     var thisState = locationData.federal.thisState;
@@ -52,13 +83,18 @@
     var federalEvents = TownHall.matchSelectionToZip(thisState, validDistricts);
     var numFederal = federalEvents.length;
     var zoomMap = true;
+    var isDYJD = [];
+    _isDoYourJobDistrict(thisState, validDistricts)
+      .then(function(returned){
+        isDYJD = returned;
+      })
     //render table
     var districtText = ' ';
     emailHandler.clearDistricts();
     validDistricts.forEach(function(district){
       if (district) {
         districtText = districtText + thisState + '-' + district + ' ';
-        emailHandler.addDistrict(thisState + '-' + district)
+        emailHandler.addDistrict(thisState + '-' + district);
       } else {
         districtText = districtText + thisState;
       }
@@ -114,7 +150,6 @@
       selectedData.forEach(function(ele){
         eventHandler.renderPanels(ele, $parent);
       });
-
       mapView.makeSidebar(selectedData);
       addtocalendar.load();
 
@@ -254,6 +289,7 @@
     var compiledTemplate = Handlebars.getTemplate('eventCards');
     var $panel = $(compiledTemplate(townhall));
     $panel.appendTo($parent);
+
   };
 
   eventHandler.populateEventModal = function(townhall) {

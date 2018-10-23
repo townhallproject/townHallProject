@@ -10,6 +10,9 @@
 
         </div>
         <div class="col-xs-8">
+          {{#if isPledger}}
+          <span class="logo logo-right logo-small pledger-logo"></span>
+          {{/if}}
           {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
             <h3 class="line-height-small">
               <div class="row">
@@ -25,24 +28,7 @@
           {{else}}
             <h3>{{formattedMember}} <small>{{displayDistrict}}</small></h3>
           {{/ifCond}}
-          {{#if dateValid}}
-          <span class="addtocalendar pull-right">
-            <a class="atcb-link btn btn-white btn-md">
-              <span class="calendarButton">Add to Calendar</span>
-              <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
-            </a>
-            <var class="atc_event">
-              <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
-                <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
-                <var class="atc_timezone">{{zoneString}}</var>
-                <var class="atc_title">{{meetingType}}: {{formattedMember}}</var>
-                <var class="atc_description">{{{Notes}}}</var>
-                <var class="atc_location">{{address}}</var>
-                <var class="atc_organizer">{{party}}</var>
-              </var>
-          </span>
-          {{/if}}
-
+         
       </div>
 
       </div>
@@ -105,6 +91,23 @@
       {{#unless repeatingEvent}}
         <small>Last Updated: {{dateFormat lastUpdated}}</small>
       {{/unless}}
+      {{#if dateValid}}
+      <span class="addtocalendar pull-right">
+        <a class="atcb-link btn btn-md">
+          <span class="calendarButton">Add to Calendar</span>
+          <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+        </a>
+        <var class="atc_event">
+          <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
+          <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
+          <var class="atc_timezone">{{zoneString}}</var>
+          <var class="atc_title">{{meetingType}}: {{formattedMember}}</var>
+          <var class="atc_description">{{{Notes}}}</var>
+          <var class="atc_location">{{address}}</var>
+          <var class="atc_organizer">{{party}}</var>
+        </var>
+      </span>
+      {{/if}}
     </div>
   </div>
 </div>
