@@ -528,7 +528,7 @@
         Time: townhall.Time,
         chamber: townhall.chamber || null,
         district: townhall.district,
-        displayDistrict: townhall.displayDistrict.split(' (')[0],
+        displayDistrict: townhall.displayDistrict ? townhall.displayDistrict.split(' (')[0] : townhall.district,
         districtId: districtId,
         stateCode: stateCode,
         stateAbbr: stateAbbr,
