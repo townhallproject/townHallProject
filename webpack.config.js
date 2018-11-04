@@ -28,8 +28,8 @@ const plugins = [
     // },
     {
       flatten: true,
-      from: 'src/images',
-      to: 'images',
+      from: 'src/Images',
+      to: 'Images',
     },
   ]),
 ];
@@ -56,6 +56,10 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+      },
+      { 
+        test: /\.handlebars$/, 
+        loader: 'handlebars-loader'
       },
       {
         test: /\.css$/,

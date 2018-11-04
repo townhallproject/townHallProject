@@ -36,6 +36,7 @@
     "google-maps": "^3.2.1",
     "grunt-bower-install": "^1.6.0",
     "handlebars": "^4.0.6",
+    "handlebars-loader": "^1.7.0",
     "jquery": "^3.3.1",
     "jquery-typeahead": "^2.10.6",
     "page": "^1.8.6",

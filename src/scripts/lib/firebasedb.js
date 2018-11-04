@@ -1,11 +1,12 @@
 import * as firebase from 'firebase';
 
 const config = {
-  apiKey: 'AIzaSyDwZ41RWIytGELNBnVpDr7Y_k1ox2F2Heg',
-  authDomain: 'townhallproject-86312.firebaseapp.com',
-  databaseURL: 'https://townhallproject-86312.firebaseio.com',
-  storageBucket: 'townhallproject-86312.appspot.com',
-  messagingSenderId: '208752196071'
+  apiKey: 'AIzaSyAmCMim_2ePjXmiPrFhscbuBOr0updtryc',
+  authDomain: 'thp-dev-db.firebaseapp.com',
+  databaseURL: 'https://thp-dev-db.firebaseio.com',
+  projectId: 'thp-dev-db',
+  storageBucket: 'thp-dev-db.appspot.com',
+  messagingSenderId: '426223839812'
 };
 
 firebase.initializeApp(config);

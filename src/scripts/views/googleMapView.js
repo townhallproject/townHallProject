@@ -1,4 +1,5 @@
 import stateView from '../views/stateView';
+import TownHall from '../models/TownHall';
 
 (function closure(module) {
   var googleMap;

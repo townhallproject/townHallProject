@@ -1,11 +1,29 @@
 // vendor scripts
+//import './vendor/scripts/jquery-2.1.4';
+import './vendor/scripts/jquery-ui';
 import './vendor/scripts/cors-uploader';
 import './vendor/scripts/geo-viewport';
 import './vendor/scripts/handlebars-v4.0.5';
-import './vendor/scripts/jquery-2.1.4';
-import './vendor/scripts/jquery-ui';
 import './vendor/scripts/mapbox-gl-v0.32.1';
 import './vendor/scripts/tether';
+import './vendor/scripts/moment.min.js';
+import './vendor/scripts/bootstrap.min.js';
+import './vendor/scripts/bootstrap3-typeahead.min.js';
+import './vendor/scripts/handlebars-v4.0.5.js';
+import './vendor/scripts/bootstrap-tagsinput.min.js';
+
+// templates
+import './templates/districtDropdown.handlebars';
+import './templates/eventCards.handlebars';
+import './templates/eventModal.handlebars';
+import './templates/eventTableRow.handlebars';
+import './templates/invitedMembers.handlebars';
+import './templates/mapPopover.handlebars';
+import './templates/missingMemberButton.handlebars';
+import './templates/missingMemberCard.handlebars';
+import './templates/representativeCard.handlebars';
+
+
 
 // vendor style
 import './vendor/styles/normalize.css';
@@ -14,7 +32,14 @@ import './vendor/styles/default.css';
 import './vendor/styles/jquery-ui.min.css';
 import './vendor/styles/jquery-ui.structure.min.css';
 import './vendor/styles/normalize.css';
-import './vendor/styles/railscasts.css'
+import './vendor/styles/railscasts.css';
+
+
+
+
+
+// local styles
+import './styles/css/bootstrapTH_v1_0.min.css';
 
 import { firebase, firebasedb } from './scripts/lib/firebasedb';
 import mapHelperFunctions from './scripts/lib/map-helper-functions';
@@ -22,7 +47,7 @@ import urlParamsHandler from './scripts/lib/urlParams';
 import constants from './scripts/lib/constants';
 
 // to add
-// vendor and style
+// vendor and styleF
 
 // modules:
 // <script src="/scripts/lib/firebasedb.js"></script>
@@ -52,11 +77,11 @@ import zipLookUpHandler from './scripts/views/zipLookUpView';
 // <script src="/scripts/views/repCardView.js"></script>
 import repCardView from './scripts/views/repCardView';
 // <script src="/scripts/views/emailSignUpView.js"></script>
-import emailSignUpView from './scripts/views/emailSignUpView';
+// import emailSignUpView from './scripts/views/emailSignUpView';
 // <script src="/scripts/views/tableView.js"></script>
 import tableHandler from './scripts/views/tableView';
 // <script src="/scripts/views/videoView.js"></script>
-import videoUploadHandler from './scripts/views/videoView';
+// import videoUploadHandler from './scripts/views/videoView';
 // <script src="/scripts/views/missingMembersView.js"></script>
 import missingMembersView from './scripts/views/missingMembersView';
 // <script src="/scripts/views/indexView.js"></script>

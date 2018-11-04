@@ -35,8 +35,8 @@
   <meta property="og:description" content="Town Hall Project is a progressive, a citizen-powered research and organizing project dedicated to holding lawmakers accountable via town hall meetings and other in-person engagement.">
   <meta property="og:site_name" content="Town Hall Project" />
 
-  <!-- <link href='https://actionnetwork.org/css/style-embed-whitelabel.css' rel='stylesheet' type='text/css' />
-  <script src="https://use.fontawesome.com/316bfde8e8.js"></script> -->
+  <!-- <link href='https://actionnetwork.org/css/style-embed-whitelabel.css' rel='stylesheet' type='text/css' /> -->
+  <script src="https://use.fontawesome.com/316bfde8e8.js"></script>
   <!-- <link href="https://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
   <link href="/vendor/styles/jquery-ui.min.css" rel="stylesheet" type="text/css">
   <link href="/vendor/styles/jquery-ui.structure.min.css" rel="stylesheet" type="text/css">
@@ -73,7 +73,7 @@
           <span class="icon-bar"></span>
         </button>
         <a data-toggle="tab" href="#home" class="navbar-brand hash-link" id="brand-icon">
-          <img src="/Images/THP_logo_horizontal_simple.png" alt="">
+          <img src="./Images/THP_logo_horizontal_simple.png" alt="">
         </a>
       </div>
       <div class="collapse navbar-collapse" id="main-nav">
@@ -184,7 +184,7 @@
       <div class="col-sm-4 text-center">
         <a target="_blank" href="https://marchforourlives.com/tour/">
           <div class=" image-holder ">
-            <img src="../Images/road-to-change.svg" />
+            <img src="./Images/road-to-change.svg" />
           </div>
           <h3 class="text-main ">Attend an event near you
             <i class="text-main fa fa-external-link-square"></i>
@@ -194,7 +194,7 @@
       <div class="col-sm-4  text-center">
           <a target="_blank" href="https://docs.google.com/document/u/1/d/e/2PACX-1vSorDmXHT4DHFgp6KYH8d4NMT7WtJoP6AGKaRyNY2PHscZibC8oIWu4RUit02y0OB8-4c90ultd-6Ea/pub">
             <div class="image-holder ">
-              <img src="../Images/town-hall-for-our-lives.svg" />
+              <img src="./Images/town-hall-for-our-lives.svg" />
             </div>
             <h3 class="text-main ">Organize a
               <span class="text-secondary">THFOL:</span> <br> Read Our Guide
@@ -214,7 +214,7 @@
               <div class=" text-left site-header clearfix displayoff ">
                 <div class="form-text-results col-md-12">
                   <div class="text-toggle header-large">
-                    <img id="header-image" src="/Images/THP_logo_inverse.png" alt="">
+                    <img id="header-image" src="./Images/THP_logo_inverse.png" alt="">
                   </div>
                   <div class="text-toggle header-small hidden">
                     <!-- <img src="/Images/THP_logo_inverse_simple.png" alt=""> -->
@@ -260,14 +260,14 @@
       <div class="container-fluid map-container-large">
         <div class="hidden show-if-no-webgl webgl-banner">
           <div class="webGl-warning" target="_blank">
-            <img class="webGl-compimg" src="../Images/map/ohno-computer.png"></img>
+            <img class="webGl-compimg" src="./Images/map/ohno-computer.png"></img>
             <p>Our interactive map feature uses WebGL, a plugin common in most modern browsers. Your browser does not have WebGL
               working currently.</p>
             <p>You can learn how to enable WebGL on
               <a href="https://get.webgl.org/" target="_blank">this website.</a>
             </p>
           </div>
-          <img class="webGL-kill" src="../Images/map/xmark.svg"></img>
+          <img class="webGL-kill" src="./Images/map/xmark.svg"></img>
         </div>
         <div class="row map-large">
           <div id="map"></div>
@@ -1197,7 +1197,7 @@
 
     <div role="tabpanel" class="tab-pane" id="year-one">
       <div class="container">
-        <img src="/Images/EOY_Report_Layout_noBG-01-01.png" alt="" />
+        <img src="./Images/EOY_Report_Layout_noBG-01-01.png" alt="" />
       </div>
       <!-- Background becomes EOY graphic -->
     </div>
@@ -1206,10 +1206,10 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 img-holder">
-            <img src="../Images/svgs/THP_Pledge_House.svg" />
+            <img src="./Images/svgs/THP_Pledge_House.svg" />
           </div>
           <div class="col-md-6 img-holder">
-            <img src="../Images/svgs/THP_Pledge_Senate.svg" />
+            <img src="./Images/svgs/THP_Pledge_Senate.svg" />
           </div>
         </div>
       </div>
@@ -1224,7 +1224,7 @@
   <div class="modal fade missing-members-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
-        <img src="/Images/Missing_Member_Report.png" alt="" />
+        <img src="./Images/Missing_Member_Report.png" alt="" />
         <a class="twitter-share-button" href="https://townhallproject.com/Images/Missing_Member_Report.png?text=Missing%20Members%20Report">
           Tweet</a>
         <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ftownhallproject.com%2FImages%2FMissing_Member_Report.png&layout=button&size=small&mobile_iframe=true&appId=1549118422076809&width=59&height=20"
@@ -1258,6 +1258,14 @@
       </ul>
     </div>
   </footer>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+  <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
   <!-- Vendor Files -->
   <!-- <script src="/vendor/scripts/jquery-2.1.4.js"></script>
   <script src="/vendor/scripts/jquery-ui.js"></script>
@@ -1351,7 +1359,7 @@
   <script src="/scripts/controllers/map-controller.js"></script>
   <script src="/scripts/controllers/routes.js"></script> -->
 
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMap&libraries=visualization,geometry"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmCMim_2ePjXmiPrFhscbuBOr0updtryc&callback=initMap&libraries=visualization,geometry"></script>
 
 </body>
 
