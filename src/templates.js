@@ -1,10 +1,11 @@
+const Handlebars = require('handlebars');
 Handlebars.getTemplate = function(name) {
-  if (Handlebars.templates === undefined || Handlebars.templates[name] === undefined) {
+  if (!Handlebars.templates || !Handlebars.templates[name]) {
     $.ajax({
       url : location.origin + '/templates/' + name + '.handlebars',
       mimeType: 'text/x-handlebars-template',
       success : function(data) {
-        if (Handlebars.templates === undefined) {
+        if (!Handlebars.templates) {
           Handlebars.templates = {};
         }
         Handlebars.templates[name] = Handlebars.compile(data);
@@ -72,3 +73,5 @@ Handlebars.registerHelper('shortDateTime', function(townhall) {
   var shortDateTime = localString.slice(0, -6) + localString.slice(-2);
   return townhall.timeZone ? townhall.timeZone : null;
 });
+
+export default Handlebars;

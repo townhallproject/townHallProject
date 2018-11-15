@@ -1,3 +1,5 @@
+import urlParamsHandler from '../lib/urlParams';
+
 const zipLookUpHandler = {};
 
 zipLookUpHandler.zipErrorResponse = function (errorMessage) {

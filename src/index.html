@@ -260,14 +260,14 @@
       <div class="container-fluid map-container-large">
         <div class="hidden show-if-no-webgl webgl-banner">
           <div class="webGl-warning" target="_blank">
-            <img class="webGl-compimg" src="./Images/map/ohno-computer.png"></img>
+            <img class="webGl-compimg" src="./Images/ohno-computer.png"></img>
             <p>Our interactive map feature uses WebGL, a plugin common in most modern browsers. Your browser does not have WebGL
               working currently.</p>
             <p>You can learn how to enable WebGL on
               <a href="https://get.webgl.org/" target="_blank">this website.</a>
             </p>
           </div>
-          <img class="webGL-kill" src="./Images/map/xmark.svg"></img>
+          <img class="webGL-kill" src="./Images/xmark.svg"></img>
         </div>
         <div class="row map-large">
           <div id="map"></div>
@@ -1206,10 +1206,10 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 img-holder">
-            <img src="./Images/svgs/THP_Pledge_House.svg" />
+            <img src="./Images/THP_Pledge_House.svg" />
           </div>
           <div class="col-md-6 img-holder">
-            <img src="./Images/svgs/THP_Pledge_Senate.svg" />
+            <img src="./Images/THP_Pledge_Senate.svg" />
           </div>
         </div>
       </div>
@@ -1258,14 +1258,17 @@
       </ul>
     </div>
   </footer>
-  <script
+  <!-- <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+  crossorigin="anonymous"></script> -->
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
   <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
   <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
   <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
   <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmCMim_2ePjXmiPrFhscbuBOr0updtryc&callback=initMap&libraries=visualization,geometry"></script>
+
   <!-- Vendor Files -->
   <!-- <script src="/vendor/scripts/jquery-2.1.4.js"></script>
   <script src="/vendor/scripts/jquery-ui.js"></script>
@@ -1359,7 +1362,6 @@
   <script src="/scripts/controllers/map-controller.js"></script>
   <script src="/scripts/controllers/routes.js"></script> -->
 
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmCMim_2ePjXmiPrFhscbuBOr0updtryc&callback=initMap&libraries=visualization,geometry"></script>
 
 </body>
 

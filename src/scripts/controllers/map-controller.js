@@ -2,6 +2,9 @@ import stateData from '../../data/states';
 import bboxes from '../../data/bboxes';
 import TownHall from '../models/TownHall';
 import stateView from '../views/stateView';
+import mapView from '../views/mapView';
+import noWebGlMapView from '../views/googleMapView';
+import mapboxView from '../views/mapboxView';
 
 const mapController = {};
 

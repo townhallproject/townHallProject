@@ -1,4 +1,9 @@
-(function closure(module) {
+import { firebasedb } from '../lib/firebasedb';
+import TownHall from '../models/TownHall';
+import mapboxView from './mapboxView';
+import tableHandler from './tableView';
+import zipLookUpHandler from './zipLookUpView';
+
   var map;
   var mapView = {};
   mapView.zoomLocation = false;
@@ -160,7 +165,5 @@
     }
   };
 
-  module.mapView = mapView;
 
-}(window));
-
+export default mapView;

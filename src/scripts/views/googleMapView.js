@@ -1,7 +1,6 @@
 import stateView from '../views/stateView';
 import TownHall from '../models/TownHall';
 
-(function closure(module) {
   var googleMap;
   var google;
   var infowindow;
@@ -462,5 +461,4 @@ import TownHall from '../models/TownHall';
     }, 50);
   };
 
-  module.noWebGlMapView = noWebGlMapView;
-}(window));
+export default noWebGlMapView;

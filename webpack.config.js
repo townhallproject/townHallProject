@@ -23,12 +23,9 @@ const plugins = [
   }),
   // new ExtractPlugin('bundle.[hash].css'),
   new CopyWebpackPlugin([
-    // {
-    //   from: 'src/CNAME',
-    // },
     {
       flatten: true,
-      from: 'src/Images',
+      from: 'src/Images/*',
       to: 'Images',
     },
   ]),

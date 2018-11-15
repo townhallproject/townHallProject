@@ -1,6 +1,6 @@
+import Handlebars from  '../../templates';
 import TownHall from '../models/TownHall';
 import stateView from './stateView';
-
 
 const tableHandler = {};
 

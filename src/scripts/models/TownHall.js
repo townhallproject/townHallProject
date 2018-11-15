@@ -1,28 +1,31 @@
 import { firebasedb } from '../lib/firebasedb';
+import constants from '../lib/constants';
 
 class TownHall {
-  constructor(opts) {
-    for (var key in opts) {
-      this[key] = opts[key];
-    }
-    let allTownHalls = [];
-    let allMoCs = [];
-    let currentContext = [];
-    let allStates = [];
-    let filters = {};
-    let sortOn = 'State';
-    let filteredResults = [];
-    let isCurrentContext = false;
-    let isMap = false;
-    let zipQuery;
-    let allStateTownHalls = [];
-    let timeZones = {
+    static allTownHalls = [];
+    static allMoCs = [];
+    static currentContext = [];
+    static allStates = [];
+    static filters = {};
+    static sortOn = 'State';
+    static filteredResults = [];
+    static isCurrentContext = false;
+    static isMap = false;
+    static zipQuery;
+    static allStateTownHalls = [];
+    static timeZones = {
       PST: 'America/Los_Angeles',
       MST: 'America/Denver',
       CST: 'America/Chicago',
       EST: 'America/New_York',
       other: 'no time zone'
     }
+
+  constructor(opts) {
+    for (var key in opts) {
+      this[key] = opts[key];
+    }
+  
   }
 
   isInFuture() {
@@ -55,6 +58,44 @@ class TownHall {
       this.formattedMember = sentence.join(' ');
     }
   }
+
+  // for state leg: HD-01 (North Caroline House District 1)
+  // for federal: NC-6
+  makeDisplayDistrict() {
+    if (this.level === 'state') {
+      //state leg or statewide office
+      var title;
+      if (this.district) {
+        //state leg
+        //"VA HD-08" (Virginia House District 8)
+        var chamber = this.district.split('-')[0];
+        var number = this.district.split('-')[1];
+        var sentence = [this.district, '(' + this.stateName, constants[chamber], parseInt(number) + ')'];
+        this.displayDistrict = sentence.join(' ');
+      } else {
+        //statewide office, ie Governor
+        var office = this.thp_id.split('-')[1];
+        title = constants[office];
+        this.displayDistrict = title;
+      }
+    } else {
+      var state = this.state ? this.state : this.stateAbbr;
+      if (this.district && parseInt(this.district)) {
+        //House
+        this.displayDistrict = state + '-' + parseInt(this.district);
+      } else if (this.chamber === 'upper') {
+        //Senator
+        this.displayDistrict = state + ', ' + 'Senate';
+      } else if (this.chamber === 'statewide' && this.office) {
+        this.displayDistrict = this.office.toUpperCase() + ' ' + state;
+      } else {
+        this.displayDistrict = state;
+      }
+      if (this.meetingType === 'Campaign Town Hall') {
+        this.displayDistrict = 'Running for: ' + this.displayDistrict;
+      }
+    }
+  };
 }
 
 TownHall.saveZipLookup = (zip) => {
@@ -140,43 +181,6 @@ TownHall.getZipLatLng = (zip) => {
   });
 };
 
-// for state leg: HD-01 (North Caroline House District 1)
-// for federal: NC-6
-TownHall.makeDisplayDistrict = () => {
-  if (this.level === 'state') {
-    //state leg or statewide office
-    var title;
-    if (this.district) {
-      //state leg
-      //"VA HD-08" (Virginia House District 8)
-      var chamber = this.district.split('-')[0];
-      var number = this.district.split('-')[1];
-      var sentence = [this.district, '(' + this.stateName, constants[chamber], parseInt(number) + ')'];
-      this.displayDistrict = sentence.join(' ');
-    } else {
-      //statewide office, ie Governor
-      var office = this.thp_id.split('-')[1];
-      title = constants[office];
-      this.displayDistrict = title;
-    }
-  } else {
-    var state = this.state ? this.state : this.stateAbbr;
-    if (this.district && parseInt(this.district)) {
-      //House
-      this.displayDistrict = state + '-' + parseInt(this.district);
-    } else if (this.chamber === 'upper') {
-      //Senator
-      this.displayDistrict = state + ', ' + 'Senate';
-    } else if (this.chamber === 'statewide' && this.office) {
-      this.displayDistrict = this.office.toUpperCase() + ' ' + state;
-    } else {
-      this.displayDistrict = state;
-    }
-    if (this.meetingType === 'Campaign Town Hall') {
-      this.displayDistrict = 'Running for: ' + this.displayDistrict;
-    }
-  }
-};
 
 TownHall.lookupReps = (key, value) => {
   return _lookupRepIds(key, value).then(function (govtrack_ids) {
@@ -326,6 +330,7 @@ TownHall.removeFilterCategory = (category) => {
 };
 
 TownHall.resetFilters = () => {
+
   Object.keys(TownHall.filters).forEach(key => {
     delete TownHall.filters[key];
   });

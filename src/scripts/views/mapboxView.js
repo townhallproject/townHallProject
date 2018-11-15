@@ -1,4 +1,9 @@
-import { fips } from '../../data/fips-lookup';
+import geoViewport from '@mapbox/geo-viewport';
+
+import fips from '../../data/fips-lookup';
+import stateView from './stateView';
+import mapView from './mapView';
+import indexView from './indexView';
 
 const mapboxView = {};
 var map;
