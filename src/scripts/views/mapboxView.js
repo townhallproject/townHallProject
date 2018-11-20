@@ -1,10 +1,19 @@
 import geoViewport from '@mapbox/geo-viewport';
+import $ from 'jquery';
 
+import mapPopoverTemplate from '../../templates/mapPopover';
 import fips from '../../data/fips-lookup';
+import urlParamsHandler from '../lib/urlParams';
+import mapHelperFunctions from '../lib/map-helper-functions';
+
+import TownHall from '../models/TownHall';
+
 import stateView from './stateView';
 import mapView from './mapView';
 import indexView from './indexView';
-
+import eventHandler from './eventView';
+import repCardHandler from './repCardView';
+import emailHandler from './emailSignUpView';
 const mapboxView = {};
 var map;
 // Define an intial view for the map
@@ -315,7 +324,6 @@ mapboxView.addPopups = function (state) {
     var feature = features[0];
     var townhall = new TownHall(feature.properties);
     townhall.makeFormattedMember();
-    var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
     popup.setLngLat(feature.geometry.coordinates)
       .setHTML(mapPopoverTemplate(townhall))
       .addTo(map);

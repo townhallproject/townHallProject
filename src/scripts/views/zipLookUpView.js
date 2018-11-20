@@ -1,4 +1,9 @@
+import $ from 'jquery';
+
 import urlParamsHandler from '../lib/urlParams';
+import eventHandler from './eventView';
+
+import mapboxView from './mapboxView';
 
 const zipLookUpHandler = {};
 

@@ -1,6 +1,8 @@
-import Handlebars from  '../../templates';
+import $ from 'jquery';
+
 import TownHall from '../models/TownHall';
 import stateView from './stateView';
+import eventTableRowTemplate from '../../templates/eventTableRow';
 
 const tableHandler = {};
 
@@ -47,8 +49,7 @@ tableHandler.renderTable = function (townhall, $tableid) {
   }
   townhall.addressLink = 'https://www.google.com/maps?q=' + escape(townhall.address);
   townhall.makeFormattedMember();
-  var compiledTemplate = Handlebars.getTemplate('eventTableRow');
-  $($tableid).append(compiledTemplate(townhall));
+  $($tableid).append(eventTableRowTemplate(townhall));
 };
 
 tableHandler.getFilterState = function () {

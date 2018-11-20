@@ -28,6 +28,11 @@ const plugins = [
       from: 'src/Images/*',
       to: 'Images',
     },
+    {
+      flatten: true,
+      from: 'src/vendor/scripts/*',
+      to: 'vendor/scripts',
+    },
   ]),
 ];
 

@@ -1,3 +1,5 @@
+import page from 'page';
+
 import stateData from '../../data/states';
 import bboxes from '../../data/bboxes';
 import TownHall from '../models/TownHall';

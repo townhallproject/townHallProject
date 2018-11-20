@@ -1,6 +1,11 @@
+import $ from 'jquery';
+
 import TownHall from '../models/TownHall';
-import mapView from './mapboxView';
+
+import mapView from './mapView';
 import tableHandler from './tableView';
+import emailHandler from './eventView';
+
 const indexView = {};
 
 indexView.renderAwards = function () {

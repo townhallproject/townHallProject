@@ -1,4 +1,5 @@
 import { firebasedb } from '../lib/firebasedb';
+import constants from '../lib/constants';
 
 class MoC {
   constructor(opts) {
@@ -9,7 +10,7 @@ class MoC {
       this.repOf = 'Sen. ' + this.state;
       this.displayType = 'Senate';
       this.subtitle = 'Senator';
-    } else {
+    } else if (this.type === 'rep') {
       this.repOf = this.state + '-' + this.zeroPadding();
       this.displayType = 'House';
       this.subtitle = this.state + '-' + this.district;
@@ -23,9 +24,9 @@ class MoC {
 }
 
 MoC.all = () => {
-  firebasedb.ref('mocData/').once('value').then(function (snapshot) {
+  return firebasedb.ref('mocData/').once('value').then(function (snapshot) {
     var MoCs = snapshot.val();
-    return Object.keys(MoCs).map(function (key) {
+    MoCs = Object.keys(MoCs).map(function (key) {
       return new MoC(MoCs[key]);
     }).filter(function (member) {
       return member.in_office;
@@ -37,6 +38,7 @@ MoC.all = () => {
       }
       return 0;
     });
+    return MoCs
   });
 }
 

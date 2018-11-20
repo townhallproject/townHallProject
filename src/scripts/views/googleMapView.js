@@ -1,22 +1,27 @@
+import $ from 'jquery';
+
 import stateView from '../views/stateView';
 import TownHall from '../models/TownHall';
+import mapPopoverTemplate from '../../templates/mapPopover';
 
-  var googleMap;
-  var google;
-  var infowindow;
-  var noWebGlMapView = {};
+import mapView from './mapView';
 
-  noWebGlMapView.noWebGlMapinit = function(){
-    $('.show-if-no-webgl').removeClass('hidden');
-    $('.hide-if-no-webgl').addClass('hidden');
-    $('.map-container-split').addClass('no-web-gl');
-    $('.webGL-kill').click(function(){
-      $('.webgl-banner').addClass('hidden');
-    });
-    mapView.webGL = false;
-  };
+var googleMap;
+var google = {};
+var infowindow;
+var noWebGlMapView = {};
+
+noWebGlMapView.noWebGlMapinit = function(){
+  $('.show-if-no-webgl').removeClass('hidden');
+  $('.hide-if-no-webgl').addClass('hidden');
+  $('.map-container-split').addClass('no-web-gl');
+  $('.webGL-kill').click(function(){
+    $('.webgl-banner').addClass('hidden');
+  });
+  mapView.webGL = false;
+};
 //draws map
-  module.initMap = function initMap() {
+window.initMap = function initMap() {
     if (mapView.webGL) {
       return;
     }
@@ -401,29 +406,28 @@ import TownHall from '../models/TownHall';
     }
   };
 
-  // TODO; Probably redudent with resize map
-  noWebGlMapView.focusMap = function(bb) {
-    google.maps.event.trigger(googleMap, 'resize');
-    var southWest = new google.maps.LatLng(bb[1], bb[0]);
-    var northEast = new google.maps.LatLng(bb[3], bb[2]);
-    var bounds = new google.maps.LatLngBounds(southWest, northEast);
-    googleMap.fitBounds(bounds);
-  };
+// TODO; Probably redudent with resize map
+noWebGlMapView.focusMap = function(bb) {
+  google.maps.event.trigger(googleMap, 'resize');
+  var southWest = new google.maps.LatLng(bb[1], bb[0]);
+  var northEast = new google.maps.LatLng(bb[3], bb[2]);
+  var bounds = new google.maps.LatLngBounds(southWest, northEast);
+  googleMap.fitBounds(bounds);
+};
 
-  function assignMarker(iconFlag) {
-    if (iconFlag === 'tele') {
-      iconFlag = 'phone-in';
-    }
-    var path = '/Images/map/' + iconFlag + '.svg';
-    return path;
+function assignMarker(iconFlag) {
+  if (iconFlag === 'tele') {
+    iconFlag = 'phone-in';
   }
+  var path = '/Images/map/' + iconFlag + '.svg';
+  return path;
+}
 
 // Adds all events into main data array
 // Adds all events as markers
 // renders tables
   noWebGlMapView.setData = function (townhall){
     this.townhall.makeFormattedMember();
-    var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
     TownHall.addFilterIndexes(townhall);
     $('[data-toggle="popover"]').popover({
       container: 'body',
@@ -452,13 +456,13 @@ import TownHall from '../models/TownHall';
     });
   };
 
-  noWebGlMapView.resetMap = function() {
-    if (!google.map){
-      return;
-    }
-    setTimeout(function () {
-      noWebGlMapView.onResizeMap();
-    }, 50);
-  };
+noWebGlMapView.resetMap = function() {
+  if (!google.map){
+    return;
+  }
+  setTimeout(function () {
+    noWebGlMapView.onResizeMap();
+  }, 50);
+};
 
 export default noWebGlMapView;

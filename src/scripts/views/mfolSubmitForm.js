@@ -1,10 +1,12 @@
 // For handling user submitted events.
-/*global Handlebars regEx:true*/
+/*global regEx:true*/
+import $ from 'jquery';
 
 import fips from '../../data/fips-lookup';
 import moment from 'moment';
 import MfolEvent from '../models/mfolEvent';
-import { firebasedb } from '../lib/firebasedb';
+import districtDropdown from '../../templates/districtDropdown';
+import invitedMembersTemplate from '../../templates/invitedMembers';
 
 const newEventView = {};
 MfolEvent.currentEvent = {
@@ -103,8 +105,7 @@ newEventView.displayMembers = function (district) {
     var rep = newEventView.mocsByStateAndDistrict[MfolEvent.currentEvent.state]['districts'][district];
     if (!MfolEvent.reps[rep]) {
       $('.invited-members').remove();
-      var compiledTemplate = Handlebars.getTemplate('invitedMembers');
-      $('#your-rep').append($(compiledTemplate(rep)));
+      $('#your-rep').append($(invitedMembersTemplate(rep)));
       MfolEvent.reps[rep] = true;
     }
   }
@@ -223,8 +224,7 @@ newEventView.stateChanged = function (event) {
     if (districts.length === 1) {
       districts = ['At large'];
     }
-    var compiledTemplate = Handlebars.getTemplate('districtDropdown');
-    $('#district-dropdown-list').append($(compiledTemplate({ districts: districts })));
+    $('#district-dropdown-list').append($(districtDropdown(districts)));
   }
 };
 

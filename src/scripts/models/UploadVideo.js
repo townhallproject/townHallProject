@@ -17,6 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import $ from 'jquery';
+
+import videoUploadHandler from '../views/videoView';
+
 const authInfo = {
   client_id: '1060892537782-gsbi9kn8qf5t1370uc7lnhqqopt9e9d3.apps.googleusercontent.com',
   client_secret: '8vcglkf2blCtQM3p25hiyV21',

@@ -1,3 +1,9 @@
+import $ from 'jquery';
+
+import '../../vendor/scripts/bootstrap-tagsinput.js';
+
+import TownHall from '../models/TownHall';
+
 const emailHandler = {};
 
 const zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;

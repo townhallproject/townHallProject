@@ -1,4 +1,10 @@
-import { statePopulation } from '../../data/statePop';
+import isotope from 'isotope-layout';
+import $ from 'jquery';
+console.log(isotope)
+import statePopulation from '../../data/statePop';
+import MoC from '../models/MemberOfCongress';
+import missingMemberButtonTemplate from '../../templates/missingMemberButton';
+import missingMemberCardTemplate from '../../templates/missingMemberCard';
 
 const missingMemberView = {};
 missingMemberView.loaded = false;
@@ -26,9 +32,8 @@ missingMemberView.addFilter = function (filterObj, filterValue) {
 };
 
 missingMemberView.renderAll = function (template, parent, array) {
-  var compiledTemplate = Handlebars.getTemplate(template);
   array.forEach(function (ele) {
-    $(parent).append($(compiledTemplate(ele)));
+    $(parent).append($(template(ele)));
   });
 };
 
@@ -99,7 +104,7 @@ function startIsotope() {
 }
 
 missingMemberView.init = function () {
-  MoC.all.then(function (MoCs) {
+  MoC.all().then(function (MoCs) {
     var missingMembers = MoCs.filter(function (member) {
       return member.missingMember;
     });
@@ -114,10 +119,10 @@ missingMemberView.init = function () {
     $currentState.removeClass('transparent');
     $copy.text($currentState.attr('data-total'));
     // make cards
-    missingMemberView.renderAll('missingMemberCard', '.grid', missingMembers);
+    missingMemberView.renderAll(missingMemberCardTemplate, '.grid', missingMembers);
     // add state buttons
     var allCategories = getAllCategories(missingMembers);
-    missingMemberView.renderAll('missingMemberButton', '#state-buttons', allCategories);
+    missingMemberView.renderAll(missingMemberButtonTemplate, '#state-buttons', allCategories);
     // initalize isotope
     startIsotope();
   });

@@ -6,6 +6,14 @@
     "codeFrame": true
   },
   "globals": {
-    "mapboxgl": true
+    "mapboxgl": true,
+    "localStorage": true,
+    "document": true,
+    "window": true,
+    "location": true,
+    "setTimeout": true
+  },
+  "rules": {
+    "no-undef": "error"
   }
 }

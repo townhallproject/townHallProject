@@ -1,8 +1,14 @@
+import $ from 'jquery';
+
 import { firebasedb } from '../lib/firebasedb';
+import urlParamsHandler from '../lib/urlParams';
+
 import TownHall from '../models/TownHall';
+
 import mapboxView from './mapboxView';
 import tableHandler from './tableView';
 import zipLookUpHandler from './zipLookUpView';
+import noWebGlMapView from './googleMapView';
 
   var map;
   var mapView = {};

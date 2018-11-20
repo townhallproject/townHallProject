@@ -1,5 +1,7 @@
 import indexView from '../views/indexView';
 import tableHandler from '../views/tableView';
+import stateView from '../views/stateView';
+
 const indexController = {};
 
 indexController.renderMainIndex = function (ctx, next) {

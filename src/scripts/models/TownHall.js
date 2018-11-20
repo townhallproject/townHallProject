@@ -36,13 +36,6 @@ class TownHall {
     }
   }
 
-  //Handlebars write
-  toHtml(templateid) {
-    var source = $(templateid).html();
-    var renderTemplate = Handlebars.compile(source);
-    return renderTemplate(this);
-  }
-
   makeFormattedMember() {
     var sentence;
     var icon = this.iconFlag ? this.iconFlag : this.icon;

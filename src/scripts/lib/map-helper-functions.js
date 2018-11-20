@@ -1,3 +1,5 @@
+import bboxes from '../../data/bboxes';
+
 const mapHelperFunctions = {};
 
 mapHelperFunctions.zeroPad = function zeroPad(districtID) {

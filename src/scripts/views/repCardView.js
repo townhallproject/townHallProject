@@ -1,3 +1,9 @@
+import $ from 'jquery';
+
+import representativeCardTemplate from '../../templates/representativeCard';
+
+import TownHall from '../models/TownHall';
+
 const repCardHandler = {};
 
 // renders the results of rep response
@@ -28,9 +34,8 @@ repCardHandler.repCards = function (results, compiledTemplate, $parent) {
 repCardHandler.renderRepresentativeCards = function (representativePromise, $parent, state) {
   $parent.empty(); // If they search for a new zipcode clear the old info
   representativePromise.then(function (representatives) {
-    var compiledTemplate = Handlebars.getTemplate('representativeCard');
     $parent.append('<h2 class="text-primary text-center">Your Federal Representatives</h2>');
-    repCardHandler.repCards(representatives, compiledTemplate, $parent);
+    repCardHandler.repCards(representatives, representativeCardTemplate, $parent);
 
     if (representatives.length > 3) {
       $parent.append('<h4 class="col-md-12 text-center">Your zip code encompasses more than one district.<br><small><a href="http://www.house.gov/representatives/find/">Learn More</a></small></h4>');
@@ -44,8 +49,7 @@ repCardHandler.renderRepresentativeCards = function (representativePromise, $par
 // append additional reps for lookup by district
 repCardHandler.addRepresentativeCards = function (representativePromise, $parent) {
   representativePromise.then(function (representatives) {
-    var compiledTemplate = Handlebars.getTemplate('representativeCard');
-    repCardHandler.repCards(representatives, compiledTemplate, $parent);
+    repCardHandler.repCards(representatives, representativeCardTemplate, $parent);
   });
 };
 

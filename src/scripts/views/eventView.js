@@ -1,12 +1,31 @@
-/*globals newEventView*/
+/*globals setTimeout addtocalendar Promise*/
 import $ from 'jquery';
+import page from 'page';
+
+import { firebasedb } from '../lib/firebasedb';
+
+import eventCardTemplate from '../../templates/eventCards';
+import eventModalTemplate from '../../templates/eventModal';
+
 import stateData from '../../data/states';
 import urlParamsHandler from '../lib/urlParams';
+import mapHelperFunctions from '../lib/map-helper-functions';
+
 import TownHall from '../models/TownHall';
+
+import indexView from './indexView';
+import mapView from './mapView';
 import newEventView from './mfolSubmitForm';
 import tableHandler from './tableView';
 import videoUploadHandler from './videoView';
 import emailHandler from './emailSignUpView';
+import missingMemberView from './missingMembersView';
+import resultsView from './resultsView';
+import stateView from './stateView';
+import mapboxView from './mapboxView';
+import zipLookUpHandler from './zipLookUpView';
+import repCardHandler from './repCardView';
+
 const zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
 // object to hold the front end view functions
 const eventHandler = {};
@@ -250,14 +269,12 @@ eventHandler.renderPanels = function (townhall, $parent) {
     townhall.addressLink = 'https://www.google.com/maps/dir/Current+Location/' + escape(townhall.address);
   }
   townhall.makeFormattedMember();
-  var compiledTemplate = Handlebars.getTemplate('eventCards');
-  var $panel = $(compiledTemplate(townhall));
+  var $panel = $(eventCardTemplate(townhall));
   $panel.appendTo($parent);
 };
 
 eventHandler.populateEventModal = function (townhall) {
-  var compiledTemplate = Handlebars.getTemplate('eventModal');
-  $('.event-modal .modal-content').html(compiledTemplate(townhall));
+  $('.event-modal .modal-content').html(eventModalTemplate(townhall));
   urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
   addtocalendar.load();
 };
