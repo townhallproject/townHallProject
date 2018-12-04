@@ -1,7 +1,5 @@
 import { json } from './templateUtils';
-import eventHandler from '../scripts/views/eventView';
 
-window.populateModal = eventHandler.populateEventModal;
 export default (townhall) => {
 return `<li id="${townhall.eventId}"
   class="event-row list-group-item ${townhall.Notes ? 'has-notes' : ''}"

@@ -1,3 +1,5 @@
+import $ from 'jquery';
+import eventHandler from './eventView';
 const stateView = {};
 
 stateView.maskCountry = function (map, state) {

@@ -1,3 +1,6 @@
+import eventHandler from './scripts/views/eventView';
+window.populateModal = eventHandler.populateEventModal;
+
 // vendor scripts
 import './vendor/scripts/jquery-2.1.4';
 import './vendor/scripts/jquery-ui';
@@ -5,7 +8,6 @@ import './vendor/scripts/cors-uploader';
 import './vendor/scripts/geo-viewport';
 import './vendor/scripts/mapbox-gl-v0.32.1';
 import './vendor/scripts/tether';
-import './vendor/scripts/moment.min.js';
 import './vendor/scripts/bootstrap.min.js';
 import './vendor/scripts/bootstrap3-typeahead.min.js';
 

@@ -1,3 +1,7 @@
+import moment from 'moment';
+
+import { firebasedb } from '../lib/firebasedb';
+
 const dataviz = {};
 
 dataviz.getPastEvents = function (path, dateStart, dateEnd) {

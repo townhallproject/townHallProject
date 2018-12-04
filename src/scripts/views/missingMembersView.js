@@ -1,6 +1,5 @@
-import isotope from 'isotope-layout';
 import $ from 'jquery';
-console.log(isotope)
+import isotope from 'isotope-layout';
 import statePopulation from '../../data/statePop';
 import MoC from '../models/MemberOfCongress';
 import missingMemberButtonTemplate from '../../templates/missingMemberButton';

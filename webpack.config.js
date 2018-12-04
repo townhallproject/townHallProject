@@ -2,10 +2,12 @@ require('dotenv').config();
 const HTMLPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const { ProvidePlugin } = require('webpack');
 
 const plugins = [
+  new CleanWebpackPlugin(['build']),
   new ProvidePlugin({
     jQuery: 'jquery',
     $: 'jquery',
@@ -27,6 +29,11 @@ const plugins = [
       flatten: true,
       from: 'src/Images/*',
       to: 'Images',
+    },
+    {
+      flatten: true,
+      from: 'src/Images/map',
+      to: 'Images/map/',
     },
     {
       flatten: true,
@@ -114,19 +121,13 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /\.(jpg|jpeg|gif|png|tiff|svg)$/,
-        exclude: /\.glyph.svg/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 6000,
-              name: 'Images/[name].[ext]',
-            },
-          },
-        ],
-      },
+
+     {
+         test: /\.(png|svg|jpg|gif)$/,
+         use: [
+           'file-loader'
+         ]
+       }
 
     ],
   },

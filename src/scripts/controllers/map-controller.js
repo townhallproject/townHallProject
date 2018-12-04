@@ -1,4 +1,5 @@
 import page from 'page';
+import $ from 'jquery';
 
 import stateData from '../../data/states';
 import bboxes from '../../data/bboxes';

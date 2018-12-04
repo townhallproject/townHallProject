@@ -18,7 +18,6 @@ limitations under the License.
 */
 
 import $ from 'jquery';
-
 import videoUploadHandler from '../views/videoView';
 
 const authInfo = {

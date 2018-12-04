@@ -54,6 +54,7 @@
 // Utility classes
 @import "~bootstrap3/less/utilities.less";
 @import "~bootstrap3/less/responsive-utilities.less";
+@import "./bootstrap.4.utilities.less";
 
 // Brand Colors
 @brand-primary: #0d4668;
@@ -146,7 +147,7 @@ section.border{
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
 @navbar-border-radius:                     none;
-@grid-float-breakpoint: @screen-md-min;
+@grid-float-breakpoint: 1140px;
 
 //event color key
 @main-in-person:#439cbf;
@@ -377,7 +378,7 @@ input{
    h3{
      margin-top: 0;
    }
-   .image-holder{
+   .image-holder {
      margin-top: 40px;
      img {
       //  max-width: 350px;
@@ -385,7 +386,7 @@ input{
    }
  }
 
- @media (min-width: @screen-sm-min){
+ @media (max-width: @screen-sm-min){
    #mfol-banner {
      .image-holder{
        img {
@@ -491,7 +492,13 @@ a.social-icon {
   margin-bottom: 1em;
 }
 .list-group { margin-bottom: 0; }
-.event-card { margin-bottom: 1rem; }
+.event-card { 
+  margin-bottom: 1rem; 
+  .panel-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+}
 
 .event-card-icon {
   -webkit-background-size: 38px 38px;
@@ -529,30 +536,30 @@ a.social-icon {
 }
 
 .event-icon__in-person {
-  background-image: url('../Images/map/in-person.svg');
+  background-image: url('/Images/map/circle-in-person.svg');
 }
 
 .event-icon__tele {
-  background-image: url('../Images/map/circle-tele.svg');
+  background-image: url('/Images/map/circle-tele.svg');
 }
 
 .event-icon__staff {
-  background-image: url('../Images/map/circle-staff.svg');
+  background-image: url('/Images/map/circle-staff.svg');
 }
 
 .event-icon__activism {
-  background-image: url('../Images/map/circle-activism.svg');
+  background-image: url('/Images/map/circle-activism.svg');
 }
 
 .event-icon__campaign {
-  background-image: url('../Images/map/circle-campaign.svg');
+  background-image: url('/Images/map/circle-campaign.svg');
 }
 .event-icon__mfol {
-  background-image: url('../Images/map/circle-mfol.svg');
+  background-image: url('/Images/map/circle-mfol.svg');
 }
 
 .state-icon__CO {
-  background-image: url('../Images/CO/state-icon.png');
+  background-image: url('/Images/CO/state-icon.png');
 }
 .event-icon__with-date { margin-top: 7px; }
 
@@ -705,10 +712,16 @@ a.social-icon {
   /* Can probably remove some of this when migrating to bootstrap 4 */
   margin-bottom: 2em;
   background: @brand-white;
+  .popover {
+    color: @brand-text;
+  }
   .card-header {
     padding: 0 15px;
     h3 {
       margin-top: 10px;
+    }
+    .logo {
+      margin-top: 20px;
     }
   }
   .card-block {
@@ -719,9 +732,16 @@ a.social-icon {
     }
   }
   .card-footer {
-    padding: 0 2.5em 1.25em;
+    // padding: 0 2.5em 1.25em;
     label {
       font-weight: 500;
+    }
+    .challenger {
+      padding: 20px;
+      background: @brand-primary;
+      color: @brand-white;
+      height: 80px;
+    
     }
   }
 
@@ -736,9 +756,78 @@ a.social-icon {
     font-weight: 700;
     letter-spacing: 0.05em;
   }
+
 }
+
+.logo {
+  height: 80px;
+  background-size: 80px 80px;
+  background-repeat: no-repeat;
+  width: 80px;
+  vertical-align: middle;
+  float:left;
+  margin-left: 25px;   
+}
+.logo-right{
+  float: right;
+}
+.logo-small{
+  height: 45px;
+  background-size: 45px 45px;
+  background-repeat: no-repeat;
+  width: 45px;
+}
+.mfol-logo {
+  background-size: 100px 100px;
+  background-image: url('/Images/town-hall-for-our-lives.svg');
+  margin-right: 25px;
+  margin-left: 30px;   
+  width: 100px;
+
+}
+.do-your-job-logo {
+  background-image: url('/Images/svgs/do-your-job-logo.svg');
+}
+.pledger-logo {
+  background-image: url('/Images/svgs/town-hall-pledge-logo.svg');
+}
+
 .time-sensitive {
-  padding-bottom: 1em;
+  display: flex;
+  .display-flex {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+  }
+  h1 {
+    display: inline-block;
+
+  }
+
+  .first-row {
+    border-bottom: 1px solid @brand-white;
+    width: 100%;
+    margin: auto;
+  }
+  .happening-now-title {
+    .break {
+      display: block;
+    }
+    i {
+      color: #b14038;
+      font-size: 3em;
+    }
+    background: #ed6c64;
+    color: white;
+    height: 100%;
+    flex: 1;
+    padding-left: 20px 
+  }
+  .happening-now-content {
+    flex: 2;
+    margin: auto;
+  }
+
 }
 .time-sensitive .container{
   max-width: 950px;
@@ -1285,6 +1374,9 @@ img.grayscale {
         opacity: 0.65;
         color: #ffffff;
       }
+      .do-your-job-logo {
+        margin-top: 20px;
+      }
     }
   }
   .navbar {
@@ -1517,7 +1609,6 @@ img.grayscale {
 }
 .swingleft-holder a {
   font-weight: normal;
-
 }
 
 .less-padding {
@@ -1547,7 +1638,7 @@ img.grayscale {
   width: 20px;
   height: 20px;
   margin: 5px;
-  background-image: url('../Images/map/usa.svg');
+  background-image: url('/Images/map/usa.svg');
   background-size: 20px 20px;
   background-repeat: no-repeat;
   display: inline-block;
@@ -1678,7 +1769,7 @@ img.grayscale {
   border: 1px solid black;
   width: 15px;
   height: 15px;
-  background-image: url('../Images/map/senate-fill.svg');
+  background-image: url('/Images/map/senate-fill.svg');
 }
 
 .map-legend__distrcit {
@@ -1707,28 +1798,28 @@ img.grayscale {
 }
 
 .map-legend .map-legend__person {
-  background-image: url('../Images/map/in-person.svg');
+  background-image: url('/Images/map/in-person.svg');
 }
 
 .map-legend .map-legend__mfol {
-  background-image: url('../Images/map/mfol.svg');
+  background-image: url('/Images/map/mfol.svg');
   background-size: 16px;
 }
 
 .map-legend .map-legend__tele {
-  background-image: url('../Images/map/phone-in.svg');
+  background-image: url('/Images/map/phone-in.svg');
 }
 
 .map-legend .map-legend__staff {
-  background-image: url('../Images/map/staff.svg');
+  background-image: url('/Images/map/staff.svg');
 }
 
 .map-legend .map-legend__activ {
-  background-image: url('../Images/map/activism.svg');
+  background-image: url('/Images/map/activism.svg');
 }
 
 .map-legend .map-legend__campaign {
-  background-image: url('../Images/map/campaign.svg');
+  background-image: url('/Images/map/campaign.svg');
 }
 
 .map-small .map-legend {
@@ -1877,6 +1968,25 @@ img.grayscale {
 
 .webGl-warning {
   max-width: 750px;
+}
+
+@media screen and (max-width: 850px){
+    .time-sensitive {
+    .happening-now-title {
+      .break{
+
+        display: inline;
+      }
+      flex: 1 100%;
+      height: initial!important;
+      i {
+        font-size: 1em;
+      }
+    }
+    .happening-now-content {
+      flex: 1 100%;
+    }
+  }
 }
 
 @media screen and (max-width: 800px){

@@ -54,6 +54,7 @@
 // Utility classes
 @import "utilities.less";
 @import "responsive-utilities.less";
+@import "bootstrap.4.utilities.less";
 
 // Brand Colors
 @brand-primary: #0d4668;
@@ -67,6 +68,9 @@
 @brand-secondary-dark : darken(@brand-secondary, 20%);
 @brand-white: #ffffff;
 
+.text-main {
+  color: @brand-text;
+}
 .text-white {
   color: @brand-white;
 }
@@ -92,6 +96,10 @@
 }
 section.background-light-blue {
   padding: 0.5em 0 2em;
+  border-bottom: solid @brand-primary 1px;
+}
+
+section.border{
   border-bottom: solid @brand-primary 1px;
 }
 
@@ -127,7 +135,7 @@ section.background-light-blue {
 @navbar-collapse-max-height:       340px;
 
 @navbar-default-color:             #777;
-@navbar-default-bg:                #@brand-white;
+@navbar-default-bg:                @brand-white;
 @navbar-default-border:            darken(@navbar-default-bg, 6.5%);
 
 // Navbar links
@@ -139,11 +147,27 @@ section.background-light-blue {
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
 @navbar-border-radius:                     none;
-@grid-float-breakpoint: @screen-md-min;
+@grid-float-breakpoint: 1140px;
+
+//event color key
+@main-in-person:#439cbf;
+@main-staff:#d0a8c1;
+@main-activism: #ec955a;
+@main-tele:#73b94c;
+@main-campaign: #d7bd40;
+@main-mfol: #1b4886;
 
 .weight-heavy {
   font-weight: 700;
   letter-spacing: 0.06em;
+}
+
+.weight-normal {
+  font-weight: 400;
+}
+
+.overline{
+  text-decoration: overline;
 }
 
 .line-height-small{
@@ -166,8 +190,42 @@ section.background-light-blue {
 .navbar-brand {
   padding-top: 5px!important;
 }
-.navbar-left a {
-  font-size: 18px;
+.navbar .navbar-left {
+  a {
+    font-size: 18px;
+  }
+  li.dropdown.dropdown--stateSelection {
+    padding: 11px 15px;
+    margin-right: 15px;
+    &.open {
+      max-height: 60px; // Prevent the menu from pushing down the rest of the page
+      button {
+        background-color: #ffffff;
+      }
+    }
+    button {
+      font-size: 17px;
+      font-weight: 100;
+      text-align: left;
+      span.caret {
+        position: absolute;
+        top: 30px;
+        right: 0;
+      }
+      &:hover, &:active, &:focus {
+        background-color: #ffffff;
+      }
+    }
+    &, button, .dropdown-menu {
+      width: 185px;
+    }
+    .dropdown-menu {
+      min-width: 185px; // Void default styling
+      position: inherit;
+      top: 0;
+      padding: 10px 0;
+    }
+  }
 }
 .navbar-right .btn {
   font-size: 1.2em;
@@ -223,6 +281,10 @@ h1, h2 {
 
 .hidden {
   display: none!important;
+}
+
+.transparent {
+  opacity: 0;
 }
 
 .navbar{
@@ -296,6 +358,39 @@ input{
        &:-moz-placeholder { /* Firefox 4 - 18 */
          color: @brand-success;
          opacity: 0.9;
+       }
+     }
+   }
+   .bootstrap-tagsinput {
+      height: 46px;
+      line-height: 1.3333333;
+      border: none;
+   }
+ }
+#open-email-form{
+  float: right;
+  margin: 10px;
+}
+ #mfol-banner {
+   h1 {
+     margin-top: 50px;
+   }
+   h3{
+     margin-top: 0;
+   }
+   .image-holder {
+     margin-top: 40px;
+     img {
+      //  max-width: 350px;
+     }
+   }
+ }
+
+ @media (max-width: @screen-sm-min){
+   #mfol-banner {
+     .image-holder{
+       img {
+        //  max-width: 270px;
        }
      }
    }
@@ -397,7 +492,13 @@ a.social-icon {
   margin-bottom: 1em;
 }
 .list-group { margin-bottom: 0; }
-.event-card { margin-bottom: 1rem; }
+.event-card { 
+  margin-bottom: 1rem; 
+  .panel-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+}
 
 .event-card-icon {
   -webkit-background-size: 38px 38px;
@@ -409,10 +510,30 @@ a.social-icon {
   margin: 2px 0 0;
 }
 
-.panel-heading_in-person  { background-color: #439cbf; }
-.panel-heading_staff      { background-color: #d0a8c1; }
-.panel-heading_activism   { background-color: #ec955a; }
-.panel-heading_tele       { background-color: #73b94c; }
+.state-icon {
+  -webkit-background-size: 38px 38px;
+  height: 18px;
+  width: 18px;
+  display: inline-block;
+  background-size: 18px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.panel-heading_in-person  { background-color: @main-in-person; }
+.panel-heading_staff      { background-color: @main-staff; }
+.panel-heading_activism   { background-color: @main-activism; }
+.panel-heading_tele       { background-color: @main-tele; }
+.panel-heading_campaign   { background-color: @main-campaign; }
+.panel-heading_mfol       {
+  background-color: #ededed;
+  color: #302f2e;
+  border-top: 0.5px solid @main-mfol;
+  border-bottom: 4px solid @main-mfol;
+  small {
+    color: @main-mfol;
+  }
+}
 
 .event-icon__in-person {
   background-image: url('/Images/map/circle-in-person.svg');
@@ -430,6 +551,16 @@ a.social-icon {
   background-image: url('/Images/map/circle-activism.svg');
 }
 
+.event-icon__campaign {
+  background-image: url('/Images/map/circle-campaign.svg');
+}
+.event-icon__mfol {
+  background-image: url('/Images/map/circle-mfol.svg');
+}
+
+.state-icon__CO {
+  background-image: url('/Images/CO/state-icon.png');
+}
 .event-icon__with-date { margin-top: 7px; }
 
 .calendarButton {
@@ -510,6 +641,21 @@ a.social-icon {
   position: relative;
 }
 
+.small-award-holder{
+  max-width: 400px;
+  text-align: center;
+  margin: auto;
+}
+
+.award-header, .small-awards, .small-award-holder{
+  margin-bottom: 3rem;
+}
+
+.small-award{
+  box-shadow: grey 0px 0px 10px 1px;
+  border-radius: 3px;
+}
+
 .list-item-no-border {
   border: 0;
   padding: 0;
@@ -566,10 +712,16 @@ a.social-icon {
   /* Can probably remove some of this when migrating to bootstrap 4 */
   margin-bottom: 2em;
   background: @brand-white;
+  .popover {
+    color: @brand-text;
+  }
   .card-header {
     padding: 0 15px;
     h3 {
       margin-top: 10px;
+    }
+    .logo {
+      margin-top: 20px;
     }
   }
   .card-block {
@@ -580,9 +732,16 @@ a.social-icon {
     }
   }
   .card-footer {
-    padding: 0 2.5em 1.25em;
+    // padding: 0 2.5em 1.25em;
     label {
       font-weight: 500;
+    }
+    .challenger {
+      padding: 20px;
+      background: @brand-primary;
+      color: @brand-white;
+      height: 80px;
+    
     }
   }
 
@@ -597,9 +756,78 @@ a.social-icon {
     font-weight: 700;
     letter-spacing: 0.05em;
   }
+
 }
+
+.logo {
+  height: 80px;
+  background-size: 80px 80px;
+  background-repeat: no-repeat;
+  width: 80px;
+  vertical-align: middle;
+  float:left;
+  margin-left: 25px;   
+}
+.logo-right{
+  float: right;
+}
+.logo-small{
+  height: 45px;
+  background-size: 45px 45px;
+  background-repeat: no-repeat;
+  width: 45px;
+}
+.mfol-logo {
+  background-size: 100px 100px;
+  background-image: url('/Images/town-hall-for-our-lives.svg');
+  margin-right: 25px;
+  margin-left: 30px;   
+  width: 100px;
+
+}
+.do-your-job-logo {
+  background-image: url('/Images/svgs/do-your-job-logo.svg');
+}
+.pledger-logo {
+  background-image: url('/Images/svgs/town-hall-pledge-logo.svg');
+}
+
 .time-sensitive {
-  padding-bottom: 1em;
+  display: flex;
+  .display-flex {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+  }
+  h1 {
+    display: inline-block;
+
+  }
+
+  .first-row {
+    border-bottom: 1px solid @brand-white;
+    width: 100%;
+    margin: auto;
+  }
+  .happening-now-title {
+    .break {
+      display: block;
+    }
+    i {
+      color: #b14038;
+      font-size: 3em;
+    }
+    background: #ed6c64;
+    color: white;
+    height: 100%;
+    flex: 1;
+    padding-left: 20px 
+  }
+  .happening-now-content {
+    flex: 2;
+    margin: auto;
+  }
+
 }
 .time-sensitive .container{
   max-width: 950px;
@@ -857,6 +1085,11 @@ dt.key{
   color: @brand-info;
 }
 
+.btn-transparent{
+  background-color: transparent;
+  text-align: left;
+}
+
 #nearest {
   padding-top:10px;
   overflow-y: scroll;
@@ -1015,6 +1248,14 @@ li[data-toggle='popover']:hover {
     }
   }
 }
+//mfol form
+.new-event-form-mfol {
+  margin-bottom: 200px
+}
+
+.member-name.form-control[readonly] {
+  color: @brand-success;
+}
 
 // google forms
 .embed-container {
@@ -1035,6 +1276,22 @@ li[data-toggle='popover']:hover {
     top: 0;
     left: 0;
     width: 100%;
+    height: 100%;
+ }
+
+ .embed-container-guide { 
+  padding-bottom: 56.25%;
+  margin-bottom: 200px;
+} 
+.embed-container-guide iframe,
+.embed-container-guide object,
+.embed-container-guide embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
     height: 100%;
  }
 
@@ -1073,6 +1330,21 @@ img.grayscale {
   filter: grayscale(100%);
 }
 
+// End of Year graphic page
+#year-one {
+  background-color: @brand-success;
+  .container {
+    @media (min-width: 1200px) {
+      width: 1440px
+    }
+    img{
+      max-width: 1440px;
+      width: 100%;
+      margin-bottom: 100px;
+    }
+  }
+}
+
 // Missing Members
 .missing-member-report{
   color: @brand-success;
@@ -1089,11 +1361,23 @@ img.grayscale {
 
 #missing-members {
   background-color: @brand-gray;
-  .missing-member-cards-container{
+  .missing-member-cards-container {
     padding-bottom: 130px;
     -webkit-box-shadow: inset 0px 12px 29px -13px rgba(0,0,0,1);
        -moz-box-shadow: inset 0px 12px 29px -13px rgba(0,0,0,1);
             box-shadow: inset 0px 12px 29px -13px  rgba(0,0,0,1);
+
+    .card-representative {
+      .fa-address-book {
+        position: absolute;
+        right: 15px;
+        opacity: 0.65;
+        color: #ffffff;
+      }
+      .do-your-job-logo {
+        margin-top: 20px;
+      }
+    }
   }
   .navbar {
     border-bottom: @brand-cool;
@@ -1299,6 +1583,10 @@ img.grayscale {
   min-height: 75px;
 }
 
+.vertical-align {
+  vertical-align: top;
+}
+
 .footer-text {
   padding: 5px;
 }
@@ -1321,7 +1609,6 @@ img.grayscale {
 }
 .swingleft-holder a {
   font-weight: normal;
-
 }
 
 .less-padding {
@@ -1421,6 +1708,7 @@ img.grayscale {
 
 .map-large {
   position: relative;
+  background-color: @brand-gray;
 }
 
 .map-legend {
@@ -1437,7 +1725,7 @@ img.grayscale {
           transition: 0.2s all;
 }
 
-.map-legend.map-legend-inset{
+.map-legend.map-legend-inset {
   position: absolute;
   right: 1rem;
   box-shadow: 0px 1px 10px 1px rgba(0,0,0,0.1);
@@ -1464,7 +1752,19 @@ img.grayscale {
     margin-bottom: 0px;
   }
 }
+.border-toggle:focus {
+  outline: none!important;
+}
 
+.border-toggle.active {
+  box-shadow: inset 0 0px 5px 1px rgba(0,0,0,.125)
+}
+
+.state-lines {
+  border-top: dotted 0.5px @brand-gray;
+  margin-top: 0.7em;
+  padding-top: 0.7em;
+}
 .map-legend__senate {
   border: 1px solid black;
   width: 15px;
@@ -1479,8 +1779,31 @@ img.grayscale {
   background-color: hsl(185, 77%, 46%);
 }
 
+.map-legend-line {
+  width: 15px;
+  height: 9px;
+}
+
+.map-legend__state_upper {
+  border-bottom: 1.5px solid #abbfcb;
+
+}
+
+.map-legend__state_lower {
+  border-bottom: 1.5px solid #a4a4a4;
+}
+
+.map-legend__federal{
+  border-bottom: 1.5px solid @brand-gray;
+}
+
 .map-legend .map-legend__person {
   background-image: url('/Images/map/in-person.svg');
+}
+
+.map-legend .map-legend__mfol {
+  background-image: url('/Images/map/mfol.svg');
+  background-size: 16px;
 }
 
 .map-legend .map-legend__tele {
@@ -1495,10 +1818,17 @@ img.grayscale {
   background-image: url('/Images/map/activism.svg');
 }
 
+.map-legend .map-legend__campaign {
+  background-image: url('/Images/map/campaign.svg');
+}
+
 .map-small .map-legend {
   left: initial;
   right: 0;
   padding: 2rem 2rem 0.5rem;
+  .border-toggle {
+    display: block;
+  }
  }
  .no-web-gl .map-small .map-legend {
    right: initial;
@@ -1545,6 +1875,33 @@ img.grayscale {
 }
 
 @media screen and (max-width: 767px){
+  .nav.navbar-left {
+    margin-bottom: 0;
+
+    li.dropdown.dropdown--stateSelection.open {
+      max-height: initial;
+    }
+  }
+  .nav.navbar-right {
+    margin-top: 0;
+    & li:first-of-type {
+      width: 60%;
+      display: inline-block;
+      font-size: 18px;
+      vertical-align: middle;
+      bottom: 2px;
+      a {
+        padding: 0 15px;
+      }
+    }
+    & li:not(:first-of-type) {
+      width: 12%;
+      display: inline-block;
+      a.social-icons {
+        padding-top: 5px;
+      }
+    }
+  }
   .footer {
     padding: 0px;
     padding-top: 20px;
@@ -1613,6 +1970,25 @@ img.grayscale {
   max-width: 750px;
 }
 
+@media screen and (max-width: 850px){
+    .time-sensitive {
+    .happening-now-title {
+      .break{
+
+        display: inline;
+      }
+      flex: 1 100%;
+      height: initial!important;
+      i {
+        font-size: 1em;
+      }
+    }
+    .happening-now-content {
+      flex: 1 100%;
+    }
+  }
+}
+
 @media screen and (max-width: 800px){
   .webGl-warning { width: 500px; }
   .warning-container {
@@ -1678,4 +2054,14 @@ img.grayscale {
 }
 .d-inline {
   display: inline;
+}
+
+#town-hall-pledge{
+  .container{
+    margin-top: 18px;
+    margin-bottom: 220px;
+  }
+  .img-holder{
+    padding: 20px;
+  }
 }
