@@ -7,7 +7,7 @@ stateView.maskCountry = function (map, state) {
 };
 
 stateView.renderHeader = function (state) {
-  $('#header-image').attr('src', location.origin + '/Images/' + state + '/THP_logo_inverse.png');
+  $('#header-image').attr('src', `${location.origin}/Images/${state}/THP_logo_inverse.png`);
 };
 
 stateView.setStateDropdown = function (state) {

@@ -26,14 +26,10 @@ const plugins = [
   // new ExtractPlugin('bundle.[hash].css'),
   new CopyWebpackPlugin([
     {
-      flatten: true,
-      from: 'src/Images/*',
-      to: 'Images',
-    },
-    {
-      flatten: true,
-      from: 'src/Images/map',
-      to: 'Images/map/',
+      from: 'src/Images/**/*',
+        transformPath(targetPath) {
+          return targetPath.split('src/')[1];
+        }
     },
     {
       flatten: true,
