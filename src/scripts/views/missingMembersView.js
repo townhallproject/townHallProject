@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import isotope from 'isotope-layout';
+import Isotope from 'isotope-layout';
 import statePopulation from '../../data/statePop';
 import MoC from '../models/MemberOfCongress';
 import missingMemberButtonTemplate from '../../templates/missingMemberButton';
@@ -75,7 +75,7 @@ function getAllCategories(returnedData) {
 }
 
 function startIsotope() {
-  var $grid = $('.grid').isotope({
+  var $grid = new Isotope('.grid', {
     itemSelector: '.element-item',
     getSortData: {
       townhall: '.townHallNumber parseInt' // text from querySelector
@@ -83,10 +83,10 @@ function startIsotope() {
     sortBy: 'townhall',
     sortAscending: false
   });
-  // layout Isotope after each image loads
-  $grid.imagesLoaded().progress(function () {
-    $grid.isotope('layout');
-  });
+  // // layout Isotope after each image loads
+  // $grid.imagesLoaded().progress(function () {
+  //   $grid.isotope('layout');
+  // });
   var filters = {};
   $('.filter-button-group').on('click', '.btn-filter', function () {
     var $this = $(this);
@@ -98,7 +98,9 @@ function startIsotope() {
     // combine filters
     var filterValue = concatValues(filters);
     missingMemberView.addFilter(filters, filterValue);
-    $grid.isotope({ filter: filterValue });
+    $grid.arrange({
+      filter: filterValue
+    });
   });
 }
 

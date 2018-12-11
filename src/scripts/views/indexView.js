@@ -4,7 +4,7 @@ import TownHall from '../models/TownHall';
 
 import mapView from './mapView';
 import tableHandler from './tableView';
-import emailHandler from './eventView';
+import emailHandler from './emailSignUpView';
 
 const indexView = {};
 

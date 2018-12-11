@@ -526,7 +526,7 @@ mapboxView.makePoint = function (townhall, stateIcon) {
   }
   // makes staff icon smaller
   iconKey = iconKey === 'staff' ? 'staff-small' : iconKey;
-  if (townhall.thp_id) {
+  if (townhall.thp_id && townhall.district) {
     townhall.chamber = townhall.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
   }
   array.features.push({

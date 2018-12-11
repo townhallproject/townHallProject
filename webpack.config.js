@@ -40,6 +40,12 @@ const plugins = [
 ];
 
 module.exports = {
+  resolve: {
+      alias: {
+        'masonry': 'masonry-layout',
+        'isotope': 'isotope-layout'
+      }
+    },
   mode: 'development',
 
   plugins,

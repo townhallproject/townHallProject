@@ -50,17 +50,18 @@ export default (missingMember) => {
     </div>
     <div class="mm card-footer no-padding container-flex">
       <div class="row">
-      <div class="footer-icon type-holder col-4 vertical-align ">
-         ${missingMember.taxBill ? 
-        `<div class="footer-text"><small>Voted for</small> <span class="highlight">GOP Tax Bill</span></div>`: ''}
-        <div class="footer-icon col-4 swingleft-holder less-padding vertical-align">
+        <div class="footer-icon type-holder col-4 vertical-align">
+          ${missingMember.taxBill ? 
+            `<div class="footer-text"><small>Voted for</small> <span class="highlight">GOP Tax Bill</span></div>`: ''}
         </div>
-        <div class="footer-icon  col-4">
+
+        <div class="footer-icon col-4 swingleft-holder vertical-align">
+        </div>
+        <div class="footer-icon type-holder col-4">
             ${missingMember.ahca ? `<div class="footer-text ahca-text  vertical-align">
               <small>Voted for </small><span class="highlight">AHCA</span></div>`: ''}
         </div>
-        </div>
       </div>
-   </div>
+    </div>
 </div>`
 }
