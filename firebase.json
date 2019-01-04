@@ -44,6 +44,14 @@
       {
         "source": "/virginia",
         "destination": "/index.html"
+      },
+      {
+        "source": "/Oregon",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/oregon",
+        "destination": "/index.html"
       }
     ],
     "ignore": [
