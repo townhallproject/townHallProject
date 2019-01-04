@@ -26,7 +26,7 @@
       this.party = 'Republican';
       break;
     case 'D':
-      this.party = 'Democrat';
+      this.party = 'Democratic';
       break;
     case 'I':
       this.party = 'Independent';

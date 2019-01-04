@@ -3,38 +3,27 @@
     <div class="card-header">
       <div class="row">
         <div class="col-xs-4 col-sm-3 no-padding p-0">
-          {{#if missingMember}}
+          {{!-- {{#if missingMember}}
             <a href="https://jacksonmaxfield.github.io/flyer_gen/#/m={{id}}" target="_blank"
                title="Print a milk-carton like poster for your Missing Member of Congress.">
               <div class="missing-member weight-heavy">Missing Member</div>
             </a>
-          {{/if}}
+          {{/if}} --}}
           <img src="https://www.govtrack.us/data/photos/{{govtrack_id}}-100px.jpeg" onerror="$(this).remove()" class="grayscale" />
         </div>
         <div class="col-xs-8 col-sm-9">
-          {{#if dyjd}}
+          {{#if pledged}}
             <div class="col-sm-9">
-            <h3>{{formattedMember}}</h3>
-            <h4>{{party}}</h4>
+              <h3>{{formattedMember}}</h3>
+              <h4>{{party}}</h4>
             </div>
             <div class="col-sm-3">
-              <a href="https://www.townhallpledge.com/" target="_blank" class="logo logo-right do-your-job-logo" data-toggle="popover" title="Do your job race" data-content="This member has not held town halls, and their challenger has taken the town hall pledge. Visit townhallpledge.com to find out more."></a>
+              <a href="https://www.townhallpledge.com/" target="_blank" class="logo logo-right pledger-logo"></a>
             </div>
           {{/if}}
-          {{#unless dyjd}}
-              {{#if pledged}}
-                <div class="col-sm-9">
-                  <h3>{{formattedMember}}</h3>
-                  <h4>{{party}}</h4>
-                </div>
-                <div class="col-sm-3">
-                  <a href="https://www.townhallpledge.com/" target="_blank" class="logo logo-right pledger-logo"></a>
-                </div>
-              {{/if}}
-              {{#unless pledged}}
-                  <h3>{{formattedMember}}</h3>
-                  <h4>{{party}}</h4>
-              {{/unless}}
+          {{#unless pledged}}
+              <h3>{{formattedMember}}</h3>
+              <h4>{{party}}</h4>
           {{/unless}}
         </div>
       </div>
@@ -75,32 +64,22 @@
       </div>
     </div>
     <div class="card-footer">
-    <div class="mm card-footer no-padding container-flex">
-      <div class="row">
-        <div class="footer-icon type-holder col-4 vertical-align ">
-          {{#if next_election}}
-          <div class="footer-text"><small>Term ends:</small> <span class="highlight">{{next_election}}</span></div>{{/if}}
-        </div>
-        <div class="footer-icon type-holder col-4 vertical-align ">
-          {{#if taxBill}}
-          <div class="footer-text"><small>Voted for</small> <span class="highlight">2017 Tax Bill</span></div>{{/if}}
-        </div>
-        <div class="footer-icon  col-4">
-          {{#if ahca}}<div class="footer-text ahca-text  vertical-align">
-            <small>Voted for </small><span class="highlight">AHCA</span></div>{{/if}}
-        </div>
-      </div>
-    </div>
-      {{#if dyjd}}
-      <div class="challenger container-flex">
+      <div class="mm card-footer no-padding container-flex">
         <div class="row">
-          <div class="col-xs-9 ">Challenger <strong>{{pledger}}</strong> has taken the <strong>Town Hall Pledge</strong></div>
-          <div class="col-xs-3 ">
-            <a href="https://www.townhallpledge.com/" target="_blank" class="logo logo-small logo-right pledger-logo"></a>
+          <div class="footer-icon type-holder col-4 vertical-align ">
+            {{#if next_election}}
+            <div class="footer-text"><small>Term ends:</small> <span class="highlight">{{next_election}}</span></div>{{/if}}
+          </div>
+          <div class="footer-icon type-holder col-4 vertical-align ">
+            {{#if taxBill}}
+            <div class="footer-text"><small>Voted for</small> <span class="highlight">2017 Tax Bill</span></div>{{/if}}
+          </div>
+          <div class="footer-icon  col-4">
+            {{#if ahca}}<div class="footer-text ahca-text  vertical-align">
+              <small>Voted for </small><span class="highlight">AHCA</span></div>{{/if}}
           </div>
         </div>
       </div>
-      {{/if}}
     </div>
   </div>
 </div>
