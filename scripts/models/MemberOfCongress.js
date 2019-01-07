@@ -1,13 +1,13 @@
 (function(module) {
   function MoC(opts) {
-    for (keys in opts) {
+    for (var keys in opts) {
       this[keys] = opts[keys];
     }
     if (this.type === 'sen') {
       this.repOf = 'Sen. ' + this.state;
       this.displayType = 'Senate';
       this.subtitle = 'Senator';
-    } else {
+    } else if (this.type === 'rep') {
       this.repOf = this.state + '-' + this.zeroPadding();
       this.displayType = 'House';
       this.subtitle = this.state + '-' + this.district;
@@ -16,8 +16,35 @@
 
   MoC.prototype.zeroPadding = function() {
     var zeros = '00';
-    district = this.district.toString();
+    var district = this.district.toString();
     return zeros.substring(0, zeros.length - district.length) + district;
+  };
+
+  MoC.prototype.format = function(){
+    switch (this.party) {
+    case 'R':
+      this.party = 'Republican';
+      break;
+    case 'D':
+      this.party = 'Democratic';
+      break;
+    case 'I':
+      this.party = 'Independent';
+      break;
+    }
+    var termEnd = new Date(this.term_end);
+    // Get the canon facebook and twitter accounts
+    this.facebook_canon = this.facebook_official_account || this.facebook_account || this.facebook;
+    this.twitter_canon = this.twitter_account || this.twitter;
+    // If term expires in janurary then assume the election is in the prior year
+    this.electionYear = termEnd.getMonth() === 0 ? termEnd.getFullYear() - 1 : termEnd.getFullYear();
+    if (this.dyjd){
+      this.pledger = this.dyjd.pledger;
+    }
+    var prefix = this.type === 'sen' ? 'Senator' : 'Rep.';
+
+    var sentence = [prefix, this.displayName];
+    this.formattedMember = sentence.join(' ');
   };
 
   MoC.all = firebasedb.ref('mocData/').once('value').then(function(snapshot) {

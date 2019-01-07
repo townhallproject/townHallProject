@@ -1,5 +1,9 @@
 <div class="text-info map-popup">
-  <h4 class="mapbox-popup-title">{{Member}}</h4>
+  <h4 class="mapbox-popup-title">
+    {{#if stateIcon}}
+    <span class="pull-left state-icon state-icon__{{stateAbbr}}">
+    {{/if}}
+    </span>{{formattedMember}} <small>{{displayDistrict}}</small></h4>
   <p>{{Location}}</p>
   <span>{{Time}} </span>
   <span>
@@ -7,8 +11,8 @@
       on {{repeatingEvent}}
     {{/if}}
     {{#unless repeatingEvent}}
-      {{#if Date}}
-        on {{Date}}
+      {{#if date}}
+        on {{date}}
       {{/if}}
     {{/unless}}
   </span><br>
