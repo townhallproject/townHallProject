@@ -71,7 +71,10 @@
       } else {
         this.displayDistrict = state;
       }
-      if (this.meetingType === 'Campaign Town Hall'){
+      if (this.meetingType === 'Campaign Town Hall') {
+       if (this.chamber === 'nationwide'){
+        this.displayDistrict = ''
+      } else {
         this.displayDistrict = 'Running for: ' + this.displayDistrict;
       }
     }
