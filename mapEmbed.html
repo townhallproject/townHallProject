@@ -1,64 +1,261 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0 user-scalable=no" name="viewport">
-    <title>Town Hall Project || Find a Town Hall Near you</title>
-    <meta name="google-site-verification" content="Z-DITr7yziksJNk7OlwHxiD2WK31wNO0GbRP7px3xL8" />
-    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-    <meta name="description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0 user-scalable=no" name="viewport">
+  <title>Town Hall Project || Find a Town Hall Near you</title>
+  <meta name="google-site-verification" content="Z-DITr7yziksJNk7OlwHxiD2WK31wNO0GbRP7px3xL8" />
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
       identify and promote upcoming Congressional forums nationwide.">
-      <link rel="shortcut icon" href="./Images/THP_favicon.png" type="image/x-icon">
-    <!-- Social media meta tags -->
+  <link rel="shortcut icon" href="./Images/THP_favicon.png" type="image/x-icon">
+  <!-- Social media meta tags -->
 
-    <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="Town Hall Project">
-    <meta itemprop="description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
-    identify and promote upcoming Congressional forums nationwide.">
-    <meta itemprop="image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_horizontal_facebook.png">
+  <!-- Schema.org markup for Google+ -->
+  <meta itemprop="name" content="Town Hall Project">
+  <meta itemprop="description" content="Town Hall Project is a progressive, a citizen-powered research and organizing project dedicated to holding lawmakers accountable via town hall meetings and other in-person engagement.">
+  <meta itemprop="image" content="https://townhallproject.com/Images/THP_logo_horizontal_facebook.png">
 
-    <!-- Twitter Card data -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@townhallproject">
-    <meta name="twitter:title" content="Town Hall Project">
-    <meta name="twitter:description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
-    identify and promote upcoming Congressional forums nationwide.">
-    <meta name="twitter:creator" content="@townhallproject">
-    <!-- Twitter summary card must be at least 120px x 120px -->
-    <meta name="twitter:image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_vertical_twitter.png">
-    <meta name="twitter:image:alt" content="The Town Hall Project wordmark with a podium">
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@townhallproject">
+  <meta name="twitter:title" content="Town Hall Project">
+  <meta name="twitter:description" content="Town Hall Project is a progressive, a citizen-powered research and organizing project dedicated to holding lawmakers accountable via town hall meetings and other in-person engagement.">
+  <meta name="twitter:creator" content="@townhallproject">
+  <!-- Twitter summary card must be at least 120px x 120px -->
+  <meta name="twitter:image" content="https://townhallproject.com/Images/THP_logo_vertical_twitter.png">
+  <meta name="twitter:image:alt" content="The Town Hall Project wordmark with a podium">
 
-    <!-- Open Graph data -->
-    <meta property="og:title" content="Town Hall Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://townhallproject-86312.firebaseapp.com/" />
-    <meta property="og:image" content="https://townhallproject-86312.firebaseapp.com/Images/THP_logo_horizontal_facebook.png">
-    <meta property="og:description" content="Town Hall Project 2018 is a progressive, volunteer-based initiative working to
-    identify and promote upcoming Congressional forums nationwide.">
-    <meta property="og:site_name" content="Town Hall Project" />
-    <link rel="stylesheet" href="/styles/css/bootstrap.min.css">
-    <script id="marker-template" type="text/x-handlebars-template">
-      <div class=text-info>
-        <h4>{{Member}}</h4>
-        <p>{{Location}}</p>
-        <span>{{Time}}</span> on <span>{{Date}}</span> at <a href={{addressLink}} target="_blank">{{address}}</a></span></li>
-    </script>
-  </head>
-  <body>
-    <div class="row map-large" id="mapEmbedContainer">
-      <div id="mapEmbed"></div>
-      <div class="" id="logoOverlay">
-        <a href="https://townhallproject.com/"><img src="/Images/THP_logo_horizontal.png" alt=""></a>
+  <!-- Open Graph data -->
+  <meta property="og:title" content="Town Hall Project" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://townhallproject.com/" />
+  <meta property="og:image" content="https://townhallproject.com/Images/THP_logo_horizontal_facebook.png">
+  <meta property="og:description" content="Town Hall Project is a progressive, a citizen-powered research and organizing project dedicated to holding lawmakers accountable via town hall meetings and other in-person engagement.">
+  <meta property="og:site_name" content="Town Hall Project" />
+
+  <link href='https://actionnetwork.org/css/style-embed-whitelabel.css' rel='stylesheet' type='text/css' />
+  <script src="https://use.fontawesome.com/316bfde8e8.js"></script>
+  <link href="https://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/styles/jquery-ui.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/styles/jquery-ui.structure.min.css" rel="stylesheet" type="text/css">
+  <link href="/vendor/styles/bootstrap-tagsinput.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,900" rel="stylesheet">
+  <link href='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' />
+
+  <link rel="stylesheet" href="/styles/css/bootstrapTH_v1_0.min.css">
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-92247600-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+
+<body style="margin-bottom:0;">
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+      <header class="site-header">
+        <section class="container container-fluid">
+          <div class="row">
+        
+            <div class="col-md-12 right-panels">
+              <form id="look-up" class="form-inline text-center" action="index.html">
+                <div class="form-group text-center">
+                  <label for="zip"></label>
+                  <input class="form-control input-lg " type="zip" name="" value="" placeholder="Zip Code">
+                  <button type="submit" name="button" class="btn btn-primary btn-lg fath-button">Find A Town Hall</button>
+                  <div id="selection-results" class="text-center ">
+                    <h4 class="selection-results_content"></h4>
+                  </div>
+                </div>
+              </form>
+              <div id="textresults" class="text-center "></div>
+            </div>
+          </div>
+        </section>
+      </header>
+      <!-- Call to action when no events are present -->
+      <section class="background-light-blue" id="no-events">
+        <div class="container container-fluid">
+          <div class="col-md-12">
+            <h2 class="weight-heavy">There are no events with your representatives right now &mdash; but you can still
+              make your voice heard!</h2>
+            <h3>
+              <a href="//5calls.org/team/townhallproject/72" target="_blank">Call</a>, write, or email your Senators or
+              Representative. Write a letter to the editor in your local newspaper.
+              Join an
+              <a href="https://www.indivisibleguide.com/act-locally/" target="_blank">Indivisible group</a> or other
+              local activist organization to create change in your community.</h3>
+            <h3>If you hear of town halls or other events with your member of Congress, don’t hesitate to
+              <a class="hash-link" data-toggle="tab" href="#submit">submit them</a> to us so we can spread the word.</h3>
+            <h3 class="weight-heavy">Show Up. Speak Out.</h3>
+          </div>
+        </div>
+      </section>
+      <div class="container-fluid map-container-large">
+        <div class="hidden show-if-no-webgl webgl-banner">
+          <div class="webGl-warning" target="_blank">
+            <img class="webGl-compimg" src="../Images/map/ohno-computer.png"></img>
+            <p>Our interactive map feature uses WebGL, a plugin common in most modern browsers. Your browser does not
+              have WebGL
+              working currently.</p>
+            <p>You can learn how to enable WebGL on
+              <a href="https://get.webgl.org/" target="_blank">this website.</a>
+            </p>
+          </div>
+          <img class="webGL-kill" src="../Images/map/xmark.svg"></img>
+        </div>
+        <div class="row map-large">
+          <div id="map"></div>
+          <div class="map-legend">
+            <ul class="list-inline">
+              <li class="map-legend-li hide-if-no-webgl">
+                <dt class="map-legend__senate"></dt>
+                <dd>U.S. Senator</dd>
+              </li>
+              <li class="map-legend-li hide-if-no-webgl">
+                <dt class="map-legend__distrcit"></dt>
+                <dd>U.S. Representative</dd>
+              </li>
+              <li class="map-legend-li">
+                <dt class="map-legend-icon map-legend__person"></dt>
+                <dd>In-person</dd>
+              </li>
+              <li class="map-legend-li">
+                <dt class="map-legend-icon map-legend__hr_one"></dt>
+                <dd>HR 1 Event</dd>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="header-with-results map-container-split hidden">
+        <div class="row">
+          <div class="col-md-6">
+            <section class="results multipleResults">
+              <div id="nearest" class="flexcroll nearest-with-results"></div>
+            </section>
+          </div>
+          <div class="col-md-6 map-small map-fixing">
+          </div>
+        </div>
+      </div>
+     
+      <!-- Cards showing representatives and their contact info -->
+      <div id="representativeCards">
+        <section class="container container-fluid"></section>
       </div>
     </div>
 
-    <!-- Vendor Files -->
-    <script src="/vendor/scripts/jquery-2.1.4.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
-    <script src="/vendor/scripts/handlebars-v4.0.5.js"></script>
+  </div>
+  <div class="modal fade event-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div>
+  <!-- Vendor Files -->
+  <script src="/vendor/scripts/jquery-2.1.4.js"></script>
+  <script src="/vendor/scripts/jquery-ui.js"></script>
+  <script src="/vendor/scripts/moment.min.js"></script>
+  <script src="/vendor/scripts/bootstrap.min.js"></script>
+  <script src="/vendor/scripts/bootstrap3-typeahead.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/page.js/1.11.1/page.js"></script>
+  <script src="/vendor/scripts/tether.js"></script>
+  <script src="/vendor/scripts/handlebars-v4.0.5.js"></script>
+  <script src="/vendor/scripts/mapbox-gl-v0.32.1.js"></script>
+  <script src="/vendor/scripts/geo-viewport.js"></script>
+  <script src="/vendor/scripts/cors-uploader.js"></script>
+  <script src="templates.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+  <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+  <script src="/vendor/scripts/bootstrap-tagsinput.min.js"></script>
 
-    <!-- Script Files -->
-    <script src="/scripts/views/mapViewEmbed.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&callback=initMapEmbed&libraries=visualization,geometry"></script>
-  </body>
+  <script type="text/javascript">
+    (function () {
+      if (window.addtocalendar)
+        if (typeof window.addtocalendar.start == "function") return;
+      if (window.ifaddtocalendar == undefined) {
+        window.ifaddtocalendar = 1;
+        var d = document,
+          s = d.createElement('script'),
+          g = 'getElementsByTagName';
+        s.type = 'text/javascript';
+        s.charset = 'UTF-8';
+        s.async = true;
+        s.src = ('https:' == window.location.protocol ? 'https' : 'http') + '://addtocalendar.com/atc/1.5/atc.min.js';
+        var h = d[g]('body')[0];
+        h.appendChild(s);
+      }
+    })();
+  </script>
+  <script>
+    window.twttr = (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function (f) {
+        t._e.push(f);
+      };
+
+      return t;
+    }(document, "script", "twitter-wjs"));
+  </script>
+  <!-- Script Files -->
+
+  <script src="/scripts/lib/firebasedb.js"></script>
+  <script src="/scripts/lib/map-helper-functions.js"></script>
+  <script src="/scripts/lib/urlParams.js"></script>
+  <script src="/data/states.js"></script>
+  <script src="/data/bboxes.js"></script>
+  <script src="/data/zipLookup.js"></script>
+  <script src="/data/fips-lookup.js"></script>
+  <script src="/data/statePop.js"></script>
+
+  <script src="/scripts/models/MemberOfCongress.js"></script>
+  <script src="/scripts/lib/constants.js"></script>
+  <script src="/scripts/models/TownHall.js"></script>
+  <script src="/scripts/models/UploadVideo.js"></script>
+  <script src="/scripts/models/do-your-job.js"></script>
+
+  <script src="/scripts/views/zipLookUpView.js"></script>
+  <script src="/scripts/views/repCardView.js"></script>
+  <script src="/scripts/views/emailSignUpView.js"></script>
+  <script src="/scripts/views/tableView.js"></script>
+  <script src="/scripts/views/videoView.js"></script>
+  <script src="/scripts/views/missingMembersView.js"></script>
+  <script src="/scripts/views/indexView.js"></script>
+  <script src="/scripts/views/resultsView.js"></script>
+  <script src="/scripts/views/stateView.js"></script>
+  <script src="/scripts/views/googleMapView.js"></script>
+  <script src="/scripts/views/mapboxView.js"></script>
+  <script src="/scripts/views/mapView.js"></script>
+  <script src="/scripts/views/eventView.js"></script>
+  <script src="/scripts/views/dataViz.js"></script>
+
+  <script src="/scripts/controllers/index-controller.js"></script>
+  <script src="/scripts/controllers/map-controller.js"></script>
+  <script src="/scripts/controllers/embed-routes.js"></script>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&callback=initMap&libraries=visualization,geometry"></script>
+
+</body>
+
 </html>
