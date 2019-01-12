@@ -13,17 +13,18 @@ page('/',
   mapController.addDistrictListener
 );
 
-page('/mapEmbed/:mapEmbedSettings',
+page('/mapEmbed.html',
   mapController.reset,
   mapController.setBounds,
   mapController.webGlsupported,
   mapController.hideStateLegend,
   mapController.setMap,
-  mapController.readData,
+  mapController.getUrlParams,
+  mapController.readDataNoTable,
   mapController.addDistrictListener
 );
 
-page('/:stateName',
+page('/mapEmbed.html/:stateName',
   mapController.getState,
   indexController.renderStateIndex,
   mapController.setBounds,

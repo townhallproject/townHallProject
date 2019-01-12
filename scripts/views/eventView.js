@@ -450,14 +450,16 @@
     if (localStorage.getItem('signedUp') === 'true') {
       emailHandler.hideEmailForm();
     }
-    var divTop = $('#all-events-table').offset().top + 380;
-    $(window).scroll(function() {
-      if($(window).scrollTop() > divTop) {
-        $('#scrollBtn').show();
-      } else {
-        $('#scrollBtn').hide();
-      }
-    });
+    if ($('#all-events-table').offset()) {
+      var divTop = $('#all-events-table').offset().top + 380;
+      $(window).scroll(function() {
+        if($(window).scrollTop() > divTop) {
+          $('#scrollBtn').show();
+        } else {
+          $('#scrollBtn').hide();
+        }
+      });
+    }
   }
 
   function setYearEndImage(){
