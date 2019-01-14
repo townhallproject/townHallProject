@@ -28,9 +28,7 @@
           {{else}}
             <h3>{{formattedMember}} <small>{{displayDistrict}}</small></h3>
           {{/ifCond}}
-         
       </div>
-
       </div>
     </div>
     <div class="panel-body">
@@ -75,9 +73,15 @@
         <li class="list-group-item list-item-no-border list-item-no-border">{{{Notes}}}
         </li>
         {{/if}}
+        {{#ifCond iconFlag '===' 'hr-one'}}
+        <li class="list-group-item list-item-no-border text-center">
+          <a class="btn btn-primary" data-toggle="modal" data-target=".event-modal" onclick="eventHandler.populateEventModal({{{json this}}})">RSVP
+          </a>
+        </li>
+        {{/ifCond}}
         {{#if link}}
-        <li class="list-group-item list-item-no-border pull-right">
-          <a href="{{link}}" target="_blank">{{#if linkName}}{{linkName}}    {{/if}}{{#unless linkName}}Find out more  {{/unless}}<i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+        <li class="list-group-item list-item-no-border pull-left">
+          <a href="{{link}}" target="_blank">{{#if linkName}}{{linkName}}    {{/if}}{{#unless linkName}}Find out more  {{/unless}}</a>
         </li>
         {{/if}}
         {{#if RSVP}}

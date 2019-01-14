@@ -1,4 +1,4 @@
-/*globals newEventView*/
+/*globals newEventView rsvpHandler*/
 (function(module) {
   var zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
   // object to hold the front end view functions
@@ -447,6 +447,8 @@
       emailHandler.closeEmailForm();
     });
     $('#email-signup-form').on('submit', emailHandler.validateSignup);
+    $('.modal').on('submit', '#rsvp-form', rsvpHandler.validateSignup);
+
     if (localStorage.getItem('signedUp') === 'true') {
       emailHandler.hideEmailForm();
     }

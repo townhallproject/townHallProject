@@ -38,17 +38,67 @@
         <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
         <var class="atc_event">
           <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
-            <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
-            <var class="atc_timezone">{{zoneString}}</var>
-            <var class="atc_title">{{meetingType}}: {{Member}}</var>
-            <var class="atc_description">{{{Notes}}}</var>
-            <var class="atc_location">{{address}}</var>
-            <var class="atc_organizer">{{party}}</var>
-          </var>
+          <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
+          <var class="atc_timezone">{{zoneString}}</var>
+          <var class="atc_title">{{meetingType}}: {{Member}}</var>
+          <var class="atc_description">{{{Notes}}}</var>
+          <var class="atc_location">{{address}}</var>
+          <var class="atc_organizer">{{party}}</var>
         </var>
       </span>
-    </div>
-  </h3>
+    </h3>
+    {{#ifCond iconFlag '===' 'hr-one'}}
+    <div class="row rsvp-form-holder">
+      <h4 id="email-title" class="text-center ">RSVP to this event</h4>
+      <form id="rsvp-form">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="col-sm-6">
+              <input type="text" class="form-control input-lg-light" name="first" placeholder="First name" required>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control input-lg-light" name="last" placeholder="Last name" required>
+            </div>
+            <div class="col-sm-6">
+              <input type="email" class="form-control input-lg-light" name="email" placeholder="Email" required>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control input-lg-light" name="zipcode" placeholder="Zip code">
+            </div>
+            <div class="col-sm-6">
+              <input type="phone" class="form-control input-lg-light" name="phone" placeholder="Phone number">
+            </div>
+            <div class="col-sm-6 hidden" id="">
+              <input type="text" class="form-control input-lg-light" name="eventId" value={{eventId}}>
+            </div>
+            <div class="col-xs-12">
+              <label class="checkbox-inline">
+                <input type="checkbox" value="" name="can_email">Ok to receive email updates about this event.</input>
+              </label>
+            </div>
+            <div class="col-xs-12">
+              <label class="checkbox-inline">
+                <input type="checkbox" value="" name="can_text">Ok to receive text updates about this event.</input>
+              </label>
+            </div>
+            <div class="col-xs-12">
+              <label class="checkbox-inline">
+                <input type="checkbox" value="" name="partner">Okay to receive emails from partner organizations about other ways to make a difference in your community. </input>
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="col-xs-12 text-center">
+              <button type="submit" name="button" class="btn btn-primary btn-light-background ">Submit RSVP</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      </div>
+      <div class="hidden rsvp-thank-you text-center">
+        <h4>Thank you!</h4>
+      </div>
+    {{/ifCond}}
 
   {{#if Notes}}
     <p>{{{Notes}}}</p>
