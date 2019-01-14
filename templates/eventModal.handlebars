@@ -47,7 +47,7 @@
         </var>
       </span>
     </h3>
-    {{#ifCond iconFlag '===' 'in-person'}}
+    {{#ifCond iconFlag '===' 'hr-one'}}
     <div class="row rsvp-form-holder">
       <h4 id="email-title" class="text-center ">RSVP to this event</h4>
       <form id="rsvp-form">
@@ -88,14 +88,14 @@
             </div>
           </div>
           <div class="col-lg-4">
-            <div class="col-xs-12">
-              <button type="submit" name="button" class="btn btn-primary btn-light-background btn-lg">Submit</button>
+            <div class="col-xs-12 text-center">
+              <button type="submit" name="button" class="btn btn-primary btn-light-background ">Submit RSVP</button>
             </div>
           </div>
         </div>
       </form>
       </div>
-      <div class="hidden rsvp-thank-you">
+      <div class="hidden rsvp-thank-you text-center">
         <h4>Thank you!</h4>
       </div>
     {{/ifCond}}
