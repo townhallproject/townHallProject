@@ -150,6 +150,7 @@ section.border{
 @grid-float-breakpoint: 1140px;
 
 //event color key
+@main-hr-one: #5e8bdc;
 @main-in-person:#439cbf;
 @main-staff:#d0a8c1;
 @main-activism: #ec955a;
@@ -520,6 +521,7 @@ a.social-icon {
   background-repeat: no-repeat;
 }
 
+.panel-heading_hr-one  { background-color: @main-hr-one; }
 .panel-heading_in-person  { background-color: @main-in-person; }
 .panel-heading_staff      { background-color: @main-staff; }
 .panel-heading_activism   { background-color: @main-activism; }
@@ -537,6 +539,10 @@ a.social-icon {
 
 .event-icon__in-person {
   background-image: url('/Images/map/circle-in-person.svg');
+}
+
+.event-icon__hr-one {
+  background-image: url('/Images/map/circle-hr-one.svg');
 }
 
 .event-icon__tele {
@@ -1795,6 +1801,10 @@ img.grayscale {
 
 .map-legend__federal{
   border-bottom: 1.5px solid @brand-gray;
+}
+
+.map-legend .map-legend__hr {
+  background-image: url('/Images/map/hr-one.svg');
 }
 
 .map-legend .map-legend__person {
