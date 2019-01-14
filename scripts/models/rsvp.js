@@ -15,7 +15,8 @@
     if (this.family_name && this.given_name && this.email_address && this.eventId) {
       firebasedb.ref('rsvps/' + this.eventId).push(this)
         .then(function(){
-          $('#rsvp-form').addClass('hidden');
+          $('.rsvp-form-holder').addClass('hidden');
+          $('.rsvp-thank-you').removeClass('hidden');
         });
     }
   };
