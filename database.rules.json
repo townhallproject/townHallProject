@@ -27,6 +27,17 @@
         }
       }
     },
+    "rsvps": {
+      ".read": "false",
+      ".write": "false",
+      "$townHallID": {
+        ".read": "false",
+        ".write": "true",
+        "$firebaseid": {
+          ".validate": "newData.hasChildren(['eventId','email_address', 'family_name', 'given_name', 'postal_code', 'phone_number', 'can_contact'])"
+        }
+      }
+    },
     "indivisible": {
       ".indexOn": "event_starts_at_date",
       ".read": "true",
