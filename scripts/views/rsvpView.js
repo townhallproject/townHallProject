@@ -50,7 +50,7 @@
       } else if ((name === 'email' && !emailRegEx.test(field[0].value))) {
         field.addClass('has-error');
         errors++;
-      } else if (name === 'zipcode' && !zipcodeRegEx.test(field[0].value)) {
+      } else if (name === 'zipcode' && field[0].value.length > 0 && !zipcodeRegEx.test(field[0].value)) {
         field.addClass('has-error');
         errors++;
       } else {

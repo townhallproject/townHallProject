@@ -80,6 +80,28 @@
     });
   };
 
+  mapController.getUrlParams = function(ctx, next) {
+    if (ctx.querystring && ctx.querystring.split('=')[0] === 'event-type') {
+      urlParamsHandler.getUrlParamFromQuery(ctx.querystring, 'event-type')
+      ctx.filters = ctx.querystring.split('=')[1].split(',');
+    }
+    next()
+
+  }
+
+  mapController.readDataNoTable = function (ctx, next) {
+    if (!ctx.webGL) {
+      mapView.readData(false, 'noTable', ctx.filters);
+      return next();
+    }
+    ctx.map.on('load', function () {
+      mapboxView.onLoad();
+      mapView.readData(true, 'noTable', ctx.filters);
+      TownHall.isMap = true;
+      next();
+    });
+  };
+
   mapController.readStateData = function(ctx, next) {
     if (!ctx.webGL) {
       mapView.readStateData(false, ctx.stateUPSP);
