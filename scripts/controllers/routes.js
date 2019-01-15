@@ -13,16 +13,6 @@ page('/',
   mapController.addDistrictListener
 );
 
-page('/mapEmbed/:mapEmbedSettings',
-  mapController.reset,
-  mapController.setBounds,
-  mapController.webGlsupported,
-  mapController.hideStateLegend,
-  mapController.setMap,
-  mapController.readData,
-  mapController.addDistrictListener
-);
-
 page('/:stateName',
   mapController.getState,
   indexController.renderStateIndex,
