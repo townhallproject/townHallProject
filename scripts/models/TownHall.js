@@ -163,7 +163,7 @@
           if (!townhall[key]) {
             return;
           }
-          return filter.slice(0, 8) === townhall[key].slice(0, 8);
+          return filter === townhall[key].slice(0, filter.length);
         });
       });
     }, data).sort(TownHall.sortFunction);
