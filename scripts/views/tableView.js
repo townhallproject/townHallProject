@@ -61,7 +61,7 @@
 
   tableHandler.addFilter = function(filter, value) {
     // Avoid duplicates
-    if (TownHall.filters.hasOwnProperty(filter) && TownHall.filters[filter].indexOf(value) !== -1) { 
+    if (TownHall.filters.hasOwnProperty(filter) && TownHall.filters[filter].indexOf(value) !== -1) {
       return;
     } else if (value === 'All') {
       tableHandler.removeFilterCategory(filter);
