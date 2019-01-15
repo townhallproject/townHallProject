@@ -3,7 +3,6 @@
 
   urlParamsHandler.getUrlParamFromQuery = function (queryString, param) {
     var query = queryString.match(new RegExp('([?&])' + param + '[^&]*'));
-    console.log(query)
     if (query) {
       return query[0].split('=')[1];
     }
