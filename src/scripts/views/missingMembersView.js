@@ -108,6 +108,10 @@ missingMemberView.init = function () {
   MoC.all().then(function (MoCs) {
     var missingMembers = MoCs.filter(function (member) {
       return member.missingMember;
+    }).map(function(mem) {
+      if (mem.party === 'D') {mem.party = 'Democratic'}
+      if (mem.party === 'R') {mem.party = 'Republican'}
+      return mem;
     });
 
     missingMemberView.loaded = true;
