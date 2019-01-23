@@ -93,8 +93,11 @@
     </div>
     <div class="panel-footer">
       {{#unless repeatingEvent}}
-        <small>Last Updated: {{dateFormat lastUpdated}}</small>
+        <small>Last Updated: {{dateFormat lastUpdated}} </small>
       {{/unless}}
+      {{#if ada_accessible}}
+        <small> ADA accessible</small>
+      {{/if}}
       {{#if dateValid}}
       <span class="addtocalendar pull-right">
         <a class="atcb-link btn btn-md">
