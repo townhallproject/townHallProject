@@ -94,6 +94,9 @@
                 <a href="/colorado" class="stateNav-colorado">Colorado</a>
               </li>
               <li>
+                <a href="/oregon" class="stateNav-oregon">Oregon</a>
+              </li>
+              <li>
                 <a href="/north-carolina" class="stateNav-north-carolina">North Carolina</a>
               </li>
               <li>
@@ -104,9 +107,9 @@
           <li>
             <a class="hash-link" data-toggle="tab" href="#about">About</a>
           </li>
-          <li>
+          <!-- <li>
             <a class="hash-link" href="#missing-members" data-toggle="tab" id="missing-member-tab">Missing Members</a>
-          </li>
+          </li> -->
           <li>
             <a class="hash-link" href="#join" data-toggle="tab">Join us</a>
           </li>
@@ -283,6 +286,10 @@
               <li class="map-legend-li">
                 <dt class="map-legend-icon map-legend__campaign"></dt>
                 <dd>Campaign Event</dd>
+              </li>
+              <li class="map-legend-li">
+                <dt class="map-legend-icon map-legend__hr"></dt>
+                <dd>H.R. 1</dd>
               </li>
               <li class="map-legend-li">
                 <dt class="map-legend-icon map-legend__mfol"></dt>
@@ -1245,6 +1252,7 @@
   <!-- Vendor Files -->
   <script src="/vendor/scripts/jquery-2.1.4.js"></script>
   <script src="/vendor/scripts/jquery-ui.js"></script>
+  <script src="/vendor/scripts/moment.min.js"></script>
   <script src="/vendor/scripts/bootstrap.min.js"></script>
   <script src="/vendor/scripts/bootstrap3-typeahead.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/page.js/1.11.1/page.js"></script>
@@ -1311,9 +1319,10 @@
   <script src="/scripts/lib/constants.js"></script>
   <script src="/scripts/models/TownHall.js"></script>
   <script src="/scripts/models/UploadVideo.js"></script>
-  <script src="/scripts/models/mfolEvent.js"></script>
   <script src="/scripts/models/do-your-job.js"></script>
+  <script src="/scripts/models/rsvp.js"></script>
 
+  <script src="/scripts/views/rsvpView.js"></script>
   <script src="/scripts/views/zipLookUpView.js"></script>
   <script src="/scripts/views/repCardView.js"></script>
   <script src="/scripts/views/emailSignUpView.js"></script>
@@ -1328,13 +1337,12 @@
   <script src="/scripts/views/mapView.js"></script>
   <script src="/scripts/views/eventView.js"></script>
   <script src="/scripts/views/dataViz.js"></script>
-  <script src="/scripts/views/mfolSubmitForm.js"></script>
 
   <script src="/scripts/controllers/index-controller.js"></script>
   <script src="/scripts/controllers/map-controller.js"></script>
   <script src="/scripts/controllers/routes.js"></script>
 
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&callback=initMap&libraries=visualization,geometry"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&callback=initMap&libraries=visualization,geometry"></script>
 
 </body>
 
