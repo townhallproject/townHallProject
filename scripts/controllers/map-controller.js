@@ -40,6 +40,26 @@
     }
   };
 
+  mapController.getStateEmbed = function (ctx, next) {
+    // ///convert state name to necessary coordinates for mapbox url
+    if (ctx.stateName) {
+      var stateInfo = $.grep(stateData, function (e) {
+        return e.Name === parseState(ctx.stateName);
+      });
+      ctx.params.stateName = stateInfo;
+      if (stateInfo.length > 0) {
+        var stateUsps = stateInfo[0]['USPS'];
+        ctx.stateUPSP = stateUsps;
+        stateView.state = ctx.stateUPSP;
+        next();
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  };
+
   mapController.setBounds = function(ctx, next) {
     if (ctx.stateUPSP) {
       var bbox = bboxes[ctx.stateUPSP];
@@ -85,11 +105,17 @@
       urlParamsHandler.getUrlParamFromQuery(ctx.querystring, 'event-type')
       ctx.filters = ctx.querystring.split('=')[1].split(',');
     }
-    next()
-
+    if (ctx.querystring && ctx.querystring.split('=')[0] === 'state-name') {
+      urlParamsHandler.getUrlParamFromQuery(ctx.querystring, 'state-name')
+      ctx.stateName = ctx.querystring.split('=')[1].split(',')[0];
+    }
+    next();
   }
 
   mapController.readDataNoTable = function (ctx, next) {
+    if (ctx.stateUPSP) {
+      return mapController.readStateData(ctx, next);
+    }
     if (!ctx.webGL) {
       mapView.readData(false, 'noTable', ctx.filters);
       return next();
@@ -117,7 +143,7 @@
   };
 
   mapController.maskCountry = function(ctx, next) {
-    if (ctx.webGL) {
+    if (ctx.webGL && ctx.stateUPSP) {
       stateView.maskCountry(ctx.map, ctx.stateUPSP);
     }
     next();
@@ -129,6 +155,30 @@
     }
     next();
   };
+
+  mapController.addDistrictListenerEmbed = function (ctx, next) {
+    if (ctx.stateUPSP) {
+      return (mapController.addStateDistrictListener(ctx, next))
+    }
+    if (ctx.webGL) {
+      mapboxView.addDistrictListener();
+    }
+    next();
+  };
+
+  mapController.legendEmbed = function(ctx, next) {
+    if (ctx.stateUPSP) {
+      return mapController.showStateLegend(ctx, next)
+    }
+    return mapController.hideStateLegend(ctx, next)
+  }
+
+  mapController.borderEmbed = function (ctx, next) {
+    if (ctx.stateUPSP) {
+      return mapController.setborderListeners(ctx, next);
+    }
+    next();
+  }
 
   mapController.showStateLegend = function(ctx, next) {
     if (ctx.webGL) {
@@ -160,6 +210,7 @@
   };
 
   mapController.reset = function(ctx, next) {
+    console.log('reset')
     TownHall.allTownHalls = [];
     TownHall.currentContext = [];
     TownHall.isCurrentContext = false;

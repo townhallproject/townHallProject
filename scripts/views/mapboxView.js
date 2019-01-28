@@ -555,10 +555,12 @@
 
   mapboxView.showStateLegend = function(){
     $('.state-lines').removeClass('hidden').show();
+    $('.state-show').removeClass('hidden').show();
   };
 
   mapboxView.hideStateLegend = function(){
     $('.state-lines').hide();
+    $('.state-show').hide();
   };
 
   mapboxView.toggleBorders = function () {

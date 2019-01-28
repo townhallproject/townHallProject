@@ -14,27 +14,17 @@ page('/',
 );
 
 page('/mapEmbed.html',
-  mapController.reset,
-  mapController.setBounds,
-  mapController.webGlsupported,
-  mapController.hideStateLegend,
-  mapController.setMap,
   mapController.getUrlParams,
-  mapController.readDataNoTable,
-  mapController.addDistrictListener
-);
-
-page('/mapEmbed.html/:stateName',
-  mapController.getState,
-  indexController.renderStateIndex,
+  mapController.reset,
+  mapController.getStateEmbed,
   mapController.setBounds,
   mapController.webGlsupported,
-  mapController.showStateLegend,
-  mapController.setborderListeners,
+  mapController.legendEmbed,
+  mapController.borderEmbed,
   mapController.setMap,
-  mapController.readStateData,
+  mapController.readDataNoTable,
   mapController.maskCountry,
-  mapController.addStateDistrictListener
+  mapController.addDistrictListenerEmbed
 );
 
 page();
