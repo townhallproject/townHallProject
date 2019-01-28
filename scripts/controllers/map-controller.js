@@ -102,15 +102,15 @@
 
   mapController.getUrlParams = function(ctx, next) {
     if (ctx.querystring && ctx.querystring.split('=')[0] === 'event-type') {
-      urlParamsHandler.getUrlParamFromQuery(ctx.querystring, 'event-type')
+      urlParamsHandler.getUrlParamFromQuery(ctx.querystring, 'event-type');
       ctx.filters = ctx.querystring.split('=')[1].split(',');
     }
     if (ctx.querystring && ctx.querystring.split('=')[0] === 'state-name') {
-      urlParamsHandler.getUrlParamFromQuery(ctx.querystring, 'state-name')
+      urlParamsHandler.getUrlParamFromQuery(ctx.querystring, 'state-name');
       ctx.stateName = ctx.querystring.split('=')[1].split(',')[0];
     }
     next();
-  }
+  };
 
   mapController.readDataNoTable = function (ctx, next) {
     if (ctx.stateUPSP) {
@@ -158,7 +158,7 @@
 
   mapController.addDistrictListenerEmbed = function (ctx, next) {
     if (ctx.stateUPSP) {
-      return (mapController.addStateDistrictListener(ctx, next))
+      return (mapController.addStateDistrictListener(ctx, next));
     }
     if (ctx.webGL) {
       mapboxView.addDistrictListener();
@@ -168,17 +168,17 @@
 
   mapController.legendEmbed = function(ctx, next) {
     if (ctx.stateUPSP) {
-      return mapController.showStateLegend(ctx, next)
+      return mapController.showStateLegend(ctx, next);
     }
-    return mapController.hideStateLegend(ctx, next)
-  }
+    return mapController.hideStateLegend(ctx, next);
+  };
 
   mapController.borderEmbed = function (ctx, next) {
     if (ctx.stateUPSP) {
       return mapController.setborderListeners(ctx, next);
     }
     next();
-  }
+  };
 
   mapController.showStateLegend = function(ctx, next) {
     if (ctx.webGL) {
@@ -210,7 +210,6 @@
   };
 
   mapController.reset = function(ctx, next) {
-    console.log('reset')
     TownHall.allTownHalls = [];
     TownHall.currentContext = [];
     TownHall.isCurrentContext = false;

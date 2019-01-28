@@ -73,12 +73,12 @@
     townHallsFB.once('value', function() {
       Promise.all(isPledgerPromises)
         .then(function (allTownHalls) {
-           if (webgl) {
-             mapboxView.setData();
-           }
-           TownHall.allTownHalls = allTownHalls
-           zipLookUpHandler.zipSearchByParam();
-        })
+          if (webgl) {
+            mapboxView.setData();
+          }
+          TownHall.allTownHalls = allTownHalls;
+          zipLookUpHandler.zipSearchByParam();
+        });
     });
   };
 
