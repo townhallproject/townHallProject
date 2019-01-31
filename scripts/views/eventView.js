@@ -466,7 +466,7 @@
 
   function setYearEndImage(){
     if (window.innerWidth < 768) {
-      $('#year-two img').attr('src', 'Images/lookback2018-Mobile.png');
+      $('#year-two img').attr('src', 'Images/lookback2018-Mobile-nobg.png');
     } else {
       $('#year-two img').attr('src', 'Images/lookback2018-Desktop-nobg.png');
 
