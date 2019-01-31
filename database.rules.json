@@ -157,6 +157,12 @@
         }
       }
     },
+    "moc_by_congress": {
+      ".read": "true",
+      "$congressKey": {
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
+      }
+    },
     "candidate_data": {
       ".read": "true",
       "$mocKey": {
