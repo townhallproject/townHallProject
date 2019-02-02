@@ -466,10 +466,14 @@
 
   function setYearEndImage(){
     if (window.innerWidth < 768) {
+      $('#year-one img').attr('src', 'Images/EOY_2017_Report_Mobile.png');
+    } else {
+      $('#year-one img').attr('src', 'Images/EOY_Report_Layout_noBG-01-01.png');
+    }
+    if (window.innerWidth < 768) {
       $('#year-two img').attr('src', 'Images/lookback2018-Mobile-nobg.png');
     } else {
       $('#year-two img').attr('src', 'Images/lookback2018-Desktop-nobg.png');
-
     }
   }
 
