@@ -16,12 +16,16 @@
       {{/if}}
     {{/unless}}
   </span><br>
-    {{#if addressLink}}
-      <span><a href="{{addressLink}}" target="_blank">{{address}}</a></span>
+    {{#if address}}
+      <span>{{address}}</span>
     {{/if}}
-    {{#unless addressLink}}
-      {{#if address}}
-        <span>{{address}}</span>
-      {{/if}}
-    {{/unless}}
+    {{#ifCond iconFlag '===' 'hr-one'}}
+      {{#if showButton}}
+      <div class="text-center">
+        <a class="btn btn-white" data-toggle="modal" data-target=".event-modal"
+          onclick="eventHandler.populateEventModal({{{json this}}})">RSVP
+        </a>
+      </div>
+    {{/if}}
+    {{/ifCond}}
 </div>
