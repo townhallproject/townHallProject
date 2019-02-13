@@ -27,6 +27,17 @@
         }
       }
     },
+    "rsvps": {
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('rsvpDownloads').val() == true",
+      ".write": "false",
+      "$townHallID": {
+        ".read": "false",
+        ".write": "true",
+        "$firebaseid": {
+          ".validate": "newData.hasChildren(['eventId','email_address', 'family_name', 'given_name', 'postal_code', 'phone_number', 'can_contact'])"
+        }
+      }
+    },
     "indivisible": {
       ".indexOn": "event_starts_at_date",
       ".read": "true",
