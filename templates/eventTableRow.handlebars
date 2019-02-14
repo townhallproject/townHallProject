@@ -53,6 +53,9 @@
     {{#if address}}
       <li>{{address}}</li>
     {{/if}}
+    {{#if ada_accessible}}
+        <div class="ada-logo ada-logo-table"></div>
+    {{/if}}
   </ul>
   {{#if Notes}}
     <div id="notes-{{eventId}}" class="collapse notes">{{{Notes}}}</div>
