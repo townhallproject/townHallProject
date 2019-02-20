@@ -5,9 +5,11 @@
   // renders the results of rep response
   repCardHandler.repCards = function(results, compiledTemplate, $parent) {
     results.forEach(function(rep) {
-      var newRep = new MoC(rep);
-      newRep.format();
-      $parent.append(compiledTemplate(newRep));
+      if (rep) {
+        var newRep = new MoC(rep);
+        newRep.format();
+        $parent.append(compiledTemplate(newRep));
+      }
     });
   };
 

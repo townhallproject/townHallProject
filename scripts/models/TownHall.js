@@ -218,11 +218,13 @@
 
   function _lookupRepObjs(reps) {
     var MoCPromiseArray = reps.map(function (rep) {
-      return firebasedb.ref('mocData/' + rep.govtrackId).once('value').then(function (snapshot) {
-        var data = snapshot.val();
-        data.dyjd = rep.dyjd;
-        return data;
-      });
+      if (rep.govtrackId) {
+        return firebasedb.ref('mocData/' + rep.govtrackId).once('value').then(function (snapshot) {
+          var data = snapshot.val();
+          data.dyjd = rep.dyjd;
+          return data;
+        });
+      }
     });
     return Promise.all(MoCPromiseArray).then(function(MoCs) {
       return MoCs;
@@ -303,7 +305,7 @@
     } else {
       var path = key + '-' + (value === '0' ? '00' : mapHelperFunctions.zeroPad(value));
       return firebasedb.ref('/mocByStateDistrict/' + path).once('value').then(function(snapshot) {
-        return snapshot.val().govtrack_id;
+        return snapshot.val().govtrack_id ? snapshot.val().govtrack_id: null;
       })
       .then(function(govtrackId){
         return firebasedb.ref('do_your_job_districts/' + path).once('value')

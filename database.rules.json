@@ -28,7 +28,7 @@
       }
     },
     "rsvps": {
-      ".read": "false",
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('rsvpDownloads').val() == true",
       ".write": "false",
       "$townHallID": {
         ".read": "false",
@@ -71,6 +71,22 @@
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$townHallID": {
         ".validate": "newData.hasChildren(['eventId','lastUpdated'])"
+      }
+    },
+    "archive_116th_congress": {
+      ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      "$month": {
+        ".indexOn": "dateObj",
+        "$townHallID": {
+          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+          "dateObj": {
+            ".indexOn": ".value"
+          },
+          "meetingType": {
+            ".indexOn": ".value"
+          }
+        }
       }
     },
     "townHallsOld": {
@@ -155,12 +171,6 @@
         "currentEvents": {
           ".write": "auth.uid !== null"
         }
-      }
-    },
-    "moc_by_congress": {
-      ".read": "true",
-      "$congressKey": {
-        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
       }
     },
     "candidate_data": {
@@ -322,14 +332,24 @@
       }
     },
     "users": {
+      ".write": "false",
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$user_id": {
         ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
-        ".write": "$user_id === auth.uid",
+        ".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
         "mocs": {
           "$mocID": {
             ".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true"
           }
         }
+      }
+    },
+    "pending_access_request": {
+      ".write": "false",
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      "$user_id": {
+        ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        ".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true"
       }
     },
     "sms-users": {

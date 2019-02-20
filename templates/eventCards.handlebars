@@ -70,7 +70,11 @@
         </li>
         <div class="inset-line"></div>
         {{#if Notes}}
-        <li class="list-group-item list-item-no-border list-item-no-border">{{{Notes}}}
+        <li class="list-group-item list-item-no-border list-item-no-border">{{Notes}}
+        </li>
+        {{/if}}
+        {{#if disclaimer}}
+        <li class="list-group-item list-item-no-border list-item-no-border">{{disclaimer}}
         </li>
         {{/if}}
         {{#ifCond iconFlag '===' 'hr-one'}}

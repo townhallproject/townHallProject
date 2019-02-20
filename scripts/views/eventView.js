@@ -294,7 +294,10 @@
 
   eventHandler.populateEventModal = function(townhall) {
     var compiledTemplate = Handlebars.getTemplate('eventModal');
-    $('.event-modal .modal-content').html(compiledTemplate(townhall));
+    var timeStampTownhall = Object.assign({
+      time_submitted: moment().format()
+    }, townhall);
+    $('.event-modal .modal-content').html(compiledTemplate(timeStampTownhall));
     urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
     addtocalendar.load();
   };

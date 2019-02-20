@@ -77,14 +77,17 @@
             <div class="col-sm-6 hidden" id="">
               <input type="text" class="form-control input-lg-light" name="eventId" value={{eventId}}>
             </div>
+            <div class="col-sm-6 hidden" id="">
+              <input type="text" class="form-control input-lg-light" name="time_submitted" value={{time_submitted}}>
+            </div>
             <div class="col-xs-12">
               <label class="checkbox-inline">
-                <input type="checkbox" value="" name="can_email">Ok to receive email updates about this event.</input>
+                <input type="checkbox" value="" name="can_email">Okay to receive email updates about this event.</input>
               </label>
             </div>
             <div class="col-xs-12">
               <label class="checkbox-inline">
-                <input type="checkbox" value="" name="can_text">Ok to receive text updates about this event.</input>
+                <input type="checkbox" value="" name="can_text">Okay to receive text updates about this event.</input>
               </label>
             </div>
           </div>
@@ -103,6 +106,13 @@
 
     {{#if Notes}}
     <p>{{{Notes}}}</p>
+  {{/if}}
+  {{#if disclaimer}}
+    <p>{{{disclaimer}}}</p>
+  {{/if}}
+  <p>
+    {{#if phoneNumber}}
+      <div> Call in number: {{phoneNumber}}</div>
     {{/if}}
     <p>
       {{#if phoneNumber}}
