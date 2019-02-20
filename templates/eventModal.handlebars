@@ -1,14 +1,16 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+      aria-hidden="true">&times;</span></button>
   <div class="modal-title">
     {{#if eventName}}
-      <h3 class="text-center">{{eventName}}</h3>
+    <h3 class="text-center">{{eventName}}</h3>
     {{/if}}
     {{#unless eventName}}
-      <h3 class="text-center">{{meetingType}}</h3>
+    <h3 class="text-center">{{meetingType}}</h3>
     {{/unless}}
     <span class="text-center">
-      <h4 class="hidden-xs">{{dateString}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4>
+      <h4 class="hidden-xs">{{dateString}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}},
+          {{timeZone}}{{/if}}</span></h4>
       <h4 class="visible-xs-block">{{#shortDateTime this}}{{/shortDateTime}}</h4>
       {{#if Location}}<h4>{{Location}}</h4>{{/if}}
     </span>
@@ -17,25 +19,29 @@
 <div class="modal-body">
   <div class="row">
     {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
-      <h3 class="col-xs-10 col-md-9 line-height-medium">
-        {{#ifCond District '===' 'Senate'}}
-          <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{Member}} <small>  {{#if party}} ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
-        {{else}}
-          <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{Member}} <small>  {{#if party}} ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
-        {{/ifCond}}
-        <br>
-        <span class="discriptor-text d-inline-block">Visiting MoC (will be present): </span>{{districtAdopter}} <small> ({{districtAdopterParty}}) {{districtAdopterState}}, {{districtAdopterDistrict}}</small>
-      </h3>
+    <h3 class="col-xs-10 col-md-9 line-height-medium">
+      {{#ifCond District '===' 'Senate'}}
+      <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{Member}} <small> {{#if party}}
+        ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
+      {{else}}
+      <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{Member}} <small>
+        {{#if party}} ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
+      {{/ifCond}}
+      <br>
+      <span class="discriptor-text d-inline-block">Visiting MoC (will be present): </span>{{districtAdopter}} <small>
+        ({{districtAdopterParty}}) {{districtAdopterState}}, {{districtAdopterDistrict}}</small>
+    </h3>
     {{else}}
-      <h3 class="col-xs-10 col-md-9">{{formattedMember}} <small>
+    <h3 class="col-xs-10 col-md-9">{{formattedMember}} <small>
         {{#if party}}
-        ({{party}}) 
+        ({{party}})
         {{/if}}
         {{displayDistrict}}</small></h3>
     {{/ifCond}}
     <h3 class="col-xs-2 col-md-3">
       <span class="addtocalendar pull-right">
-        <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
+        <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i
+            class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
         <var class="atc_event">
           <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
           <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
@@ -92,13 +98,13 @@
           </div>
         </div>
       </form>
-      </div>
-      <div class="hidden rsvp-thank-you text-center">
-        <h4>Thank you!</h4>
-      </div>
+    </div>
+    <div class="hidden rsvp-thank-you text-center">
+      <h4>Thank you!</h4>
+    </div>
     {{/ifCond}}
 
-  {{#if Notes}}
+    {{#if Notes}}
     <p>{{{Notes}}}</p>
   {{/if}}
   {{#if disclaimer}}
@@ -108,27 +114,34 @@
     {{#if phoneNumber}}
       <div> Call in number: {{phoneNumber}}</div>
     {{/if}}
-    {{#if link}}
+    <p>
+      {{#if phoneNumber}}
+      <div> Call in number: {{phoneNumber}}</div>
+      {{/if}}
+      {{#if link}}
       <div><a href="{{link}}" target="_blank">
-        {{#if linkName}}{{linkName}}{{/if}}
-        {{#unless linkName}}Find out more{{/unless}}
-      </a></div>
-    {{/if}}
-    {{#if RSVP}}
+          {{#if linkName}}{{linkName}}{{/if}}
+          {{#unless linkName}}Find out more{{/unless}}
+        </a></div>
+      {{/if}}
+      {{#if RSVP}}
       <div><a href="{{RSVP}}" target="_blank">{{rsvpName}}</a></div>
-    {{/if}}
-  </p>
-  {{#ifCond address 'regexTest' '[0-9]{5}' }}
+      {{/if}}
+    </p>
+    {{#ifCond address 'regexTest' '[0-9]{5}' }}
     <p>
       <div class="map">
-        <iframe
-          width="600"
-          height="450"
-          frameborder="0" style="border:0"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&q={{addressQuery address}}" allowfullscreen>
+        <iframe width="600" height="450" frameborder="0" style="border:0"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&q={{addressQuery address}}"
+          allowfullscreen>
         </iframe>
       </div>
     </p>
-  {{/ifCond}}
-  <p>Last Updated: {{dateFormat lastUpdated}}</p>
-</div>
+    {{/ifCond}}
+    <p>Last Updated: {{dateFormat lastUpdated}}</p>
+    <div class="event-modal-ada">
+      {{#if ada_accessible}}
+        <snap>ADA Accessible</snap><span class="ada-logo ada-logo-event-modal"></span>
+      {{/if}}
+    </div>
+  </span>
