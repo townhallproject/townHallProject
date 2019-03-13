@@ -1,6 +1,14 @@
 (function(module) {
   urlParamsHandler = {};
 
+  urlParamsHandler.getUrlParamFromQuery = function (queryString, param) {
+    var query = queryString.match(new RegExp('([?&])' + param + '[^&]*'));
+    if (query) {
+      return query[0].split('=')[1];
+    }
+    return false;
+  };
+
   urlParamsHandler.getUrlParameter = function(param) {
     var query = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
     if (query) {

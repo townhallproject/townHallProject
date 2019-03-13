@@ -150,6 +150,7 @@ section.border{
 @grid-float-breakpoint: 1140px;
 
 //event color key
+@main-hr-one: #5e8bdc;
 @main-in-person:#439cbf;
 @main-staff:#d0a8c1;
 @main-activism: #ec955a;
@@ -497,6 +498,8 @@ a.social-icon {
   .panel-footer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 5px;
   }
 }
 
@@ -520,6 +523,7 @@ a.social-icon {
   background-repeat: no-repeat;
 }
 
+.panel-heading_hr-one  { background-color: @main-hr-one; }
 .panel-heading_in-person  { background-color: @main-in-person; }
 .panel-heading_staff      { background-color: @main-staff; }
 .panel-heading_activism   { background-color: @main-activism; }
@@ -537,6 +541,10 @@ a.social-icon {
 
 .event-icon__in-person {
   background-image: url('/Images/map/circle-in-person.svg');
+}
+
+.event-icon__hr-one {
+  background-image: url('/Images/map/circle-hr-one.svg');
 }
 
 .event-icon__tele {
@@ -792,6 +800,47 @@ a.social-icon {
   background-image: url('/Images/svgs/town-hall-pledge-logo.svg');
 }
 
+.ada-footer-text {
+  display: flex;
+  align-items: center;
+  width: 125px;
+  justify-content: space-between;
+}
+
+.ada-logo {
+  background-image: url('/Images/svgs/ada_accessible_icon.svg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 15px;
+  height: 15px;
+}
+
+.ada-logo-event-card {
+  margin-left: -70px;
+  margin-top: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.event-modal-ada {
+  display: flex;
+  align-items: center;
+  height: 25px;
+}
+
+.ada-logo-event-modal {
+  margin-left: 0px;
+  margin-top: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.ada-logo-table {
+  width: 30px;
+  height: 20px;
+  position: absolute;
+}
+
 .time-sensitive {
   display: flex;
   .display-flex {
@@ -825,6 +874,7 @@ a.social-icon {
   }
   .happening-now-content {
     flex: 2;
+    padding: 1em;
     margin: auto;
   }
 
@@ -1024,6 +1074,10 @@ dt.key{
   border:none;
 }
 
+.input-lg-light {
+  margin-bottom: 10px;
+}
+
 #can-form-area-stay-up-to-date-on-our-work input {
   color: @brand-text;
 }
@@ -1053,7 +1107,7 @@ dt.key{
 }
 
 .btn-primary:hover {
-  border: @brand-white solid 2px;
+  border: @brand-primary solid 2px;
   background-color:white;
   color: @brand-primary;
 }
@@ -1331,7 +1385,7 @@ img.grayscale {
 }
 
 // End of Year graphic page
-#year-one {
+#year-one, #year-two {
   background-color: @brand-success;
   .container {
     @media (min-width: 1200px) {
@@ -1694,7 +1748,7 @@ img.grayscale {
   box-shadow: 0px 1px 3px @brand-primary;
   -webkit-box-shadow: 0px 1px 3px #0d4668;
           box-shadow: 0px 1px 3px #0d4668;
-  span, h4 {
+  span, h4, p {
     color: @brand-white;
   }
 }
@@ -1751,6 +1805,9 @@ img.grayscale {
   .list-inline {
     margin-bottom: 0px;
   }
+  .map-legend-li {
+    padding-right: 0;
+  }
 }
 .border-toggle:focus {
   outline: none!important;
@@ -1761,9 +1818,7 @@ img.grayscale {
 }
 
 .state-lines {
-  border-top: dotted 0.5px @brand-gray;
   margin-top: 0.7em;
-  padding-top: 0.7em;
 }
 .map-legend__senate {
   border: 1px solid black;
@@ -1795,6 +1850,10 @@ img.grayscale {
 
 .map-legend__federal{
   border-bottom: 1.5px solid @brand-gray;
+}
+
+.map-legend .map-legend__hr {
+  background-image: url('/Images/map/hr-one.svg');
 }
 
 .map-legend .map-legend__person {
@@ -1943,7 +2002,7 @@ img.grayscale {
     position: absolute;
     right: 0;
     bottom: 0;
-    padding: 1.5rem 2.5rem 1rem;
+    padding: 1.5rem 1.5rem 1rem;
     margin: 1rem 1rem;
   }
   .map-legend .map-legend-li{

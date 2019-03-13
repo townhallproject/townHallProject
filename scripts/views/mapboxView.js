@@ -288,9 +288,10 @@
 
   // Adds a Popup listener to the point layer.
   mapboxView.addPopups = function(state) {
+    var showButton = location.hostname === 'declarationforamericandemocracy' || location.pathname === '/mapEmbed.html';
     var popup = new mapboxgl.Popup({
-      closeButton: false,
-      closeOnClick: false
+      closeButton: showButton,
+      closeOnClick: showButton,
     });
 
     map.on('mousemove', function(e) {
@@ -303,15 +304,21 @@
       map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 
       if (!features.length) {
-        popup.remove();
+        if (!showButton) {
+          popup.remove();
+        }
         return;
       }
       var feature = features[0];
-      var townhall = new TownHall(feature.properties);
-      townhall.makeFormattedMember();
+      var townHallFromList = TownHall.allTownHalls.find(function(ele){
+        return ele.eventId === feature.properties.eventId;
+      })
+      var townHall = townHallFromList ? new TownHall(townHallFromList) : new TownHall(feature.properties);
+      townHall.makeFormattedMember();
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
+      townHall.showButton = showButton;
       popup.setLngLat(feature.geometry.coordinates)
-        .setHTML(mapPopoverTemplate(townhall))
+        .setHTML(mapPopoverTemplate(townHall))
           .addTo(map);
     });
   };
@@ -426,10 +433,9 @@
   };
 
   var filterDistrict = ['any'];
-  var includedStates = ['in', 'NAME'];
+  var includedStates = ['in', 'ABR'];
 
   // Does the initial filter for the map to determine which districts have Town Halls.
-  // TODO: Add in a data-driven style for the district layer that does a different fill if it's a local represenative vs. a Senator
   mapboxView.filterMap = function(townHall) {
     // Fetch states with senators in em'
     if (townHall.meetingType === 'DC Event') {
@@ -439,10 +445,12 @@
     var district = townHall.district;
 
     if (!district) {
-      if (!townHall.stateName) {
+      if (!townHall.state) {
         return;
       }
-      includedStates.push(townHall.stateName);
+      if(townHall.chamber === 'upper' && townHall.level === 'federal') {
+        includedStates.push(townHall.state);
+      }
     }
 
     var filterSenate = ['all', includedStates];
@@ -537,6 +545,7 @@
         address: townhall.address,
         meetingType: townhall.meetingType,
         icon: iconKey,
+        eventId: townhall.eventId,
         level: townhall.level,
         stateIcon: stateIcon || undefined
       },
@@ -554,10 +563,12 @@
 
   mapboxView.showStateLegend = function(){
     $('.state-lines').removeClass('hidden').show();
+    $('.state-show').removeClass('hidden').show();
   };
 
   mapboxView.hideStateLegend = function(){
     $('.state-lines').hide();
+    $('.state-show').hide();
   };
 
   mapboxView.toggleBorders = function () {

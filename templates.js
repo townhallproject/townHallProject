@@ -68,7 +68,7 @@ Handlebars.registerHelper('dateFormat', function(lastUpdated) {
 });
 
 Handlebars.registerHelper('shortDateTime', function(townhall) {
-  var localString = new Date(townhall.Date + ' ' + townhall.Time).toLocaleString();
+  var localString = new Date(townhall.dateString + ' ' + townhall.Time).toLocaleString();
   var shortDateTime = localString.slice(0, -6) + localString.slice(-2);
   return townhall.timeZone ? townhall.timeZone : null;
 });
