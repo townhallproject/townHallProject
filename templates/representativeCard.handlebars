@@ -12,19 +12,8 @@
           <img src="https://www.govtrack.us/data/legislator-photos/photos/{{govtrack_id}}-100px.jpeg" onerror="$(this).remove()" class="grayscale" />
         </div>
         <div class="col-xs-8 col-sm-9">
-          {{#if pledged}}
-            <div class="col-sm-9">
               <h3>{{formattedMember}}</h3>
               <h4>{{party}}</h4>
-            </div>
-            <div class="col-sm-3">
-              <a href="https://www.townhallpledge.com/" target="_blank" class="logo logo-right pledger-logo"></a>
-            </div>
-          {{/if}}
-          {{#unless pledged}}
-              <h3>{{formattedMember}}</h3>
-              <h4>{{party}}</h4>
-          {{/unless}}
         </div>
       </div>
     </div>
