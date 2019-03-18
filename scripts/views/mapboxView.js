@@ -312,7 +312,7 @@
       var feature = features[0];
       var townHallFromList = TownHall.allTownHalls.find(function(ele){
         return ele.eventId === feature.properties.eventId;
-      })
+      });
       var townHall = townHallFromList ? new TownHall(townHallFromList) : new TownHall(feature.properties);
       townHall.makeFormattedMember();
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
