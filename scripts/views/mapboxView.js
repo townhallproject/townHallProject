@@ -532,7 +532,7 @@
       properties: {
         //TODO: normalize this.
         repeatingEvent: townhall.repeatingEvent,
-        date: townhall.dateString,
+        dateString: townhall.dateString,
         Time: townhall.Time,
         chamber: townhall.chamber || null,
         district: townhall.district,

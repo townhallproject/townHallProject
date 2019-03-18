@@ -94,8 +94,9 @@
     tableHandler.clearTableData();
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall(snapshot.val());
-      
-      ele.chamber = ele.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
+      if(ele.district && !ele.chamber) {
+        ele.chamber = ele.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
+      }
       ele.level = 'state';
       ele.makeDisplayDistrict();
       TownHall.allStateTownHalls.push(ele);
