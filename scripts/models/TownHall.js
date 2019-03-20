@@ -114,10 +114,10 @@
       prefix = constants[this.chamber];
     }
     if (this.meetingType === 'Empty Chair Town Hall') {
-      sentence = [prefix, this.Member, '(invited)'];
+      sentence = [prefix, this.displayName, '(invited)'];
       this.formattedMember = sentence.join(' ');
     } else {
-      sentence = [prefix, this.Member];
+      sentence = [prefix, this.displayName];
       this.formattedMember = sentence.join(' ');
     }
   };
