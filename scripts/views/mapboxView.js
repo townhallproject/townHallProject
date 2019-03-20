@@ -312,7 +312,7 @@
       var feature = features[0];
       var townHallFromList = TownHall.allTownHalls.find(function(ele){
         return ele.eventId === feature.properties.eventId;
-      })
+      });
       var townHall = townHallFromList ? new TownHall(townHallFromList) : new TownHall(feature.properties);
       townHall.makeFormattedMember();
       var mapPopoverTemplate = Handlebars.getTemplate('mapPopover');
@@ -520,7 +520,7 @@
     }
     // makes staff icon smaller
     iconKey = iconKey === 'staff' ? 'staff-small' : iconKey;
-    if (townhall.thp_id && townhall.district) {
+    if (townhall.thp_id && townhall.district && !townhall.chamber && townhall.district.split('-').length > 1) {
       townhall.chamber = townhall.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
     }
     array.features.push({

@@ -89,10 +89,11 @@
         }
       }
     },
-    "townHallsOld": {
-      ".read": "true",
+    "archive_clean": {
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$month": {
+        ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
         ".indexOn": "dateObj",
         "$townHallID": {
           ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
@@ -110,6 +111,7 @@
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$state": {
         "$month": {
+          ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
           ".indexOn": "dateObj",
           "$townHallID": {
             ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
