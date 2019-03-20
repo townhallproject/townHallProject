@@ -520,7 +520,7 @@
     }
     // makes staff icon smaller
     iconKey = iconKey === 'staff' ? 'staff-small' : iconKey;
-    if (townhall.thp_id && townhall.district) {
+    if (townhall.thp_id && townhall.district && !townhall.chamber && townhall.district.split('-').length > 1) {
       townhall.chamber = townhall.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
     }
     array.features.push({
