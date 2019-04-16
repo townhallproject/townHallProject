@@ -1,7 +1,7 @@
 <li id="{{eventId}}"
   class="event-row list-group-item {{#if Notes}}has-notes{{/if}}"
   data-Main_State-filter="{{State}}"
-  data-Member-filter="{{Member}}"
+  data-Member-filter="{{displayName}}"
   {{#if Notes}}
     data-toggle="collapse"
     data-target="#notes-{{eventId}}"

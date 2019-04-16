@@ -418,8 +418,8 @@
     if (TownHall.allStates.indexOf(townhall.stateName) === -1) {
       TownHall.allStates.push(townhall.stateName);
     }
-    if (TownHall.allMoCs.indexOf(townhall.Member) === -1) {
-      TownHall.allMoCs.push(townhall.Member);
+    if (TownHall.allMoCs.indexOf(townhall.displayName) === -1) {
+      TownHall.allMoCs.push(townhall.displayName);
     }
   };
 
