@@ -135,7 +135,7 @@
       ".read": "true",
       ".write": "auth.uid !== null",
       "$townHallID": {
-        ".validate": "newData.hasChildren(['Member', 'eventId'])"
+        ".validate": "newData.hasChildren([eventId'])"
       }
     },
     "state_legislators_user_submission": {
@@ -143,7 +143,7 @@
         ".read": "true",
         ".write": "auth.uid !== null",
         "$townHallID": {
-          ".validate": "newData.hasChildren(['Member', 'eventId'])"
+          ".validate": "newData.hasChildren(['eventId'])"
         }
       }
     },
