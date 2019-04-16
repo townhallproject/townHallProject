@@ -63,9 +63,9 @@
     var newMember = false;
     var chamber;
     if (moment(townhall.dateObj).isBetween('2017-07-29', '2017-09-04', []) && townhall.meetingType ==='Town Hall') {
-      if (!dataviz.membersEvents.has(townhall.Member)) {
+      if (!dataviz.membersEvents.has(townhall.displayName)) {
         newMember = true;
-        dataviz.membersEvents.add(townhall.Member);
+        dataviz.membersEvents.add(townhall.displayName);
       }
       if (townhall.party === 'Republican') {
         var party = 'rep';

@@ -14,9 +14,9 @@
             <h3 class="line-height-small">
               <div class="row">
                 {{#ifCond District '===' 'Senate'}}
-                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>{{Member}} <small> ({{displayDistrict}})</small></span>
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>{{displayName}} <small> ({{displayDistrict}})</small></span>
                 {{else}}
-                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>{{Member}} <small> ({{displayDistrict}})</small></span>
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>{{displayName}} <small> ({{displayDistrict}})</small></span>
                 {{/ifCond}}
 
                 <span class="d-inline-block col-sm-6"><span class="small-white">Visiting MoC (will be present):<br></span>{{districtAdopter}} <small> ({{districtAdopterParty}}, {{districtAdopterDistrict}})</small></span>
