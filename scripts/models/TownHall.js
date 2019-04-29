@@ -71,8 +71,12 @@
       } else {
         this.displayDistrict = state;
       }
-      if (this.meetingType === 'Campaign Town Hall'){
-        this.displayDistrict = 'Running for: ' + this.displayDistrict;
+      if (this.meetingType === 'Campaign Town Hall') {
+        if (this.chamber === 'nationwide'){
+          this.displayDistrict = '';
+        } else {
+          this.displayDistrict = 'Running for: ' + this.displayDistrict;
+        }
       }
     }
   };
@@ -110,10 +114,10 @@
       prefix = constants[this.chamber];
     }
     if (this.meetingType === 'Empty Chair Town Hall') {
-      sentence = [prefix, this.Member, '(invited)'];
+      sentence = [prefix, this.displayName, '(invited)'];
       this.formattedMember = sentence.join(' ');
     } else {
-      sentence = [prefix, this.Member];
+      sentence = [prefix, this.displayName];
       this.formattedMember = sentence.join(' ');
     }
   };
@@ -153,10 +157,13 @@
         // Currently some of the data is inconsistent.  Some parties are listed as "Democrat" and some are listed as "Democratic", etc
         // TODO:  Once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
         return TownHall.filters[key].some(function(filter) {
+          if (key === 'party') {
+            filter = filter.slice(0, 1);
+          }
           if (!townhall[key]) {
             return;
           }
-          return filter.slice(0, 8) === townhall[key].slice(0, 8);
+          return filter === townhall[key].slice(0, filter.length);
         });
       });
     }, data).sort(TownHall.sortFunction);
@@ -211,11 +218,13 @@
 
   function _lookupRepObjs(reps) {
     var MoCPromiseArray = reps.map(function (rep) {
-      return firebasedb.ref('mocData/' + rep.govtrackId).once('value').then(function (snapshot) {
-        var data = snapshot.val();
-        data.dyjd = rep.dyjd;
-        return data;
-      });
+      if (rep.govtrackId) {
+        return firebasedb.ref('mocData/' + rep.govtrackId).once('value').then(function (snapshot) {
+          var data = snapshot.val();
+          data.dyjd = rep.dyjd;
+          return data;
+        });
+      }
     });
     return Promise.all(MoCPromiseArray).then(function(MoCs) {
       return MoCs;
@@ -296,7 +305,7 @@
     } else {
       var path = key + '-' + (value === '0' ? '00' : mapHelperFunctions.zeroPad(value));
       return firebasedb.ref('/mocByStateDistrict/' + path).once('value').then(function(snapshot) {
-        return snapshot.val().govtrack_id;
+        return snapshot.val().govtrack_id ? snapshot.val().govtrack_id: null;
       })
       .then(function(govtrackId){
         return firebasedb.ref('do_your_job_districts/' + path).once('value')
@@ -409,8 +418,8 @@
     if (TownHall.allStates.indexOf(townhall.stateName) === -1) {
       TownHall.allStates.push(townhall.stateName);
     }
-    if (TownHall.allMoCs.indexOf(townhall.Member) === -1) {
-      TownHall.allMoCs.push(townhall.Member);
+    if (TownHall.allMoCs.indexOf(townhall.displayName) === -1) {
+      TownHall.allMoCs.push(townhall.displayName);
     }
   };
 

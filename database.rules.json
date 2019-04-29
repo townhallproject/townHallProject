@@ -27,6 +27,17 @@
         }
       }
     },
+    "rsvps": {
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('rsvpDownloads').val() == true",
+      ".write": "false",
+      "$townHallID": {
+        ".read": "false",
+        ".write": "true",
+        "$firebaseid": {
+          ".validate": "newData.hasChildren(['eventId','email_address', 'family_name', 'given_name', 'postal_code', 'phone_number', 'can_contact'])"
+        }
+      }
+    },
     "indivisible": {
       ".indexOn": "event_starts_at_date",
       ".read": "true",
@@ -62,10 +73,27 @@
         ".validate": "newData.hasChildren(['eventId','lastUpdated'])"
       }
     },
-    "townHallsOld": {
+    "archive_116th_congress": {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$month": {
+        ".indexOn": "dateObj",
+        "$townHallID": {
+          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+          "dateObj": {
+            ".indexOn": ".value"
+          },
+          "meetingType": {
+            ".indexOn": ".value"
+          }
+        }
+      }
+    },
+    "archive_clean": {
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      "$month": {
+        ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
         ".indexOn": "dateObj",
         "$townHallID": {
           ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
@@ -83,6 +111,7 @@
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$state": {
         "$month": {
+          ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
           ".indexOn": "dateObj",
           "$townHallID": {
             ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
@@ -106,7 +135,7 @@
       ".read": "true",
       ".write": "auth.uid !== null",
       "$townHallID": {
-        ".validate": "newData.hasChildren(['Member', 'eventId'])"
+        ".validate": "newData.hasChildren(['eventId'])"
       }
     },
     "state_legislators_user_submission": {
@@ -114,7 +143,7 @@
         ".read": "true",
         ".write": "auth.uid !== null",
         "$townHallID": {
-          ".validate": "newData.hasChildren(['Member', 'eventId'])"
+          ".validate": "newData.hasChildren(['eventId'])"
         }
       }
     },
@@ -305,14 +334,24 @@
       }
     },
     "users": {
+      ".write": "false",
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$user_id": {
         ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
-        ".write": "$user_id === auth.uid",
+        ".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
         "mocs": {
           "$mocID": {
             ".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true"
           }
         }
+      }
+    },
+    "pending_access_request": {
+      ".write": "false",
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      "$user_id": {
+        ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        ".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true"
       }
     },
     "sms-users": {

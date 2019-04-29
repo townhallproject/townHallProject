@@ -1,14 +1,16 @@
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+      aria-hidden="true">&times;</span></button>
   <div class="modal-title">
     {{#if eventName}}
-      <h3 class="text-center">{{eventName}}</h3>
+    <h3 class="text-center">{{eventName}}</h3>
     {{/if}}
     {{#unless eventName}}
-      <h3 class="text-center">{{meetingType}}</h3>
+    <h3 class="text-center">{{meetingType}}</h3>
     {{/unless}}
     <span class="text-center">
-      <h4 class="hidden-xs">{{dateString}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}}, {{timeZone}}{{/if}}</span></h4>
+      <h4 class="hidden-xs">{{dateString}} <span class="profile-summary-value"> at {{Time}}{{#if timeZone}},
+          {{timeZone}}{{/if}}</span></h4>
       <h4 class="visible-xs-block">{{#shortDateTime this}}{{/shortDateTime}}</h4>
       {{#if Location}}<h4>{{Location}}</h4>{{/if}}
     </span>
@@ -17,67 +19,129 @@
 <div class="modal-body">
   <div class="row">
     {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
-      <h3 class="col-xs-10 col-md-9 line-height-medium">
-        {{#ifCond District '===' 'Senate'}}
-          <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{Member}} <small>  {{#if party}} ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
-        {{else}}
-          <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{Member}} <small>  {{#if party}} ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
-        {{/ifCond}}
-        <br>
-        <span class="discriptor-text d-inline-block">Visiting MoC (will be present): </span>{{districtAdopter}} <small> ({{districtAdopterParty}}) {{districtAdopterState}}, {{districtAdopterDistrict}}</small>
-      </h3>
+    <h3 class="col-xs-10 col-md-9 line-height-medium">
+      {{#ifCond District '===' 'Senate'}}
+      <span class="discriptor-text d-inline-block">Home state MoC (not present): </span>{{displayName}} <small> {{#if party}}
+        ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
+      {{else}}
+      <span class="discriptor-text d-inline-block">Home district MoC (not present): </span>{{displayName}} <small>
+        {{#if party}} ({{party}}) {{/if}}{{state}}, {{displayDistrict}}</small>
+      {{/ifCond}}
+      <br>
+      <span class="discriptor-text d-inline-block">Visiting MoC (will be present): </span>{{districtAdopter}} <small>
+        ({{districtAdopterParty}}) {{districtAdopterState}}, {{districtAdopterDistrict}}</small>
+    </h3>
     {{else}}
-      <h3 class="col-xs-10 col-md-9">{{formattedMember}} <small>
+    <h3 class="col-xs-10 col-md-9">{{formattedMember}} <small>
         {{#if party}}
-        ({{party}}) 
+        ({{party}})
         {{/if}}
         {{displayDistrict}}</small></h3>
     {{/ifCond}}
     <h3 class="col-xs-2 col-md-3">
       <span class="addtocalendar pull-right">
-        <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
+        <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i
+            class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
         <var class="atc_event">
           <var class="atc_date_start">{{yearMonthDay}} {{timeStart24}}</var>
-            <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
-            <var class="atc_timezone">{{zoneString}}</var>
-            <var class="atc_title">{{meetingType}}: {{Member}}</var>
-            <var class="atc_description">{{{Notes}}}</var>
-            <var class="atc_location">{{address}}</var>
-            <var class="atc_organizer">{{party}}</var>
-          </var>
+          <var class="atc_date_end">{{yearMonthDay}} {{timeEnd24}}</var>
+          <var class="atc_timezone">{{zoneString}}</var>
+          <var class="atc_title">{{meetingType}}: {{displayName}}</var>
+          <var class="atc_description">{{{Notes}}}</var>
+          <var class="atc_location">{{address}}</var>
+          <var class="atc_organizer">{{party}}</var>
         </var>
       </span>
+    </h3>
+    {{#ifCond iconFlag '===' 'hr-one'}}
+    <div class="row rsvp-form-holder">
+      <h4 id="email-title" class="text-center ">RSVP to this event</h4>
+      <form id="rsvp-form">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="col-sm-6">
+              <input type="text" class="form-control input-lg-light" name="first" placeholder="First name" required>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control input-lg-light" name="last" placeholder="Last name" required>
+            </div>
+            <div class="col-sm-6">
+              <input type="email" class="form-control input-lg-light" name="email" placeholder="Email" required>
+            </div>
+            <div class="col-sm-6">
+              <input type="text" class="form-control input-lg-light" name="zipcode" placeholder="Zip code">
+            </div>
+            <div class="col-sm-6">
+              <input type="phone" class="form-control input-lg-light" name="phone" placeholder="Phone number">
+            </div>
+            <div class="col-sm-6 hidden" id="">
+              <input type="text" class="form-control input-lg-light" name="eventId" value={{eventId}}>
+            </div>
+            <div class="col-sm-6 hidden" id="">
+              <input type="text" class="form-control input-lg-light" name="time_submitted" value={{time_submitted}}>
+            </div>
+            <div class="col-xs-12">
+              <label class="checkbox-inline">
+                <input type="checkbox" value="" name="can_email">Okay to receive email updates about this event.</input>
+              </label>
+            </div>
+            <div class="col-xs-12">
+              <label class="checkbox-inline">
+                <input type="checkbox" value="" name="can_text">Okay to receive text updates about this event.</input>
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="col-xs-12 text-center">
+              <button type="submit" name="button" class="btn btn-primary btn-light-background ">Submit RSVP</button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
-  </h3>
+    <div class="hidden rsvp-thank-you text-center">
+      <h4>Thank you!</h4>
+    </div>
+    {{/ifCond}}
 
-  {{#if Notes}}
+    {{#if Notes}}
     <p>{{{Notes}}}</p>
+  {{/if}}
+  {{#if disclaimer}}
+    <p>{{{disclaimer}}}</p>
   {{/if}}
   <p>
     {{#if phoneNumber}}
       <div> Call in number: {{phoneNumber}}</div>
     {{/if}}
-    {{#if link}}
+    <p>
+      {{#if phoneNumber}}
+      <div> Call in number: {{phoneNumber}}</div>
+      {{/if}}
+      {{#if link}}
       <div><a href="{{link}}" target="_blank">
-        {{#if linkName}}{{linkName}}{{/if}}
-        {{#unless linkName}}Find out more{{/unless}}
-      </a></div>
-    {{/if}}
-    {{#if RSVP}}
+          {{#if linkName}}{{linkName}}{{/if}}
+          {{#unless linkName}}Find out more{{/unless}}
+        </a></div>
+      {{/if}}
+      {{#if RSVP}}
       <div><a href="{{RSVP}}" target="_blank">{{rsvpName}}</a></div>
-    {{/if}}
-  </p>
-  {{#ifCond address 'regexTest' '[0-9]{5}' }}
+      {{/if}}
+    </p>
+    {{#ifCond address 'regexTest' '[0-9]{5}' }}
     <p>
       <div class="map">
-        <iframe
-          width="600"
-          height="450"
-          frameborder="0" style="border:0"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&q={{addressQuery address}}" allowfullscreen>
+        <iframe width="600" height="450" frameborder="0" style="border:0"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&q={{addressQuery address}}"
+          allowfullscreen>
         </iframe>
       </div>
     </p>
-  {{/ifCond}}
-  <p>Last Updated: {{dateFormat lastUpdated}}</p>
-</div>
+    {{/ifCond}}
+    <p>Last Updated: {{dateFormat lastUpdated}}</p>
+    <div class="event-modal-ada">
+      {{#if ada_accessible}}
+        <snap>ADA Accessible</snap><span class="ada-logo ada-logo-event-modal"></span>
+      {{/if}}
+    </div>
+  </span>

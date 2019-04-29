@@ -43,7 +43,7 @@
 
   // Fetch data from Firebase, run map filter & point layers
   // listens for new data.
-  mapView.readData = function(webgl) {
+  mapView.readData = function(webgl, noTable, filters) {
     mapboxView.featuresHome.features = [];
     var isPledgerPromises =[];
     var townHallsFB = firebasedb.ref('/townHalls/');
@@ -53,11 +53,16 @@
       ///If no state filter show all results
       ele.level = 'federal';
       ele.makeDisplayDistrict();
+      if (filters && !filters.includes(ele.meetingType)) {
+        return;
+      }
       TownHall.allTownHalls.push(ele);
       
       isPledgerPromises.push(ele.getIsPledger());
       TownHall.addFilterIndexes(ele);
-      tableHandler.initialMainTable(ele);
+      if (!noTable) {
+        tableHandler.initialMainTable(ele);
+      }
       if (webgl) {
         mapboxView.filterMap(ele);
         mapboxView.makePoint(ele);
@@ -68,12 +73,12 @@
     townHallsFB.once('value', function() {
       Promise.all(isPledgerPromises)
         .then(function (allTownHalls) {
-           if (webgl) {
-             mapboxView.setData();
-           }
-           TownHall.allTownHalls = allTownHalls
-           zipLookUpHandler.zipSearchByParam();
-        })
+          if (webgl) {
+            mapboxView.setData();
+          }
+          TownHall.allTownHalls = allTownHalls;
+          zipLookUpHandler.zipSearchByParam();
+        });
     });
   };
 
@@ -89,8 +94,9 @@
     tableHandler.clearTableData();
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall(snapshot.val());
-      
-      ele.chamber = ele.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
+      if(ele.district && !ele.chamber) {
+        ele.chamber = ele.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
+      }
       ele.level = 'state';
       ele.makeDisplayDistrict();
       TownHall.allStateTownHalls.push(ele);

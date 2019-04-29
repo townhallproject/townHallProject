@@ -10,16 +10,13 @@
 
         </div>
         <div class="col-xs-8">
-          {{#if isPledger}}
-          <span class="logo logo-right logo-small pledger-logo"></span>
-          {{/if}}
           {{#ifCond meetingType '===' 'Adopt-A-District/State'}}
             <h3 class="line-height-small">
               <div class="row">
                 {{#ifCond District '===' 'Senate'}}
-                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>{{Member}} <small> ({{displayDistrict}})</small></span>
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>{{displayName}} <small> ({{displayDistrict}})</small></span>
                 {{else}}
-                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>{{Member}} <small> ({{displayDistrict}})</small></span>
+                  <span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>{{displayName}} <small> ({{displayDistrict}})</small></span>
                 {{/ifCond}}
 
                 <span class="d-inline-block col-sm-6"><span class="small-white">Visiting MoC (will be present):<br></span>{{districtAdopter}} <small> ({{districtAdopterParty}}, {{districtAdopterDistrict}})</small></span>
@@ -28,9 +25,7 @@
           {{else}}
             <h3>{{formattedMember}} <small>{{displayDistrict}}</small></h3>
           {{/ifCond}}
-         
       </div>
-
       </div>
     </div>
     <div class="panel-body">
@@ -72,12 +67,22 @@
         </li>
         <div class="inset-line"></div>
         {{#if Notes}}
-        <li class="list-group-item list-item-no-border list-item-no-border">{{{Notes}}}
+        <li class="list-group-item list-item-no-border list-item-no-border">{{Notes}}
         </li>
         {{/if}}
+        {{#if disclaimer}}
+        <li class="list-group-item list-item-no-border list-item-no-border">{{disclaimer}}
+        </li>
+        {{/if}}
+        {{#ifCond iconFlag '===' 'hr-one'}}
+        <li class="list-group-item list-item-no-border text-center">
+          <a class="btn btn-primary" data-toggle="modal" data-target=".event-modal" onclick="eventHandler.populateEventModal({{{json this}}})">RSVP
+          </a>
+        </li>
+        {{/ifCond}}
         {{#if link}}
-        <li class="list-group-item list-item-no-border pull-right">
-          <a href="{{link}}" target="_blank">{{#if linkName}}{{linkName}}    {{/if}}{{#unless linkName}}Find out more  {{/unless}}<i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+        <li class="list-group-item list-item-no-border pull-left">
+          <a href="{{link}}" target="_blank">{{#if linkName}}{{linkName}}    {{/if}}{{#unless linkName}}Find out more  {{/unless}}</a>
         </li>
         {{/if}}
         {{#if RSVP}}
@@ -89,8 +94,11 @@
     </div>
     <div class="panel-footer">
       {{#unless repeatingEvent}}
-        <small>Last Updated: {{dateFormat lastUpdated}}</small>
+        <small>Last Updated: {{dateFormat lastUpdated}} </small>
       {{/unless}}
+      {{#if ada_accessible}}
+          <small class="ada-footer-text">ADA Accessible <div class="ada-logo ada-logo-event-card"></div> </small>
+      {{/if}}
       {{#if dateValid}}
       <span class="addtocalendar pull-right">
         <a class="atcb-link btn btn-md">

@@ -1,4 +1,4 @@
-/*globals newEventView*/
+/*globals newEventView rsvpHandler*/
 (function(module) {
   var zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
   // object to hold the front end view functions
@@ -294,7 +294,10 @@
 
   eventHandler.populateEventModal = function(townhall) {
     var compiledTemplate = Handlebars.getTemplate('eventModal');
-    $('.event-modal .modal-content').html(compiledTemplate(townhall));
+    var timeStampTownhall = Object.assign({
+      time_submitted: moment().format()
+    }, townhall);
+    $('.event-modal .modal-content').html(compiledTemplate(timeStampTownhall));
     urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
     addtocalendar.load();
   };
@@ -447,17 +450,21 @@
       emailHandler.closeEmailForm();
     });
     $('#email-signup-form').on('submit', emailHandler.validateSignup);
+    $('.modal').on('submit', '#rsvp-form', rsvpHandler.validateSignup);
+
     if (localStorage.getItem('signedUp') === 'true') {
       emailHandler.hideEmailForm();
     }
-    var divTop = $('#all-events-table').offset().top + 380;
-    $(window).scroll(function() {
-      if($(window).scrollTop() > divTop) {
-        $('#scrollBtn').show();
-      } else {
-        $('#scrollBtn').hide();
-      }
-    });
+    if ($('#all-events-table').offset()) {
+      var divTop = $('#all-events-table').offset().top + 380;
+      $(window).scroll(function() {
+        if($(window).scrollTop() > divTop) {
+          $('#scrollBtn').show();
+        } else {
+          $('#scrollBtn').hide();
+        }
+      });
+    }
   }
 
   function setYearEndImage(){
@@ -465,7 +472,11 @@
       $('#year-one img').attr('src', 'Images/EOY_2017_Report_Mobile.png');
     } else {
       $('#year-one img').attr('src', 'Images/EOY_Report_Layout_noBG-01-01.png');
-
+    }
+    if (window.innerWidth < 768) {
+      $('#year-two img').attr('src', 'Images/lookback2018-Mobile-nobg.png');
+    } else {
+      $('#year-two img').attr('src', 'Images/lookback2018-Desktop-nobg.png');
     }
   }
 
