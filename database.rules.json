@@ -69,9 +69,6 @@
     "townHallIds": {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-      "$townHallID": {
-        ".validate": "newData.hasChildren(['eventId','lastUpdated'])"
-      }
     },
     "archive_116th_congress": {
       ".read": "true",
@@ -89,7 +86,7 @@
         }
       }
     },
-    "archive_clean": {
+    "archived_town_halls": {
       ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$month": {
@@ -151,13 +148,11 @@
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
     },
-    "MOCs": {
+    "moc_by_congress": {
       ".read": "true",
-      "$mocKey": {
+      "$congressKey": {
         ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
-        "currentEvents": {
-          ".write": "auth.uid !== null"
-        }
+        ".read": "true"
       }
     },
     "mocData": {
