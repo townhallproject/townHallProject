@@ -68,7 +68,7 @@
     },
     "townHallIds": {
       ".read": "true",
-      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
     },
     "archive_116th_congress": {
       ".read": "true",
@@ -87,10 +87,9 @@
       }
     },
     "archived_town_halls": {
-      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$month": {
-        ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
         ".indexOn": "dateObj",
         "$townHallID": {
           ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
@@ -108,7 +107,6 @@
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$state": {
         "$month": {
-          ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
           ".indexOn": "dateObj",
           "$townHallID": {
             ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
@@ -146,6 +144,10 @@
     },
     "town_hall_pledges": {
       ".read": "true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+    },
+    "subscribers": {
+      ".read": "false",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
     },
     "moc_by_congress": {
