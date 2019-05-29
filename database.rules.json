@@ -68,7 +68,7 @@
     },
     "townHallIds": {
       ".read": "true",
-      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
     },
     "archive_116th_congress": {
       ".read": "true",
@@ -102,12 +102,13 @@
         }
       }
     },
-    "state_townhalls_archive": {
+    "archived_state_town_halls": {
       ".read": "true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$state": {
         "$month": {
           ".indexOn": "dateObj",
+          ".read": "true",
           "$townHallID": {
             ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
             "dateObj": {
