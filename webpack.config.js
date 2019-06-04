@@ -1,11 +1,14 @@
 require('dotenv').config();
 const HTMLPlugin = require('html-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const { ProvidePlugin } = require('webpack');
 
+const devMode = process.env.NODE_ENV !== 'production';
 const plugins = [
   new CleanWebpackPlugin(['build']),
   new ProvidePlugin({
@@ -16,8 +19,8 @@ const plugins = [
   new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // both options are optional
-    chunkFilename: '[id].css',
-    filename: '[name].css',
+    filename: devMode ? '[name].css' : '[name].[hash].css',
+    chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
   }),
 
   new HTMLPlugin({
@@ -47,7 +50,9 @@ module.exports = {
       }
     },
   mode: 'development',
-
+  optimization: {
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+  },
   plugins,
 
   // Load this and everythning it cares about
@@ -85,23 +90,16 @@ module.exports = {
         use: [
           {
             loader: 'css-loader',
-            options: {
-              sourceMap: true,
-            },
           },
           'resolve-url-loader',
           {
             loader: 'sass-loader',
-            options: {
-              sourceMap: true,
-            },
           },
         ],
       },
       {
         test: /\.less$/,
         use: [
-
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
