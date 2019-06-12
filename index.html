@@ -563,9 +563,9 @@
                     <span id="current-state" data-current=0 data-total=0></span>
                   </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul id="all-events-table-dropdown-container" class="nav navbar-nav navbar-right">
                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Member
+                    <a href="#" class="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Member
                       <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -600,7 +600,7 @@
                     </ul>
                   </li>
                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">State
+                    <a href="#" class="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">State
                       <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -641,7 +641,10 @@
                         <a data-filter="meetingType" id="Campaign Town Hall" class="dropdown-item" href="#">Campaign Town Hall</a>
                       </li>
                       <li>
-                        <a data-filter="meetingType" id="DC Event" class="dropdown-item" href="#">DC Event</a>
+                        <a data-filter="meetingType" id="DC Event" class="dropdown-item hide-on-state-view" href="#">DC Event</a>
+                      </li>
+                      <li>
+                        <a data-filter="meetingType" id="Other" class="dropdown-item" href="#">Other</a>
                       </li>
                       <li>
                         <a data-filter="meetingType" id="All" class="dropdown-item" href="#">All</a>
@@ -659,7 +662,10 @@
                         <a data-filter="dateObj" id="byDate" class="dropdown-item" href="#">By Date</a>
                       </li>
                       <li>
-                        <a data-filter="stateName" id="byState" class="dropdown-item" href="#">By State</a>
+                        <a data-filter="stateName" id="byState" class="dropdown-item hide-on-state-view" href="#">By State</a>
+                      </li>
+                      <li>
+                        <a data-filter="displayName" id="byName" class="dropdown-item" href="#">By Name</a>
                       </li>
                     </ul>
                   </li>
