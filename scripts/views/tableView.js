@@ -5,8 +5,10 @@
     TownHall.resetData();
     if (stateView.state) {
       tableHandler.resetFilters();
+      tableHandler.configureDropdowns();
     } else {
       tableHandler.initialFilters();
+      tableHandler.configureDropdowns();
     }
     tableHandler.renderTableWithArray(tableHandler.getFilterState());
   };
@@ -23,6 +25,15 @@
     tableHandler.addFilter('meetingType', 'Town Hall');
     tableHandler.addFilter('meetingType', 'Empty Chair Town Hall');
     tableHandler.addFilter('meetingType', 'Campaign Town Hall');
+  };
+
+  tableHandler.configureDropdowns = function() {
+    // Handle dropdowns per view
+    if (stateView.state) {
+        $('.hide-on-state-view').hide();
+    } else {
+        $('.hide-on-state-view').show();
+    }
   };
 
   tableHandler.renderTableWithArray = function (array) {
