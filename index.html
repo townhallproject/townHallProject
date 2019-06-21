@@ -106,10 +106,10 @@
                 <a href="/michigan" class="stateNav-michigan">Michigan</a>
               </li>
               <li>
-                <a href="/north-carolina" class="stateNav-north-carolina">North Carolina</a>
+                <a href="/nevada" class="stateNav-nevada">Nevada</a>
               </li>
               <li>
-                <a href="/nevada" class="stateNav-nevada">Nevada</a>
+                <a href="/north-carolina" class="stateNav-north-carolina">North Carolina</a>
               </li>
               <li>
                 <a href="/oregon" class="stateNav-oregon">Oregon</a>
@@ -300,11 +300,11 @@
               </li>
               <li class="map-legend-li">
                 <dt class="map-legend-icon map-legend__next-gen"></dt>
-                <dd>Youth Vote Town Hall</dd>
+                <dd>Youth Vote</dd>
               </li>
               <li class="map-legend-li">
                 <dt class="map-legend-icon map-legend__hr"></dt>
-                <dd>H.R. 1</dd>
+                <dd>Voting Rights</dd>
               </li>
               <li class="map-legend-li">
                 <dt class="map-legend-icon map-legend__mfol"></dt>
@@ -559,9 +559,9 @@
                     <span id="current-state" data-current=0 data-total=0></span>
                   </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul id="all-events-table-dropdown-container" class="nav navbar-nav navbar-right">
                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Member
+                    <a href="#" class="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Member
                       <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -596,7 +596,7 @@
                     </ul>
                   </li>
                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">State
+                    <a href="#" class="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">State
                       <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -637,6 +637,9 @@
                         <a data-filter="meetingType" id="Campaign Town Hall" class="dropdown-item" href="#">Campaign Town Hall</a>
                       </li>
                       <li>
+                        <a data-filter="meetingType" id="Other" class="dropdown-item" href="#">Other</a>
+                      </li>
+                      <li>
                         <a data-filter="meetingType" id="All" class="dropdown-item" href="#">All</a>
                       </li>
                     </ul>
@@ -652,7 +655,10 @@
                         <a data-filter="dateObj" id="byDate" class="dropdown-item" href="#">By Date</a>
                       </li>
                       <li>
-                        <a data-filter="stateName" id="byState" class="dropdown-item" href="#">By State</a>
+                        <a data-filter="stateName" id="byState" class="dropdown-item hide-on-state-view" href="#">By State</a>
+                      </li>
+                      <li>
+                        <a data-filter="displayName" id="byName" class="dropdown-item" href="#">By Name</a>
                       </li>
                     </ul>
                   </li>
