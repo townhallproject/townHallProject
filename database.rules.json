@@ -148,7 +148,7 @@
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
     },
     "subscribers": {
-      ".read": "false",
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
     },
     "moc_by_congress": {

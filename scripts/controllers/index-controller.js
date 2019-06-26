@@ -6,6 +6,7 @@
     indexView.renderHeader();
     indexView.setStateDropdown();
     tableHandler.initialFilters();
+    tableHandler.configureDropdowns();
     next();
   };
 
@@ -14,6 +15,7 @@
     stateView.renderHeader(ctx.stateUPSP);
     stateView.setStateDropdown(ctx.stateUPSP);
     tableHandler.resetFilters();
+    tableHandler.configureDropdowns();
     next();
   };
 
