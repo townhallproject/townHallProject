@@ -30,9 +30,9 @@
   tableHandler.configureDropdowns = function() {
     // Handle dropdowns per view
     if (stateView.state) {
-        $('.hide-on-state-view').hide();
+      $('.hide-on-state-view').hide();
     } else {
-        $('.hide-on-state-view').show();
+      $('.hide-on-state-view').show();
     }
   };
 
