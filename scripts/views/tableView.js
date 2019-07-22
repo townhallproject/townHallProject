@@ -17,7 +17,7 @@
     $('#all-events-table').children().slice(1).remove();
     $('#current-state').attr('data-total', 0);
     $('#current-state').attr('data-current', 0);
-  }
+  };
 
   tableHandler.initialFilters = function() {
     tableHandler.resetFilters();
