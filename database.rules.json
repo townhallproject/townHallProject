@@ -14,6 +14,7 @@
       }
     },
     "state_townhalls": {
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$state": {
         ".indexOn": "lastUpdated",
         ".read": "true",
@@ -135,6 +136,7 @@
       }
     },
     "state_legislators_user_submission": {
+      ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
       "$state": {
         ".read": "true",
         ".write": "auth.uid !== null",
@@ -353,7 +355,14 @@
         ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
         ".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
         "mocs": {
+          ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
           "$mocID": {
+            ".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true"
+          }
+        },
+        "events": {
+          ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
+          "$eventId": {
             ".write": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true"
           }
         }
