@@ -100,9 +100,9 @@
   missingMemberView.init = function(){
     MoC.all.then(function(MoCs) {
       var missingMembers = MoCs.filter(function(member) {
-        return member.missingMember;
+        member.format();
+        return member.missing_member && member.missing_member[116];
       });
-
       missingMemberView.loaded = true;
       var $currentState = $('#mm-current-state');
       var $copy = $('#mm-total-copy');
