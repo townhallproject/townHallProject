@@ -2,6 +2,17 @@
   var map;
   var mapView = {};
   mapView.zoomLocation = false;
+  var legendIcons = {
+    inPerson: false,
+    staff: false,
+    tele: false,
+    activism: false,
+    campaign: false,
+    nextGen: false,
+    hrOne: false,
+    mfol: false,
+  };
+
 
   mapView.setMap = function(style, parentBB, ctxbounds){
     map = mapboxView.setMap(style, parentBB, ctxbounds);
@@ -49,7 +60,8 @@
     var townHallsFB = firebasedb.ref('/townHalls/');
     tableHandler.clearTableData();
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
-      var ele = new TownHall(snapshot.val());
+      var ele = new TownHall(snapshot.val()); 
+      mapView.checkForAbsentEvents(ele);
       ///If no state filter show all results
       ele.level = 'federal';
       ele.makeDisplayDistrict();
@@ -76,6 +88,8 @@
           if (webgl) {
             mapboxView.setData();
           }
+          mapView.hideAbsentEvents();
+
           TownHall.allTownHalls = allTownHalls;
           zipLookUpHandler.zipSearchByParam();
         });
@@ -173,6 +187,42 @@
     }
   };
 
+  // If no events of a given type are present in the snapshot, hide its associated legend li
+  mapView.hideAbsentEvents = function hideAbsentEvents(){
+    for(var key in legendIcons){
+      if(legendIcons[key] === false){
+        $(`.${key}-parent`).addClass('hidden');
+      }
+    }
+  };
+
+  // for each townhall event in ele, update legendIcons if key matches
+  mapView.checkForAbsentEvents = function checkForAbsentEvents(ele){
+    if (ele.iconFlag === 'in-person'){
+      legendIcons.inPerson = true;
+    }
+    if (ele.iconFlag === 'staff'){
+      legendIcons.staff = true;
+    }
+    if (ele.iconFlag === 'tele'){
+      legendIcons.tele = true;
+    }
+    if (ele.iconFlag === 'activism'){
+      legendIcons.activism = true;
+    }
+    if (ele.iconFlag === 'campaign'){
+      legendIcons.campaign = true;
+    }
+    if (ele.iconFlag === 'next-gen'){
+      legendIcons.nextGen = true;
+    }
+    if (ele.iconFlag === 'hr-one'){
+      legendIcons.hrOne = true;
+    }
+    if (ele.iconFlag === 'mfol') {
+      legendIcons.mfol = true;
+    }
+  };
   module.mapView = mapView;
 
 }(window));
