@@ -30,6 +30,8 @@ tableHandler.initialFilters = function () {
   tableHandler.addFilter('meetingType', 'Town Hall');
   tableHandler.addFilter('meetingType', 'Empty Chair Town Hall');
   tableHandler.addFilter('meetingType', 'Campaign Town Hall');
+  tableHandler.addFilter('meetingType', 'Youth Vote');
+  tableHandler.addFilter('meetingType', 'Voting Rights');
 };
 
 tableHandler.configureDropdowns = function() {
