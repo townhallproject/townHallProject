@@ -12,7 +12,7 @@ export default (missingMember) => {
         <div>
             <a href="https://jacksonmaxfield.github.io/flyer_gen/#/m=${missingMember.id}" target="_blank"
                title="Print a milk-carton like poster for your Missing Member of Congress.">
-              <i class="fa fa-2x fa-address-book" aria-hidden="true"></i>
+              <i class="fas fa-2x fa-address-book" aria-hidden="true"></i>
             </a>
         </div>
       </div>
@@ -27,23 +27,23 @@ export default (missingMember) => {
         <div class="social-icons col-xs-12 col-sm-7 no-padding p-0 text-right">
           ${missingMember.twitter ?
             `<a href="//twitter.com/${missingMember.twitter}" class="social-icon" target="_blank">
-              <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+              <i class="fas fa-twitter-square fa-2x" aria-hidden="true"></i>
             </a>`:''}
           ${missingMember.facebook ? 
             `<a href="//facebook.com/${missingMember.facebook}" class="social-icon" target="_blank">
-              <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+              <i class="fas fa-facebook-square fa-2x" aria-hidden="true"></i>
             </a>`: ''}
           ${missingMember.oc_email ? 
             `<a href="mailto:${missingMember.oc_email}" class="social-icon">
-              <i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+              <i class="fas fa-envelope-square fa-2x" aria-hidden="true"></i>
             </a>`: ''}
           ${missingMember.contact_form ? 
             `<a href="${missingMember.contact_form}" class="social-icon" target="_blank">
-              <i class="fa fa fa-external-link-square fa-2x" aria-hidden="true"></i>
+              <i class="fas fa fa-external-link-square fa-2x" aria-hidden="true"></i>
             </a>`:''}
           ${missingMember.url ? 
             `<a href="${missingMember.url}" class="social-icon" target="_blank">
-              <i class="fa fa fa-external-link-square fa-2x" aria-hidden="true"></i>
+              <i class="fas fa fa-external-link-square fa-2x" aria-hidden="true"></i>
             </a>`: ''}
         </div>
       </div>
