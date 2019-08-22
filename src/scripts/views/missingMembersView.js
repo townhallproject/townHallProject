@@ -84,6 +84,7 @@ function startIsotope() {
     sortAscending: false
   });
   // // layout Isotope after each image loads
+  // will probably need diff library with npm - imagesLoaded
   // $grid.imagesLoaded().progress(function () {
   //   $grid.isotope('layout');
   // });
@@ -107,7 +108,8 @@ function startIsotope() {
 missingMemberView.init = function () {
   MoC.all().then(function (MoCs) {
     var missingMembers = MoCs.filter(function (member) {
-      return member.missingMember;
+      member.format();
+      return member.missing_member && member.missing_member[116];
     }).map(function(mem) {
       if (mem.party === 'D') {mem.party = 'Democratic'}
       if (mem.party === 'R') {mem.party = 'Republican'}
