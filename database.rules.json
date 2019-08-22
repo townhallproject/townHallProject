@@ -203,6 +203,21 @@
         }
       }
     },
+    "state_candidate_keys": {
+      ".read": "true",
+      "$mocKey": {
+        ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true || root.child('users').child(auth.uid).child('dataIntern').val() == true",
+        "lastUpdatedBy": {
+          ".write": "auth.uid !== null"
+        },
+        "lastUpdated": {
+          ".write": "auth.uid !== null"
+        },
+        "currentEvents": {
+          ".write": "auth.uid !== null"
+        }
+      }
+    },
     "mocID": {
       ".read": "true",
       "$mocKey": {
