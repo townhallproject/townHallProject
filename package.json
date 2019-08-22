@@ -33,6 +33,7 @@
     "firebase": "^3.6.6",
     "firebase-admin": "^5.5.1",
     "firebase-functions": "^0.7.5",
+    "firebase-tools": "^7.0.2",
     "geo-distance": "^0.1.2",
     "google-maps": "^3.2.1",
     "grunt-bower-install": "^1.6.0",
