@@ -9,6 +9,7 @@ indexController.renderMainIndex = function (ctx, next) {
   indexView.renderHeader();
   indexView.setStateDropdown();
   tableHandler.initialFilters();
+  tableHandler.configureDropdowns();
   next();
 };
 
@@ -17,6 +18,7 @@ indexController.renderStateIndex = function (ctx, next) {
   stateView.renderHeader(ctx.stateUPSP);
   stateView.setStateDropdown(ctx.stateUPSP);
   tableHandler.resetFilters();
+  tableHandler.configureDropdowns();
   next();
 };
 
