@@ -418,6 +418,9 @@ export const init = () => {
   $('#view-missing-member-report').on('click', function () {
     $('.missing-members-modal').modal('show');
   });
+  $('#view-accessibility-report').on('click', function () {
+    $('.recess-report-modal').modal('show');
+  });
   $('.privacy-policy-button').on('click', function () {
     $('#privacy-policy-link').click();
     $('html,body').scrollTop(0);
