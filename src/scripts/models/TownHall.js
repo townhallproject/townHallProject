@@ -140,18 +140,21 @@ TownHall.sortFunction = (a, b) => {
   }
 };
 
-TownHall.getFilteredResults = (data) => {
+TownHall.getFilteredResults = function(data) {
   // Itterate through all active filters and pull out any townhalls that match them
   // At least one attribute from within each filter group must match
-  return TownHall.filteredResults = Object.keys(TownHall.filters).reduce(function (filteredData, key) {
-    return filteredData.filter(function (townhall) {
+  return TownHall.filteredResults = Object.keys(TownHall.filters).reduce(function(filteredData, key) {
+    return filteredData.filter(function(townhall) {
       // Currently some of the data is inconsistent.  Some parties are listed as "Democrat" and some are listed as "Democratic", etc
       // TODO:  Once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
-      return TownHall.filters[key].some(function (filter) {
+      return TownHall.filters[key].some(function(filter) {
+        if (key === 'party') {
+          filter = filter.slice(0, 1);
+        }
         if (!townhall[key]) {
           return;
         }
-        return filter.slice(0, 8) === townhall[key].slice(0, 8);
+        return filter === townhall[key].slice(0, filter.length);
       });
     });
   }, data).sort(TownHall.sortFunction);
