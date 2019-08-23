@@ -57,22 +57,22 @@ class TownHall {
   makeDisplayDistrict() {
     if (this.level === 'state') {
       //state leg or statewide office
-      var title;
+      let title;
       if (this.district) {
         //state leg
         //"VA HD-08" (Virginia House District 8)
-        var chamber = this.district.split('-')[0];
-        var number = this.district.split('-')[1];
-        var sentence = [this.district, '(' + this.stateName, constants[chamber], parseInt(number) + ')'];
+        const chamber = this.district.split('-')[0];
+        const number = this.district.split('-')[1];
+        const sentence = [this.district, '(' + this.stateName, constants[chamber], parseInt(number) + ')'];
         this.displayDistrict = sentence.join(' ');
       } else {
         //statewide office, ie Governor
-        var office = this.thp_id.split('-')[1];
+        const office = this.thp_id.split('-')[1];
         title = constants[office];
         this.displayDistrict = title;
       }
     } else {
-      var state = this.state ? this.state : this.stateAbbr;
+      const state = this.state ? this.state : this.stateAbbr;
       if (this.district && parseInt(this.district)) {
         //House
         this.displayDistrict = state + '-' + parseInt(this.district);
@@ -89,6 +89,30 @@ class TownHall {
       }
     }
   };
+
+  getIsPledger() {
+    let townhall = this;
+    townhall.isPledger = false;
+    const townHallMember = this.displayName;
+    if (townhall.state && townhall.displayName) {
+      return firebasedb.ref('town_hall_pledges/' + townhall.state)
+        .once('value')
+        .then(function(snapshot) {
+          snapshot.forEach(function(personData){
+            var person = personData.val();
+            if (person.displayName === townHallMember && person.pledged) {
+              townhall.isPledger = true;
+              return townhall;
+  
+            } 
+          });
+          return Promise.resolve(townhall);
+  
+        });
+    }
+    return Promise.resolve(townhall);
+  };
+  
 }
 
 TownHall.saveZipLookup = (zip) => {

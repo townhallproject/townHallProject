@@ -38,12 +38,11 @@ export default (eventInfo) => {
         ${eventInfo.party ?
         `(${eventInfo.party})`
         : '' }
-        ${eventInfo.displayDistrict}</small></h3>
-      }`
+        ${eventInfo.displayDistrict}</small></h3>`
     }
     <h3 class="col-xs-2 col-md-3">
       <span class="addtocalendar pull-right">
-        <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fas fa-calendar-plus-o" aria-hidden="true"></i></a>
+        <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
         <var class="atc_event">
           <var class="atc_date_start">${eventInfo.yearMonthDay} ${eventInfo.timeStart24}</var>
             <var class="atc_date_end">${eventInfo.yearMonthDay} ${eventInfo.timeEnd24}</var>
