@@ -35,7 +35,7 @@
         ".read": "false",
         ".write": "true",
         "$firebaseid": {
-          ".validate": "newData.hasChildren(['eventId','email_address', 'family_name', 'given_name', 'postal_code', 'phone_number', 'can_contact'])"
+          ".validate": "newData.hasChildren(['eventId','email_address', 'family_name', 'given_name', 'postal_code', 'can_contact'])"
         }
       }
     },
@@ -69,7 +69,7 @@
     },
     "townHallIds": {
       ".read": "true",
-      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
     },
     "archive_116th_congress": {
       ".read": "true",
@@ -381,6 +381,13 @@
       "$user_id": {
         ".read": "$user_id === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() == true",
         ".write": "$user_id === auth.uid"
+      },
+      "potential-vols": {
+        ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+        "$phoneNumber": {
+          ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+          ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
+        },
       }
     }
   }
