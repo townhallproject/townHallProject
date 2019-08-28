@@ -2,16 +2,7 @@
   var map;
   var mapView = {};
   mapView.zoomLocation = false;
-  var legendIcons = {
-    inPerson: false,
-    staff: false,
-    tele: false,
-    activism: false,
-    campaign: false,
-    nextGen: false,
-    hrOne: false,
-    mfol: false,
-  };
+  var legendIcons = {};
 
 
   mapView.setMap = function(style, parentBB, ctxbounds){
@@ -88,7 +79,7 @@
           if (webgl) {
             mapboxView.setData();
           }
-          mapView.hideAbsentEvents();
+          mapView.displayPresentEvents();
 
           TownHall.allTownHalls = allTownHalls;
           zipLookUpHandler.zipSearchByParam();
@@ -187,41 +178,16 @@
     }
   };
 
-  // If no events of a given type are present in the snapshot, hide its associated legend li
-  mapView.hideAbsentEvents = function hideAbsentEvents(){
+  // If an event is present in the snapshot, remove hidden class.
+  mapView.displayPresentEvents = function displayPresentEvents(){
     for(var key in legendIcons){
-      if(legendIcons[key] === false){
-        $(`.${key}-parent`).addClass('hidden');
-      }
+      $(`.${key}-parent`).removeClass('hidden');
     }
   };
 
-  // for each townhall event in ele, update legendIcons if key matches
+  // For each townhall event encountered, add KV pair to legend icons.
   mapView.checkForAbsentEvents = function checkForAbsentEvents(ele){
-    if (ele.iconFlag === 'in-person'){
-      legendIcons.inPerson = true;
-    }
-    if (ele.iconFlag === 'staff'){
-      legendIcons.staff = true;
-    }
-    if (ele.iconFlag === 'tele'){
-      legendIcons.tele = true;
-    }
-    if (ele.iconFlag === 'activism'){
-      legendIcons.activism = true;
-    }
-    if (ele.iconFlag === 'campaign'){
-      legendIcons.campaign = true;
-    }
-    if (ele.iconFlag === 'next-gen'){
-      legendIcons.nextGen = true;
-    }
-    if (ele.iconFlag === 'hr-one'){
-      legendIcons.hrOne = true;
-    }
-    if (ele.iconFlag === 'mfol') {
-      legendIcons.mfol = true;
-    }
+    legendIcons[ele.iconFlag] = false;
   };
   module.mapView = mapView;
 
