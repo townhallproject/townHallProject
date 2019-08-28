@@ -279,50 +279,102 @@
           <img class="webGL-kill" src="../Images/map/xmark.svg"></img>
         </div>
         <div class="row map-large">
-          <div id="map"></div>
-          <div class="map-legend">
-            <ul class="list-inline">
-              <li class="map-legend-li hide-if-no-webgl">
-                <dt class="map-legend__senate"></dt>
-                <dd>U.S. Senator</dd>
-              </li>
-              <li class="map-legend-li hide-if-no-webgl">
-                <dt class="map-legend__distrcit"></dt>
-                <dd>U.S. Representative</dd>
-              </li>
-              <li class="map-legend-li">
-                <dt class="map-legend-icon map-legend__person"></dt>
-                <dd>In-person</dd>
-              </li>
-              <li class="map-legend-li">
-                <dt class="map-legend-icon map-legend__staff"></dt>
-                <dd>Staff-only</dd>
-              </li>
-              <li class="map-legend-li">
-                <dt class="map-legend-icon map-legend__tele"></dt>
-                <dd>Call-in</dd>
-              </li>
-              <li class="map-legend-li">
-                <dt class="map-legend-icon map-legend__activ"></dt>
-                <dd>Activist Event</dd>
-              </li>
-              <li class="map-legend-li">
-                <dt class="map-legend-icon map-legend__campaign"></dt>
-                <dd>Campaign Event</dd>
-              </li>
-              <li class="map-legend-li">
-                <dt class="map-legend-icon map-legend__next-gen"></dt>
-                <dd>Youth Vote</dd>
-              </li>
-              <li class="map-legend-li">
-                <dt class="map-legend-icon map-legend__hr"></dt>
-                <dd>Voting Rights</dd>
-              </li>
-              <li class="map-legend-li">
-                <dt class="map-legend-icon map-legend__mfol"></dt>
-                <dd>THFOL</dd>
-              </li>
-            </ul>
+        
+          <div id="map">
+          </div>
+              <div class="map-legend hidden-xs">
+                <ul class="list-inline">
+                  <li class="map-legend-li hide-if-no-webgl">
+                    <dt class="map-legend__senate"></dt>
+                    <dd>U.S. Senator</dd>
+                  </li>
+                  <li class="map-legend-li hide-if-no-webgl">
+                    <dt class="map-legend__distrcit"></dt>
+                    <dd>U.S. Representative</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__person"></dt>
+                    <dd>In-person</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__staff"></dt>
+                    <dd>Staff-only</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__tele"></dt>
+                    <dd>Call-in</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__activ"></dt>
+                    <dd>Activist Event</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__campaign"></dt>
+                    <dd>Campaign Event</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__next-gen"></dt>
+                    <dd>Youth Vote</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__hr"></dt>
+                    <dd>Voting Rights</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__mfol"></dt>
+                    <dd>THFOL</dd>
+                  </li>
+                </ul>
+              </div>
+          <div class="map-legend visible-xs">
+              <div id="Legend" class="collapse">
+                <ul class="list-inline">
+                  <li class="map-legend-li hide-if-no-webgl">
+                    <dt class="map-legend__senate"></dt>
+                    <dd>U.S. Senator</dd>
+                  </li>
+                  <li class="map-legend-li hide-if-no-webgl">
+                    <dt class="map-legend__distrcit"></dt>
+                    <dd>U.S. Representative</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__person"></dt>
+                    <dd>In-person</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__staff"></dt>
+                    <dd>Staff-only</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__tele"></dt>
+                    <dd>Call-in</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__activ"></dt>
+                    <dd>Activist Event</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__campaign"></dt>
+                    <dd>Campaign Event</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__next-gen"></dt>
+                    <dd>Youth Vote</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__hr"></dt>
+                    <dd>Voting Rights</dd>
+                  </li>
+                  <li class="map-legend-li">
+                    <dt class="map-legend-icon map-legend__mfol"></dt>
+                    <dd>THFOL</dd>
+                  </li>
+                </ul>
+            </div>
+              <button data-target="#Legend" class="btn-xs btn-default visible-xs" data-toggle="collapse"><i class="fas fa-bars"></i></button>
+          </div>
+        </div>
+      </div>
             <ul class="state-lines list-inline hide-if-no-webgl hidden">
               <li class="map-legend-li">Showing: </li>
               <button type="button" name="button" id="show-federal-borders"
@@ -349,9 +401,6 @@
                 </ul>
               </button>
             </ul>
-          </div>
-        </div>
-      </div>
       <div class="header-with-results map-container-split hidden">
         <div class="row">
           <div class="col-md-6">
@@ -511,205 +560,191 @@
       <div id="representativeCards">
         <section class="container container-fluid"></section>
       </div>
-
-      <section class="scroll-to-form text-center">
-        <p>
-          <a href="#events-table" class="scroll-button btn btn-white btn-lg">
-            <i class="fas fa-chevron-down fa-2x" aria-hidden="true"></i>
-          </a>
-        </p>
-      </section>
-      <a name="events-table" id="events-table"></a>
-      <section class=" container container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <span class="pull-right">
-              <button id="scrollBtn">
-                <i class="fas fa-chevron-up fa-2x" aria-hidden="true"></i>
-              </button>
-            </span>
-          </div>
-        </div>
-        <h2 class="text-primary table-title text-center">Upcoming Events</h2>
-        <div class="row">
-          <small>
-            <ul class="list-unstyled container">
+<div class="hidden-xs">
+  <section class="scroll-to-form text-center">
+    <p>
+      <a href="#events-table" class="scroll-button btn btn-white btn-lg">
+        <i class="fas fa-chevron-down fa-2x" aria-hidden="true"></i>
+      </a>
+    </p>
+  </section>
+  <a name="events-table" id="events-table"></a>
+  <section class=" container container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <span class="pull-right">
+          <button id="scrollBtn">
+            <i class="fas fa-chevron-up fa-2x" aria-hidden="true"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+    <h2 class="text-primary table-title text-center">Upcoming Events</h2>
+    <div class="row">
+      <small>
+        <ul class="list-unstyled container">
+          <li>
+            <span class="text-secondary">Town Hall</span>
+            <span> - A forum where lawmakers give legislative updates and answer open questions from constituents.</span>
+          </li>
+          <li>
+            <span class="text-secondary">"Empty Chair" Town Hall</span>
+            <span> - A citizen-organized town hall held with or without the invited lawmaker.</span>
+          </li>
+          <li>
+            <span class="text-secondary">Adopt-A-District/State</span>
+            <span> - A citizen-organized town hall featuring a member of Congress from another district.</span>
+          </li>
+          <li>
+            <span class="text-secondary">Office Hours </span>
+            <span> - Opportunity to meet and question a lawmaker's staff. Usually held in district offices but sometimes are
+              "mobile office hours."</span>
+          </li>
+          <li>
+            <span class="text-secondary">Campaign Town Hall </span>
+            <span> - A town hall organized by a candidate for office - whether an incumbent or challenger. (Town Hall Project
+              includes these events as a public resource--not to endorse a particular candidate or campaign).</span>
+          </li>
+          <li>
+            <span class="text-secondary">Ticketed Event</span>
+            <span> - Paid events. Typically fundraisers. (Town Hall Project includes these events as a public resource--not
+              to endorse a particular candidate or campaign).</span>
+          </li>
+          <li>
+            <span class="text-secondary">TeleTown Hall Meeting </span>
+            <span> - A town hall conducted by conference call or online.</span>
+          </li>
+        </ul>
+      </small>
+    </div>
+    <div>
+      <ul id="all-events-table" class="list-group">
+        <li class="list-group-item list-group-heading">
+          <nav class="navbar navbar-default navbar-static-top ">
+            <ul class="nav navbar-nav navbar-left" id="filter-info">
               <li>
-                <span class="text-secondary">Town Hall</span>
-                <span> - A forum where lawmakers give legislative updates and answer open questions from
-                  constituents.</span>
-              </li>
-              <li>
-                <span class="text-secondary">"Empty Chair" Town Hall</span>
-                <span> - A citizen-organized town hall held with or without the invited lawmaker.</span>
-              </li>
-              <li>
-                <span class="text-secondary">Adopt-A-District/State</span>
-                <span> - A citizen-organized town hall featuring a member of Congress from another district.</span>
-              </li>
-              <li>
-                <span class="text-secondary">Office Hours </span>
-                <span> - Opportunity to meet and question a lawmaker's staff. Usually held in district offices but
-                  sometimes are
-                  "mobile office hours."</span>
-              </li>
-              <li>
-                <span class="text-secondary">Campaign Town Hall </span>
-                <span> - A town hall organized by a candidate for office - whether an incumbent or challenger. (Town
-                  Hall Project
-                  includes these events as a public resource--not to endorse a particular candidate or campaign).</span>
-              </li>
-              <li>
-                <span class="text-secondary">Ticketed Event</span>
-                <span> - Paid events. Typically fundraisers. (Town Hall Project includes these events as a public
-                  resource--not
-                  to endorse a particular candidate or campaign).</span>
-              </li>
-              <li>
-                <span class="text-secondary">TeleTown Hall Meeting </span>
-                <span> - A town hall conducted by conference call or online.</span>
+                <span id="current-state" data-current=0 data-total=0></span>
               </li>
             </ul>
-          </small>
-        </div>
-        <div>
-          <ul id="all-events-table" class="list-group">
-            <li class="list-group-item list-group-heading">
-              <nav class="navbar navbar-default navbar-static-top ">
-                <ul class="nav navbar-nav navbar-left" id="filter-info">
+            <ul id="all-events-table-dropdown-container" class="nav navbar-nav navbar-right">
+              <li class="dropdown hidden">
+                <a href="#" class="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Member
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="downdown-title">Search by member of Congress</li>
+                  <li role="separator" class="divider"></li>
                   <li>
-                    <span id="current-state" data-current=0 data-total=0></span>
+                    <input id="memberTypeahead" type="text" class="form-control dropdown-item filter" data-provide="typeahead"
+                      placeholder="Search by member" data-filter="displayName" autocomplete="off">
                   </li>
                 </ul>
-                <ul id="all-events-table-dropdown-container" class="nav navbar-nav navbar-right">
-                  <li class="dropdown hidden">
-                    <a href="#" class="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button"
-                      aria-haspopup="true" aria-expanded="false">Member
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li class="downdown-title">Search by member of Congress</li>
-                      <li role="separator" class="divider"></li>
-                      <li>
-                        <input id="memberTypeahead" type="text" class="form-control dropdown-item filter"
-                          data-provide="typeahead" placeholder="Search by member" data-filter="displayName"
-                          autocomplete="off">
-                      </li>
-                    </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu filter">
+                  <li class="downdown-title">Filter by party</li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                    <a data-filter="party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
                   </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                      aria-expanded="false">Party
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu filter">
-                      <li class="downdown-title">Filter by party</li>
-                      <li role="separator" class="divider"></li>
-                      <li>
-                        <a data-filter="party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
-                      </li>
-                      <li>
-                        <a data-filter="party" id="Republican" class="dropdown-item" href="#">Republican</a>
-                      </li>
-                      <li>
-                        <a data-filter="party" id="Independent" class="dropdown-item" href="#">Independent</a>
-                      </li>
-                      <li>
-                        <a data-filter="party" id="All" class="dropdown-item" href="#">All</a>
-                      </li>
+                  <li>
+                    <a data-filter="party" id="Republican" class="dropdown-item" href="#">Republican</a>
+                  </li>
+                  <li>
+                    <a data-filter="party" id="Independent" class="dropdown-item" href="#">Independent</a>
+                  </li>
+                  <li>
+                    <a data-filter="party" id="All" class="dropdown-item" href="#">All</a>
+                  </li>
 
-                    </ul>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button"
-                      aria-haspopup="true" aria-expanded="false">State
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li class="downdown-title">Search by State</li>
-                      <li role="separator" class="divider"></li>
-                      <li>
-                        <input id="stateTypeahead" type="text" class="form-control dropdown-item filter"
-                          data-provide="typeahead" placeholder="Search by state" data-filter="stateName"
-                          autocomplete="off">
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                      aria-expanded="false">Event Type
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu filter">
-                      <li class="downdown-title">Filter by Event Type</li>
-                      <li role="separator" class="divider"></li>
-                      <li>
-                        <a data-filter="meetingType" id="Town Hall" class="dropdown-item" href="#">Town Hall</a>
-                      </li>
-                      <li>
-                        <a data-filter="meetingType" id="Empty Chair Town Hall" class="dropdown-item" href="#">Empty
-                          Chair Town Hall</a>
-                      </li>
-                      <li>
-                        <a data-filter="meetingType" id="Adopt-A-District/State" href="#">Adopt-A-District/State</a>
-                      </li>
-                      <li>
-                        <a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a>
-                      </li>
-                      <li>
-                        <a data-filter="meetingType" id="Ticketed Event" class="dropdown-item" href="#">Ticketed
-                          Event</a>
-                      </li>
-                      <li>
-                        <a data-filter="meetingType" id="Tele-Town Hall" class="dropdown-item" href="#">Tele-Town
-                          Hall</a>
-                      </li>
-                      <li>
-                        <a data-filter="meetingType" id="Campaign Town Hall" class="dropdown-item" href="#">Campaign
-                          Town Hall</a>
-                      </li>
-                      <li>
-                        <a data-filter="meetingType" id="Youth Vote" class="dropdown-item" href="#">Youth Vote</a>
-                      </li>
-                      <li>
-                        <a data-filter="meetingType" id="Voting Rights" class="dropdown-item" href="#">Voting Rights</a>
-                      </li>
-                      <li>
-                        <a data-filter="meetingType" id="Other" class="dropdown-item" href="#">Other</a>
-                      </li>
-                      <li>
-                        <a data-filter="meetingType" id="All" class="dropdown-item" href="#">All</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                      aria-expanded="false">Sort
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu sort">
-                      <li class="downdown-title">Sort Table</li>
-                      <li role="separator" class="divider"></li>
-                      <li>
-                        <a data-filter="dateObj" id="byDate" class="dropdown-item" href="#">By Date</a>
-                      </li>
-                      <li>
-                        <a data-filter="stateName" id="byState" class="dropdown-item hide-on-state-view" href="#">By
-                          State</a>
-                      </li>
-                      <li>
-                        <a data-filter="displayName" id="byName" class="dropdown-item" href="#">By Name</a>
-                      </li>
-                    </ul>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">State
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="downdown-title">Search by State</li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                    <input id="stateTypeahead" type="text" class="form-control dropdown-item filter" data-provide="typeahead"
+                      placeholder="Search by state" data-filter="stateName" autocomplete="off">
                   </li>
                 </ul>
-              </nav>
-            </li>
-            <!-- end header-->
-          </ul>
-          <!--end table-->
-        </div>
-      </section>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Event Type
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu filter">
+                  <li class="downdown-title">Filter by Event Type</li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                    <a data-filter="meetingType" id="Town Hall" class="dropdown-item" href="#">Town Hall</a>
+                  </li>
+                  <li>
+                    <a data-filter="meetingType" id="Empty Chair Town Hall" class="dropdown-item" href="#">Empty Chair Town Hall</a>
+                  </li>
+                  <li>
+                    <a data-filter="meetingType" id="Adopt-A-District/State" href="#">Adopt-A-District/State</a>
+                  </li>
+                  <li>
+                    <a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a>
+                  </li>
+                  <li>
+                    <a data-filter="meetingType" id="Ticketed Event" class="dropdown-item" href="#">Ticketed Event</a>
+                  </li>
+                  <li>
+                    <a data-filter="meetingType" id="Tele-Town Hall" class="dropdown-item" href="#">Tele-Town Hall</a>
+                  </li>
+                  <li>
+                    <a data-filter="meetingType" id="Campaign Town Hall" class="dropdown-item" href="#">Campaign Town Hall</a>
+                  </li>
+                  <li>
+                    <a data-filter="meetingType" id="Youth Vote" class="dropdown-item" href="#">Youth Vote</a>
+                  </li>
+                  <li>
+                    <a data-filter="meetingType" id="Voting Rights" class="dropdown-item" href="#">Voting Rights</a>
+                  </li>
+                  <li>
+                    <a data-filter="meetingType" id="Other" class="dropdown-item" href="#">Other</a>
+                  </li>
+                  <li>
+                    <a data-filter="meetingType" id="All" class="dropdown-item" href="#">All</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu sort">
+                  <li class="downdown-title">Sort Table</li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                    <a data-filter="dateObj" id="byDate" class="dropdown-item" href="#">By Date</a>
+                  </li>
+                  <li>
+                    <a data-filter="stateName" id="byState" class="dropdown-item hide-on-state-view" href="#">By State</a>
+                  </li>
+                  <li>
+                    <a data-filter="displayName" id="byName" class="dropdown-item" href="#">By Name</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </li>
+        <!-- end header-->
+      </ul>
+      <!--end table-->
+    </div>
+  </section>
+<!--end of hidden-xs div-->
+</div>
     </div>
     <div role="tabpanel" class="tab-pane" id="submit">
       <div class='embed-container submit-embed-container'>
