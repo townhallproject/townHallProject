@@ -325,25 +325,18 @@
   function checkEventParam() {
     var eventId = urlParamsHandler.getUrlParameter('eventId');
     var stateId = urlParamsHandler.getUrlParameter('state');
-    // eslint-disable-next-line no-console
-    console.log(eventId);
-    // eslint-disable-next-line no-console
-    console.log(stateId);
+
     if (stateId && eventId) {
       firebasedb.ref('/state_townhalls/'+stateId+'/'+eventId).once('value').then(function(snapshot){
-        if(snapshot.val()) {
-          // eslint-disable-next-line no-console
-          console.log('here! 330');
-          var townhall = new TownHall(snapshot.val()); 
+        if (snapshot.val()) {
+          var townhall = new TownHall(snapshot.val());
           townhall.makeFormattedMember();
-          eventHandler.populateEventModal(townhall); 
+          eventHandler.populateEventModal(townhall);
           $('.event-modal').modal('show');
         }
       });
     } else if (eventId){
-      // eslint-disable-next-line no-console
-      console.log('here!');
-      firebasedb.ref('/townHalls/' + eventId).once('value').then(function(snapshot){
+      firebasedb.ref('townHalls/' + eventId).once('value').then(function(snapshot){
         if (snapshot.val()) {
           var townhall = new TownHall(snapshot.val());
           townhall.makeFormattedMember();
