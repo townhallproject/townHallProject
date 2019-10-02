@@ -41,14 +41,15 @@ export default (rep)=> (
             </a>`: ''
           }
           ${rep.contact_form ?
-            `<a href="${rep.contact_form}" class="social-icon" target="_blank">
+            `<a href="http://${rep.contact_form}" class="social-icon" target="_blank">
               <i class="fa fa fa-external-link-square fa-2x" aria-hidden="true"></i>
             </a>` :
             rep.domain ?
-              `<a href="${rep.domain}" class="social-icon" target="_blank">
+              `<a href="http://${rep.domain}" class="social-icon" target="_blank">
                 <i class="fa fa fa-external-link-square fa-2x" aria-hidden="true"></i>
               </a>`
-              : ''}
+              : ''
+          }
         </div>
       </div>
     </div>
