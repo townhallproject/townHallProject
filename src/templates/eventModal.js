@@ -77,7 +77,7 @@ export default (eventInfo) => {
           width="600"
           height="450"
           frameborder="0" style="border:0"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyALLuOh_q8phgScmZiVEJwkaK8NkUPkkrM&q=${addressQuery(eventInfo.address)}" allowfullscreen>
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&q=${addressQuery(eventInfo.address)}" allowfullscreen>
         </iframe>
       </div>
     </p>`
