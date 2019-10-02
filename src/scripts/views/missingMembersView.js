@@ -10,14 +10,14 @@ missingMemberView.loaded = false;
 missingMemberView.statePopulation = statePopulation;
 
 missingMemberView.addFilter = function (filterObj, filterValue) {
-  var $currentState = $('#mm-current-state');
-  var total = parseInt($currentState.attr('data-total'));
-  var nofilters = true;
+  let $currentState = $('#mm-current-state');
+  let total = parseInt($currentState.attr('data-total'));
+  let nofilters = true;
   Object.keys(filterObj).forEach(function (filter) {
     if (filterObj[filter].length > 0) {
       nofilters = false;
       $('.' + filter).remove();
-      var removeFilterbutton = '<li class="mm-turn-off-filter button-group ' + filter + '" data-filter-group=' + filter + '><button class=" btn-filter btn btn-secondary btn-xs" ' +
+      let removeFilterbutton = '<li class="mm-turn-off-filter button-group ' + filter + '" data-filter-group=' + filter + '><button class=" btn-filter btn btn-secondary btn-xs" ' +
         'data-filter="" >' +
         filterObj[filter].split('.')[1] + '<i class="fa fa-times" aria-hidden="true"></i>' +
         '</button></li>';
@@ -26,7 +26,7 @@ missingMemberView.addFilter = function (filterObj, filterValue) {
       $('.' + filter).remove();
     }
   });
-  var cur = nofilters ? total : $(filterValue).length;
+  let cur = nofilters ? total : $(filterValue).length;
   $currentState.text('Viewing ' + cur + ' of ' + total + ' total missing members');
 };
 
@@ -38,8 +38,8 @@ missingMemberView.renderAll = function (template, parent, array) {
 
 // flatten object by concatting values
 function concatValues(obj) {
-  var value = '.element-item';
-  for (var prop in obj) {
+  let value = '.element-item';
+  for (let prop in obj) {
     value += obj[prop];
   }
   return value;
@@ -63,8 +63,8 @@ function getAllCategories(returnedData) {
     }
     return acc;
   }, []).sort(function (a, b) {
-    var statea = a.categoryID;
-    var stateb = b.categoryID;
+    let statea = a.categoryID;
+    let stateb = b.categoryID;
     if (statea > stateb) {
       return 1;
     } else if (stateb > statea) {
@@ -75,7 +75,7 @@ function getAllCategories(returnedData) {
 }
 
 function startIsotope() {
-  var $grid = new Isotope('.grid', {
+  let $grid = new Isotope('.grid', {
     itemSelector: '.element-item',
     getSortData: {
       townhall: '.townHallNumber parseInt' // text from querySelector
@@ -88,16 +88,16 @@ function startIsotope() {
   // $grid.imagesLoaded().progress(function () {
   //   $grid.isotope('layout');
   // });
-  var filters = {};
+  let filters = {};
   $('.filter-button-group').on('click', '.btn-filter', function () {
-    var $this = $(this);
+    let $this = $(this);
     // get group key
-    var $buttonGroup = $this.parents('.button-group');
-    var filterGroup = $buttonGroup.attr('data-filter-group');
+    let $buttonGroup = $this.parents('.button-group');
+    let filterGroup = $buttonGroup.attr('data-filter-group');
     // set filter for group
     filters[filterGroup] = $this.attr('data-filter');
     // combine filters
-    var filterValue = concatValues(filters);
+    let filterValue = concatValues(filters);
     missingMemberView.addFilter(filters, filterValue);
     $grid.arrange({
       filter: filterValue
@@ -107,18 +107,14 @@ function startIsotope() {
 
 missingMemberView.init = function () {
   MoC.all().then(function (MoCs) {
-    var missingMembers = MoCs.filter(function (member) {
+    let missingMembers = MoCs.filter(function (member) {
       member.format();
       return member.missing_member && member.missing_member[116];
-    }).map(function(mem) {
-      if (mem.party === 'D') {mem.party = 'Democratic'}
-      if (mem.party === 'R') {mem.party = 'Republican'}
-      return mem;
     });
 
     missingMemberView.loaded = true;
-    var $currentState = $('#mm-current-state');
-    var $copy = $('#mm-total-copy');
+    let $currentState = $('#mm-current-state');
+    let $copy = $('#mm-total-copy');
     $('#mm-current-state').attr('data-current', missingMembers.length);
     $('#mm-current-state').attr('data-total', missingMembers.length);
     // inital report of data
@@ -128,7 +124,7 @@ missingMemberView.init = function () {
     // make cards
     missingMemberView.renderAll(missingMemberCardTemplate, '.grid', missingMembers);
     // add state buttons
-    var allCategories = getAllCategories(missingMembers);
+    let allCategories = getAllCategories(missingMembers);
     missingMemberView.renderAll(missingMemberButtonTemplate, '#state-buttons', allCategories);
     // initalize isotope
     startIsotope();
