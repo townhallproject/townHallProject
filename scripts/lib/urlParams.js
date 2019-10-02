@@ -19,6 +19,8 @@
 
   urlParamsHandler.setUrlParameter = function(param, value) {
     // Get query params, and remove the matching param if it exists
+    // eslint-disable-next-line no-console
+    console.log('Here, urlParamsHandler, setUrlParameter', param, value);
     var search = document.location.search.replace(new RegExp('([?&])' + param + '[^&]*'),'');
     // If there are no query params then we need to add the ? back
     if (search.indexOf('?') === -1) {

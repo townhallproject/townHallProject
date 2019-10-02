@@ -293,12 +293,17 @@
   };
 
   eventHandler.populateEventModal = function(townhall) {
+    var level = townhall.level;
     var compiledTemplate = Handlebars.getTemplate('eventModal');
     var timeStampTownhall = Object.assign({
       time_submitted: moment().format()
     }, townhall);
     $('.event-modal .modal-content').html(compiledTemplate(timeStampTownhall));
-    urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
+    if (level === 'state'){
+      urlParamsHandler.setUrlParameter('state', townhall.state);
+    } else {
+      urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
+    }
     addtocalendar.load();
   };
 
@@ -319,8 +324,26 @@
 
   function checkEventParam() {
     var eventId = urlParamsHandler.getUrlParameter('eventId');
-    if (eventId) {
-      firebasedb.ref('/townHalls/' + eventId).once('value').then(function(snapshot) {
+    var stateId = urlParamsHandler.getUrlParameter('state');
+    // eslint-disable-next-line no-console
+    console.log(eventId);
+    // eslint-disable-next-line no-console
+    console.log(stateId);
+    if (stateId && eventId) {
+      firebasedb.ref('/state_townhalls/'+stateId+'/'+eventId).once('value').then(function(snapshot){
+        if(snapshot.val()) {
+          // eslint-disable-next-line no-console
+          console.log('here! 330');
+          var townhall = new TownHall(snapshot.val()); 
+          townhall.makeFormattedMember();
+          eventHandler.populateEventModal(townhall); 
+          $('.event-modal').modal('show');
+        }
+      });
+    } else if (eventId){
+      // eslint-disable-next-line no-console
+      console.log('here!');
+      firebasedb.ref('/townHalls/' + eventId).once('value').then(function(snapshot){
         if (snapshot.val()) {
           var townhall = new TownHall(snapshot.val());
           townhall.makeFormattedMember();
@@ -427,6 +450,7 @@
     // Remove query param when closing modal
     $('.event-modal').on('hide.bs.modal', function () {
       urlParamsHandler.setUrlParameter('eventId', false);
+      urlParamsHandler.setUrlParameter('stateId', false); 
     });
     $('#close-email').on('click', function(){
       localStorage.setItem('signedUp', true);
