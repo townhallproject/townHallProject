@@ -44,6 +44,62 @@
       {
         "source": "/virginia",
         "destination": "/index.html"
+      },
+      {
+        "source": "/Oregon",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/oregon",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/nevada",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/Nevada",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/michigan",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/Michigan",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/maine",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/Maine",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/maryland",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/Maryland",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/pennsylvania",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/Pennsylvania",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/florida",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/Florida",
+        "destination": "/index.html"
       }
     ],
     "ignore": [
