@@ -69,7 +69,7 @@
     },
     "townHallIds": {
       ".read": "true",
-      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
+      ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
     },
     "archive_116th_congress": {
       ".read": "true",
@@ -387,7 +387,7 @@
         "$phoneNumber": {
           ".read": "root.child('users').child(auth.uid).child('isAdmin').val() == true",
           ".write": "root.child('users').child(auth.uid).child('isAdmin').val() == true"
-        },
+        }
       }
     }
   }
