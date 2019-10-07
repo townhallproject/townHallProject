@@ -1,0 +1,19 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": false,
+    "codeFrame": true
+  },
+  "globals": {
+    "mapboxgl": true,
+    "localStorage": true,
+    "document": true,
+    "window": true,
+    "location": true,
+    "setTimeout": true
+  },
+  "rules": {
+    "no-undef": "error"
+  }
+}

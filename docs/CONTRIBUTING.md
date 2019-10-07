@@ -65,25 +65,5 @@ Writing data follows a similar pattern. We chain `.ref()` with `.update([object]
 We do not write data from the client side very often.
 For more information, check out the Firebase [docs](https://firebase.google.com/docs/).
 
-### Handlebars
-
-Right now we are using [Handlebars](http://handlebarsjs.com/) to template our html.
-To make a new template create a file in templates/[filename].handlebars.
-
-ex.
-```HTML
-<div class="col-xs-6">
-  <p>{{meetingType}}</p>
-</div>
-```
-To render to that template, you need to compile it, which returns a function you can then pass an object to. The function returns rendered HTML that you can then append to the DOM.
-
-```JavaScript
-var $parent = $('.[element in the DOM]');
-var compiledTemplate = Handlebars.getTemplate('[filename]');
-var $newEle = $(compiledTemplate(townhall));
-$panel.appendTo($parent);
-  ```
-
 ### Help
 If you need help on anything, or are unsure about how something is setup, please email meganrm@townhallproject.com.
