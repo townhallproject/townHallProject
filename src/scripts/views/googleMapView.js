@@ -427,7 +427,7 @@ function assignMarker(iconFlag) {
 // Adds all events as markers
 // renders tables
   noWebGlMapView.setData = function (townhall){
-    this.townhall.makeFormattedMember();
+    townhall.makeFormattedMember();
     TownHall.addFilterIndexes(townhall);
     $('[data-toggle="popover"]').popover({
       container: 'body',
