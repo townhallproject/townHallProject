@@ -1529,6 +1529,9 @@
       return t;
     }(document, "script", "twitter-wjs"));
   </script>
+  <script> 
+    function initMap() {} // to keep from getting a initMap is not a function error, gets overwritten by code in bundle. 
+  </script>
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmCMim_2ePjXmiPrFhscbuBOr0updtryc&callback=initMap&libraries=visualization,geometry">
   </script>
