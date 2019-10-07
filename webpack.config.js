@@ -55,7 +55,7 @@ module.exports = {
   },
   plugins,
 
-  // Load this and everythning it cares about
+  // Load this and everything it cares about
   entry: `${__dirname}/src/main.js`,
 
   devtool: 'source-map',
