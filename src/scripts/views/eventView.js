@@ -302,17 +302,14 @@ function setupTypeaheads() {
 function checkEventParam() {
   let eventId = urlParamsHandler.getUrlParameter('eventId');
   var stateId = urlParamsHandler.getUrlParameter('state');
+  let ref;
   if (stateId && eventId) {
-    firebasedb.ref('/state_townhalls/' + stateId + '/' + eventId).once('value').then(function (snapshot) {
-      if (snapshot.exists()) {
-        var townhall = new TownHall(snapshot.val());
-        townhall.makeFormattedMember();
-        eventHandler.populateEventModal(townhall);
-        $('.event-modal').modal('show');
-      }
-    });
+    ref = `/state_townhalls/${stateId}/${eventId}`;
   } else if (eventId) {
-    firebasedb.ref('/townHalls/' + eventId).once('value').then(function (snapshot) {
+    ref = `/townHalls/${eventId}`;
+  }
+  if (ref) {
+    firebasedb.ref(ref).once('value').then(function (snapshot) {
       if (snapshot.exists()) {
         var townhall = new TownHall(snapshot.val());
         townhall.makeFormattedMember();
@@ -419,6 +416,7 @@ export const init = () => {
   // Remove query param when closing modal
   $('.event-modal').on('hide.bs.modal', function () {
     urlParamsHandler.setUrlParameter('eventId', false);
+    urlParamsHandler.setUrlParameter('state', false);
   });
   $('#close-email').on('click', function () {
     localStorage.setItem('signedUp', true);
