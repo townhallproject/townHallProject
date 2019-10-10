@@ -274,7 +274,12 @@ eventHandler.renderPanels = function (townhall, $parent) {
 };
 
 eventHandler.populateEventModal = function (townhall) {
+  let { level } = townhall;
   $('.event-modal .modal-content').html(eventModalTemplate(townhall));
+  if (level === 'state') {
+    urlParamsHandler.setUrlParameter('state', townhall.state);
+  }
+  urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
   urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
   addtocalendar.load();
 };
@@ -296,9 +301,16 @@ function setupTypeaheads() {
 
 function checkEventParam() {
   let eventId = urlParamsHandler.getUrlParameter('eventId');
-  if (eventId) {
-    firebasedb.ref('/townHalls/' + eventId).once('value').then(function (snapshot) {
-      if (snapshot.val()) {
+  var stateId = urlParamsHandler.getUrlParameter('state');
+  let ref;
+  if (stateId && eventId) {
+    ref = `/state_townhalls/${stateId}/${eventId}`;
+  } else if (eventId) {
+    ref = `/townHalls/${eventId}`;
+  }
+  if (ref) {
+    firebasedb.ref(ref).once('value').then(function (snapshot) {
+      if (snapshot.exists()) {
         var townhall = new TownHall(snapshot.val());
         townhall.makeFormattedMember();
         eventHandler.populateEventModal(townhall);
@@ -404,6 +416,7 @@ export const init = () => {
   // Remove query param when closing modal
   $('.event-modal').on('hide.bs.modal', function () {
     urlParamsHandler.setUrlParameter('eventId', false);
+    urlParamsHandler.setUrlParameter('state', false);
   });
   $('#close-email').on('click', function () {
     localStorage.setItem('signedUp', true);
