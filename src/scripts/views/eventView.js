@@ -274,7 +274,12 @@ eventHandler.renderPanels = function (townhall, $parent) {
 };
 
 eventHandler.populateEventModal = function (townhall) {
+  let { level } = townhall;
   $('.event-modal .modal-content').html(eventModalTemplate(townhall));
+  if (level === 'state') {
+    urlParamsHandler.setUrlParameter('state', townhall.state);
+  }
+  urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
   urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
   addtocalendar.load();
 };
@@ -296,9 +301,19 @@ function setupTypeaheads() {
 
 function checkEventParam() {
   let eventId = urlParamsHandler.getUrlParameter('eventId');
-  if (eventId) {
+  var stateId = urlParamsHandler.getUrlParameter('state');
+  if (stateId && eventId) {
+    firebasedb.ref('/state_townhalls/' + stateId + '/' + eventId).once('value').then(function (snapshot) {
+      if (snapshot.exists()) {
+        var townhall = new TownHall(snapshot.val());
+        townhall.makeFormattedMember();
+        eventHandler.populateEventModal(townhall);
+        $('.event-modal').modal('show');
+      }
+    });
+  } else if (eventId) {
     firebasedb.ref('/townHalls/' + eventId).once('value').then(function (snapshot) {
-      if (snapshot.val()) {
+      if (snapshot.exists()) {
         var townhall = new TownHall(snapshot.val());
         townhall.makeFormattedMember();
         eventHandler.populateEventModal(townhall);
