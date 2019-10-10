@@ -280,7 +280,6 @@ eventHandler.populateEventModal = function (townhall) {
     urlParamsHandler.setUrlParameter('state', townhall.state);
   }
   urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
-  urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
   addtocalendar.load();
 };
 
@@ -313,6 +312,7 @@ function checkEventParam() {
       if (snapshot.exists()) {
         var townhall = new TownHall(snapshot.val());
         townhall.makeFormattedMember();
+        townhall.makeDisplayDistrict();
         eventHandler.populateEventModal(townhall);
         $('.event-modal').modal('show');
       }
