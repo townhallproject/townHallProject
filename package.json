@@ -46,7 +46,8 @@
     "jquery": "^3.4.1",
     "jquery-typeahead": "^2.10.6",
     "page": "^1.8.6",
-    "react": "^16.4.2",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
     "twilio": "^2.11.1"
   },
   "devDependencies": {

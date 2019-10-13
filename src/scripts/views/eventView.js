@@ -308,9 +308,9 @@ function checkEventParam() {
   }
 }
 
-$(document).ready(function () {
-  init();
-});
+// $(document).ready(function () {
+//   init();
+// });
 
 export const init = () => {
   checkEventParam();
