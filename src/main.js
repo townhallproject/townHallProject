@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import page from 'page';
 
-// import eventHandler from './scripts/views/eventView';
 import { init } from './scripts/views/eventView';
-// window.populateModal = eventHandler.populateEventModal;
 
 // vendor scripts
 import './vendor/scripts/jquery-2.1.4';
@@ -28,130 +26,131 @@ import './vendor/styles/railscasts.css';
 
 // local styles
 import './styles/customboot.less';
-// import './scripts/controllers/routes';
+
+import './scripts/controllers/routes';
 
 class App extends React.Component {
   componentDidMount() {
-    // init();
+    init();
     page();
   }
   render() {
     return (
       <div>
-        <nav class="navbar navbar-default navbar-main">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav"
+        <nav className="navbar navbar-default navbar-main">
+          <div className="container-fluid">
+            <div className="navbar-header">
+              <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav"
                 aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
               </button>
-              <a data-toggle="tab" href="#home" class="navbar-brand hash-link" id="brand-icon">
+              <a data-toggle="tab" href="#home" className="navbar-brand hash-link" id="brand-icon">
                 <img src="/Images/THP_logo_horizontal_simple.png" alt=""></img>
               </a>
             </div>
-            <div class="collapse navbar-collapse" id="main-nav">
-              <ul class="nav navbar-nav navbar-left" roll="tablists">
-                <li class="dropdown dropdown--stateSelection">
-                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+            <div className="collapse navbar-collapse" id="main-nav">
+              <ul className="nav navbar-nav navbar-left" roll="tablists">
+                <li className="dropdown dropdown--stateSelection">
+                  <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="true">
-                    <span class="button-text">State Legislatures</span>
-                    <span class="caret"></span>
+                    <span className="button-text">State Legislatures</span>
+                    <span className="caret"></span>
                   </button>
-                  <ul class="dropdown-menu">
+                  <ul className="dropdown-menu">
                     <li>
-                      <a href="/" class="stateNav-federal">Federal</a>
+                      <a href="/" className="stateNav-federal">Federal</a>
                     </li>
                     <li>
-                      <a href="/arizona" class="stateNav-arizona">Arizona</a>
+                      <a href="/arizona" className="stateNav-arizona">Arizona</a>
                     </li>
                     <li>
-                      <a href="/colorado" class="stateNav-colorado">Colorado</a>
+                      <a href="/colorado" className="stateNav-colorado">Colorado</a>
                     </li>
                     <li>
-                      <a href="/florida" class="stateNav-florida">Florida</a>
+                      <a href="/florida" className="stateNav-florida">Florida</a>
                     </li>
                     <li>
-                      <a href="/maine" class="stateNav-maine">Maine</a>
+                      <a href="/maine" className="stateNav-maine">Maine</a>
                     </li>
                     <li>
-                      <a href="/maryland" class="stateNav-maryland">Maryland</a>
+                      <a href="/maryland" className="stateNav-maryland">Maryland</a>
                     </li>
                     <li>
-                      <a href="/michigan" class="stateNav-michigan">Michigan</a>
+                      <a href="/michigan" className="stateNav-michigan">Michigan</a>
                     </li>
                     <li>
-                      <a href="/nevada" class="stateNav-nevada">Nevada</a>
+                      <a href="/nevada" className="stateNav-nevada">Nevada</a>
                     </li>
                     <li>
-                      <a href="/north-carolina" class="stateNav-north-carolina">North Carolina</a>
+                      <a href="/north-carolina" className="stateNav-north-carolina">North Carolina</a>
                     </li>
                     <li>
-                      <a href="/oregon" class="stateNav-oregon">Oregon</a>
+                      <a href="/oregon" className="stateNav-oregon">Oregon</a>
                     </li>
                     <li>
-                      <a href="/pennsylvania" class="stateNav-pennsylvania">Pennsylvania</a>
+                      <a href="/pennsylvania" className="stateNav-pennsylvania">Pennsylvania</a>
                     </li>
                     <li>
-                      <a href="/virginia" class="stateNav-virginia">Virginia</a>
+                      <a href="/virginia" className="stateNav-virginia">Virginia</a>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <a class="hash-link" data-toggle="tab" href="#about">About</a>
+                  <a className="hash-link" data-toggle="tab" href="#about">About</a>
                 </li>
                 <li>
-                  <a class="hash-link" href="#missing-members" data-toggle="tab" id="missing-member-tab">Missing Members</a>
+                  <a className="hash-link" href="#missing-members" data-toggle="tab" id="missing-member-tab">Missing Members</a>
                 </li>
                 <li>
-                  <a class="hash-link" href="#join" data-toggle="tab">Join us</a>
+                  <a className="hash-link" href="#join" data-toggle="tab">Join us</a>
                 </li>
                 <li>
                   <a href="//www.townhallpledge.com/" target="_blank">Pledge</a>
                 </li>
                 <li>
-                  <a class="hash-link" href="#upload-video" data-toggle="tab">Share a video</a>
+                  <a className="hash-link" href="#upload-video" data-toggle="tab">Share a video</a>
                 </li>
                 <li>
-                  <a class="hash-link" data-toggle="tab" href="#submit">Submit an event</a>
+                  <a className="hash-link" data-toggle="tab" href="#submit">Submit an event</a>
                 </li>
                 <li>
-                  <a id="privacy-policy-link" class="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#privacy-policy">Privacy
+                  <a id="privacy-policy-link" className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#privacy-policy">Privacy
                 Policy</a>
                 </li>
                 <li>
-                  <a class="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#thfol-guide">THFOL guide</a>
+                  <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#thfol-guide">THFOL guide</a>
                 </li>
                 <li>
-                  <a class="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#year-one">Look back at 2017</a>
+                  <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#year-one">Look back at 2017</a>
                 </li>
                 <li>
-                  <a class="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#year-two">Look back at 2018</a>
+                  <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#year-two">Look back at 2018</a>
                 </li>
                 <li>
-                  <a class="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#town-hall-pledge"></a>
+                  <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#town-hall-pledge"></a>
                 </li>
               </ul>
-              <ul class="nav navbar-nav navbar-right">
+              <ul className="nav navbar-nav navbar-right">
                 <li>
-                  <a href="https://secure.actblue.com/donate/thp" target="_blank" class="btn" id="donate-button" role="button"
+                  <a href="https://secure.actblue.com/donate/thp" target="_blank" className="btn" id="donate-button" role="button"
                     target="_blank">Donate</a>
                 </li>
                 <li>
-                  <a class="social-icons" href="https://twitter.com/townhallproject" target="_blank">
-                    <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
+                  <a className="social-icons" href="https://twitter.com/townhallproject" target="_blank">
+                    <i className="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
                   </a>
                 </li>
                 <li>
-                  <a class="social-icons" href="https://www.facebook.com/TownHallProject/" target="_blank">
-                    <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
+                  <a className="social-icons" href="https://www.facebook.com/TownHallProject/" target="_blank">
+                    <i className="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
                   </a>
                 </li>
                 <li>
-                  <a data-toggle="tab" class="social-icons hash-link text-white" href="#contact">
-                    <i class="fas fa-envelope-square fa-2x"></i>
+                  <a data-toggle="tab" className="social-icons hash-link text-white" href="#contact">
+                    <i className="fas fa-envelope-square fa-2x"></i>
                   </a>
                 </li>
               </ul>
@@ -160,67 +159,67 @@ class App extends React.Component {
 
         </nav>
 
-        <div class="time-sensitive background-gray">
-          <div class=" display-flex">
-            <div class="happening-now-title">
-              <h1><span class="break">What's</span><span class="break"> happening</span> now</h1>
-              <h1><i class="fa fa-chevron-right"></i></h1>
+        <div className="time-sensitive background-gray">
+          <div className=" display-flex">
+            <div className="happening-now-title">
+              <h1><span className="break">What's</span><span className="break"> happening</span> now</h1>
+              <h1><i className="fa fa-chevron-right"></i></h1>
             </div>
-            <div class="happening-now-content">
-              <div class="text-center">
-                <h2 class="text-primary">
-                  <a class="text-primary"
+            <div className="happening-now-content">
+              <div className="text-center">
+                <h2 className="text-primary">
+                  <a className="text-primary"
                     target="_blank"
-                    href="https://docs.google.com/document/u/1/d/e/2PACX-1vTWD9u5IF08YH6tt76Q_S6dTwQYmm7g_2jQbZ4JaXJpEBJV0srbUfS_MseuKudHeo6YDLdyk-x1A58Z/pub">Read our September 2019 Congressional Accessibility Report and see how this Congress stacks up <i class="fa fa fa-external-link-square"></i></a>
+                    href="https://docs.google.com/document/u/1/d/e/2PACX-1vTWD9u5IF08YH6tt76Q_S6dTwQYmm7g_2jQbZ4JaXJpEBJV0srbUfS_MseuKudHeo6YDLdyk-x1A58Z/pub">Read our September 2019 Congressional Accessibility Report and see how this Congress stacks up <i className="fa fa fa-external-link-square"></i></a>
                 </h2>
-                {/*<button class="btn btn-primary " type="button" name="button" id="view-accessibility-report">Infographic</button>*/}
+                {/*<button className="btn btn-primary " type="button" name="button" id="view-accessibility-report">Infographic</button>*/}
               </div>
             </div>
           </div>
         </div>
 
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane page active" id="home">
-            <header class="site-header clearfix">
-              <section class="container container-fluid">
-                <div class="row">
-                  <div class="col-md-6 left-panels">
-                    <div class=" text-left site-header clearfix displayoff ">
-                      <div class="form-text-results col-md-12">
-                        <div class="text-toggle header-large">
+        <div className="tab-content">
+          <div role="tabpanel" className="tab-pane page active" id="home">
+            <header className="site-header clearfix">
+              <section className="container container-fluid">
+                <div className="row">
+                  <div className="col-md-6 left-panels">
+                    <div className=" text-left site-header clearfix displayoff ">
+                      <div className="form-text-results col-md-12">
+                        <div className="text-toggle header-large">
                           <img id="header-image" src="/Images/THP_logo_inverse.png" alt=""></img>
                         </div>
-                        <div class="text-toggle header-small hidden">
+                        <div className="text-toggle header-small hidden">
                           {/*<img src="/Images/THP_logo_inverse_simple.png" alt=""></img>*/}
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6 right-panels">
-                    <div class="spacer">
+                  <div className="col-md-6 right-panels">
+                    <div className="spacer">
                     </div>
-                    <form id="look-up" class="form-inline text-center" action="index.html">
-                      <div class="form-group text-center">
-                        <label for="zip"></label>
-                        <input class="form-control input-lg " type="zip" name="" value="" placeholder="Zip Code" />
-                        <button type="submit" name="button" class="btn btn-primary btn-lg fath-button">Find A Town Hall</button>
+                    <form id="look-up" className="form-inline text-center" action="index.html">
+                      <div className="form-group text-center">
+                        <label htmlFor="zip"></label>
+                        <input className="form-control input-lg" type="zip" name="" placeholder="Zip Code" />
+                        <button type="submit" name="button" className="btn btn-primary btn-lg fath-button">Find A Town Hall</button>
 
-                        <div id="selection-results" class="text-center ">
-                          <h4 class="selection-results_content"></h4>
+                        <div id="selection-results" className="text-center ">
+                          <h4 className="selection-results_content"></h4>
                         </div>
 
                       </div>
                     </form>
-                    <div id="textresults" class="text-center "></div>
+                    <div id="textresults" className="text-center "></div>
                   </div>
                 </div>
               </section>
             </header>
             {/*Call to action when no events are present*/}
-            <section class="background-light-blue" id="no-events">
-              <div class="container container-fluid">
-                <div class="col-md-12">
-                  <h2 class="weight-heavy">There are no events with your representatives right now &mdash; but you can still
+            <section className="background-light-blue" id="no-events">
+              <div className="container container-fluid">
+                <div className="col-md-12">
+                  <h2 className="weight-heavy">There are no events with your representatives right now &mdash; but you can still
                 make your voice heard!</h2>
                   <h3>
                     <a href=" https://5calls.org" target="_blank">Call</a>, write, or email your Senators or Representative.
@@ -229,16 +228,16 @@ class App extends React.Component {
                 <a href="https://indivisible.org/groups" target="_blank">Indivisible group</a> or other local activist
                 organization to create change in your community.</h3>
                   <h3>If you hear of town halls or other events with your member of Congress, don’t hesitate to
-                <a class="hash-link" data-toggle="tab" href="#submit">submit them</a> to us so we can spread the word.
+                <a className="hash-link" data-toggle="tab" href="#submit">submit them</a> to us so we can spread the word.
               </h3>
-                  <h3 class="weight-heavy">Show Up. Speak Out.</h3>
+                  <h3 className="weight-heavy">Show Up. Speak Out.</h3>
                 </div>
               </div>
             </section>
-            <div class="container-fluid map-container-large">
-              <div class="hidden show-if-no-webgl webgl-banner">
-                <div class="webGl-warning" target="_blank">
-                  <img class="webGl-compimg" src="../Images/map/ohno-computer.png"></img>
+            <div className="container-fluid map-container-large">
+              <div className="hidden show-if-no-webgl webgl-banner">
+                <div className="webGl-warning" target="_blank">
+                  <img className="webGl-compimg" src="../Images/map/ohno-computer.png"></img>
                   <p>Our interactive map feature uses WebGL, a plugin common in most modern browsers. Your browser does not
                     have WebGL
                 working currently.</p>
@@ -246,226 +245,226 @@ class App extends React.Component {
                 <a href="https://get.webgl.org/" target="_blank">this website.</a>
                   </p>
                 </div>
-                <img class="webGL-kill" src="../Images/map/xmark.svg"></img>
+                <img className="webGL-kill" src="../Images/map/xmark.svg"></img>
               </div>
-              <div class="row map-large">
+              <div className="row map-large">
 
                 <div id="map">
                 </div>
-                <div class="map-legend hidden-xs">
-                  <ul class="list-inline">
-                    <li class="map-legend-li hide-if-no-webgl">
-                      <dt class="map-legend__senate"></dt>
+                <div className="map-legend hidden-xs">
+                  <ul className="list-inline">
+                    <li className="map-legend-li hide-if-no-webgl">
+                      <dt className="map-legend__senate"></dt>
                       <dd>U.S. Senator</dd>
                     </li>
-                    <li class="map-legend-li hide-if-no-webgl">
-                      <dt class="map-legend__distrcit"></dt>
+                    <li className="map-legend-li hide-if-no-webgl">
+                      <dt className="map-legend__distrcit"></dt>
                       <dd>U.S. Representative</dd>
                     </li>
-                    <li class="map-legend-li">
-                      <dt class="map-legend-icon map-legend__person"></dt>
+                    <li className="map-legend-li">
+                      <dt className="map-legend-icon map-legend__person"></dt>
                       <dd>In-person</dd>
                     </li>
-                    <li class="map-legend-li">
-                      <dt class="map-legend-icon map-legend__staff"></dt>
+                    <li className="map-legend-li">
+                      <dt className="map-legend-icon map-legend__staff"></dt>
                       <dd>Staff-only</dd>
                     </li>
-                    <li class="map-legend-li">
-                      <dt class="map-legend-icon map-legend__tele"></dt>
+                    <li className="map-legend-li">
+                      <dt className="map-legend-icon map-legend__tele"></dt>
                       <dd>Call-in</dd>
                     </li>
-                    <li class="map-legend-li">
-                      <dt class="map-legend-icon map-legend__activ"></dt>
+                    <li className="map-legend-li">
+                      <dt className="map-legend-icon map-legend__activ"></dt>
                       <dd>Activist Event</dd>
                     </li>
-                    <li class="map-legend-li">
-                      <dt class="map-legend-icon map-legend__campaign"></dt>
+                    <li className="map-legend-li">
+                      <dt className="map-legend-icon map-legend__campaign"></dt>
                       <dd>Campaign Event</dd>
                     </li>
-                    <li class="map-legend-li">
-                      <dt class="map-legend-icon map-legend__next-gen"></dt>
+                    <li className="map-legend-li">
+                      <dt className="map-legend-icon map-legend__next-gen"></dt>
                       <dd>Youth Vote</dd>
                     </li>
-                    <li class="map-legend-li">
-                      <dt class="map-legend-icon map-legend__hr"></dt>
+                    <li className="map-legend-li">
+                      <dt className="map-legend-icon map-legend__hr"></dt>
                       <dd>Voting Rights</dd>
                     </li>
-                    <li class="map-legend-li">
-                      <dt class="map-legend-icon map-legend__mfol"></dt>
+                    <li className="map-legend-li">
+                      <dt className="map-legend-icon map-legend__mfol"></dt>
                       <dd>THFOL</dd>
                     </li>
                   </ul>
                 </div>
-                <div class="map-legend visible-xs">
-                  <div id="Legend" class="collapse">
-                    <ul class="list-inline">
-                      <li class="map-legend-li hide-if-no-webgl">
-                        <dt class="map-legend__senate"></dt>
+                <div className="map-legend visible-xs">
+                  <div id="Legend" className="collapse">
+                    <ul className="list-inline">
+                      <li className="map-legend-li hide-if-no-webgl">
+                        <dt className="map-legend__senate"></dt>
                         <dd>U.S. Senator</dd>
                       </li>
-                      <li class="map-legend-li hide-if-no-webgl">
-                        <dt class="map-legend__distrcit"></dt>
+                      <li className="map-legend-li hide-if-no-webgl">
+                        <dt className="map-legend__distrcit"></dt>
                         <dd>U.S. Representative</dd>
                       </li>
-                      <li class="map-legend-li">
-                        <dt class="map-legend-icon map-legend__person"></dt>
+                      <li className="map-legend-li">
+                        <dt className="map-legend-icon map-legend__person"></dt>
                         <dd>In-person</dd>
                       </li>
-                      <li class="map-legend-li">
-                        <dt class="map-legend-icon map-legend__staff"></dt>
+                      <li className="map-legend-li">
+                        <dt className="map-legend-icon map-legend__staff"></dt>
                         <dd>Staff-only</dd>
                       </li>
-                      <li class="map-legend-li">
-                        <dt class="map-legend-icon map-legend__tele"></dt>
+                      <li className="map-legend-li">
+                        <dt className="map-legend-icon map-legend__tele"></dt>
                         <dd>Call-in</dd>
                       </li>
-                      <li class="map-legend-li">
-                        <dt class="map-legend-icon map-legend__activ"></dt>
+                      <li className="map-legend-li">
+                        <dt className="map-legend-icon map-legend__activ"></dt>
                         <dd>Activist Event</dd>
                       </li>
-                      <li class="map-legend-li">
-                        <dt class="map-legend-icon map-legend__campaign"></dt>
+                      <li className="map-legend-li">
+                        <dt className="map-legend-icon map-legend__campaign"></dt>
                         <dd>Campaign Event</dd>
                       </li>
-                      <li class="map-legend-li">
-                        <dt class="map-legend-icon map-legend__next-gen"></dt>
+                      <li className="map-legend-li">
+                        <dt className="map-legend-icon map-legend__next-gen"></dt>
                         <dd>Youth Vote</dd>
                       </li>
-                      <li class="map-legend-li">
-                        <dt class="map-legend-icon map-legend__hr"></dt>
+                      <li className="map-legend-li">
+                        <dt className="map-legend-icon map-legend__hr"></dt>
                         <dd>Voting Rights</dd>
                       </li>
-                      <li class="map-legend-li">
-                        <dt class="map-legend-icon map-legend__mfol"></dt>
+                      <li className="map-legend-li">
+                        <dt className="map-legend-icon map-legend__mfol"></dt>
                         <dd>THFOL</dd>
                       </li>
                     </ul>
                   </div>
-                  <button data-target="#Legend" class="btn-xs btn-default visible-xs" data-toggle="collapse"><i class="fas fa-bars"></i></button>
+                  <button data-target="#Legend" className="btn-xs btn-default visible-xs" data-toggle="collapse"><i className="fas fa-bars"></i></button>
                 </div>
               </div>
             </div>
-            <ul class="state-lines list-inline hide-if-no-webgl hidden">
-              <li class="map-legend-li">Showing: </li>
+            <ul className="state-lines list-inline hide-if-no-webgl hidden">
+              <li className="map-legend-li">Showing: </li>
               <button type="button" name="button" id="show-federal-borders"
-                class="btn btn-xs btn-transparent border-toggle inactive">
-                <li class="map-legend-li interactive federal">
-                  <dt class="map-legend-line map-legend__federal"></dt>
+                className="btn btn-xs btn-transparent border-toggle inactive">
+                <li className="map-legend-li interactive federal">
+                  <dt className="map-legend-line map-legend__federal"></dt>
                   <dd>Congressional districts</dd>
                 </li>
               </button>
               <button type="button" name="button" id="show-state-borders"
-                class="btn btn-xs btn-transparent border-toggle active">
-                <ul class="list-inline">
-                  <li class="map-legend-li state">
-                    <dt class="map-legend-line map-legend__state_lower"></dt>
+                className="btn btn-xs btn-transparent border-toggle active">
+                <ul className="list-inline">
+                  <li className="map-legend-li state">
+                    <dt className="map-legend-line map-legend__state_lower"></dt>
                     <dd>State House districts</dd>
                   </li>
-                  <li class="map-legend-li state">
-                    <dt class="map-legend-line map-legend__state_upper"></dt>
+                  <li className="map-legend-li state">
+                    <dt className="map-legend-line map-legend__state_upper"></dt>
                     <dd>State Senate districts</dd>
                   </li>
                 </ul>
               </button>
             </ul>
-            <div class="header-with-results map-container-split hidden">
-              <div class="row">
-                <div class="col-md-6">
-                  <section class="results multipleResults">
-                    <div id="nearest" class="flexcroll nearest-with-results"></div>
+            <div className="header-with-results map-container-split hidden">
+              <div className="row">
+                <div className="col-md-6">
+                  <section className="results multipleResults">
+                    <div id="nearest" className="flexcroll nearest-with-results"></div>
                   </section>
                 </div>
-                <div class="col-md-6 map-small map-fixing">
+                <div className="col-md-6 map-small map-fixing">
                 </div>
               </div>
             </div>
-            <section class="email-signup--inline hidden" id="missing-member-banner">
-              <div class="container container-fluid">
-                <div class="row">
-                  <h2 class="text-center extra-large">August Recess 2017</h2>
-                  <div class="col-sm-6 graphs">
-                    <h4 class="text-primary table-title text-center">Members of Congress holding town halls</h4>
+            <section className="email-signup--inline hidden" id="missing-member-banner">
+              <div className="container container-fluid">
+                <div className="row">
+                  <h2 className="text-center extra-large">August Recess 2017</h2>
+                  <div className="col-sm-6 graphs">
+                    <h4 className="text-primary table-title text-center">Members of Congress holding town halls</h4>
                     <dt>Senate</dt>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-dem-no-events dem-senate" data-count={48}>
-                        <span class="sr-only">Democratic no events</span>
+                    <div className="progress">
+                      <div className="progress-bar progress-bar-dem-no-events dem-senate" data-count={48}>
+                        <span className="sr-only">Democratic no events</span>
                       </div>
-                      <div class="progress-bar progress-bar-dem-has-events dem-aug-progress-senate" data-count={0}>
-                        <span class="sr-only">Democratic progress</span>
+                      <div className="progress-bar progress-bar-dem-has-events dem-aug-progress-senate" data-count={0}>
+                        <span className="sr-only">Democratic progress</span>
                       </div>
-                      <div class="progress-bar progress-bar-rep-has-events rep-aug-progress-senate" data-count={0}>
-                        <span class="sr-only">Republican progress</span>
+                      <div className="progress-bar progress-bar-rep-has-events rep-aug-progress-senate" data-count={0}>
+                        <span className="sr-only">Republican progress</span>
                       </div>
-                      <div class="progress-bar progress-bar-rep-no-events rep-senate" data-count={52}>
-                        <span class="sr-only">Republican no events</span>
+                      <div className="progress-bar progress-bar-rep-no-events rep-senate" data-count={52}>
+                        <span className="sr-only">Republican no events</span>
                       </div>
                     </div>
                     <dt>House</dt>
-                    <div class="progress">
-                      <div class="progress-bar progress-bar-dem-no-events dem-house" data-count={194}>
-                        <span class="sr-only">Democratic progress</span>
+                    <div className="progress">
+                      <div className="progress-bar progress-bar-dem-no-events dem-house" data-count={194}>
+                        <span className="sr-only">Democratic progress</span>
                       </div>
-                      <div class="progress-bar progress-bar-dem-has-events dem-aug-progress-house" data-count={0}>
-                        <span class="sr-only">Democratic progress</span>
+                      <div className="progress-bar progress-bar-dem-has-events dem-aug-progress-house" data-count={0}>
+                        <span className="sr-only">Democratic progress</span>
                       </div>
-                      <div class="progress-bar progress-bar-rep-has-events rep-aug-progress-house" data-count={0}>
-                        <span class="sr-only">Republican progress</span>
+                      <div className="progress-bar progress-bar-rep-has-events rep-aug-progress-house" data-count={0}>
+                        <span className="sr-only">Republican progress</span>
                       </div>
-                      <div class="progress-bar progress-bar-rep-no-events rep-house" data-count={240}>
-                        <span class="sr-only">Republican progress</span>
+                      <div className="progress-bar progress-bar-rep-no-events rep-house" data-count={240}>
+                        <span className="sr-only">Republican progress</span>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-xs-6">
-                        <dl class="dl-horizontal progress-bar-key">
-                          <dt class="key progress-bar-dem-no-events"></dt>
+                    <div className="row">
+                      <div className="col-xs-6">
+                        <dl className="dl-horizontal progress-bar-key">
+                          <dt className="key progress-bar-dem-no-events"></dt>
                           <dd>Democrats without town halls</dd>
                         </dl>
-                        <dl class="dl-horizontal progress-bar-key">
-                          <dt class="key progress-bar-dem-has-events"></dt>
+                        <dl className="dl-horizontal progress-bar-key">
+                          <dt className="key progress-bar-dem-has-events"></dt>
                           <dd>Democrats holding town halls</dd>
                         </dl>
                       </div>
-                      <div class="col-xs-6">
-                        <dl class="dl-horizontal progress-bar-key">
-                          <dt class="key progress-bar-rep-no-events"></dt>
+                      <div className="col-xs-6">
+                        <dl className="dl-horizontal progress-bar-key">
+                          <dt className="key progress-bar-rep-no-events"></dt>
                           <dd>Republicans without town halls</dd>
                         </dl>
-                        <dl class="dl-horizontal progress-bar-key">
-                          <dt class="key progress-bar-rep-has-events"></dt>
+                        <dl className="dl-horizontal progress-bar-key">
+                          <dt className="key progress-bar-rep-has-events"></dt>
                           <dd>Republicans holding town halls</dd>
                         </dl>
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-6 graphs">
-                    <dl class="dl-horizontal graph">
-                      <h4 class="text-primary table-title text-center">Total number of town halls</h4>
+                  <div className="col-sm-6 graphs">
+                    <dl className="dl-horizontal graph">
+                      <h4 className="text-primary table-title text-center">Total number of town halls</h4>
                       <dt>Senate</dt>
                       <dd>
-                        <div class="progress bar-graph">
-                          <div class="progress-bar progress-bar-dem-has-events dem-aug-total-senate" data-count={0}
+                        <div className="progress bar-graph">
+                          <div className="progress-bar progress-bar-dem-has-events dem-aug-total-senate" data-count={0}
                             data-max={100}>
-                            <span class="sr-only">Democratic progress</span>
+                            <span className="sr-only">Democratic progress</span>
                           </div>
                         </div>
-                        <div class="progress bar-graph">
-                          <div class="progress-bar progress-bar-rep-has-events rep-aug-total-senate" data-count={0}
+                        <div className="progress bar-graph">
+                          <div className="progress-bar progress-bar-rep-has-events rep-aug-total-senate" data-count={0}
                             data-max={100}>
-                            <span class="sr-only">Democratic progress</span>
+                            <span className="sr-only">Democratic progress</span>
                           </div>
                         </div>
                       </dd>
                       <dt>House</dt>
                       <dd>
-                        <div class="progress bar-graph">
-                          <div class="progress-bar progress-bar-dem-has-events dem-aug-total-house" data-count={0} data-max={100}>
-                            <span class="sr-only">Democratic progress</span>
+                        <div className="progress bar-graph">
+                          <div className="progress-bar progress-bar-dem-has-events dem-aug-total-house" data-count={0} data-max={100}>
+                            <span className="sr-only">Democratic progress</span>
                           </div>
                         </div>
-                        <div class="progress bar-graph">
-                          <div class="progress-bar progress-bar-rep-has-events rep-aug-total-house" data-count={0} data-max={100}>
-                            <span class="sr-only">Democratic progress</span>
+                        <div className="progress bar-graph">
+                          <div className="progress-bar progress-bar-rep-has-events rep-aug-total-house" data-count={0} data-max={100}>
+                            <span className="sr-only">Democratic progress</span>
                           </div>
                         </div>
                       </dd>
@@ -475,35 +474,35 @@ class App extends React.Component {
               </div>
             </section>
 
-            <section class="background-light-blue email-signup--inline" id="email-signup">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close-email">
+            <section className="background-light-blue email-signup--inline" id="email-signup">
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close" id="close-email">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <div class="container container-fluid">
-                <h1 id="email-title" class="text-center extra-large">Sign up to receive updates on local events.</h1>
+              <div className="container container-fluid">
+                <h1 id="email-title" className="text-center extra-large">Sign up to receive updates on local events.</h1>
                 <form id="email-signup-form">
-                  <div class="row">
-                    <div class="col-lg-8">
-                      <div class="col-sm-6">
-                        <input type="text" class="form-control input-lg" name="first" placeholder="First Name" />
+                  <div className="row">
+                    <div className="col-lg-8">
+                      <div className="col-sm-6">
+                        <input type="text" className="form-control input-lg" name="first" placeholder="First Name" />
                       </div>
-                      <div class="col-sm-6">
-                        <input type="text" class="form-control input-lg" name="last" placeholder="Last Name" />
+                      <div className="col-sm-6">
+                        <input type="text" className="form-control input-lg" name="last" placeholder="Last Name" />
                       </div>
-                      <div class="col-sm-6">
-                        <input type="email" class="form-control input-lg" name="email" placeholder="Email" />
+                      <div className="col-sm-6">
+                        <input type="email" className="form-control input-lg" name="email" placeholder="Email" />
                       </div>
-                      <div class="col-sm-6">
-                        <input type="text" class="form-control input-lg" name="zipcode" placeholder="Zip Code" />
+                      <div className="col-sm-6">
+                        <input type="text" className="form-control input-lg" name="zipcode" placeholder="Zip Code" />
                       </div>
-                      <div class="col-sm-6 hidden" id="district-subscribe">
-                        <label for="districts" class="col-sm-4">Subscribe to districts:</label>
-                        <input type="text" class="form-control input-lg" name="districts" data-role="tagsinput" />
+                      <div className="col-sm-6 hidden" id="district-subscribe">
+                        <label htmlFor="districts" className="col-sm-4">Subscribe to districts:</label>
+                        <input type="text" className="form-control input-lg" name="districts" data-role="tagsinput" />
                       </div>
                     </div>
-                    <div class="col-lg-4">
-                      <div class="col-xs-12">
-                        <button type="submit" name="button" class="btn btn-primary btn-light-background btn-lg btn-block">Sign
+                    <div className="col-lg-4">
+                      <div className="col-xs-12">
+                        <button type="submit" name="button" className="btn btn-primary btn-light-background btn-lg btn-block">Sign
                       up</button>
                       </div>
                     </div>
@@ -512,187 +511,187 @@ class App extends React.Component {
               </div>
             </section>
 
-            <div id="email-update" class="hidden background-light-blue container-fluid">
-              <button id="open-email-form" class="btn btn-xs">Update your email subscription</button>
+            <div id="email-update" className="hidden background-light-blue container-fluid">
+              <button id="open-email-form" className="btn btn-xs">Update your email subscription</button>
             </div>
 
 
             {/*Cards showing representatives and their contact info*/}
             <div id="representativeCards">
-              <section class="container container-fluid"></section>
+              <section className="container container-fluid"></section>
             </div>
-            <div class="hidden-xs">
-              <section class="scroll-to-form text-center">
+            <div className="hidden-xs">
+              <section className="scroll-to-form text-center">
                 <p>
-                  <a href="#events-table" class="scroll-button btn btn-white btn-lg">
-                    <i class="fa fa-chevron-down fa-2x" aria-hidden="true"></i>
+                  <a href="#events-table" className="scroll-button btn btn-white btn-lg">
+                    <i className="fa fa-chevron-down fa-2x" aria-hidden="true"></i>
                   </a>
                 </p>
               </section>
               <a name="events-table" id="events-table"></a>
-              <section class=" container container-fluid">
-                <div class="row">
-                  <div class="col-md-12">
-                    <span class="pull-right">
+              <section className=" container container-fluid">
+                <div className="row">
+                  <div className="col-md-12">
+                    <span className="pull-right">
                       <button id="scrollBtn">
-                        <i class="fa fa-chevron-up fa-2x" aria-hidden="true"></i>
+                        <i className="fa fa-chevron-up fa-2x" aria-hidden="true"></i>
                       </button>
                     </span>
                   </div>
                 </div>
-                <h2 class="text-primary table-title text-center">Upcoming Events</h2>
-                <div class="row">
+                <h2 className="text-primary table-title text-center">Upcoming Events</h2>
+                <div className="row">
                   <small>
-                    <ul class="list-unstyled container">
+                    <ul className="list-unstyled container">
                       <li>
-                        <span class="text-secondary">Town Hall</span>
+                        <span className="text-secondary">Town Hall</span>
                         <span> - A forum where lawmakers give legislative updates and answer open questions from constituents.</span>
                       </li>
                       <li>
-                        <span class="text-secondary">"Empty Chair" Town Hall</span>
+                        <span className="text-secondary">"Empty Chair" Town Hall</span>
                         <span> - A citizen-organized town hall held with or without the invited lawmaker.</span>
                       </li>
                       <li>
-                        <span class="text-secondary">Adopt-A-District/State</span>
+                        <span className="text-secondary">Adopt-A-District/State</span>
                         <span> - A citizen-organized town hall featuring a member of Congress from another district.</span>
                       </li>
                       <li>
-                        <span class="text-secondary">Office Hours </span>
+                        <span className="text-secondary">Office Hours </span>
                         <span> - Opportunity to meet and question a lawmaker's staff. Usually held in district offices but sometimes are
                 "mobile office hours."</span>
                       </li>
                       <li>
-                        <span class="text-secondary">Campaign Town Hall </span>
+                        <span className="text-secondary">Campaign Town Hall </span>
                         <span> - A town hall organized by a candidate for office - whether an incumbent or challenger. (Town Hall Project
                 includes these events as a public resource--not to endorse a particular candidate or campaign).</span>
                       </li>
                       <li>
-                        <span class="text-secondary">Ticketed Event</span>
+                        <span className="text-secondary">Ticketed Event</span>
                         <span> - Paid events. Typically fundraisers. (Town Hall Project includes these events as a public resource--not
                 to endorse a particular candidate or campaign).</span>
                       </li>
                       <li>
-                        <span class="text-secondary">TeleTown Hall Meeting </span>
+                        <span className="text-secondary">TeleTown Hall Meeting </span>
                         <span> - A town hall conducted by conference call or online.</span>
                       </li>
                     </ul>
                   </small>
                 </div>
                 <div>
-                  <ul id="all-events-table" class="list-group">
-                    <li class="list-group-item list-group-heading">
-                      <nav class="navbar navbar-default navbar-static-top ">
-                        <ul class="nav navbar-nav navbar-left" id="filter-info">
+                  <ul id="all-events-table" className="list-group">
+                    <li className="list-group-item list-group-heading">
+                      <nav className="navbar navbar-default navbar-static-top ">
+                        <ul className="nav navbar-nav navbar-left" id="filter-info">
                           <li>
                             <span id="current-state" data-current={0} data-total={0}></span>
                           </li>
                         </ul>
-                        <ul id="all-events-table-dropdown-container" class="nav navbar-nav navbar-right">
-                          <li class="dropdown hidden">
-                            <a href="#" class="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Member
-                    <span class="caret"></span>
+                        <ul id="all-events-table-dropdown-container" className="nav navbar-nav navbar-right">
+                          <li className="dropdown hidden">
+                            <a href="#" className="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Member
+                    <span className="caret"></span>
                             </a>
-                            <ul class="dropdown-menu">
-                              <li class="downdown-title">Search by member of Congress</li>
-                              <li role="separator" class="divider"></li>
+                            <ul className="dropdown-menu">
+                              <li className="downdown-title">Search by member of Congress</li>
+                              <li role="separator" className="divider"></li>
                               <li>
-                                <input id="memberTypeahead" type="text" class="form-control dropdown-item filter" data-provide="typeahead"
-                                  placeholder="Search by member" data-filter="displayName" autocomplete="off" />
+                                <input id="memberTypeahead" type="text" className="form-control dropdown-item filter" data-provide="typeahead"
+                                  placeholder="Search by member" data-filter="displayName" autoComplete="off" />
                               </li>
                             </ul>
                           </li>
-                          <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party
-                    <span class="caret"></span>
+                          <li className="dropdown">
+                            <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Party
+                    <span className="caret"></span>
                             </a>
-                            <ul class="dropdown-menu filter">
-                              <li class="downdown-title">Filter by party</li>
-                              <li role="separator" class="divider"></li>
+                            <ul className="dropdown-menu filter">
+                              <li className="downdown-title">Filter by party</li>
+                              <li role="separator" className="divider"></li>
                               <li>
-                                <a data-filter="party" id="Democratic" class="dropdown-item" href="#">Democratic</a>
+                                <a data-filter="party" id="Democratic" className="dropdown-item" href="#">Democratic</a>
                               </li>
                               <li>
-                                <a data-filter="party" id="Republican" class="dropdown-item" href="#">Republican</a>
+                                <a data-filter="party" id="Republican" className="dropdown-item" href="#">Republican</a>
                               </li>
                               <li>
-                                <a data-filter="party" id="Independent" class="dropdown-item" href="#">Independent</a>
+                                <a data-filter="party" id="Independent" className="dropdown-item" href="#">Independent</a>
                               </li>
                               <li>
-                                <a data-filter="party" id="All" class="dropdown-item" href="#">All</a>
+                                <a data-filter="party" id="All" className="dropdown-item" href="#">All</a>
                               </li>
 
                             </ul>
                           </li>
-                          <li class="dropdown">
-                            <a href="#" class="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">State
-                    <span class="caret"></span>
+                          <li className="dropdown">
+                            <a href="#" className="dropdown-toggle hide-on-state-view" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">State
+                    <span className="caret"></span>
                             </a>
-                            <ul class="dropdown-menu">
-                              <li class="downdown-title">Search by State</li>
-                              <li role="separator" class="divider"></li>
+                            <ul className="dropdown-menu">
+                              <li className="downdown-title">Search by State</li>
+                              <li role="separator" className="divider"></li>
                               <li>
-                                <input id="stateTypeahead" type="text" class="form-control dropdown-item filter" data-provide="typeahead"
-                                  placeholder="Search by state" data-filter="stateName" autocomplete="off" />
+                                <input id="stateTypeahead" type="text" className="form-control dropdown-item filter" data-provide="typeahead"
+                                  placeholder="Search by state" data-filter="stateName" autoComplete="off" />
                               </li>
                             </ul>
                           </li>
-                          <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Event Type
-                    <span class="caret"></span>
+                          <li className="dropdown">
+                            <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Event Type
+                    <span className="caret"></span>
                             </a>
-                            <ul class="dropdown-menu filter">
-                              <li class="downdown-title">Filter by Event Type</li>
-                              <li role="separator" class="divider"></li>
+                            <ul className="dropdown-menu filter">
+                              <li className="downdown-title">Filter by Event Type</li>
+                              <li role="separator" className="divider"></li>
                               <li>
-                                <a data-filter="meetingType" id="Town Hall" class="dropdown-item" href="#">Town Hall</a>
+                                <a data-filter="meetingType" id="Town Hall" className="dropdown-item" href="#">Town Hall</a>
                               </li>
                               <li>
-                                <a data-filter="meetingType" id="Empty Chair Town Hall" class="dropdown-item" href="#">Empty Chair Town Hall</a>
+                                <a data-filter="meetingType" id="Empty Chair Town Hall" className="dropdown-item" href="#">Empty Chair Town Hall</a>
                               </li>
                               <li>
                                 <a data-filter="meetingType" id="Adopt-A-District/State" href="#">Adopt-A-District/State</a>
                               </li>
                               <li>
-                                <a data-filter="meetingType" id="Office Hours" class="dropdown-item" href="#">Office Hours</a>
+                                <a data-filter="meetingType" id="Office Hours" className="dropdown-item" href="#">Office Hours</a>
                               </li>
                               <li>
-                                <a data-filter="meetingType" id="Ticketed Event" class="dropdown-item" href="#">Ticketed Event</a>
+                                <a data-filter="meetingType" id="Ticketed Event" className="dropdown-item" href="#">Ticketed Event</a>
                               </li>
                               <li>
-                                <a data-filter="meetingType" id="Tele-Town Hall" class="dropdown-item" href="#">Tele-Town Hall</a>
+                                <a data-filter="meetingType" id="Tele-Town Hall" className="dropdown-item" href="#">Tele-Town Hall</a>
                               </li>
                               <li>
-                                <a data-filter="meetingType" id="Campaign Town Hall" class="dropdown-item" href="#">Campaign Town Hall</a>
+                                <a data-filter="meetingType" id="Campaign Town Hall" className="dropdown-item" href="#">Campaign Town Hall</a>
                               </li>
                               <li>
-                                <a data-filter="meetingType" id="Youth Vote" class="dropdown-item" href="#">Youth Vote</a>
+                                <a data-filter="meetingType" id="Youth Vote" className="dropdown-item" href="#">Youth Vote</a>
                               </li>
                               <li>
-                                <a data-filter="meetingType" id="Voting Rights" class="dropdown-item" href="#">Voting Rights</a>
+                                <a data-filter="meetingType" id="Voting Rights" className="dropdown-item" href="#">Voting Rights</a>
                               </li>
                               <li>
-                                <a data-filter="meetingType" id="Other" class="dropdown-item" href="#">Other</a>
+                                <a data-filter="meetingType" id="Other" className="dropdown-item" href="#">Other</a>
                               </li>
                               <li>
-                                <a data-filter="meetingType" id="All" class="dropdown-item" href="#">All</a>
+                                <a data-filter="meetingType" id="All" className="dropdown-item" href="#">All</a>
                               </li>
                             </ul>
                           </li>
-                          <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort
-                    <span class="caret"></span>
+                          <li className="dropdown">
+                            <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort
+                    <span className="caret"></span>
                             </a>
-                            <ul class="dropdown-menu sort">
-                              <li class="downdown-title">Sort Table</li>
-                              <li role="separator" class="divider"></li>
+                            <ul className="dropdown-menu sort">
+                              <li className="downdown-title">Sort Table</li>
+                              <li role="separator" className="divider"></li>
                               <li>
-                                <a data-filter="dateObj" id="byDate" class="dropdown-item" href="#">By Date</a>
+                                <a data-filter="dateObj" id="byDate" className="dropdown-item" href="#">By Date</a>
                               </li>
                               <li>
-                                <a data-filter="stateName" id="byState" class="dropdown-item hide-on-state-view" href="#">By State</a>
+                                <a data-filter="stateName" id="byState" className="dropdown-item hide-on-state-view" href="#">By State</a>
                               </li>
                               <li>
-                                <a data-filter="displayName" id="byName" class="dropdown-item" href="#">By Name</a>
+                                <a data-filter="displayName" id="byName" className="dropdown-item" href="#">By Name</a>
                               </li>
                             </ul>
                           </li>
@@ -707,40 +706,40 @@ class App extends React.Component {
               {/*end of hidden-xs div*/}
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="submit">
-            <div class='embed-container submit-embed-container'>
+          <div role="tabpanel" className="tab-pane" id="submit">
+            <div className='embed-container submit-embed-container'>
               <iframe
                 src='https://docs.google.com/forms/d/e/1FAIpQLSfvIJikraQCZcqUpYfDZHC7KvxDUp4zcfzlLQ7RoaDQcBZUbQ/viewform?c=0&w=1'
                 style={{ borderWidth:0, width:800, height:600, frameborder:0 }}></iframe>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="contact">
-            <div class='embed-container contact-embed-container'>
+          <div role="tabpanel" className="tab-pane" id="contact">
+            <div className='embed-container contact-embed-container'>
               <iframe
                 src="https://docs.google.com/forms/d/e/1FAIpQLSffVaop5xVSxXFrRtAZsxMDqkvucAplMdC9-CPHiTXxPKQV0g/viewform?embedded=true"
-                width="800" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+                width="800" height="600" frameBorder="0" marginHeight="0" marginWidth="0">Loading...</iframe>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane page" id="about">
+          <div role="tabpanel" className="tab-pane page" id="about">
             <header>
-              <section class="container container-fluid quote-header">
-                <blockquote class="col-sm-6 col-sm-offset-3">
-                  <p class="text-white">"It falls to each of us to be those anxious, jealous guardians of our democracy.
+              <section className="container container-fluid quote-header">
+                <blockquote className="col-sm-6 col-sm-offset-3">
+                  <p className="text-white">"It falls to each of us to be those anxious, jealous guardians of our democracy.
                     Embrace the joyous task we have
                     been given to continually try to improve this great nation of ours because, for all our outward
                     differences,
                     we in fact all share the same proud type, the most important office in a democracy,
-                <span class="text-secondary">citizen</span>."</p>
-                  <footer class="text-success">President Obama,
+                <span className="text-secondary">citizen</span>."</p>
+                  <footer className="text-success">President Obama,
                 <cite title="Source Title">Farewell Address</cite>
                   </footer>
                 </blockquote>
               </section>
             </header>
-            <section class="container">
-              <article class="center-block about">
-                <h2 class="text-secondary-dark">About Town Hall Project</h2>
-                <p class="lead">Town Hall Project empowers constituents across the country to have face-to-face conversations
+            <section className="container">
+              <article className="center-block about">
+                <h2 className="text-secondary-dark">About Town Hall Project</h2>
+                <p className="lead">Town Hall Project empowers constituents across the country to have face-to-face conversations
                   with their elected
                   representatives. We are campaign veterans and first time volunteers. We come from a diversity of backgrounds
                   and live across the country. We share progressive values and believe strongly in civic engagement. We
@@ -748,14 +747,14 @@ class App extends React.Component {
                   every district and state for public events with members of Congress. Then we share our findings to promote
                   participation
               in the democratic process.</p>
-                <p class="lead">This movement is diverse, open source, and powered by citizens. We are proud to be a part of
+                <p className="lead">This movement is diverse, open source, and powered by citizens. We are proud to be a part of
               it.</p>
-                <p class="text-primary">
+                <p className="text-primary">
                   <strong>Show Up. Speak Out.</strong>
                 </p>
               </article>
-              <article class="row">
-                <div class="col-sm-6">
+              <article className="row">
+                <div className="col-sm-6">
                   <h3>About the Events</h3>
                   <p>Our project is currently focused on federal elected officials. We strongly believe that state
                     legislatures deserve
@@ -776,7 +775,7 @@ class App extends React.Component {
                     <li>Campaign events where the member will not take questions</li>
                   </ul>
                 </div>
-                <div class="col-sm-6">
+                <div className="col-sm-6">
                   <h3>What to expect</h3>
                   <p>The most powerful thing you can do, as a constituent, is ask an earnest, pressing question on an issue
                     close
@@ -797,8 +796,8 @@ class App extends React.Component {
                   </ul>
                 </div>
               </article>
-              <article class="row">
-                <div class="col-sm-6">
+              <article className="row">
+                <div className="col-sm-6">
                   <h3>Why Town Halls</h3>
                   <p>There is no better way to influence your representatives than in-person conversations. Town halls are a
                     longstanding
@@ -810,7 +809,7 @@ class App extends React.Component {
                 with his or her representatives.</p>
                   <p>You have more power than you think. Town halls are one of the most effective ways to use it.</p>
                 </div>
-                <div class="col-sm-6">
+                <div className="col-sm-6">
                   <h3>Our Supporters</h3>
                   <p>Town Hall Project is possible because of the hard work of researchers, organizers, and developers across
                     country,
@@ -818,21 +817,21 @@ class App extends React.Component {
                 </div>
               </article>
             </section>
-            <div class="banner" id="hand-raised"></div>
-            <section class="container mt-5">
+            <div className="banner" id="hand-raised"></div>
+            <section className="container mt-5">
               <h3>Frequently Asked Questions</h3>
-              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                  <div class="panel-heading" role="tab">
-                    <h4 class="panel-title">
+              <div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div className="panel panel-default">
+                  <div className="panel-heading" role="tab">
+                    <h4 className="panel-title">
                       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#canIJoin" aria-expanded="true"
                         aria-controls="canIJoin">
                         Can I join you?
                   </a>
                     </h4>
                   </div>
-                  <div id="canIJoin" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="Can I Join You?">
-                    <div class="panel-body">
+                  <div id="canIJoin" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="Can I Join You?">
+                    <div className="panel-body">
                       Yes! If you are interested in joining our volunteer research team or have more specialized skills like
                       web development, contact
                       us at
@@ -840,17 +839,17 @@ class App extends React.Component {
                 </div>
                   </div>
                 </div>
-                <div class="panel panel-default">
-                  <div class="panel-heading" role="tab">
-                    <h4 class="panel-title">
+                <div className="panel panel-default">
+                  <div className="panel-heading" role="tab">
+                    <h4 className="panel-title">
                       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#canISupport" aria-expanded="true"
                         aria-controls="canISupport">
                         Can I support you?
                   </a>
                     </h4>
                   </div>
-                  <div id="canISupport" class="panel-collapse collapse" role="tabpanel" aria-labelledby="Can I support you?">
-                    <div class="panel-body">
+                  <div id="canISupport" className="panel-collapse collapse" role="tabpanel" aria-labelledby="Can I support you?">
+                    <div className="panel-body">
                       Yes! Town Hall Project relies on grassroots donations like yours to continue to bring rapid event
                       research to citizens and
                       activists nationwide. Please make a donation
@@ -861,17 +860,17 @@ class App extends React.Component {
                 </div>
                   </div>
                 </div>
-                <div class="panel panel-default">
-                  <div class="panel-heading" role="tab">
-                    <h4 class="panel-title">
+                <div className="panel panel-default">
+                  <div className="panel-heading" role="tab">
+                    <h4 className="panel-title">
                       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#ourStory" aria-expanded="true"
                         aria-controls="ourStory">
                         What’s your story?
                   </a>
                     </h4>
                   </div>
-                  <div id="ourStory" class="panel-collapse collapse" role="tabpanel" aria-labelledby="What's your story?">
-                    <div class="panel-body">
+                  <div id="ourStory" className="panel-collapse collapse" role="tabpanel" aria-labelledby="What's your story?">
+                    <div className="panel-body">
                       <p>At the beginning of 2017, our founder Jimmy Dahman believed that congressional town halls would play
                         an enormously
                         important role in this chapter of our democracy but was surprised to discover just how difficult
@@ -896,18 +895,18 @@ class App extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div class="panel panel-default">
-                  <div class="panel-heading" role="tab">
-                    <h4 class="panel-title">
+                <div className="panel panel-default">
+                  <div className="panel-heading" role="tab">
+                    <h4 className="panel-title">
                       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#politicalPerspective"
                         aria-expanded="true" aria-controls="politicalPerspective">
                         What is your political perspective?
                   </a>
                     </h4>
                   </div>
-                  <div id="politicalPerspective" class="panel-collapse collapse" role="tabpanel"
+                  <div id="politicalPerspective" className="panel-collapse collapse" role="tabpanel"
                     aria-labelledby="What is your political perspective?">
-                    <div class="panel-body">
+                    <div className="panel-body">
                       <p>We are transparent that the Town Hall Project team shares largely progressive policy views. We make
                         no secret
                         of our support of other progressive organizations and our opposition to this Administration’s most
@@ -927,34 +926,34 @@ class App extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div class="panel panel-default">
-                  <div class="panel-heading" role="tab">
-                    <h4 class="panel-title">
+                <div className="panel panel-default">
+                  <div className="panel-heading" role="tab">
+                    <h4 className="panel-title">
                       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#townhallcom" aria-expanded="true"
                         aria-controls="townhallcom">
                         Are you affiliated with townhall.com?
                   </a>
                     </h4>
                   </div>
-                  <div id="townhallcom" class="panel-collapse collapse" role="tabpanel"
+                  <div id="townhallcom" className="panel-collapse collapse" role="tabpanel"
                     aria-labelledby="Are you affiliated with townhall.com?">
-                    <div class="panel-body">
+                    <div className="panel-body">
                       Nope.
                 </div>
                   </div>
                 </div>
-                <div class="panel panel-default">
-                  <div class="panel-heading" role="tab">
-                    <h4 class="panel-title">
+                <div className="panel panel-default">
+                  <div className="panel-heading" role="tab">
+                    <h4 className="panel-title">
                       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#whoAreYou" aria-expanded="true"
                         aria-controls="whoAreYou">
                         Who are you?
                   </a>
                     </h4>
                   </div>
-                  <div id="whoAreYou" class="panel-collapse collapse" role="tabpanel"
+                  <div id="whoAreYou" className="panel-collapse collapse" role="tabpanel"
                     aria-labelledby="Are you affiliated with whoAreYou?">
-                    <div class="panel-body">
+                    <div className="panel-body">
                       <p>Town Hall Project would not be possible without the hard work and talent of dozens of research
                         volunteers,
                     web developers, communications experts, and advisors.</p>
@@ -992,16 +991,16 @@ class App extends React.Component {
                 </div>
               </div>
             </section>
-            <section class="container">
-              <article class="row">
-                <div class="col-sm-5 col-offset-1">
+            <section className="container">
+              <article className="row">
+                <div className="col-sm-5 col-offset-1">
                   <h3>Can I send you town halls that I find?</h3>
                   <p>Yes! Please send town hall or any other congressional events to us
                 <a href="#submit">here</a>. Please include as much detail as you can, including a date, time, and link or
                                   other source of the
                 event information. </p>
                 </div>
-                <div class="col-sm-5 col-sm-offset-2">
+                <div className="col-sm-5 col-sm-offset-2">
                   <h3>What if my representatives have no public events scheduled?</h3>
                   <p>Call their
                 <a href="https://www.govtrack.us/congress/members" target="_blank">district offices</a> and let them know
@@ -1012,19 +1011,19 @@ class App extends React.Component {
                 and invite your member of Congress to fill that chair.</p>
                 </div>
               </article>
-              <article class="row text-center">
+              <article className="row text-center">
                 <h3>Get connected locally!</h3>
                 <p>
-                  <a data-toggle="tab" class="hash-link" href="#contact">Contact us </a>and one of our organizers will connect
+                  <a data-toggle="tab" className="hash-link" href="#contact">Contact us </a>and one of our organizers will connect
               you with groups in your area.</p>
-                <a class="privacy-policy-button" data-toggle="tab" href="#privacy-policy">Privacy Policy</a>
+                <a className="privacy-policy-button" data-toggle="tab" href="#privacy-policy">Privacy Policy</a>
               </article>
-              <div class="col-sm-4">
+              <div className="col-sm-4">
               </div>
             </section>
-            <section class="container">
-              <div class="row">
-                <div class="col-sm-12" id="disclaimer">
+            <section className="container">
+              <div className="row">
+                <div className="col-sm-12" id="disclaimer">
                   <small>The information available on or from this website is compiled by Town Hall Project volunteers and
                     provided for
                     general informational purposes only. While all efforts are made to verify accuracy of events, event
@@ -1038,135 +1037,135 @@ class App extends React.Component {
               </div>
             </section>
           </div>
-          <div role="tabpanel" class="tab-pane" id="join">
+          <div role="tabpanel" className="tab-pane" id="join">
             <header>
-              <section class="container container-fluid">
-                <div class="col-md-6 col-md-offset-3">
-                  <p class="lead">Sign up now for personalized event updates for your congressional district and state! </p>
+              <section className="container container-fluid">
+                <div className="col-md-6 col-md-offset-3">
+                  <p className="lead">Sign up now for personalized event updates for your congressional district and state! </p>
                   <p>We will email you town hall events with your members of Congress, as well as send the latest news on
                     upcoming
                 debates in Congress and updates on our project.</p>
                 </div>
               </section>
             </header>
-            <section class="container container-fluid">
-              <div id='can-form-area-stay-up-to-date-on-our-work' class=" col-md-6 col-md-offset-3"></div>
+            <section className="container container-fluid">
+              <div id='can-form-area-stay-up-to-date-on-our-work' className=" col-md-6 col-md-offset-3"></div>
             </section>
-            <div class="banner" id="cover">
-              <div class="photo-credit text-white">
+            <div className="banner" id="cover">
+              <div className="photo-credit text-white">
                 <small>Photo credit: Trang Dang</small>
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane" id="missing-members">
+          <div role="tabpanel" className="tab-pane" id="missing-members">
             <header>
-              <section class="container container-fluid">
-                <div class="col-md-6 col-md-offset-3">
-                  <p class="lead">
+              <section className="container container-fluid">
+                <div className="col-md-6 col-md-offset-3">
+                  <p className="lead">
                     <span id="mm-total-copy">Many</span> members of Congress have not held a single in-person town hall since
                     January 3, 2019.
               </p>
-                  <p class="lead">
+                  <p className="lead">
                     Is yours one of them?
               </p>
                 </div>
               </section>
-              <nav class="navbar navbar-default">
-                <ul class="nav navbar-nav navbar-left filter-button-group">
-                  <li class="block">
-                    {/*<!-- <div class="col-sm-6">
-                          <button class="btn btn-primary btn-block" type="button" name="button" id="view-missing-member-report">View 2017 Report</button>
+              <nav className="navbar navbar-default">
+                <ul className="nav navbar-nav navbar-left filter-button-group">
+                  <li className="block">
+                    {/*<!-- <div className="col-sm-6">
+                          <button className="btn btn-primary btn-block" type="button" name="button" id="view-missing-member-report">View 2017 Report</button>
                           </div> -->*/}
-                    <div class="col-sm-6">
-                      <p class="transparent" id="mm-current-state" data-current={0} data-total={0}>
+                    <div className="col-sm-6">
+                      <p className="transparent" id="mm-current-state" data-current={0} data-total={0}>
                         Viewing ### of ### total missing members
                   </p>
                       {/*<!-- <p>
                           Click the
-                    <i class="fas fa-address-book" aria-hidden="true"></i> icon on your member's card to download a poster
+                    <i className="fas fa-address-book" aria-hidden="true"></i> icon on your member's card to download a poster
                         </p> -->*/}
                     </div>
                   </li>
-                  <li class="block filter-button-group mm-filter-info-holder">
-                    <ul class="nav navbar-nav" id="mm-filter-info">
+                  <li className="block filter-button-group mm-filter-info-holder">
+                    <ul className="nav navbar-nav" id="mm-filter-info">
                     </ul>
                   </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right btn-group">
-                  <li class="nav-item dropdown filter-button-group btn-group">
-                    <a href="#" class="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown"
+                <ul className="nav navbar-nav navbar-right btn-group">
+                  <li className="nav-item dropdown filter-button-group btn-group">
+                    <a href="#" className="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown"
                       role="button" aria-haspopup="true" aria-expanded="false">Party
-                  <span class="caret"></span>
+                  <span className="caret"></span>
                     </a>
-                    <ul class="dropdown-menu button-group" data-filter-group="party">
-                      <li class="downdown-title">Filter by party</li>
-                      <li role="separator" class="divider"></li>
-                      <li data-filter=".Democratic" id="Democratic" class="btn dropdown-item btn-filter btn-white">Democratic
+                    <ul className="dropdown-menu button-group" data-filter-group="party">
+                      <li className="downdown-title">Filter by party</li>
+                      <li role="separator" className="divider"></li>
+                      <li data-filter=".Democratic" id="Democratic" className="btn dropdown-item btn-filter btn-white">Democratic
                   </li>
-                      <li data-filter=".Republican" id="Republican" class="btn dropdown-item btn-filter btn-white">Republican
+                      <li data-filter=".Republican" id="Republican" className="btn dropdown-item btn-filter btn-white">Republican
                   </li>
-                      {/*<!-- <li data-filter=".Independent" id="Independent" class="btn dropdown-item btn-filter btn-white">Independent</li> -->*/}
-                      <li data-filter="" id="All" class="btn dropdown-item btn-filter btn-white">All</li>
+                      {/*<!-- <li data-filter=".Independent" id="Independent" className="btn dropdown-item btn-filter btn-white">Independent</li> -->*/}
+                      <li data-filter="" id="All" className="btn dropdown-item btn-filter btn-white">All</li>
                     </ul>
                   </li>
-                  <li class=" nav-item dropdown filter-button-group btn-group">
-                    <a href="#" class="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown"
+                  <li className=" nav-item dropdown filter-button-group btn-group">
+                    <a href="#" className="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown"
                       role="button" aria-haspopup="true" aria-expanded="false">Chamber
-                  <span class="caret"></span>
+                  <span className="caret"></span>
                     </a>
-                    <ul class="dropdown-menu button-group" data-filter-group="chamber">
-                      <li class="downdown-title">Filter by chamber</li>
-                      <li role="separator" class="divider"></li>
-                      <li class="btn dropdown-item btn-filter btn-white" data-filter=".Senate">Senate</li>
-                      <li class="btn dropdown-item btn-filter btn-white" data-filter=".House" id="Republican">House</li>
-                      <li class="btn dropdown-item btn-filter btn-white" data-filter="" id="All">All</li>
+                    <ul className="dropdown-menu button-group" data-filter-group="chamber">
+                      <li className="downdown-title">Filter by chamber</li>
+                      <li role="separator" className="divider"></li>
+                      <li className="btn dropdown-item btn-filter btn-white" data-filter=".Senate">Senate</li>
+                      <li className="btn dropdown-item btn-filter btn-white" data-filter=".House" id="Republican">House</li>
+                      <li className="btn dropdown-item btn-filter btn-white" data-filter="" id="All">All</li>
                     </ul>
                   </li>
-                  {/*<!-- <li class="nav-item filter-button-group button-group btn-group" data-filter-group="ahcaFilter">
-                      <a class="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".ahca">Voted for AHCA</a>
+                  {/*<!-- <li className="nav-item filter-button-group button-group btn-group" data-filter-group="ahcaFilter">
+                      <a className="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".ahca">Voted for AHCA</a>
                     </li>
-                    <li class="nav-item filter-button-group button-group btn-group" data-filter-group="taxbillFilter">
-                      <a class="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".taxBill">Voted for 2017 tax bill</a>
+                    <li className="nav-item filter-button-group button-group btn-group" data-filter-group="taxbillFilter">
+                      <a className="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".taxBill">Voted for 2017 tax bill</a>
                       </li> -->*/}
                 </ul>
-                <ul class="nav navbar-nav state-button-holder filter-button-group ">
-                  <ul id="state-buttons" class="button-group " data-filter-group="state">
+                <ul className="nav navbar-nav state-button-holder filter-button-group ">
+                  <ul id="state-buttons" className="button-group " data-filter-group="state">
                   </ul>
                 </ul>
               </nav>
             </header>
-            <div class="inset">
+            <div className="inset">
             </div>
-            <div class="missing-member-cards-container">
-              <div class="container">
-                <div class="grid">
+            <div className="missing-member-cards-container">
+              <div className="container">
+                <div className="grid">
                 </div>
               </div>
             </div>
           </div>
-          <div role="tabpanel" class="tab-pane page" id="upload-video">
-            <section class="container">
-              <h1 class="text-primary text-center">Share your Town Hall Videos</h1>
-              <div class="col-sm-8 col-sm-offset-2 upload-video-stage-1 text-center">
-                <h3 class="margin-bottom">Have a video from a town hall you want to share?</h3>
-                <button class="btn btn-primary btn-lg btn-light-background upload-video-begin center-block">Click to begin
+          <div role="tabpanel" className="tab-pane page" id="upload-video">
+            <section className="container">
+              <h1 className="text-primary text-center">Share your Town Hall Videos</h1>
+              <div className="col-sm-8 col-sm-offset-2 upload-video-stage-1 text-center">
+                <h3 className="margin-bottom">Have a video from a town hall you want to share?</h3>
+                <button className="btn btn-primary btn-lg btn-light-background upload-video-begin center-block">Click to begin
                 uploading</button>
               </div>
-              <div class="col-sm-8 col-sm-offset-2 upload-video-stage-2 hidden">
+              <div className="col-sm-8 col-sm-offset-2 upload-video-stage-2 hidden">
                 <h3>Authorizing with youtube, please wait...</h3>
               </div>
-              <div class="col-sm-8 col-sm-offset-2 upload-video-stage-3 hidden">
+              <div className="col-sm-8 col-sm-offset-2 upload-video-stage-3 hidden">
                 <form id="upload-video-form">
                   <h3>Video Information</h3>
                   <div>
-                    <input type="text" class="form-control" name="title" placeholder="Title (event and date)" />
+                    <input type="text" className="form-control" name="title" placeholder="Title (event and date)" />
                   </div>
                   <div>
-                    <textarea class="form-control" name="description"
+                    <textarea className="form-control" name="description"
                       placeholder="Please tell us about any particularly powerful questions, answers or other moments--and the relevant timecode when possible"></textarea>
                   </div>
                   <div>
-                    <input input type="file" id="video-file-field" class="button form-control" accept="video/*" />
+                    <input input type="file" id="video-file-field" className="button form-control" accept="video/*" />
                   </div>
                   <div>
                     <em>By uploading a video you grant the Town Hall Project permission to use the video and share it with
@@ -1175,39 +1174,39 @@ class App extends React.Component {
                       make
                     the content publicly available.</em>
                   </div>
-                  <button name="button" class="btn btn-primary btn-light-background btn-lg upload-video-upload"
+                  <button name="button" className="btn btn-primary btn-light-background btn-lg upload-video-upload"
                     disabled="true">Upload my video</button>
                 </form>
               </div>
-              <div class="col-sm-8 col-sm-offset-2 upload-video-stage-4 hidden">
+              <div className="col-sm-8 col-sm-offset-2 upload-video-stage-4 hidden">
                 <h3>
-                  <div class="d-inline-block margin-bottom">Upload in progress:</div>
-                  <div class="d-inline-block margin-bottom">
+                  <div className="d-inline-block margin-bottom">Upload in progress:</div>
+                  <div className="d-inline-block margin-bottom">
                     <progress id="upload-video-progress" max="1" value="0"></progress>
                   </div>
-                  <div class="d-inline-block margin-bottom">
+                  <div className="d-inline-block margin-bottom">
                     <span id="upload-video-percent-transferred"></span>% complete.</div>
-                  <div class="d-inline-block margin-bottom">About
+                  <div className="d-inline-block margin-bottom">About
                   <span id="upload-video-seconds-remaining"></span> remaining.</div>
                 </h3>
               </div>
-              <div class="col-sm-8 col-sm-offset-2 upload-video-stage-5 hidden">
+              <div className="col-sm-8 col-sm-offset-2 upload-video-stage-5 hidden">
                 <h3>Your video has been successfully uploaded. It will be reviewed by our team shortly. Thank you!</h3>
-                <button class="btn btn-primary btn-lg btn-light-background upload-video-begin center-block" id="upload-another">Upload
+                <button className="btn btn-primary btn-lg btn-light-background upload-video-begin center-block" id="upload-another">Upload
                 another video</button>
               </div>
             </section>
           </div>
-          <div role="tabpanel" class="tab-pane" id="privacy-policy">
-            <header class="margin-bottom">
-              <section class="container ">
-                <div class="col-sm-6 col-sm-offset-4">
+          <div role="tabpanel" className="tab-pane" id="privacy-policy">
+            <header className="margin-bottom">
+              <section className="container ">
+                <div className="col-sm-6 col-sm-offset-4">
                   <h2>Privacy Policy</h2>
                 </div>
               </section>
             </header>
-            <section class="container ">
-              <div class="col-sm-10 col-sm-offset-1">
+            <section className="container ">
+              <div className="col-sm-10 col-sm-offset-1">
                 <p>This website, application or online tool is operated by Town Hall Project (“Town Hall Project”, “we” or
                   “us”).
                   This privacy policy (“Policy”) explains how personal information is collected, used, and disclosed by Town
@@ -1346,98 +1345,98 @@ class App extends React.Component {
                 <p>Town Hall Project is volunteer driven and your experience is important to us. If you have any questions or
                   concerns,
                   please feel free to
-              <a data-toggle="tab" class="hash-link" href="#contact">contact us</a>.</p>
+              <a data-toggle="tab" className="hash-link" href="#contact">contact us</a>.</p>
               </div>
             </section>
-            <div class="banner" id="cover">
+            <div className="banner" id="cover">
             </div>
           </div>
 
-          <div role="tabpanel" class="tab-pane" id="year-two">
-            <div class="container">
+          <div role="tabpanel" className="tab-pane" id="year-two">
+            <div className="container">
               <img src="/Images/lookback2018-Desktop-nobg.png" alt="" />
             </div>
           </div>
 
-          <div role="tabpanel" class="tab-pane" id="year-one">
-            <div class="container">
+          <div role="tabpanel" className="tab-pane" id="year-one">
+            <div className="container">
               <img src="/Images/EOY_Report_Layout_noBG-01-01.png" alt="" />
             </div>
           </div>
 
-          <div role="tabpanel" class="tab-pane" id="town-hall-pledge">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-6 img-holder">
+          <div role="tabpanel" className="tab-pane" id="town-hall-pledge">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-6 img-holder">
                   <img src="../Images/svgs/THP_Pledge_House.svg" />
                 </div>
-                <div class="col-md-6 img-holder">
+                <div className="col-md-6 img-holder">
                   <img src="../Images/svgs/THP_Pledge_Senate.svg" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="modal fade event-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
+        <div className="modal fade event-modal" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+          <div className="modal-dialog modal-lg" role="document">
+            <div className="modal-content">
             </div>
           </div>
         </div>
-        <div class="modal fade missing-members-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-          <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content">
+        <div className="modal fade missing-members-modal" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+          <div className="modal-dialog modal-md" role="document">
+            <div className="modal-content">
               <img src="/Images/Missing_Member_Report.png" alt="" />
-              <a class="twitter-share-button"
+              <a className="twitter-share-button"
                 href="https://townhallproject.com/Images/Missing_Member_Report.png?text=Missing%20Members%20Report">
                 Tweet</a>
               <iframe
                 src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ftownhallproject.com%2FImages%2FMissing_Member_Report.png&layout=button&size=small&mobile_iframe=true&appId=1549118422076809&width=59&height=20"
-                width="59" height="20" style={{border:'none', overflow:'hidden'}} scrolling="no" frameborder="0"
-                allowTransparency="true"></iframe>
+                width="59" height="20" style={{border:'none', overflow:'hidden'}} scrolling="no" frameBorder="0"
+                allowtransparency="true"></iframe>
             </div>
           </div>
         </div>
-        <div class="modal fade recess-report-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-          <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content">
+        <div className="modal fade recess-report-modal" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+          <div className="modal-dialog modal-md" role="document">
+            <div className="modal-content">
               <img src="/Images/report-2019.png" alt="" />
-              <a class="twitter-share-button"
+              <a className="twitter-share-button"
                 href="https://townhallproject.com/Images/report-2019.png?text=AccessibilityReport">
                 Tweet</a>
               <iframe
                 src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ftownhallproject.com%2FImages%2Freport-2019.png&layout=button&size=small&mobile_iframe=true&appId=1549118422076809&width=59&height=20"
-                width="59" height="20" style={{border:'none', overflow:'hidden'}} scrolling="no" frameborder="0"
+                width="59" height="20" style={{border:'none', overflow:'hidden'}} scrolling="no" frameBorder="0"
                 allowTransparency="true"></iframe>
             </div>
           </div>
         </div>
-        <div class="modal fade recess-report-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-          <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content">
+        <div className="modal fade recess-report-modal" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+          <div className="modal-dialog modal-md" role="document">
+            <div className="modal-content">
               <img src="/Images/report-2019.png" alt="" />
-              <a class="twitter-share-button"
+              <a className="twitter-share-button"
                 href="https://townhallproject.com/Images/report-2019.png?text=AccessibilityReport">
                 Tweet</a>
               <iframe
                 src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ftownhallproject.com%2FImages%2Freport-2019.png&layout=button&size=small&mobile_iframe=true&appId=1549118422076809&width=59&height=20"
-                width="59" height="20" style={{border:'none', overflow:'hidden'}} scrolling="no" frameborder="0"
+                width="59" height="20" style={{border:'none', overflow:'hidden'}} scrolling="no" frameBorder="0"
                 allowTransparency="true"></iframe>
             </div>
           </div>
         </div>
-        <footer class="footer">
-          <div class="container text-center">
-            <ul class="list-unstyled">
+        <footer className="footer">
+          <div className="container text-center">
+            <ul className="list-unstyled">
               <li>
-                <a data-toggle="tab" class="hash-link text-white" href="#contact">
-                  <i class="fas fa-envelope-square fa-3x"></i>
+                <a data-toggle="tab" className="hash-link text-white" href="#contact">
+                  <i className="fas fa-envelope-square fa-3x"></i>
                 </a>
-                <a href="https://twitter.com/townhallproject" class="text-white" target="_blank">
-                  <i class="fab fa-twitter-square fa-3x" aria-hidden="true"></i>
+                <a href="https://twitter.com/townhallproject" className="text-white" target="_blank">
+                  <i className="fab fa-twitter-square fa-3x" aria-hidden="true"></i>
                 </a>
-                <a href="https://www.facebook.com/TownHallProject/" class="text-white" target="_blank">
-                  <i class="fab fa-facebook-square fa-3x" aria-hidden="true"></i>
+                <a href="https://www.facebook.com/TownHallProject/" className="text-white" target="_blank">
+                  <i className="fab fa-facebook-square fa-3x" aria-hidden="true"></i>
                 </a>
               </li>
               <li>
@@ -1447,7 +1446,7 @@ class App extends React.Component {
                 <small>Event details can change at short notice, please contact your representative to confirm.</small>
               </li>
               <li>
-                <a class="privacy-policy-button" data-toggle="tab" href="#privacy-policy">Privacy Policy</a>
+                <a className="privacy-policy-button" data-toggle="tab" href="#privacy-policy">Privacy Policy</a>
               </li>
             </ul>
           </div>
