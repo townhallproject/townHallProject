@@ -24,6 +24,10 @@ import './vendor/styles/normalize.css';
 import './vendor/styles/railscasts.css';
 
 
+// components
+import MapComponent from './components/MapComponent';
+
+
 // local styles
 import './styles/customboot.less';
 
@@ -249,8 +253,7 @@ class App extends React.Component {
               </div>
               <div className="row map-large">
 
-                <div id="map">
-                </div>
+                <MapComponent />
                 <div className="map-legend hidden-xs">
                   <ul className="list-inline">
                     <li className="map-legend-li hide-if-no-webgl">
