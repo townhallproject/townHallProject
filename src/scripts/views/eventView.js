@@ -308,10 +308,6 @@ function checkEventParam() {
   }
 }
 
-// $(document).ready(function () {
-//   init();
-// });
-
 export const init = () => {
   checkEventParam();
   $('#button-to-form').hide();
