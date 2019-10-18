@@ -35,6 +35,8 @@
         ".read": "false",
         ".write": "true",
         "$firebaseid": {
+          ".read": "false",
+          ".write": "true",
           ".validate": "newData.hasChildren(['eventId','email_address', 'family_name', 'given_name', 'postal_code', 'can_contact'])"
         }
       }
