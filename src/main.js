@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import page from 'page';
 
-import { init } from './scripts/views/eventView';
+import { init, populateEventModal } from './scripts/views/eventView';
+window.populateModal = populateEventModal;
 
 // vendor scripts
 import './vendor/scripts/jquery-2.1.4';
@@ -26,37 +27,26 @@ import './vendor/styles/railscasts.css';
 
 // components
 import About from './components/About';
-import Banner from './components/Banner';
 import ContactUsForm from './components/ContactUsForm';
-import EmailSignup from './components/EmailSignup';
 import EndOfYearReport from './components/EndOfYearReport';
-import EventsTable from './components/EventsTable';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Join from './components/Join';
-import MapComponent from './components/MapComponent';
 import MissingMemberReport from './components/MissingMemberReport';
 import MissingMembers from './components/MissingMembers';
-import NoEventsComponent from './components/NoEventsComponent';
 import PrivacyPolicyComponent from './components/PrivacyPolicyComponent';
 import RecessReport from './components/RecessReport';
-import RepresentativeCards from './components/RepresentativeCards';
 import SubmitEventForm from './components/SubmitEventForm';
 import TownHallPledgeAgreements from './components/TownHallPledgeAgreements';
 import UploadVideo from './components/UploadVideo';
-import ZipSearchComponent from './components/ZipSearchComponent';
 
-// TODO:
-// fix table modals
-// make components for event-modal
-// make 'Home' component and import from there
-// fix any lasting bugs, test reports
-
+import PageComponent from './components/PageComponent';
 
 // local styles
 import './styles/customboot.less';
 
 import './scripts/controllers/routes';
+import Home from './components/Home';
 
 class App extends React.Component {
   componentDidMount() {
@@ -67,41 +57,48 @@ class App extends React.Component {
     return (
       <div>
         <Header />
-        <Banner />
-        {/** TODO: Possible start of 'Home' component */}
+
+        {/** Main content & Pages */}
         <div className="tab-content">
-          <div role="tabpanel" className="tab-pane page active" id="home">
-            <ZipSearchComponent />
-            {/*Call to action when no events are present*/}
-            <NoEventsComponent />
-            <MapComponent />
-            <EmailSignup />
-            {/*Cards showing representatives and their contact info*/}
-            <RepresentativeCards />
-            <EventsTable />
-          </div>
-          <SubmitEventForm />
-          <ContactUsForm />
-          <About />
-          <Join />
-          <MissingMembers />
-          <UploadVideo />
-          <PrivacyPolicyComponent />
-          <EndOfYearReport hashtag={'year-two'} imageSrc={'/Images/lookback2018-Desktop-nobg.png'} />
-          <EndOfYearReport hashtag={'year-one'} imageSrc={'/Images/EOY_Report_Layout_noBG-01-01.png'} />
+          <PageComponent id="home" active activeBanner>
+            <Home />
+          </PageComponent>
+          <PageComponent id="submit" active={false} activeBanner>
+            <SubmitEventForm />
+          </PageComponent>
+          <PageComponent id="contact" active={false} activeBanner>
+            <ContactUsForm />
+          </PageComponent>
+          <PageComponent id="about" active={false} activeBanner>
+            <About />
+          </PageComponent>
+          <PageComponent id="join" active={false} activeBanner>
+            <Join />
+          </PageComponent>
+          <PageComponent id="missing-members" active={false}>
+            <MissingMembers />
+          </PageComponent>
+          <PageComponent id="upload-video" active={false} activeBanner>
+            <UploadVideo />
+          </PageComponent>
+          <PageComponent id="privacy-policy" active={false}>
+            <PrivacyPolicyComponent />
+          </PageComponent>
           <TownHallPledgeAgreements />
-
+          <PageComponent id="year-two" active={false}>
+            <EndOfYearReport hashtag={'year-two'} imageSrc={'/Images/lookback2018-Desktop-nobg.png'} />
+          </PageComponent>
+          <PageComponent id="year-one" active={false}>
+            <EndOfYearReport hashtag={'year-one'} imageSrc={'/Images/EOY_Report_Layout_noBG-01-01.png'} />
+          </PageComponent>
         </div>
+        {/** END Main content & Pages */}
 
-        <div className="modal fade event-modal" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-          <div className="modal-dialog modal-lg" role="document">
-            <div className="modal-content">
-            </div>
-          </div>
-        </div>
-
+        {/** Single Page Resources */}
         <MissingMemberReport imageSrc={'/Images/Missing_Member_Report.png'} link={'https://townhallproject.com/Images/Missing_Member_Report.png?text=Missing%20Members%20Report'} iframe={'https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ftownhallproject.com%2FImages%2FMissing_Member_Report.png&layout=button&size=small&mobile_iframe=true&appId=1549118422076809&width=59&height=20'} />
         <RecessReport imageSrc={'/Images/report-2019.png'} link={'https://townhallproject.com/Images/report-2019.png?text=AccessibilityReport'} iframe={'https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ftownhallproject.com%2FImages%2Freport-2019.png&layout=button&size=small&mobile_iframe=true&appId=1549118422076809&width=59&height=20'} />
+        {/** END Single Page Resources */}
+
         <Footer />
       </div>
     );
