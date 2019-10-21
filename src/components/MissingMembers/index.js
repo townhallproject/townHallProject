@@ -4,7 +4,7 @@ import React from 'react';
 
 const MissingMembers = (props) => {
   return (
-    <div role="tabpanel" className="tab-pane" id="missing-members">
+    <React.Fragment>
       <header>
         <section className="container container-fluid">
           <div className="col-md-6 col-md-offset-3">
@@ -89,7 +89,7 @@ const MissingMembers = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }
 
