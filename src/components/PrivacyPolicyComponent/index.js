@@ -2,7 +2,7 @@ import React from 'react';
 
 const PrivacyPolicyComponent = (props) => {
   return (
-    <div role="tabpanel" className="tab-pane" id="privacy-policy">
+    <React.Fragment>
       <header className="margin-bottom">
         <section className="container ">
           <div className="col-sm-6 col-sm-offset-4">
@@ -155,7 +155,7 @@ const PrivacyPolicyComponent = (props) => {
       </section>
       <div className="banner" id="cover">
       </div>
-    </div>
+    </React.Fragment>
   )
 }
 
