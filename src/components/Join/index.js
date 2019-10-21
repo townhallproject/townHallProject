@@ -1,10 +1,8 @@
 import React from 'react';
 
-// import './style.scss';
-
 const Join = (props) => {
   return (
-    <div role="tabpanel" className="tab-pane" id="join">
+    <React.Fragment>
       <header>
         <section className="container container-fluid">
           <div className="col-md-6 col-md-offset-3">
@@ -23,7 +21,7 @@ const Join = (props) => {
           <small>Photo credit: Trang Dang</small>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 
