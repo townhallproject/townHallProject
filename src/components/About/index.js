@@ -1,11 +1,8 @@
 import React from 'react';
 
-// TODO: GET STYLES IMPORT WORKING
-// import './style.scss';
-
 const About = (props) => {
   return (
-    <div role="tabpanel" className="tab-pane page" id="about">
+    <React.Fragment>
       <header>
         <section className="container container-fluid quote-header">
           <blockquote className="col-sm-6 col-sm-offset-3">
@@ -66,8 +63,8 @@ const About = (props) => {
               close
               to you.
                 <strong>Your personal story is incredibly valuable.</strong> It’s precisely how sometimes dry policy is
-                                connected with
-                                the lives of real people. It’s not always easy to speak up, but these times call for courage in all of us.
+                              connected with
+                              the lives of real people. It’s not always easy to speak up, but these times call for courage in all of us.
                 Take the mic and tell your representative why she or he needs to act in your best interest.</p>
             <p>The Town Hall Project strongly encourages you to only attend and ask questions of your own
               representatives. Remember
@@ -139,8 +136,8 @@ const About = (props) => {
                 research to citizens and
                 activists nationwide. Please make a donation
                   <a href="https://secure.actblue.com/donate/thp" target="_blank">here</a>. If you are interested in a larger or ongoing donation,
-                                  or represent a granting foundation, please
-                                  contact us at
+                                or represent a granting foundation, please
+                                contact us at
                   <a href="mailto:info@townhallproject.com">info@townhallproject.com</a>.
                 </div>
             </div>
@@ -282,17 +279,17 @@ const About = (props) => {
             <h3>Can I send you town halls that I find?</h3>
             <p>Yes! Please send town hall or any other congressional events to us
                 <a href="#submit">here</a>. Please include as much detail as you can, including a date, time, and link or
-                                other source of the
+                              other source of the
                 event information. </p>
           </div>
           <div className="col-sm-5 col-sm-offset-2">
             <h3>What if my representatives have no public events scheduled?</h3>
             <p>Call their
                 <a href="https://www.govtrack.us/congress/members" target="_blank">district offices</a> and let them know
-                                you expect them to hold public events with their constituents. To have
-                                even more impact, join with other citizens in your district or state and organize group efforts. Visit the
-                                district office together, deliver petitions, inform your local press, or even hold an “Empty Chair” town
-                                hall
+                              you expect them to hold public events with their constituents. To have
+                              even more impact, join with other citizens in your district or state and organize group efforts. Visit the
+                              district office together, deliver petitions, inform your local press, or even hold an “Empty Chair” town
+                              hall
                 and invite your member of Congress to fill that chair.</p>
           </div>
         </article>
@@ -321,7 +318,7 @@ const About = (props) => {
           </div>
         </div>
       </section>
-    </div>
+    </React.Fragment>
   )
 };
 
