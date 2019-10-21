@@ -273,7 +273,7 @@ eventHandler.renderPanels = function (townhall, $parent) {
   $panel.appendTo($parent);
 };
 
-eventHandler.populateEventModal = function (townhall) {
+export const populateEventModal = function (townhall) {
   $('.event-modal .modal-content').html(eventModalTemplate(townhall));
   urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
   addtocalendar.load();
@@ -301,7 +301,7 @@ function checkEventParam() {
       if (snapshot.val()) {
         var townhall = new TownHall(snapshot.val());
         townhall.makeFormattedMember();
-        eventHandler.populateEventModal(townhall);
+        populateEventModal(townhall);
         $('.event-modal').modal('show');
       }
     });
