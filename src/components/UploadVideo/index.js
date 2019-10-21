@@ -1,10 +1,8 @@
 import React from 'react';
 
-// import './style.scss';
-
 const UploadVideo = (props) => {
   return (
-    <div role="tabpanel" className="tab-pane page" id="upload-video">
+    <React.Fragment>
       <section className="container">
         <h1 className="text-primary text-center">Share your Town Hall Videos</h1>
         <div className="col-sm-8 col-sm-offset-2 upload-video-stage-1 text-center">
@@ -57,7 +55,7 @@ const UploadVideo = (props) => {
                 another video</button>
         </div>
       </section>
-    </div>
+    </React.Fragment>
   )
 }
 
