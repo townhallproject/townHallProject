@@ -16,9 +16,9 @@ export default (townhall) => (`<div class="col-md-12 col-sm-6 event-card">
             `<h3 class="line-height-small">
               <div class="row">
                 ${townhall.chamber === 'upper' && townhall.level === 'federal' ? 
-                  `<span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>${townhall.Member} <small> (${townhall.displayDistrict})</small></span>`
+                  `<span class="d-inline-block col-sm-6"> <span class="small-white">Home state MoC (not present):<br></span>${townhall.displayName} <small> (${townhall.displayDistrict})</small></span>`
                 :
-                  `<span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>${townhall.Member} <small> (${townhall.displayDistrict})</small></span>`
+                  `<span class="d-inline-block col-sm-6"> <span class="small-white">Home district MoC (not present):<br></span>${townhall.displayName} <small> (${townhall.displayDistrict})</small></span>`
                 }
 
                 < span class = "d-inline-block col-sm-6" > < span class = "small-white" > Visiting MoC(will be present): < br > < /span>${townhall.districtAdopter} <small> (${townhall.districtAdopterParty}, ${townhall.districtAdopterDistrict})</small > < /span>
