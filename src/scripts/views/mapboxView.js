@@ -546,7 +546,7 @@ mapboxView.makePoint = function (townhall, stateIcon) {
       districtId: districtId,
       stateCode: stateCode,
       stateAbbr: stateAbbr,
-      member: townhall.Member,
+      displayName: townhall.displayName,
       Member: townhall.Member,
       address: townhall.address,
       meetingType: townhall.meetingType,

@@ -4,7 +4,7 @@ export default (townhall) => {
 return `<li id="${townhall.eventId}"
   class="event-row list-group-item ${townhall.Notes ? 'has-notes' : ''}"
   data-Main_State-filter="${townhall.State}"
-  data-Member-filter="${townhall.Member}"
+  data-Member-filter="${townhall.displayName}"
   ${townhall.Notes ? 
     `data-toggle="collapse"
     data-target="#notes-${townhall.eventId}"
