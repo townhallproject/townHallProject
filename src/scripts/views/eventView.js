@@ -233,12 +233,10 @@ function handleZipToDistrict(zipToDistrictArray) {
 }
 
 eventHandler.lookup = function (e) {
-  console.log('lookup ')
   e.preventDefault();
   TownHall.resetData();
   TownHall.zipQuery;
   var zip = $('#look-up input').val().trim();
-  console.log('lookup ', zip)
 
   var zipCheck = zip.match(zipcodeRegEx);
   if (zipCheck) {
@@ -323,9 +321,6 @@ function checkEventParam() {
   }
 }
 
-$(document).ready(function () {
-  init();
-});
 
 export const init = () => {
   checkEventParam();
@@ -461,11 +456,9 @@ export const init = () => {
 
 export const embedMapInit = () => {
     checkEventParam();
-    console.log('init', $('#look-up'))
     $('#button-to-form').hide();
     $('#save-event').on('submit', eventHandler.save);
     $('#look-up').on('submit', eventHandler.lookup);
-    $('#look-up input').on('change', (e) => {console.log});
 
     $('#view-all').on('click', TownHall.viewAll);
 
