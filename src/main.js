@@ -1,6 +1,8 @@
+import $ from 'jquery';
+
 import eventHandler from './scripts/views/eventView';
 window.populateModal = eventHandler.populateEventModal;
-
+import { init } from './scripts/views/eventView';
 // vendor scripts
 import './vendor/scripts/jquery-2.1.4';
 import './vendor/scripts/jquery-ui';
@@ -24,3 +26,7 @@ import './vendor/styles/railscasts.css';
 // local styles
 import './styles/customboot.less';
 import './scripts/controllers/routes';
+
+$(document).ready(function () {
+    init();
+});

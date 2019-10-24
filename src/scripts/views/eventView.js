@@ -237,6 +237,7 @@ eventHandler.lookup = function (e) {
   TownHall.resetData();
   TownHall.zipQuery;
   var zip = $('#look-up input').val().trim();
+
   var zipCheck = zip.match(zipcodeRegEx);
   if (zipCheck) {
     var zipClean = zip.split('-')[0];
@@ -320,9 +321,6 @@ function checkEventParam() {
   }
 }
 
-$(document).ready(function () {
-  init();
-});
 
 export const init = () => {
   checkEventParam();
@@ -454,6 +452,20 @@ export const init = () => {
       $('#scrollBtn').hide();
     }
   });
+}
+
+export const embedMapInit = () => {
+    checkEventParam();
+    $('#button-to-form').hide();
+    $('#save-event').on('submit', eventHandler.save);
+    $('#look-up').on('submit', eventHandler.lookup);
+
+    $('#view-all').on('click', TownHall.viewAll);
+
+    $('body').on('click', '.popover .popover-title a.close', function () {
+      $('[data-toggle="popover"]').popover('hide');
+    });
+
 }
 
 function setYearEndImage() {
