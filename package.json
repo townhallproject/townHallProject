@@ -6,8 +6,8 @@
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.prod.js",
     "watch": "webpack-dev-server --inline --hot --public --config webpack.config.js",
-    "prefirebase-server": "npm run build",
-    "firebase-server": "firebase serve --only hosting",
+    "prefirebase-serve": "npm run build",
+    "firebase-serve": "firebase serve --only hosting",
     "predeploy": "npm run build",
     "deploy": "firebase deploy",
     "test": "echo \"Error: no test specified\" && exit 1",
