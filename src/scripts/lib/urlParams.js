@@ -1,5 +1,13 @@
 const urlParamsHandler = {};
 
+ urlParamsHandler.getUrlParamFromQuery = function (queryString, param) {
+   var query = queryString.match(new RegExp('([?&])' + param + '[^&]*'));
+   if (query) {
+     return query[0].split('=')[1];
+   }
+   return false;
+ };
+ 
 urlParamsHandler.getUrlParameter = (param) => {
   let query = document.location.search.match(new RegExp('([?&])' + param + '[^&]*'));
   if (query) {

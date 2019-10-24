@@ -237,6 +237,7 @@ eventHandler.lookup = function (e) {
   TownHall.resetData();
   TownHall.zipQuery;
   var zip = $('#look-up input').val().trim();
+
   var zipCheck = zip.match(zipcodeRegEx);
   if (zipCheck) {
     var zipClean = zip.split('-')[0];
@@ -274,7 +275,11 @@ eventHandler.renderPanels = function (townhall, $parent) {
 };
 
 eventHandler.populateEventModal = function (townhall) {
+  let { level } = townhall;
   $('.event-modal .modal-content').html(eventModalTemplate(townhall));
+  if (level === 'state') {
+    urlParamsHandler.setUrlParameter('state', townhall.state);
+  }
   urlParamsHandler.setUrlParameter('eventId', townhall.eventId);
   addtocalendar.load();
 };
@@ -296,11 +301,19 @@ function setupTypeaheads() {
 
 function checkEventParam() {
   let eventId = urlParamsHandler.getUrlParameter('eventId');
-  if (eventId) {
-    firebasedb.ref('/townHalls/' + eventId).once('value').then(function (snapshot) {
-      if (snapshot.val()) {
+  var stateId = urlParamsHandler.getUrlParameter('state');
+  let ref;
+  if (stateId && eventId) {
+    ref = `/state_townhalls/${stateId}/${eventId}`;
+  } else if (eventId) {
+    ref = `/townHalls/${eventId}`;
+  }
+  if (ref) {
+    firebasedb.ref(ref).once('value').then(function (snapshot) {
+      if (snapshot.exists()) {
         var townhall = new TownHall(snapshot.val());
         townhall.makeFormattedMember();
+        townhall.makeDisplayDistrict();
         eventHandler.populateEventModal(townhall);
         $('.event-modal').modal('show');
       }
@@ -308,9 +321,6 @@ function checkEventParam() {
   }
 }
 
-$(document).ready(function () {
-  init();
-});
 
 export const init = () => {
   checkEventParam();
@@ -404,6 +414,7 @@ export const init = () => {
   // Remove query param when closing modal
   $('.event-modal').on('hide.bs.modal', function () {
     urlParamsHandler.setUrlParameter('eventId', false);
+    urlParamsHandler.setUrlParameter('state', false);
   });
   $('#close-email').on('click', function () {
     localStorage.setItem('signedUp', true);
@@ -441,6 +452,20 @@ export const init = () => {
       $('#scrollBtn').hide();
     }
   });
+}
+
+export const embedMapInit = () => {
+    checkEventParam();
+    $('#button-to-form').hide();
+    $('#save-event').on('submit', eventHandler.save);
+    $('#look-up').on('submit', eventHandler.lookup);
+
+    $('#view-all').on('click', TownHall.viewAll);
+
+    $('body').on('click', '.popover .popover-title a.close', function () {
+      $('[data-toggle="popover"]').popover('hide');
+    });
+
 }
 
 function setYearEndImage() {
