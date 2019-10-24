@@ -44,10 +44,10 @@ class TownHall {
       prefix = constants[this.chamber];
     }
     if (this.meetingType === 'Empty Chair Town Hall') {
-      sentence = [prefix, this.Member, '(invited)'];
+      sentence = [prefix, this.displayName, '(invited)'];
       this.formattedMember = sentence.join(' ');
     } else {
-      sentence = [prefix, this.Member];
+      sentence = [prefix, this.displayName];
       this.formattedMember = sentence.join(' ');
     }
   }
@@ -360,8 +360,8 @@ TownHall.addFilterIndexes = (townhall) => {
   if (TownHall.allStates.indexOf(townhall.stateName) === -1) {
     TownHall.allStates.push(townhall.stateName);
   }
-  if (TownHall.allMoCs.indexOf(townhall.Member) === -1) {
-    TownHall.allMoCs.push(townhall.Member);
+  if (TownHall.allMoCs.indexOf(townhall.displayName) === -1) {
+    TownHall.allMoCs.push(townhall.displayName);
   }
 };
 

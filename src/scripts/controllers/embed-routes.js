@@ -1,6 +1,6 @@
-var page = page;
-var mapController = mapController;
-var indexController = indexController;
+import page from 'page';
+import mapController from './map-controller';
+import indexController from './index-controller';
 
 page('/',
   mapController.reset,
@@ -26,5 +26,3 @@ page('/mapEmbed.html',
   mapController.maskCountry,
   mapController.addDistrictListenerEmbed
 );
-
-page();

@@ -24,8 +24,15 @@ const plugins = [
   }),
 
   new HTMLPlugin({
+    chunks: ['main'],
+    filename: "index.html",
     template: `${__dirname}/src/index.html`,
   }),
+    new HTMLPlugin({
+      chunks: ['embedmap'],
+      filename: "mapEmbed.html",
+      template: `${__dirname}/src/mapEmbed.html`,
+    }),
   // new ExtractPlugin('bundle.[hash].css'),
   new CopyWebpackPlugin([
     {
@@ -55,14 +62,16 @@ module.exports = {
   },
   plugins,
 
-  // Load this and everything it cares about
-  entry: `${__dirname}/src/main.js`,
+  entry: {
+    main: `${__dirname}/src/main.js`,
+    embedmap: `${__dirname}/src/embedmap-main.js`
+  },
 
   devtool: 'source-map',
 
   // Stick it into the "path" folder with that file name
   output: {
-    filename: 'bundle.[hash].js',
+    filename: '[name].[hash].js',
     path: `${__dirname}/build`,
   },
   module: {

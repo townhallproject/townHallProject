@@ -26,9 +26,9 @@ export default (eventInfo) => {
       `<h3 class="col-xs-10 col-md-9 line-height-medium">
         ${eventInfo.District === 'Senate' ?
           `<span class="discriptor-text d-inline-block">Home state MoC (not present): </span>
-          ${eventInfo.Member} <small>  ${eventInfo.party ? `(${eventInfo.party})` :''}${eventInfo.state}, ${eventInfo.displayDistrict}</small>`
+          ${eventInfo.displayName} <small>  ${eventInfo.party ? `(${eventInfo.party})` :''}${eventInfo.state}, ${eventInfo.displayDistrict}</small>`
         :
-          `<span class="discriptor-text d-inline-block">Home district MoC (not present): </span>${eventInfo.Member} <small>  ${eventInfo.party ? `(${eventInfo.party})` :''}${eventInfo.state}, ${eventInfo.displayDistrict}</small>`
+          `<span class="discriptor-text d-inline-block">Home district MoC (not present): </span>${eventInfo.displayName} <small>  ${eventInfo.party ? `(${eventInfo.party})` :''}${eventInfo.state}, ${eventInfo.displayDistrict}</small>`
         }
         <br>
         <span class="discriptor-text d-inline-block">Visiting MoC (will be present): </span>${eventInfo.districtAdopter} <small> (${eventInfo.districtAdopterParty}) ${eventInfo.districtAdopterState}, ${eventInfo.districtAdopterDistrict}</small>
@@ -47,7 +47,7 @@ export default (eventInfo) => {
           <var class="atc_date_start">${eventInfo.yearMonthDay} ${eventInfo.timeStart24}</var>
             <var class="atc_date_end">${eventInfo.yearMonthDay} ${eventInfo.timeEnd24}</var>
             <var class="atc_timezone">${eventInfo.zoneString}</var>
-            <var class="atc_title">${eventInfo.meetingType}: ${eventInfo.Member}</var>
+            <var class="atc_title">${eventInfo.meetingType}: ${eventInfo.displayName}</var>
             <var class="atc_description">${eventInfo.Notes}</var>
             <var class="atc_location">${eventInfo.address}</var>
             <var class="atc_organizer">${eventInfo.party}</var>
