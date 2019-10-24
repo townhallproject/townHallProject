@@ -167,7 +167,6 @@ mapController.readStateData = function (ctx, next) {
 };
 
 mapController.maskCountry = function (ctx, next) {
-  console.log(ctx.stateUPSP)
   if (ctx.webGL) {
     stateView.maskCountry(ctx.map, ctx.stateUPSP);
   }
