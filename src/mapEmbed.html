@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0 user-scalable=no" name="viewport">
+  <title>Town Hall Project || Find a Town Hall Near you</title>
+  <meta name="google-site-verification" content="Z-DITr7yziksJNk7OlwHxiD2WK31wNO0GbRP7px3xL8" />
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Town Hall Project is dedicated to the conviction that our democracy is stronger when lawmakers and constituents meet face-to-face. Show Up, Speak Out.">
+  <link rel="shortcut icon" href="./Images/THP_favicon.png" type="image/x-icon">
+  <!-- Social media meta tags -->
+
+  <!-- Schema.org markup for Google+ -->
+  <meta itemprop="name" content="Town Hall Project">
+  <meta itemprop="description" content="Town Hall Project is a progressive, a citizen-powered research and organizing project dedicated to holding lawmakers accountable via town hall meetings and other in-person engagement.">
+  <meta itemprop="image" content="https://townhallproject.com/Images/THP_logo_horizontal_facebook.png">
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@townhallproject">
+  <meta name="twitter:title" content="Town Hall Project">
+  <meta name="twitter:description" content="Town Hall Project is a progressive, a citizen-powered research and organizing project dedicated to holding lawmakers accountable via town hall meetings and other in-person engagement.">
+  <meta name="twitter:creator" content="@townhallproject">
+  <!-- Twitter summary card must be at least 120px x 120px -->
+  <meta name="twitter:image" content="https://townhallproject.com/Images/THP_logo_vertical_twitter.png">
+  <meta name="twitter:image:alt" content="The Town Hall Project wordmark with a podium">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="Town Hall Project" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://townhallproject.com/" />
+  <meta property="og:image" content="https://townhallproject.com/Images/THP_logo_horizontal_facebook.png">
+  <meta property="og:description" content="Town Hall Project is a progressive, a citizen-powered research and organizing project dedicated to holding lawmakers accountable via town hall meetings and other in-person engagement.">
+  <meta property="og:site_name" content="Town Hall Project" />
+
+  <script src="https://use.fontawesome.com/316bfde8e8.js"></script>
+  <link href="https://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,900" rel="stylesheet">
+  <link href='https://api.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' />
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.2/mapbox-gl.css' rel='stylesheet' />
+
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-92247600-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+
+<body style="margin-bottom:0;">
+  <div id="embed-root"></div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
+  <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+  <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+
+  <script type="text/javascript">
+    (function () {
+      if (window.addtocalendar)
+        if (typeof window.addtocalendar.start == "function") return;
+      if (window.ifaddtocalendar == undefined) {
+        window.ifaddtocalendar = 1;
+        var d = document,
+          s = d.createElement('script'),
+          g = 'getElementsByTagName';
+        s.type = 'text/javascript';
+        s.charset = 'UTF-8';
+        s.async = true;
+        s.src = ('https:' == window.location.protocol ? 'https' : 'http') + '://addtocalendar.com/atc/1.5/atc.min.js';
+        var h = d[g]('body')[0];
+        h.appendChild(s);
+      }
+    })();
+  </script>
+  <script>
+    window.twttr = (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function (f) {
+        t._e.push(f);
+      };
+
+      return t;
+    }(document, "script", "twitter-wjs"));
+  </script>
+
+  <script>
+    function initMap() {} // to keep from getting a initMap is not a function error, gets overwritten by code in bundle. 
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmCMim_2ePjXmiPrFhscbuBOr0updtryc&callback=initMap&libraries=visualization,geometry">
+  </script>
+</body>
+
+</html>

@@ -46,10 +46,10 @@ const plugins = [
       from: 'src/vendor/scripts/*',
       to: 'vendor/scripts',
     },
-    {
-      from: 'src/mapEmbed.html',
-      to: 'mapEmbed.html'
-    }
+    // {
+    //   from: 'src/mapEmbed.html',
+    //   to: 'mapEmbed.html'
+    // }
   ]),
 ];
 
