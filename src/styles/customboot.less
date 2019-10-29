@@ -323,9 +323,12 @@ header{
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 12em;
+  height: 200px;
   background-color: @brand-info;
   padding: 40px;
+  .container .list-unstyled a {
+    margin: 5px;
+  }
 }
 
 img{
@@ -1393,9 +1396,6 @@ img.grayscale {
 #year-one, #year-two {
   background-color: @brand-success;
   .container {
-    @media (min-width: 1200px) {
-      width: 1440px
-    }
     img{
       max-width: 1440px;
       width: 100%;

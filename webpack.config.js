@@ -95,18 +95,6 @@ module.exports = {
       },
       // If it's a .scss file
       {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: 'css-loader',
-          },
-          'resolve-url-loader',
-          {
-            loader: 'sass-loader',
-          },
-        ],
-      },
-      {
         test: /\.less$/,
         use: [
           MiniCssExtractPlugin.loader,

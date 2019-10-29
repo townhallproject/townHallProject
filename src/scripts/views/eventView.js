@@ -274,7 +274,7 @@ eventHandler.renderPanels = function (townhall, $parent) {
   $panel.appendTo($parent);
 };
 
-eventHandler.populateEventModal = function (townhall) {
+export const populateEventModal = function (townhall) {
   let { level } = townhall;
   $('.event-modal .modal-content').html(eventModalTemplate(townhall));
   if (level === 'state') {
@@ -313,14 +313,12 @@ function checkEventParam() {
       if (snapshot.exists()) {
         var townhall = new TownHall(snapshot.val());
         townhall.makeFormattedMember();
-        townhall.makeDisplayDistrict();
-        eventHandler.populateEventModal(townhall);
+        populateEventModal(townhall);
         $('.event-modal').modal('show');
       }
     });
   }
 }
-
 
 export const init = () => {
   checkEventParam();

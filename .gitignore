@@ -42,6 +42,8 @@ bower_components
 #
 .env
 
+.DS_Store
+
 #dist css
 styles/css/bootstrap.css.map
 styles/css/bootstrapTH_v1_0.css
