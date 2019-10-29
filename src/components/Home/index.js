@@ -1,12 +1,12 @@
 import React from 'react';
 
-import ZipSearchComponent from '../ZipSearchComponent';
-import NoEventsComponent from '../NoEventsComponent';
-import MapComponent from '../MapComponent';
-import EmailSignup from '../EmailSignup';
-import RepresentativeCards from '../RepresentativeCards';
-import EventsTable from '../EventsTable';
-import EventModal from '../EventModal';
+import ZipSearchComponent from './ZipSearchComponent';
+import NoEventsComponent from './NoEventsComponent';
+import MapComponent from './MapComponent';
+import EmailSignup from './EmailSignup';
+import RepresentativeCards from './RepresentativeCards';
+import EventsTable from './EventsTable';
+import EventModal from './EventModal';
 
 const Home = (props) => {
   return (
