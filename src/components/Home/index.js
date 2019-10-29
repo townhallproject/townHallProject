@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ZipSearchComponent from './ZipSearchComponent';
+import ZipSearchComponent from './ZipSearch';
 import NoEventsComponent from './NoEventsComponent';
 import MapComponent from './MapComponent';
 import EmailSignup from './EmailSignup';
