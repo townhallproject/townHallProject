@@ -21,16 +21,10 @@ const About = (props) => {
       <section className="container">
         <article className="center-block about">
           <h2 className="text-secondary-dark">About Town Hall Project</h2>
-          <p className="lead">Town Hall Project empowers constituents across the country to have face-to-face conversations
-            with their elected
-            representatives. We are campaign veterans and first time volunteers. We come from a diversity of backgrounds
-            and live across the country. We share progressive values and believe strongly in civic engagement. We
-            research
-            every district and state for public events with members of Congress. Then we share our findings to promote
-            participation
-              in the democratic process.</p>
-          <p className="lead">This movement is diverse, open source, and powered by citizens. We are proud to be a part of
-              it.</p>
+          <p className="lead">Town Hall Project is dedicated to the conviction that our democracy is stronger, fairer, and 
+                  better when Americans and their elected representatives regularly meet face-to-face.
+                  Our work empowers constituents across the country to have face-to-face conversations with their elected 
+                  representatives.</p>
           <p className="text-primary">
             <strong>Show Up. Speak Out.</strong>
           </p>
@@ -59,21 +53,18 @@ const About = (props) => {
           </div>
           <div className="col-sm-6">
             <h3>What to expect</h3>
-            <p>The most powerful thing you can do, as a constituent, is ask an earnest, pressing question on an issue
-              close
-              to you.
-                <strong>Your personal story is incredibly valuable.</strong> It’s precisely how sometimes dry policy is
-                              connected with
-                              the lives of real people. It’s not always easy to speak up, but these times call for courage in all of us.
+            <p>The most powerful thing you can do, as a constituent, is ask an earnest, pressing question on an issue close to you.
+                <strong> Your personal story is incredibly valuable. </strong> 
+                It’s precisely how sometimes dry policy is connected 
+                with the lives of real people. It’s not always easy to speak up, but these times call for courage in all of us. 
                 Take the mic and tell your representative why she or he needs to act in your best interest.</p>
-            <p>The Town Hall Project strongly encourages you to only attend and ask questions of your own
-              representatives. Remember
+            <p>Town Hall Project strongly encourages you to only attend and ask questions of your own representatives. Remember 
                 that any town hall has limited time, and a question you take is one less question for a constituent.</p>
 
             <p>For more, we recommend:</p>
             <ul>
               <li>Indivisible's
-                  <a href="https://indivisible.org/resource/town-hall-guide" target="_blank">Town Hall strategy resources</a>
+                  <a href="https://indivisible.org/resource/town-hall-guide" target="_blank"> Town Hall strategy resources</a>
               </li>
             </ul>
           </div>
@@ -81,21 +72,17 @@ const About = (props) => {
         <article className="row">
           <div className="col-sm-6">
             <h3>Why Town Halls</h3>
-            <p>There is no better way to influence your representatives than in-person conversations. Town halls are a
-              longstanding
-              American tradition--where our elected representatives must listen and respond to the concerns of their
-              constituents.
-                Remember: you are their boss.</p>
-            <p>We believe every citizen, no matter the party of their members of Congress, should have the opportunity
-              to speak
-                with his or her representatives.</p>
+            <p>There is no better way to influence your representatives than in-person conversations. Town hall meetings 
+              are a longstanding American tradition--where our elected representatives must listen and respond to the concerns 
+              of their constituents. Remember: you are their boss.</p>
+            <p>We believe every American, no matter the party of their members of Congress, should have the opportunity to 
+              speak with his or her representatives.</p>
             <p>You have more power than you think. Town halls are one of the most effective ways to use it.</p>
           </div>
           <div className="col-sm-6">
             <h3>Our Supporters</h3>
-            <p>Town Hall Project is possible because of the hard work of researchers, organizers, and developers across
-              country,
-                and the generous support of hundreds of grassroots donors.</p>
+            <p>Town Hall Project is possible because of the hard work of researchers, organizers, and developers across the 
+              country, and the generous support of hundreds of grassroots donors.</p>
           </div>
         </article>
       </section>

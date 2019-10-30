@@ -17,6 +17,7 @@ import './vendor/scripts/mapbox-gl-v0.32.1';
 import './vendor/scripts/tether';
 import './vendor/scripts/bootstrap.min.js';
 import './vendor/scripts/bootstrap3-typeahead.min.js';
+import './vendor/scripts/iframeSizer.contentWindow.min.js'
 
 // vendor style
 import './vendor/styles/normalize.css';
