@@ -3,20 +3,12 @@ import $ from 'jquery';
 
 import urlParamsHandler from '../../../scripts/lib/urlParams';
 
-import {
-  makeStateDistrictText
-} from '../../../utils';
-
 import TownHall from '../../../scripts/models/TownHall';
 
 import zipLookUpHandler from '../../../scripts/views/zipLookUpView';
 import repCardHandler from '../../../scripts/views/repCardView';
 import stateView from '../../../scripts/views/stateView';
-import tableHandler from '../../../scripts/views/tableView';
-import emailHandler from '../../../scripts/views/emailSignUpView';
-import resultsView from '../../../scripts/views/resultsView';
 import eventHandler from '../../../scripts/views/eventView';
-import mapView from '../../../scripts/views/mapView';
 import mapboxView from '../../../scripts/views/mapboxView';
 
 const zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
@@ -48,8 +40,31 @@ export default class ZipSearch extends React.Component {
     super(props);
     this.saveZip = this.saveZip.bind(this);
     this.lookUpZip = this.lookUpZip.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       query: ''
+    }
+  }
+
+  componentDidMount() {
+    // Perform zip search on load
+    var zipcode = urlParamsHandler.getUrlParameter('zipcode');
+    var district = urlParamsHandler.getUrlParameter('district');
+    if (zipcode) {
+      this.setState({ query: zipcode})
+      this.lookUpZip(zipcode);
+    } else if (district) {
+      if (district.split('-').length === 3) {
+        //TODO: possible more checks to make sure this is a real district
+        var feature = {
+          state: district.split('-')[0],
+          district: district.split('-')[1],
+          geoID: district.split('-')[2],
+        };
+        mapboxView.districtSelect(feature);
+      } else {
+        urlParamsHandler.setUrlParameter('district', false);
+      }
     }
   }
 
@@ -102,15 +117,23 @@ export default class ZipSearch extends React.Component {
     };
   }
 
-  lookUpZip(e) {
+  handleSubmit(e) {
     e.preventDefault();
+    const zip = this.state.query;
+    this.lookUpZip(zip)
+  }
+
+  lookUpZip(zip) {
+    const {
+      setDistrict
+    } = this.props;
     TownHall.resetData();
     TownHall.zipQuery;
-    var zip = this.state.query;
 
     var zipCheck = zip.match(zipcodeRegEx);
     if (zipCheck) {
       var zipClean = zip.split('-')[0];
+      //TODO: move this
       repCardHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zipClean), $('#representativeCards section'));
       var lookupArray = ZipSearch.getLookupArray();
       var promises = lookupArray.map(function (path) {
@@ -123,6 +146,7 @@ export default class ZipSearch extends React.Component {
           urlParamsHandler.setUrlParameter('zipcode', zipClean);
 
           var locationData = ZipSearch.handleZipToDistrict(zipToDistrictArray);
+          setDistrict(locationData)
           eventHandler.renderResults(locationData);
         })
         .catch(function (error) {
@@ -134,7 +158,6 @@ export default class ZipSearch extends React.Component {
   };
 
   render() {
-    console.log('mounted')
     return (
       <header className="site-header clearfix">
         <section className="container container-fluid">
@@ -154,9 +177,9 @@ export default class ZipSearch extends React.Component {
             <div className="col-md-6 right-panels">
               <div className="spacer">
               </div>
-              <form className="form-inline text-center" onSubmit={this.lookUpZip}>
+              <form className="form-inline text-center" onSubmit={this.handleSubmit}>
                 <div className="form-group text-center">
-                  <input className="form-control input-lg" type="zip" placeholder="Zip Code" onChange={this.saveZip}/>
+                  <input className="form-control input-lg" type="zip" placeholder="Zip Code" onChange={this.saveZip} value={this.state.query}/>
                   <input type="submit" className="btn btn-primary btn-lg fath-button" value="Find a Town Hall" />
                   <div id="selection-results" className="text-center ">
                     <h4 className="selection-results_content"></h4>
