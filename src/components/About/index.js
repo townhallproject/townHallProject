@@ -101,6 +101,7 @@ const About = props => {
                   href="https://indivisible.org/resource/town-hall-guide"
                   target="_blank"
                 >
+                  {" "}
                   Town Hall strategy resources
                 </a>
               </li>
