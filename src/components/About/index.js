@@ -406,7 +406,7 @@ const About = props => {
               Yes! Please send town hall or any other congressional events to us
               <a href="#submit">here</a>. Please include as much detail as you
               can, including a date, time, and link or other source of the event
-              information.{" "}
+              information.
             </p>
           </div>
           <div className="col-sm-5 col-sm-offset-2">

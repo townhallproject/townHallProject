@@ -8,7 +8,7 @@ const Join = props => {
           <div className="col-md-6 col-md-offset-3">
             <p className="lead">
               Sign up now for personalized event updates for your
-              representatives!{" "}
+              representatives!
             </p>
             <p>
               We will email you town hall events with your members of Congress
