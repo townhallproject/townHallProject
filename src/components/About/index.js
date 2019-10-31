@@ -24,20 +24,10 @@ const About = props => {
       <section className="container">
         <article className="center-block about">
           <h2 className="text-secondary-dark">About Town Hall Project</h2>
-          <p className="lead">
-            Town Hall Project empowers constituents across the country to have
-            face-to-face conversations with their elected representatives. We
-            are campaign veterans and first time volunteers. We come from a
-            diversity of backgrounds and live across the country. We share
-            progressive values and believe strongly in civic engagement. We
-            research every district and state for public events with members of
-            Congress. Then we share our findings to promote participation in the
-            democratic process.
-          </p>
-          <p className="lead">
-            This movement is diverse, open source, and powered by citizens. We
-            are proud to be a part of it.
-          </p>
+          <p className="lead">Town Hall Project is dedicated to the conviction that our democracy is stronger, fairer, and 
+                  better when Americans and their elected representatives regularly meet face-to-face.
+                  Our work empowers constituents across the country to have face-to-face conversations with their elected 
+                  representatives.</p>
           <p className="text-primary">
             <strong>Show Up. Speak Out.</strong>
           </p>
