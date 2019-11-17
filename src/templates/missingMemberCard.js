@@ -20,12 +20,12 @@ export default (missingMember) => {
           <div><span>Office Phone:</span> ${missingMember.phone}</div>
         </div>`: ''}
         <div class="social-icons col-xs-12 col-sm-7 no-padding p-0 text-right">
-          ${missingMember.twitter ?
-      `<a href="//twitter.com/${missingMember.twitter}" class="social-icon" target="_blank">
+          ${missingMember.twitter_canon ?
+      `<a href="//twitter.com/${missingMember.twitter_canon}" class="social-icon" target="_blank">
               <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
             </a>`: ''}
-          ${missingMember.facebook ?
-      `<a href="//facebook.com/${missingMember.facebook}" class="social-icon" target="_blank">
+          ${missingMember.facebook_canon ?
+      `<a href="//facebook.com/${missingMember.facebook_canon}" class="social-icon" target="_blank">
               <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
             </a>`: ''}
           
