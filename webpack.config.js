@@ -1,10 +1,14 @@
 require('dotenv').config();
+const fs = require('fs');
+const path = require("path");
 const HTMLPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const lessToJs = require('less-vars-to-js');
+const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './src/styles/ant-default-vars.less'), 'utf8'));
 
 const { ProvidePlugin } = require('webpack');
 
@@ -93,7 +97,7 @@ module.exports = {
           'css-loader',
         ],
       },
-      // If it's a .scss file
+      // If it's a less file
       {
         test: /\.less$/,
         use: [
@@ -103,6 +107,9 @@ module.exports = {
           },
           {
             loader: 'less-loader',
+            options: {
+              modifyVars: themeVariables
+            },
           },
         ],
       },
