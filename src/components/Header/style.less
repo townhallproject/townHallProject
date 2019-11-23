@@ -1,10 +1,73 @@
-.main-nav-menu {
 
-  .ant-menu-item a {
-    text-decoration: none;
+.fade-in {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: .4s;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.menu-container {
+  .main-nav-menu {
+    .ant-menu-item {
+      a {
+        text-decoration: none;
+      }
+      .arrow {
+        margin: 0 auto;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        position: absolute;
+        bottom: -2px;
+      }
+    }
+    .ant-menu-item-selected {
+      border-bottom: 2px solid transparent;
+      .arrow {
+        border-bottom: 10px solid #3fabef;
+        display: block;
+        left: 50%;
+      }
+    }
+    .donate-btn {
+      float: right;
+      border-bottom: none;
+    }
   }
-  
-  .ant-menu-item:hover {
-
+  .submenu-hidden {
+    background-color: #3facf0;
+    border-bottom: none;
+    height: 0px;
+    -webkit-transition: height .2s ease-in-out;
+  }
+  .submenu-active {
+    align-items: center;
+    background-color: #3facf0;
+    border-bottom: none;
+    color: white;
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    -webkit-transition: height .2s ease-in-out;
+    .ant-menu-item-selected {
+      color: white;
+      border-bottom: 2px solid white;
+    }
+    .ant-menu-item:hover {
+      color: white;
+      border-bottom: 2px solid white;
+    }
   }
 }
