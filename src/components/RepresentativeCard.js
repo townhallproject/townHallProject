@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export const RepCard = (props) => {
+export default (props) => {
   const {
     rep
   } = props;

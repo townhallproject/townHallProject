@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MoC from '../../../scripts/models/MemberOfCongress';
-import { RepCard } from '../../../templates/representativeCard';
+import RepresentativeCard from '../../RepresentativeCard';
 import TownHall from '../../../scripts/models/TownHall';
 
 // import './style.scss';
@@ -46,7 +46,7 @@ class RepresentativeCards extends Component {
               const newRep = new MoC(rep);
               newRep.format();
               return (
-                <RepCard rep={newRep} />
+                <RepresentativeCard rep={newRep} />
               );
             })
           }

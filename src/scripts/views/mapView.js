@@ -22,7 +22,7 @@ import noWebGlMapView from './googleMapView';
   mapView.initialView = function resetView() {
     mapView.killSidebar();
     mapView.zoomLocation = false;
-    $('#representativeCards').hide();
+    // $('#representativeCards').hide();
     if (mapView.webGL && map) {
       mapboxView.resetMap(map);
     } else if (window.google) {
@@ -34,7 +34,7 @@ import noWebGlMapView from './googleMapView';
   mapView.resetView = function resetView() {
     mapView.killSidebar();
     mapView.zoomLocation = false;
-    $('#representativeCards').hide();
+    // $('#representativeCards').hide();
     if (mapView.webGL && map) {
       mapboxView.resetMap(map);
     } else if (window.google) {

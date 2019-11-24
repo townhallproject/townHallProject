@@ -136,7 +136,7 @@ export default class ZipSearch extends React.Component {
       var zipClean = zip.split('-')[0];
       //TODO: move this
       setZip(zipClean)
-      repCardHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zipClean), $('#representativeCards section'));
+      // repCardHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zipClean), $('#representativeCards section'));
       var lookupArray = ZipSearch.getLookupArray();
       var promises = lookupArray.map(function (path) {
         return TownHall.lookupZip(zipClean, path);
