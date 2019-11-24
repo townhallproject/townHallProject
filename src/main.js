@@ -23,7 +23,7 @@ import './vendor/styles/jquery-ui.min.css';
 import './vendor/styles/jquery-ui.structure.min.css';
 import './vendor/styles/normalize.css';
 import './vendor/styles/railscasts.css';
-
+import './vendor/scripts/iframeSizer.contentWindow.min.js'
 
 // components
 import About from './components/About';
