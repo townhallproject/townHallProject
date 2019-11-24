@@ -88,7 +88,7 @@ import noWebGlMapView from './googleMapView';
             mapboxView.setData();
           }
           TownHall.allTownHalls = allTownHalls;
-          zipLookUpHandler.zipSearchByParam();
+          // zipLookUpHandler.zipSearchByParam();
         });
     });
   };
@@ -144,7 +144,7 @@ import noWebGlMapView from './googleMapView';
         if (webgl) {
           mapboxView.setStateData();
         }
-        zipLookUpHandler.zipSearchByParam();
+        // zipLookUpHandler.zipSearchByParam();
       }
     });
     townHallsFB.once('value', function () {
@@ -153,7 +153,7 @@ import noWebGlMapView from './googleMapView';
         if (webgl) {
           mapboxView.setStateData();
         }
-        zipLookUpHandler.zipSearchByParam();
+        // zipLookUpHandler.zipSearchByParam();
       }
     });
   };

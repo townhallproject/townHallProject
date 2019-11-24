@@ -63,6 +63,10 @@ export default ({ rep }) => (
               `<div class="footer-text"><small>Term ends:</small> <span class="highlight">${rep.next_election}</span></<div>`: ''
             }
           </div>
+          <div class="footer-icon type-holder col-4 vertical-align ">
+          </div>
+          <div class="footer-icon  col-4">
+          </div>
         </div>
       </div>
     </div>

@@ -71,6 +71,7 @@ function makeReporterText(stateDistricts, chamber) {
 }
 
 eventHandler.renderResults = function (locationData) {
+  console.log('rendering')
   tableHandler.resetFilters();
   var thisState = locationData.federal.thisState;
   var validDistricts = locationData.federal.validDistricts;
@@ -233,6 +234,7 @@ function handleZipToDistrict(zipToDistrictArray) {
 }
 
 eventHandler.lookup = function (e) {
+  console.log('got called')
   e.preventDefault();
   TownHall.resetData();
   TownHall.zipQuery;
@@ -324,7 +326,7 @@ export const init = () => {
   checkEventParam();
   $('#button-to-form').hide();
   $('#save-event').on('submit', eventHandler.save);
-  $('#look-up').on('submit', eventHandler.lookup);
+  // $('#look-up').on('submit', eventHandler.lookup);
   $('#view-all').on('click', TownHall.viewAll);
   $('.sort').on('click', 'a', tableHandler.sortTable);
   setupTypeaheads();

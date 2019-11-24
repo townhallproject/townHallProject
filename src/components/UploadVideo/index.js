@@ -34,7 +34,7 @@ const UploadVideo = (props) => {
                     the content publicly available.</em>
             </div>
             <button name="button" className="btn btn-primary btn-light-background btn-lg upload-video-upload"
-              disabled="true">Upload my video</button>
+              disabled>Upload my video</button>
           </form>
         </div>
         <div className="col-sm-8 col-sm-offset-2 upload-video-stage-4 hidden">
