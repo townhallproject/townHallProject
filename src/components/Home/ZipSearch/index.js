@@ -125,7 +125,8 @@ export default class ZipSearch extends React.Component {
 
   lookUpZip(zip) {
     const {
-      setDistrict
+      setDistrict,
+      setZip
     } = this.props;
     TownHall.resetData();
     TownHall.zipQuery;
@@ -134,6 +135,7 @@ export default class ZipSearch extends React.Component {
     if (zipCheck) {
       var zipClean = zip.split('-')[0];
       //TODO: move this
+      setZip(zipClean)
       repCardHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zipClean), $('#representativeCards section'));
       var lookupArray = ZipSearch.getLookupArray();
       var promises = lookupArray.map(function (path) {

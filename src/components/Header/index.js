@@ -23,7 +23,7 @@ class Header extends Component {
     this.renderDropdown(MENU_MAP.get(key))
   }
   renderDropdown(submenu) {
-    if (submenu.length) {
+    if (subment && submenu.length) {
       this.setState({
         submenu,
         submenuClass: 'active'
