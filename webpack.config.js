@@ -82,13 +82,9 @@ module.exports = {
     rules: [
       // If it's a .js file not in node_modules, use the babel-loader
       {
-        test: /\.js$/,
+        test: /\.js|.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-      },
-      { 
-        test: /\.handlebars$/, 
-        loader: 'handlebars-loader'
       },
       {
         test: /\.css$/,
@@ -137,6 +133,9 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+  },
+  resolve: {
+    extensions: [".js", ".jsx", ".json"],
   },
 
 };

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
+
 import MoC from '../../../scripts/models/MemberOfCongress';
 import RepresentativeCard from '../../RepresentativeCard';
 import TownHall from '../../../scripts/models/TownHall';
@@ -39,7 +41,7 @@ class RepresentativeCards extends Component {
     } = this.state;
     return (
       <div id="representativeCards">
-        <section className="container container-fluid">
+        <section className={classNames("container", "container-fluid")}>
           {
             reps.map((rep) => {
               if (!rep) { return null }

@@ -1,6 +1,7 @@
+import moment from 'moment';
+
 import { firebasedb } from '../lib/firebasedb';
 import constants from '../lib/constants';
-
 class MoC {
   constructor(opts) {
     for (var keys in opts) {
@@ -35,16 +36,16 @@ class MoC {
       this.party = 'Independent';
       break;
     }
-    var termEnd = new Date(this.term_end);
     // Get the canon facebook and twitter accounts
     this.facebook_canon = this.facebook_official_account || this.facebook_account || this.facebook;
     this.twitter_canon = this.twitter_account || this.twitter;
-    // If term expires in janurary then assume the election is in the prior year
-    this.electionYear = termEnd.getMonth() === 0 ? termEnd.getFullYear() - 1 : termEnd.getFullYear();
+
+    this.electionYear = this.next_election;
+
     if (this.dyjd){
       this.pledger = this.dyjd.pledger;
     }
-    var prefix = this.type === 'sen' ? 'Senator' : 'Rep.';
+    var prefix = this.short_title;
 
     var sentence = [prefix, this.displayName];
     this.formattedMember = sentence.join(' ');
