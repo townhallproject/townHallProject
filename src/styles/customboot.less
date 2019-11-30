@@ -615,20 +615,6 @@ a.social-icon {
   background-color: @brand-secondary;
 }
 
-.Dem .panel-heading, .card-representative.Democratic .card-header{
-   color: white;
-   background-color: #66bdf4;
- }
-
- .Ind .panel-heading, .card-representative.Independent .card-header{
-   color: white;
-   background-color: darken(#705f8c, 20%);
- }
-
- .card-representative.Republican .card-header{
-   background-color: #f87773;
- }
-
 .event-party { color: #aaa; }
 
 .event-name {
@@ -674,100 +660,8 @@ a.social-icon {
   margin-bottom: 1rem;
 }
 
-.Dem .panel-heading, .card-representative.Democratic .card-header{
-  color: white;
-  background-color: #3facef;
-}
-
-.Rep .panel-heading, .card-representative.Republican .card-header{
-  color: white;
-  background-color: @brand-secondary;
-}
-
-.Ind .panel-heading, .card-representative.Independent .card-header{
-  color: white;
-  background-color: darken(#705f8c, 20%);
-}
-
 #no-events {
   display: none;
-}
-
-#representativeCards {
-  background: @brand-white;
-  background-color: #f4f4f4;
-  -webkit-box-shadow: inset 0px -39px 29px -45px rgba(0,0,0,1);
-     -moz-box-shadow: inset 0px -39px 29px -45px rgba(0,0,0,1);
-          box-shadow: inset 0px -39px 29px -45px rgba(0,0,0,1);
-  padding-bottom: 1.5em;
-  h2 {
-    margin-top: 1em;
-  }
-  /* Remove this when upgrading to bootstrap 4 and we can do proper cards */
-  .card-representative {
-    min-height: 21em;
-    div.missing-member {
-      position: absolute;
-      bottom: 0px;
-      z-index: 10;
-      line-height: 1em;
-      padding: 0.25em 0;
-      text-align: center;
-      color: @brand-secondary;
-      background-color: rgba(0, 0, 0, 0.66);
-    }
-  }
-}
-
-.card-representative {
-  /* Can probably remove some of this when migrating to bootstrap 4 */
-  margin-bottom: 2em;
-  background: @brand-white;
-  .popover {
-    color: @brand-text;
-  }
-  .card-header {
-    padding: 0 15px;
-    h3 {
-      margin-top: 10px;
-    }
-    .logo {
-      margin-top: 20px;
-    }
-  }
-  .card-block {
-    padding: 1.25em 2.5em;
-    height: 6.5em;
-    a.social-icon {
-      font-size: 1.25em;
-    }
-  }
-  .card-footer {
-    // padding: 0 2.5em 1.25em;
-    label {
-      font-weight: 500;
-    }
-    .challenger {
-      padding: 20px;
-      background: @brand-primary;
-      color: @brand-white;
-      height: 80px;
-    
-    }
-  }
-
-  h3 {
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-  h4 {
-    letter-spacing: 0.05em;
-  }
-  label, a {
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-
 }
 
 .logo {

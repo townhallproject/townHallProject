@@ -23,7 +23,7 @@ class Header extends Component {
     this.renderDropdown(MENU_MAP.get(key))
   }
   renderDropdown(submenu) {
-    if (subment && submenu.length) {
+    if (submenu && submenu.length) {
       this.setState({
         submenu,
         submenuClass: 'active'
@@ -53,15 +53,15 @@ class Header extends Component {
             Submit an Event
           </Menu.Item>
           <Menu.Item key="take-action">
-            Share Your Experience
+            Take Action
             <div className={`arrow fade-in`}></div>
           </Menu.Item>
           <Menu.Item key="our-projects">
-            Learn about Congress
+            Our Projects
             <div className={`arrow fade-in`}></div>
           </Menu.Item>
           <Menu.Item key="learn-more">
-            In the News
+            Learn More
             <div className={`arrow fade-in`}></div>
           </Menu.Item>
           <Button 

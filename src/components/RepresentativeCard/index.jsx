@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
+import './style.less'
 
 export default (props) => {
   const {
     rep
   } = props;
-  console.log(rep.electionYear)
   const renderSocialIcon = (infoKey, url, icon) => {
     if (!rep[infoKey]) { return null }
 
