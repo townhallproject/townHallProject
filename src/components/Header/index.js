@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { MENU_MAP } from './menuConstants';
 import {
+  Button,
   Menu,
   Icon
 } from 'antd';
@@ -22,7 +23,7 @@ class Header extends Component {
     this.renderDropdown(MENU_MAP.get(key))
   }
   renderDropdown(submenu) {
-    if (submenu.length) {
+    if (submenu && submenu.length) {
       this.setState({
         submenu,
         submenuClass: 'active'
@@ -52,21 +53,30 @@ class Header extends Component {
             Submit an Event
           </Menu.Item>
           <Menu.Item key="take-action">
-            Share Your Experience
+            Take Action
             <div className={`arrow fade-in`}></div>
           </Menu.Item>
           <Menu.Item key="our-projects">
-            Learn about Congress
+            Our Projects
             <div className={`arrow fade-in`}></div>
           </Menu.Item>
           <Menu.Item key="learn-more">
-            In the News
+            Learn More
             <div className={`arrow fade-in`}></div>
           </Menu.Item>
+          <Button 
+            className="current-event-btn"
+            href="https://docs.google.com/document/u/1/d/e/2PACX-1vTWD9u5IF08YH6tt76Q_S6dTwQYmm7g_2jQbZ4JaXJpEBJV0srbUfS_MseuKudHeo6YDLdyk-x1A58Z/pub"
+            target="_blank"
+            type="danger"
+          >
+            Accessibility Report
+            <Icon type="file-done" />
+          </Button>
           <Menu.Item key="donate" className="donate-btn">
             <Icon type="mail" />
             Donate
-        </Menu.Item>
+          </Menu.Item>
         </Menu>
         <Menu className={`submenu-${this.state.submenuClass}`} mode="horizontal">
           {
