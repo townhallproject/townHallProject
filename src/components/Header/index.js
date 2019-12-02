@@ -94,6 +94,9 @@ const Header = (props) => {
               <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#year-one">Look back at 2017</a>
             </li>
             <li>
+              <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#support-us">Donate</a>
+            </li>
+            <li>
               <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#year-two">Look back at 2018</a>
             </li>
             <li>

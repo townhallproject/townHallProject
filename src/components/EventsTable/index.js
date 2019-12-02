@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./style.less";
+require("./style.less");
 
 const EventsTable = props => {
   return (
