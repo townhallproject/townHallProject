@@ -2,6 +2,11 @@
   "presets": ["react", "env"],
   "plugins": [
     "transform-object-rest-spread",
-    "transform-class-properties"
+    "transform-class-properties",
+    ["import", {
+      "libraryName": "antd",
+      "style": true
+    }],
+
   ]
 }
