@@ -7,15 +7,17 @@ export default (props) => {
   const {
     rep
   } = props;
+
   const renderSocialIcon = (infoKey, url, icon) => {
     if (!rep[infoKey]) { return null }
-
-    return (<a href={`${url}/${infoKey}`} className="social-icon" target="_blank">
-            <i className={classNames("fa", icon, "fa-2x")} aria-hidden="true"></i>
-          </a>)
+    return (
+    <a href={`${url}/${infoKey}`} className="social-icon" target="_blank">
+      <i className={classNames("fa", icon, "fa-2x")} aria-hidden="true"></i>
+    </a>)
   }
 
-  return (<div className={classNames("col-lg-4", "col-md-6", "col-sm-6", "col-xs-12")}>
+  return (
+    <div className={classNames("col-lg-4", "col-md-6", "col-sm-6", "col-xs-12")}>
       <div className={classNames("card", "card-representative", rep.party)}>
         <div className="card-header">
           <div className="row">
@@ -54,7 +56,7 @@ export default (props) => {
               <div className={classNames("footer-icon", "type-holder", "col-4", "vertical-align")}>
                 {rep.next_election &&
                   (<div className="footer-text">
-                    <small>Term ends: </small> 
+                    <small>Term ends: </small>
                     <span className="highlight">{rep.next_election}</span>
                   </div>)
                 }

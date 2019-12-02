@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import MoC from '../../../scripts/models/MemberOfCongress';
 import RepresentativeCard from '../../RepresentativeCard';
+import RepCard from '../../RepCard';
 import TownHall from '../../../scripts/models/TownHall';
 
 // import './style.scss';
@@ -41,18 +42,16 @@ class RepresentativeCards extends Component {
     } = this.state;
     return (
       <div id="representativeCards">
-        <section className={classNames("container", "container-fluid")}>
           {
             reps.map((rep) => {
               if (!rep) { return null }
               const newRep = new MoC(rep);
               newRep.format();
               return (
-                <RepresentativeCard rep={newRep} />
+                <RepCard rep={newRep} />
               );
             })
           }
-        </section>
       </div>
     );
   }
