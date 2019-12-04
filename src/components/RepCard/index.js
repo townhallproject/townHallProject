@@ -25,9 +25,9 @@ class RepCard extends Component {
         title={rep.party}
         className={classNames("rep-card", rep.party)}
         actions={[
-          <Icon type="setting" key="setting" />,
-          <Icon type="edit" key="edit" />,
-          <Icon type="ellipsis" key="ellipsis" />,
+          <Icon key="setting" />,
+          <Icon key="edit" />,
+          <Icon key="ellipsis" />,
         ]}
       >
       <Meta
@@ -35,6 +35,27 @@ class RepCard extends Component {
         title={rep.displayName}
         description={rep.title}
       />
+      <div className="social-icons">
+        { rep.url &&
+          <a href={rep.url} target="_blank">
+            <Icon type="select" style={{ color: '#607d8b'}} />
+          </a>
+        }
+        { rep.facebook_canon &&
+          <a href={`https://www.facebook.com/${rep.facebook_canon}`} target="_blank">
+            <Icon type="facebook" theme="filled" style={{ color: '#3b5998'}} />
+          </a>
+        }
+        { rep.twitter_canon &&
+          <a href={`https://twitter.com/${rep.twitter_canon}`} target="_blank">
+            <Icon type="twitter" style={{ color: '#00acee'}} />
+          </a>
+        }
+      </div>
+      {
+        rep.missingMember &&
+        <div className="missing-member">Missing</div>
+      }
       <div className="rep-card-content">
         <p>Date of Last Town Hall: </p>
         <p>Local Office Phone: </p>

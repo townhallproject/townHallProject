@@ -6,6 +6,33 @@
     display: flex;
     flex-direction: column;
     color: white;
+    .social-icons {
+      position: absolute;
+      margin-left: 215px;
+      margin-top: 55px;
+      display: flex;
+      width: 100px;
+      justify-content: flex-end;
+      .anticon {
+        font-size: 30px !important;
+        margin-left: 3px;
+        margin-right: 3px;
+      }
+    }
+    .missing-member {
+      background: red;
+      width: 96px;
+      font-size: 11px;
+      -webkit-transform: rotate(270deg);
+      -moz-transform: rotate(270deg);
+      -o-transform: rotate(270deg);
+      -ms-transform: rotate(270deg);
+      transform: rotate(270deg);
+      position: absolute;
+      margin-left: 285px;
+      margin-top: 36px;
+      text-align: center;
+    }
     .ant-card-meta {
       background: white;
       border-radius: 0px;
@@ -84,6 +111,14 @@
   background: #CB0505;
   .ant-card-actions {
     background: #CB0505;
+    background-color: #ffffff80;
+  }
+}
+
+.Independent {
+  background: purple;
+  .ant-card-actions {
+    background: purple;
     background-color: #ffffff80;
   }
 }
