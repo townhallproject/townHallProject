@@ -105,8 +105,8 @@ const Header = (props) => {
           </ul>
           <ul className="nav navbar-nav navbar-right">
             <li>
-              <a href="https://secure.actblue.com/donate/thp" target="_blank" className="btn" id="donate-button" role="button"
-                target="_blank">Donate</a>
+              <a href="https://secure.actblue.com/donate/townhallproject2019" target="_blank" className="btn" id="donate-button" role="button"
+                target="_blank">Donate Now</a>
             </li>
             <li>
               <a className="social-icons" href="https://twitter.com/townhallproject" target="_blank">
