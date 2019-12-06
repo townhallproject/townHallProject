@@ -65,10 +65,10 @@ class Header extends Component {
             <div className={`arrow fade-in`}></div>
           </Menu.Item>
           <Button 
-            className="current-event-btn"
+            className="accessibility-report-btn"
             href="https://docs.google.com/document/u/1/d/e/2PACX-1vTWD9u5IF08YH6tt76Q_S6dTwQYmm7g_2jQbZ4JaXJpEBJV0srbUfS_MseuKudHeo6YDLdyk-x1A58Z/pub"
             target="_blank"
-            type="danger"
+            type="primary"
           >
             Accessibility Report
             <Icon type="file-done" />
