@@ -1,11 +1,13 @@
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
-import { MENU_MAP } from './menuConstants';
+import { MENU_MAP, STATE_LEGISLATURES_MENU } from './menuConstants';
 import {
   Button,
   Menu,
   Icon
 } from 'antd';
+
+const { SubMenu } = Menu;
 
 import './style.less';
 
@@ -50,7 +52,7 @@ class Header extends Component {
             </a>
           </Menu.Item>
           <Menu.Item key="submit-event">
-            Submit an Event
+            <a href={`#submit`} style={{ textDecoration: 'none' }}>Submit an Event</a>
           </Menu.Item>
           <Menu.Item key="take-action">
             Take Action
@@ -83,11 +85,35 @@ class Header extends Component {
             this.state.submenu &&
             this.state.submenu.map((menuName) => {
               const menuClass = menuName.toLowerCase().split(" ").join("-");
-              return (
-                <Menu.Item className="fade-in" key={menuClass}>
-                  {menuName}
-                </Menu.Item>
-              )
+              if (menuClass === 'state-legislatures') {
+                return (
+                  <SubMenu
+                    className="state-legislatures-menu fade-in"
+                    title={
+                      <span className="state-legislatures-title">
+                        {menuName}
+                      </span>
+                    }
+                  >
+                    {
+                      STATE_LEGISLATURES_MENU.map((stateName) => {
+                        const linkName = stateName.toLowerCase()
+                        return (
+                          <Menu.Item key={stateName}>
+                            <a href={`/${linkName}`} style={{ textDecoration: 'none' }}>{stateName}</a>
+                          </Menu.Item>
+                        )
+                      })
+                    }
+                  </SubMenu>
+                )
+              } else {
+                return (
+                  <Menu.Item className="fade-in" key={menuClass}>
+                    {menuName}
+                  </Menu.Item>
+                )
+              }
             })
           }
         </Menu>

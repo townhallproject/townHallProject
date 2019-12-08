@@ -1,6 +1,6 @@
 import React from 'react';
 
-// import './style.scss';
+import './style.less';
 
 const ZipSearchComponent = (props) => {
   return (
@@ -23,7 +23,7 @@ const ZipSearchComponent = (props) => {
             <div className="spacer">
             </div>
             <form id="look-up" className="form-inline text-center" action="index.html">
-              <div className="form-group text-center">
+              <div className="form-group text-center zip-container">
                 <label htmlFor="zip"></label>
                 <input className="form-control input-lg" type="zip" name="" placeholder="Zip Code" />
                 <button type="submit" name="button" className="btn btn-primary btn-lg fath-button">Find A Town Hall</button>

@@ -5,3 +5,17 @@ export const MENU_MAP = new Map([
   ['learn-more', ['About THP', 'In the News', 'Our Research']],
   ['donate', []],
 ]);
+
+export const STATE_LEGISLATURES_MENU = [
+  'Arizona',
+  'Colorado',
+  'Florida',
+  'Maine',
+  'Maryland',
+  'Michigan',
+  'Nevada',
+  'North Carolina',
+  'Oregon',
+  'Pennsylvania',
+  'Virginia'
+]
