@@ -44,7 +44,7 @@ class Header extends Component {
 
     if (this.hasSubMenu()) {
       return subMenu.map((menuItem) => {
-         if (activeKey === 'state-legislatures') {
+         if (menuItem.display === 'State Legislatures') {
            return (
              <SubMenu
                className="state-legislatures-menu fade-in"
@@ -67,12 +67,13 @@ class Header extends Component {
              </SubMenu>
            )
          } 
-         console.log(menuItem)
         return (
           <Menu.Item className="fade-in" key={menuItem.display}>
-            <a 
-            href={`#${menuItem.link}`}
-          >{menuItem.display}</a>
+            {menuItem.link ? <a 
+            className="submenu-link"
+            target={menuItem.external ? "_blank" : ""}
+            href={menuItem.external ? menuItem.link : `#${menuItem.link}`}
+          >{menuItem.display}</a> : menuItem.display}
           </Menu.Item>
         )
          

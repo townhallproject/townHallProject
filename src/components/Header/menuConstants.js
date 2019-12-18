@@ -29,10 +29,12 @@ export const MENU_MAP = new Map([
     link: MISSING_MEMBER_LINK
   }, {
     display: 'Town Hall Pledge',
-    link: TOWN_HALL_PLEDGE_LINK
+    link: TOWN_HALL_PLEDGE_LINK,
+    external: true,
   }, {
     display: 'Fight for Our Democracy',
-    link: FIGHT_FOR_OUR_DEMO_LINK
+    link: FIGHT_FOR_OUR_DEMO_LINK,
+    external: true,
   }, {
     display: 'State Legislatures'
   }]],
