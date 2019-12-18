@@ -15,28 +15,71 @@ class Header extends Component {
   constructor(props) {
     super(props)
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
+    this.hasSubMenu = this.hasSubMenu.bind(this);
     this.state = {
       submenu: [],
       submenuClass: 'hidden'
     }
   }
+
+  hasSubMenu(key) {
+    const keyToCheck = key || this.state.activeKey;
+    const subMenu = MENU_MAP.get(keyToCheck);
+    return subMenu && subMenu.length;
+  }
+
   handleMenuSelect(refObj) {
     const { key } = refObj;
-    this.renderDropdown(MENU_MAP.get(key))
-  }
-  renderDropdown(submenu) {
-    if (submenu && submenu.length) {
-      this.setState({
-        submenu,
-        submenuClass: 'active'
-      })
+    // this.renderDropdown(MENU_MAP.get(key))
+    if (this.hasSubMenu(key) && key !== this.state.activeKey) {
+      this.setState({activeKey: key })
     } else {
-      this.setState({
-        submenu: [],
-        submenuClass: 'hidden'
-      })
+      this.setState({activeKey: ''})
     }
   }
+
+  renderDropdown() {
+    const { activeKey } = this.state;
+    const subMenu = MENU_MAP.get(activeKey);
+
+    if (this.hasSubMenu()) {
+      return subMenu.map((menuItem) => {
+         if (activeKey === 'state-legislatures') {
+           return (
+             <SubMenu
+               className="state-legislatures-menu fade-in"
+               title={
+                 <span className="state-legislatures-title">
+                   {menuItem.display}
+                 </span>
+               }
+             >
+               {
+                 STATE_LEGISLATURES_MENU.map((stateName) => {
+                   const linkName = stateName.toLowerCase()
+                   return (
+                     <Menu.Item key={stateName}>
+                       <a href={`/${linkName}`} style={{ textDecoration: 'none' }}>{stateName}</a>
+                     </Menu.Item>
+                   )
+                 })
+               }
+             </SubMenu>
+           )
+         } 
+         console.log(menuItem)
+        return (
+          <Menu.Item className="fade-in" key={menuItem.display}>
+            <a 
+            href={`#${menuItem.link}`}
+          >{menuItem.display}</a>
+          </Menu.Item>
+        )
+         
+     })
+    } 
+  }
+
   render() {
     return (
       <div className="menu-container">
@@ -80,41 +123,10 @@ class Header extends Component {
             Donate
           </Menu.Item>
         </Menu>
-        <Menu className={`submenu-${this.state.submenuClass}`} mode="horizontal">
+        <Menu className={`submenu-${this.hasSubMenu() ? 'active' : 'hidden'}`} mode="horizontal">
           {
-            this.state.submenu &&
-            this.state.submenu.map((menuName) => {
-              const menuClass = menuName.toLowerCase().split(" ").join("-");
-              if (menuClass === 'state-legislatures') {
-                return (
-                  <SubMenu
-                    className="state-legislatures-menu fade-in"
-                    title={
-                      <span className="state-legislatures-title">
-                        {menuName}
-                      </span>
-                    }
-                  >
-                    {
-                      STATE_LEGISLATURES_MENU.map((stateName) => {
-                        const linkName = stateName.toLowerCase()
-                        return (
-                          <Menu.Item key={stateName}>
-                            <a href={`/${linkName}`} style={{ textDecoration: 'none' }}>{stateName}</a>
-                          </Menu.Item>
-                        )
-                      })
-                    }
-                  </SubMenu>
-                )
-              } else {
-                return (
-                  <Menu.Item className="fade-in" key={menuClass}>
-                    {menuName}
-                  </Menu.Item>
-                )
-              }
-            })
+            this.renderDropdown()
+            
           }
         </Menu>
       </div>
