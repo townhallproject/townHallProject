@@ -6,6 +6,7 @@ import {
   Menu,
   Icon
 } from 'antd';
+import classNames from 'classnames';
 
 const { SubMenu } = Menu;
 
@@ -16,6 +17,7 @@ class Header extends Component {
     super(props)
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
     this.hasSubMenu = this.hasSubMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
     this.state = {
       submenu: [],
       submenuClass: 'hidden'
@@ -26,6 +28,10 @@ class Header extends Component {
     const keyToCheck = key || this.state.activeKey;
     const subMenu = MENU_MAP.get(keyToCheck);
     return subMenu && subMenu.length;
+  }
+
+  closeMenu() {
+    this.setState({activeKey: ''})
   }
 
   handleMenuSelect(refObj) {
@@ -70,7 +76,9 @@ class Header extends Component {
         return (
           <Menu.Item className="fade-in" key={menuItem.display}>
             {menuItem.link ? <a 
-            className="submenu-link"
+            className="hash-link"
+            onClick={this.closeMenu}
+            data-toggle="tab"
             target={menuItem.external ? "_blank" : ""}
             href={menuItem.external ? menuItem.link : `#${menuItem.link}`}
           >{menuItem.display}</a> : menuItem.display}
@@ -82,6 +90,8 @@ class Header extends Component {
   }
 
   render() {
+    const arrowClasses = ['arrow', 'fade-in'];
+    const { activeKey } = this.state;
     return (
       <div className="menu-container">
         <Menu
@@ -96,19 +106,19 @@ class Header extends Component {
             </a>
           </Menu.Item>
           <Menu.Item key="submit-event">
-            <a href={`#submit`} style={{ textDecoration: 'none' }}>Submit an Event</a>
+            <a href={`#submit`} style={{ textDecoration: 'none' }} data-toggle="tab" className="hash-link">Submit an Event</a>
           </Menu.Item>
           <Menu.Item key="take-action">
             Take Action
-            <div className={`arrow fade-in`}></div>
+            <div className={classNames(arrowClasses, {active : activeKey === 'take-action'})}></div>
           </Menu.Item>
           <Menu.Item key="our-projects">
             Our Projects
-            <div className={`arrow fade-in`}></div>
+            <div className={classNames(arrowClasses, {active : activeKey === 'our-projects'})}></div>
           </Menu.Item>
           <Menu.Item key="learn-more">
             Learn More
-            <div className={`arrow fade-in`}></div>
+            <div className={classNames(arrowClasses, {active : activeKey === 'learn-more'})}></div>
           </Menu.Item>
           <Button 
             className="accessibility-report-btn"
