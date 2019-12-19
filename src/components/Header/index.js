@@ -19,8 +19,7 @@ class Header extends Component {
     this.hasSubMenu = this.hasSubMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
     this.state = {
-      submenu: [],
-      submenuClass: 'hidden'
+      activeKey: "",
     }
   }
 
@@ -36,7 +35,6 @@ class Header extends Component {
 
   handleMenuSelect(refObj) {
     const { key } = refObj;
-    // this.renderDropdown(MENU_MAP.get(key))
     if (this.hasSubMenu(key) && key !== this.state.activeKey) {
       this.setState({activeKey: key })
     } else {
@@ -101,7 +99,7 @@ class Header extends Component {
           onClick={this.handleMenuSelect}
         >
           <Menu.Item key="home">
-            <a data-toggle="tab" href="#home" className="navbar-brand hash-link brand-icon">
+            <a data-toggle="tab" href="#home" className={classNames("navbar-brand","hash-link","brand-icon")}>
               <img src="/Images/THP_logo_horizontal_simple.png" alt=""></img>
             </a>
           </Menu.Item>
@@ -120,7 +118,7 @@ class Header extends Component {
             Learn More
             <div className={classNames(arrowClasses, {active : activeKey === 'learn-more'})}></div>
           </Menu.Item>
-          <Button 
+          {/* <Button 
             className="accessibility-report-btn"
             href="https://docs.google.com/document/u/1/d/e/2PACX-1vTWD9u5IF08YH6tt76Q_S6dTwQYmm7g_2jQbZ4JaXJpEBJV0srbUfS_MseuKudHeo6YDLdyk-x1A58Z/pub"
             target="_blank"
@@ -128,17 +126,14 @@ class Header extends Component {
           >
             Accessibility Report
             <Icon type="file-done" />
-          </Button>
+          </Button> */}
           <Menu.Item key="donate" className="donate-btn">
             <Icon type="mail" />
             Donate
           </Menu.Item>
         </Menu>
         <Menu className={`submenu-${this.hasSubMenu() ? 'active' : 'hidden'}`} mode="horizontal">
-          {
-            this.renderDropdown()
-            
-          }
+          {this.renderDropdown()}
         </Menu>
       </div>
     )
