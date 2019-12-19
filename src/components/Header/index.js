@@ -75,7 +75,6 @@ class Header extends Component {
           <Menu.Item className="fade-in" key={menuItem.display}>
             {menuItem.link ? <a 
             className="hash-link"
-            onClick={this.closeMenu}
             data-toggle="tab"
             target={menuItem.external ? "_blank" : ""}
             href={menuItem.external ? menuItem.link : `#${menuItem.link}`}
