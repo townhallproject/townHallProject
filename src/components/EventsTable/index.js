@@ -1,5 +1,7 @@
 import React from "react";
 
+require("./style.less");
+
 const EventsTable = props => {
   return (
     <div className="hidden-xs">
