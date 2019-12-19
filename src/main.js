@@ -39,11 +39,11 @@ import RecessReport from './components/RecessReport';
 import SubmitEventForm from './components/SubmitEventForm';
 import TownHallPledgeAgreements from './components/TownHallPledgeAgreements';
 import UploadVideo from './components/UploadVideo';
-
+import DonatePage from './components/Donate';
 import PageComponent from './components/PageComponent';
 
 // local styles
-import './styles/customboot.less';
+require('./styles/customboot.less');
 
 import './scripts/controllers/routes';
 import Home from './components/Home';
@@ -90,6 +90,9 @@ class App extends React.Component {
           </PageComponent>
           <PageComponent id="year-one" active={false}>
             <EndOfYearReport hashtag={'year-one'} imageSrc={'/Images/EOY_Report_Layout_noBG-01-01.png'} />
+          </PageComponent>
+          <PageComponent id="support-us" active={false}>
+            <DonatePage />
           </PageComponent>
         </div>
         {/** END Main content & Pages */}

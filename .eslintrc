@@ -15,5 +15,8 @@
   },
   "rules": {
     "no-undef": "error"
+  },
+  "env": {
+    "amd": true
   }
 }
