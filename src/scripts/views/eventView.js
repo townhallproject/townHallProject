@@ -367,7 +367,7 @@ export const init = () => {
     emailHandler.hideEmailForm();
   }
 
-  $('.hash-link').on('click', function onClickGethref() {
+  $('.menu-container .hash-link').on('click', function onClickGethref() {
     var hashid = this.getAttribute('href');
     $('ul .hash-link').parent().removeClass('active');
     $('.home-page-only').removeClass('hidden');
@@ -405,7 +405,6 @@ export const init = () => {
     else {
       location.hash = hashid;
     }
-
     $('html, body').scrollTop(0);
   });
 

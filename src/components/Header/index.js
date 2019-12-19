@@ -42,6 +42,30 @@ class Header extends Component {
     }
   }
 
+  renderLink(menuItem) {
+    if (!menuItem.link) {
+      return menuItem.display
+    }
+    if (menuItem.external) {
+      return (
+            <a 
+            className={classNames(["menu-link"])}
+            target="_blank"
+            href={menuItem.link}
+          >{menuItem.display}</a>
+      )
+    }
+    return (
+          <a 
+            className={classNames(["menu-link", "hash-link"])}
+            data-toggle="tab"
+            href={`#${menuItem.link}`}
+            onClick={() => location.hash = `#${menuItem.link}`}
+          >{menuItem.display}</a>
+    )
+
+  }
+
   renderDropdown() {
     const { activeKey } = this.state;
     const subMenu = MENU_MAP.get(activeKey);
@@ -73,12 +97,9 @@ class Header extends Component {
          } 
         return (
           <Menu.Item className="fade-in" key={menuItem.display}>
-            {menuItem.link ? <a 
-            className="hash-link"
-            data-toggle="tab"
-            target={menuItem.external ? "_blank" : ""}
-            href={menuItem.external ? menuItem.link : `#${menuItem.link}`}
-          >{menuItem.display}</a> : menuItem.display}
+            {
+              this.renderLink(menuItem)
+            }
           </Menu.Item>
         )
          
