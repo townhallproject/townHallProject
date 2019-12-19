@@ -18,6 +18,7 @@
 
 .menu-container {
   .main-nav-menu {
+
     .ant-menu-overflowed-submenu {
       float: right;
     }
@@ -36,15 +37,15 @@
         position: absolute;
         bottom: -2px;
       }
-    }
-    .ant-menu-item-selected {
-      border-bottom: 2px solid transparent;
-      .arrow {
+      .arrow.active {
         border-bottom: 10px solid #3fabef;
         display: block;
         left: 50%;
         transform: translate(-50%);
       }
+    }
+    .ant-menu-item-selected {
+      border-bottom: 2px solid transparent;
     }
     .accessibility-report-btn {
       margin-left: 20px;
@@ -79,8 +80,13 @@
       color: white;
       border-bottom: 2px solid white;
     }
-    .ant-menu-submenu-title {
+    .hash-link:hover {
       color: white;
+    }
+    .ant-menu-submenu-title,
+    .hash-link {
+      color: white;
+      text-decoration: none;
     }
     .ant-menu-submenu-title:hover {
       color: white;
