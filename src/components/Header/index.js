@@ -115,6 +115,7 @@ class Header extends Component {
         <Menu
           className="main-nav-menu"
           mode="horizontal"
+          overflowedIndicator={<Button icon="menu" type="primary" />}
           style={{ lineHeight: '60px' }}
           onClick={this.handleMenuSelect}
         >
@@ -152,7 +153,11 @@ class Header extends Component {
             Donate
           </Menu.Item>
         </Menu>
-        <Menu className={`submenu-${this.hasSubMenu() ? 'active' : 'hidden'}`} mode="horizontal">
+        <Menu 
+          className={`submenu-${this.hasSubMenu() ? 'active' : 'hidden'}`}
+          mode="horizontal"
+          overflowedIndicator={<Button type="ghost">More<Icon type="down"/></Button>}
+        >
           {this.renderDropdown()}
         </Menu>
       </div>

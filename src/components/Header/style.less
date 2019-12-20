@@ -17,10 +17,17 @@
 }
 
 .menu-container {
-  .main-nav-menu {
+  .ant-menu-submenu-title .anticon {
+    margin-right: 0;
+  }
 
+  .main-nav-menu {
+    
     .ant-menu-overflowed-submenu {
       float: right;
+    }
+    .ant-menu-item:hover{
+      border-bottom: 2px solid @brand-success;
     }
     .ant-menu-item {
       font-weight: 500;
@@ -90,6 +97,9 @@
     }
     .ant-menu-submenu-title:hover {
       color: white;
+    }
+    .ant-menu-overflowed-submenu:hover {
+      border-bottom: transparent 2px solid;
     }
   }
 }
