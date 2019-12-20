@@ -6,7 +6,7 @@ import './style.less';
 const EmailSignup = (props) => {
   return (
     <div>
-      <section className="background-light-blue email-signup--inline" id="email-signup">
+      <section className="background-email-signup email-signup--inline" id="email-signup">
         <Button type="button" className="close" data-dismiss="modal" aria-label="Close" id="close-email" shape="circle" icon="close" />
         <div className="container container-fluid">
           <h1 id="email-title" className="text-center extra-large">Sign up to receive updates on local events.</h1>
