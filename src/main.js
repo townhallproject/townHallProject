@@ -60,25 +60,25 @@ class App extends React.Component {
 
         {/** Main content & Pages */}
         <div className="tab-content">
-          <PageComponent id="home" active activeBanner>
+          <PageComponent id="home" active>
             <Home />
           </PageComponent>
-          <PageComponent id="submit" active={false} activeBanner>
+          <PageComponent id="submit" active={false}>
             <SubmitEventForm />
           </PageComponent>
-          <PageComponent id="contact" active={false} activeBanner>
+          <PageComponent id="contact" active={false}>
             <ContactUsForm />
           </PageComponent>
-          <PageComponent id="about" active={false} activeBanner>
+          <PageComponent id="about" active={false}>
             <About />
           </PageComponent>
-          <PageComponent id="join" active={false} activeBanner>
+          <PageComponent id="join" active={false}>
             <Join />
           </PageComponent>
           <PageComponent id="missing-members" active={false}>
             <MissingMembers />
           </PageComponent>
-          <PageComponent id="upload-video" active={false} activeBanner>
+          <PageComponent id="upload-video" active={false}>
             <UploadVideo />
           </PageComponent>
           <PageComponent id="privacy-policy" active={false}>

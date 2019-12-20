@@ -1,7 +1,9 @@
 require('dotenv').config();
+
 const path = require('path');
 const fs = require('fs');
 const lessToJs = require('less-vars-to-js');
+
 
 const HTMLPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
@@ -107,7 +109,7 @@ module.exports = {
           'css-loader',
         ],
       },
-      // If it's a .scss file
+      // If it's a less file
       {
         test: /\.less$/,
         use: [
