@@ -144,9 +144,9 @@ mapboxView.districtSelect = function (feature) {
   if (feature.state) {
     var locationData = {
       federal: {
-        thisState: feature.state,
-        validDistricts: [feature.district],
-        validSelections: feature.geoID
+        state: feature.state,
+        districts: [feature.district],
+        selections: [feature.geoID],
       }
     };
     eventHandler.renderResults(locationData);
@@ -185,16 +185,16 @@ mapboxView.getResultsFromSelectingStateDistrict = function (feature) {
   if (feature.state) {
     var locationData = {
       federal: {
-        thisState: feature.state,
-        validDistricts: [feature.senate_district, feature.house_district],
-        validSelections: [],
+        state: feature.state,
+        districts: [feature.senate_district, feature.house_district],
+        selections: [],
       },
       upper: {
-        validDistricts: [feature.senate_district],
+        districts: [feature.senate_district],
         upperEvents: []
       },
       lower: {
-        validDistricts: [feature.house_district],
+        districts: [feature.house_district],
         lowerEvents: []
       }
     };
@@ -205,16 +205,16 @@ mapboxView.getResultsFromSelectingStateDistrict = function (feature) {
 mapboxView.getResultsFromSelectingPoint = function (feature) {
   var locationData = {
     federal: {
-      thisState: feature.state,
-      validDistricts: [],
-      validSelections: []
+      state: feature.state,
+      districts: [],
+      selections: []
     },
     upper: {
-      validDistricts: [],
+      districts: [],
       upperEvents: []
     },
     lower: {
-      validDistricts: [],
+      districts: [],
       lowerEvents: []
     }
   };
@@ -225,16 +225,16 @@ mapboxView.getResultsFromSelectingPoint = function (feature) {
     var filterHouse = ['all', ['==', 'GEOID', feature.house_geoId]];
     map.setFilter('states-house-districts-selected', filterHouse);
     map.setLayoutProperty('states-house-districts-selected', 'visibility', 'visible');
-    locationData.federal.validDistricts.push(feature.house_district);
-    locationData.lower.validDistricts.push(feature.house_district);
+    locationData.federal.districts.push(feature.house_district);
+    locationData.lower.districts.push(feature.house_district);
 
   } else if (feature.senate_geoId) {
 
     var filterSenate = ['all', ['==', 'GEOID', feature.senate_geoId]];
     map.setFilter('states-senate-districts-selected', filterSenate);
     map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'visible');
-    locationData.federal.validDistricts.push(feature.senate_district);
-    locationData.upper.validDistricts.push(feature.senate_district);
+    locationData.federal.districts.push(feature.senate_district);
+    locationData.upper.districts.push(feature.senate_district);
 
   }
   eventHandler.renderResults(locationData);
@@ -475,8 +475,13 @@ mapboxView.filterMap = function (townHall) {
 };
 
 function toggleFilters(layer, filter) {
-  map.setFilter(layer, filter);
-  map.setLayoutProperty(layer, 'visibility', 'visible');
+  try {
+    map.setFilter(layer, filter);
+    map.setLayoutProperty(layer, 'visibility', 'visible');
+    
+  } catch (error) {
+    
+  }
 }
 
 // Handles the highlight for districts when clicked on.

@@ -47,21 +47,31 @@ export default class ZipSearch extends React.Component {
   }
 
   componentDidMount() {
+    const { setDistrict } = this.props;
     // Perform zip search on load
     var zipcode = urlParamsHandler.getUrlParameter('zipcode');
-    var district = urlParamsHandler.getUrlParameter('district');
+    var selectedDistrict = urlParamsHandler.getUrlParameter('district');
     if (zipcode) {
       this.setState({ query: zipcode})
       this.lookUpZip(zipcode);
-    } else if (district) {
-      if (district.split('-').length === 3) {
+    } else if (selectedDistrict) {
+      if (selectedDistrict.split('-').length === 3) {
+        // console.log(district.split('-'))
         //TODO: possible more checks to make sure this is a real district
+        const state = selectedDistrict.split('-')[0];
+        const district = selectedDistrict.split('-')[1];
+        const geoID = selectedDistrict.split('-')[2];
         var feature = {
-          state: district.split('-')[0],
-          district: district.split('-')[1],
-          geoID: district.split('-')[2],
+          state,
+          district,
+          geoID,
         };
-        mapboxView.districtSelect(feature);
+        const locationData = {federal: {
+          state,
+          districts: [district],
+          selections: [geoID],
+        }}
+        setDistrict(locationData)
       } else {
         urlParamsHandler.setUrlParameter('district', false);
       }
@@ -76,37 +86,37 @@ export default class ZipSearch extends React.Component {
 
   static handleZipToDistrict(zipToDistrictArray) {
     var federal = zipToDistrictArray[0].reduce(function (acc, cur) {
-      if (!acc.validDistricts) {
-        acc.validDistricts = [];
-        acc.validSelections = [];
+      if (!acc.districts) {
+        acc.districts = [];
+        acc.selections = [];
       }
       var stateObj = eventHandler.getStateDataFromAbbr(cur.abr);
       var geoid = stateObj[0].FIPS + cur.dis;
-      acc.thisState = cur.abr;
-      acc.validDistricts.push(cur.dis);
-      acc.validSelections.push(geoid);
+      acc.state = cur.abr;
+      acc.districts.push(cur.dis);
+      acc.selections.push(geoid);
       return acc;
     }, {});
 
-    if (!eventHandler.checkStateName(federal.thisState)) {
+    if (!eventHandler.checkStateName(federal.state)) {
       return zipLookUpHandler.zipErrorResponse('That zipcode is not in ' + stateView.state + '. Go back to <a href="/">Town Hall Project U.S.</a> to search for events.');
     }
 
     if (zipToDistrictArray.length > 1) {
       var lower = zipToDistrictArray[1].reduce(function (acc, cur) {
-        if (!acc.validDistricts) {
-          acc.validDistricts = [];
+        if (!acc.districts) {
+          acc.districts = [];
         }
-        acc.thisState = cur.abr;
-        acc.validDistricts.push(cur.dis);
+        acc.state = cur.abr;
+        acc.districts.push(cur.dis);
         return acc;
       }, {});
       var upper = zipToDistrictArray[2].reduce(function (acc, cur) {
-        if (!acc.validDistricts) {
-          acc.validDistricts = [];
+        if (!acc.districts) {
+          acc.districts = [];
         }
-        acc.thisState = cur.abr;
-        acc.validDistricts.push(cur.dis);
+        acc.state = cur.abr;
+        acc.districts.push(cur.dis);
         return acc;
       }, {});
     }
@@ -146,7 +156,7 @@ export default class ZipSearch extends React.Component {
           urlParamsHandler.setUrlParameter('zipcode', zipClean);
 
           var locationData = ZipSearch.handleZipToDistrict(zipToDistrictArray);
-          setDistrict(locationData)
+          setDistrict(locationData);
           eventHandler.renderResults(locationData);
         })
         .catch(function (error) {
