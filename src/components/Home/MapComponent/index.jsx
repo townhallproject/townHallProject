@@ -4,21 +4,12 @@ import mapboxView from '../../../scripts/views/mapboxView';
 
 export default class CurrentEventsMap extends React.Component {
 
-  // componentDidMount() {
-  //   const { currentDistrict} = this.props;
-  //   if (currentDistrict) {
-  //     console.log('map go current district', currentDistrict)
-  //   }
-  // }
-
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { currentDistrict } = this.props;
-    if (currentDistrict) {
-      console.log('map go current district', currentDistrict)
+    if (currentDistrict && currentDistrict !== prevProps) {
       mapboxView.highlightDistrict(currentDistrict.federal.selections);
     }
   }
-
 
   render() {
     return (
