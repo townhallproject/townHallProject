@@ -1,6 +1,7 @@
 import indexView from '../views/indexView';
 import tableHandler from '../views/tableView';
 import stateView from '../views/stateView';
+import { renderApp } from '../../components/App';
 
 const indexController = {};
 
@@ -21,5 +22,10 @@ indexController.renderStateIndex = function (ctx, next) {
   tableHandler.configureDropdowns();
   next();
 };
+
+indexController.renderDom = function(ctx, next) {
+  renderApp();
+  next();
+}
 
 export default indexController;

@@ -62,19 +62,43 @@ mapController.getState = function (ctx, next) {
   }
 };
 
-mapController.setBounds = function (ctx, next) {
-  if (ctx.stateUPSP) {
-    var bbox = bboxes[ctx.stateUPSP];
-    var padding = 1;
-    var expandedbb = [bbox[0] - padding, bbox[1] - padding, bbox[2] + padding, bbox[3] + padding];
-    stateView.stateCoords = expandedbb;
-    ctx.stateCoords = expandedbb;
-    ctx.parentBB = expandedbb;
-    ctx.bounds = new mapboxgl.LngLatBounds(ctx.stateCoords);
-  } else {
-    ctx.parentBB = [-128.8, 23.6, -65.4, 50.2];
-    ctx.bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
+mapController.checkUrlParamsForSelection = function (ctx, next) {
+  var zipcode = urlParamsHandler.getUrlParameter('zipcode');
+  var selectedDistrict = urlParamsHandler.getUrlParameter('district');
+  if (zipcode) {
+    ctx.zipcode = zipcode;
+  } else if (selectedDistrict) {
+    if (selectedDistrict.split('-').length === 3) {
+      const state = selectedDistrict.split('-')[0];
+      const district = selectedDistrict.split('-')[1];
+      const geoID = selectedDistrict.split('-')[2];
+      var feature = {
+        state,
+        district,
+        geoID,
+      };
+      ctx.feature = feature;
+    } else {
+      urlParamsHandler.setUrlParameter('district', false);
+    }
   }
+  next();
+}
+
+mapController.setStateBounds = function (ctx, next) {
+  var bbox = bboxes[ctx.stateUPSP];
+  var padding = 1;
+  var expandedbb = [bbox[0] - padding, bbox[1] - padding, bbox[2] + padding, bbox[3] + padding];
+  stateView.stateCoords = expandedbb;
+  ctx.stateCoords = expandedbb;
+  ctx.parentBB = expandedbb;
+  ctx.bounds = new mapboxgl.LngLatBounds(ctx.stateCoords);
+  next();
+};
+
+mapController.setBounds = function (ctx, next) {
+  ctx.parentBB = [-128.8, 23.6, -65.4, 50.2];
+  ctx.bounds = new mapboxgl.LngLatBounds([-128.8, 23.6], [-65.4, 50.2]);
   next();
 };
 
@@ -165,6 +189,13 @@ mapController.readStateData = function (ctx, next) {
     next();
   });
 };
+
+mapController.setDistrict = function(ctx, next) {
+  if (ctx.feature) {
+    mapboxView.districtSelect(ctx.feature);
+  }
+  next();
+}
 
 mapController.maskCountry = function (ctx, next) {
   if (ctx.webGL) {
