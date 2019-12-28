@@ -54,7 +54,8 @@ module.exports = {
       alias: {
         'masonry': 'masonry-layout',
         'isotope': 'isotope-layout'
-      }
+      },
+      extensions: ['.js', '.json', '.jsx'],
     },
   mode: 'development',
   optimization: {
@@ -78,7 +79,7 @@ module.exports = {
     rules: [
       // If it's a .js file not in node_modules, use the babel-loader
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
