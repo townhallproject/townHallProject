@@ -310,6 +310,9 @@ TownHall.matchSelectionToZip = (state, districts) => {
   fetchedData = TownHall.allTownHalls.filter(function (townhall) {
     return townhall.state === state && townhall.meetingType !== 'DC Event';
   }).reduce(function (acc, curtownhall) {
+    if (!districts) {
+      acc.push(curtownhall);
+    }
     if (!curtownhall.district) {
       acc.push(curtownhall);
     } else {

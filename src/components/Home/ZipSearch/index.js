@@ -9,11 +9,59 @@ import zipLookUpHandler from '../../../scripts/views/zipLookUpView';
 import repCardHandler from '../../../scripts/views/repCardView';
 import stateView from '../../../scripts/views/stateView';
 import eventHandler from '../../../scripts/views/eventView';
-import mapboxView from '../../../scripts/views/mapboxView';
+import mapHelperFunctions from '../../../scripts/lib/map-helper-functions';
+import {
+  firestore
+} from '../../../scripts/lib/firebasedb';
+
+import { isZipCode, isState, isDistrict, isFederalDistrict } from '../../../utils';
 
 const zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
 
 export default class ZipSearch extends React.Component {
+
+static handleZipToDistrict(zipToDistrictArray) {
+  var federal = zipToDistrictArray[0].reduce(function (acc, cur) {
+    if (!acc.districts) {
+      acc.districts = [];
+      acc.selections = [];
+    }
+    var stateObj = eventHandler.getStateDataFromAbbr(cur.abr);
+    var geoid = stateObj[0].FIPS + cur.dis;
+    acc.state = cur.abr;
+    acc.districts.push(cur.dis);
+    acc.selections.push(geoid);
+    return acc;
+  }, {});
+
+  if (!eventHandler.checkStateName(federal.state)) {
+    return zipLookUpHandler.zipErrorResponse('That zipcode is not in ' + stateView.state + '. Go back to <a href="/">Town Hall Project U.S.</a> to search for events.');
+  }
+
+  if (zipToDistrictArray.length > 1) {
+    var lower = zipToDistrictArray[1].reduce(function (acc, cur) {
+      if (!acc.districts) {
+        acc.districts = [];
+      }
+      acc.state = cur.abr;
+      acc.districts.push(cur.dis);
+      return acc;
+    }, {});
+    var upper = zipToDistrictArray[2].reduce(function (acc, cur) {
+      if (!acc.districts) {
+        acc.districts = [];
+      }
+      acc.state = cur.abr;
+      acc.districts.push(cur.dis);
+      return acc;
+    }, {});
+  }
+  return {
+    federal: federal,
+    upper: upper,
+    lower: lower,
+  };
+}
   static checkIfOnlySenate(selectedData) {
     var justSenate = true;
     var numOfDistrictEvents = 0;
@@ -56,7 +104,6 @@ export default class ZipSearch extends React.Component {
       this.lookUpZip(zipcode);
     } else if (selectedDistrict) {
       if (selectedDistrict.split('-').length === 3) {
-        // console.log(district.split('-'))
         //TODO: possible more checks to make sure this is a real district
         const state = selectedDistrict.split('-')[0];
         const district = selectedDistrict.split('-')[1];
@@ -84,53 +131,97 @@ export default class ZipSearch extends React.Component {
     })
   }
 
-  static handleZipToDistrict(zipToDistrictArray) {
-    var federal = zipToDistrictArray[0].reduce(function (acc, cur) {
-      if (!acc.districts) {
-        acc.districts = [];
-        acc.selections = [];
-      }
-      var stateObj = eventHandler.getStateDataFromAbbr(cur.abr);
-      var geoid = stateObj[0].FIPS + cur.dis;
-      acc.state = cur.abr;
-      acc.districts.push(cur.dis);
-      acc.selections.push(geoid);
-      return acc;
-    }, {});
-
-    if (!eventHandler.checkStateName(federal.state)) {
-      return zipLookUpHandler.zipErrorResponse('That zipcode is not in ' + stateView.state + '. Go back to <a href="/">Town Hall Project U.S.</a> to search for events.');
-    }
-
-    if (zipToDistrictArray.length > 1) {
-      var lower = zipToDistrictArray[1].reduce(function (acc, cur) {
-        if (!acc.districts) {
-          acc.districts = [];
-        }
-        acc.state = cur.abr;
-        acc.districts.push(cur.dis);
-        return acc;
-      }, {});
-      var upper = zipToDistrictArray[2].reduce(function (acc, cur) {
-        if (!acc.districts) {
-          acc.districts = [];
-        }
-        acc.state = cur.abr;
-        acc.districts.push(cur.dis);
-        return acc;
-      }, {});
-    }
-    return {
-      federal: federal,
-      upper: upper,
-      lower: lower,
-    };
-  }
-
   handleSubmit(e) {
     e.preventDefault();
-    const zip = this.state.query;
-    this.lookUpZip(zip)
+    const { query } = this.state;
+    if (isZipCode(query)) {
+      this.lookUpZip(query);
+    } else if (isState(query)) {
+      this.lookUpByState();
+    } else if (isDistrict(query)) {
+      this.lookUpByDistrict(query);
+    } else {
+      this.lookUpName(query);
+    }
+  }
+
+  lookUpName(name) {
+    const queryRef = firestore.collection('office_people').where('displayName', "==", name);
+    const locationData = {};
+    queryRef.get()
+      .then((snapshot) => {
+      if (snapshot.empty) {
+        return;
+      }
+
+      snapshot.forEach(member => {
+        const memberData = member.data();
+        console.log(memberData.current_office_index)
+        const currentRole = memberData.roles[memberData.current_office_index];
+        if (memberData.current_campaign_index) {
+          const currentCampaign = memberData.campaigns[memberData.current_office_index];
+        }
+        if (currentRole.level === 'federal') {
+          locationData.federal = {
+            state: currentRole.state,
+            districts: currentRole.district ? [mapHelperFunctions.zeroPad(currentRole.district)] : [],
+          }
+        } else if (currentRole.level === 'state') {
+          locationData[currentRole.chamber] = {
+            state: currentRole.state,
+            districts: [currentRole.district.split('-')[1]]
+          }
+        }
+      });
+      eventHandler.renderResults(locationData);
+    })
+
+  }
+
+  lookUpByDistrict(district) {
+    const {
+      usState
+    } = this.props;
+    let locationData = {}
+    if (isFederalDistrict(district)) {
+      const state = district.split('-')[0];
+      locationData.federal = {
+        districts: [district.split('-')[1]],
+        state
+      }
+    } else if (usState) {
+      const chamber = district.split('-')[0];
+      if (chamber === 'HD') {
+        locationData.lower = {
+          districts: [district.split('-')[1]],
+          state: usState,
+        }
+      } else {
+        locationData.upper = {
+          districts: [district.split('-')[1]],
+          state: usState,
+        }
+      }
+    }
+    eventHandler.renderResults(locationData);
+
+  }
+
+  lookUpByState(state) {
+    const {
+      setDistrict
+    } = this.props;
+    TownHall.resetData();
+    TownHall.zipQuery;
+
+
+  repCardHandler.renderRepresentativeCards(TownHall.lookupReps('state', state), $('#representativeCards section'));
+
+      urlParamsHandler.setUrlParameter('state', state);
+
+      var locationData = ZipSearch.handleZipToDistrict(zipToDistrictArray);
+      setDistrict(locationData);
+      eventHandler.renderResults(locationData);
   }
 
   lookUpZip(zip) {
@@ -189,7 +280,7 @@ export default class ZipSearch extends React.Component {
               </div>
               <form className="form-inline text-center" onSubmit={this.handleSubmit}>
                 <div className="form-group text-center">
-                  <input className="form-control input-lg" type="zip" placeholder="Zip Code" onChange={this.saveZip} value={this.state.query}/>
+                  <input className="form-control input-lg" type="zip" placeholder="zipcode, district or state" onChange={this.saveZip} value={this.state.query}/>
                   <input type="submit" className="btn btn-primary btn-lg fath-button" value="Find a Town Hall" />
                   <div id="selection-results" className="text-center ">
                     <h4 className="selection-results_content"></h4>

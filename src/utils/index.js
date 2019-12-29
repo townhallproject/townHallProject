@@ -1,3 +1,7 @@
+import { find } from 'lodash';
+
+import states from '../data/states';
+
 export function makeStateDistrictText(stateDistricts, chamber) {
     var stateText = ' ';
     var mapping = {
@@ -10,4 +14,24 @@ export function makeStateDistrictText(stateDistricts, chamber) {
         }
     });
     return stateText;
+}
+
+export function isZipCode(query) {
+    const zipCodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
+    return query.match(zipCodeRegEx);
+}
+
+export function isState(query) {
+    return find(states, (stateData) => stateData.USPS.toLowerCase().trim() === query.toLowerCase().trim() || stateData.Name.toLowerCase().trim() === query.toLowerCase().trim()
+    )
+}
+
+export function isDistrict(query) {
+    const districtRegEx = /([A-Z]){2}-(\d{2})/g;
+    return query.match(districtRegEx);
+}
+
+export function isFederalDistrict(query) {
+    const prefix = query.split('-')[0];
+    return isState(prefix)
 }

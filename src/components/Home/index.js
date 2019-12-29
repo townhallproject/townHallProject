@@ -13,6 +13,7 @@ import EmailSignup from './EmailSignup';
 import RepresentativeCards from './RepresentativeCards';
 import EventsTable from './EventsTable';
 import EventModal from './EventModal';
+import { isState } from '../../utils';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -22,18 +23,57 @@ export default class Home extends React.Component {
       currentDistrict: '',
       init: true,
       allTownHalls: [],
+      allStateTownHalls: [],
     }
   }
 
   componentDidMount() {
-
+    const usState = isState(location.pathname.split('/')[1]);
     const initialTownHalls = [];
-    const { init, allTownHalls } = this.state;
+    const initialStateTownHalls = [];
+    const {
+      init,
+      allTownHalls,
+      allStateTownHalls
+    } = this.state;
     const app = this;
-    var townHallsFB = firebasedb.ref('/townHalls/');
-    townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
+    let totalPromises = 1;
+    let numberFinished = 0;
+
+    const federalRef = firebasedb.ref('/townHalls/');
+    if (usState) {
+      totalPromises = 2;
+      let stateRef = firebasedb.ref('/state_townhalls/' + usState.USPS + '/');
+      stateRef.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
+        var ele = new TownHall(snapshot.val());
+        if (ele.district && !ele.chamber) {
+          ele.chamber = ele.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
+        }
+        ele.level = 'state';
+        ele.makeDisplayDistrict();
+        if (init) {
+          initialStateTownHalls.push(ele);
+        } else {
+          app.setState({
+            allStateTownHalls: [...allStateTownHalls, ele]
+          })
+        }
+      });
+      stateRef.once('value', function () {
+        numberFinished++;
+        if (init && numberFinished === totalPromises) {
+          app.setState({
+            init: false,
+            allTownHalls: initialTownHalls,
+            usState: usState ? usState.USPS : null,
+            allStateTownHalls: initialStateTownHalls,
+          })
+        }
+
+    });
+    }
+    federalRef.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall(snapshot.val());
-      ///If no state filter show all results
       ele.level = 'federal';
       ele.makeDisplayDistrict();
       if (init) {
@@ -43,18 +83,18 @@ export default class Home extends React.Component {
           allTownHalls: [...allTownHalls, ele]
         })
       }
-
       TownHall.addFilterIndexes(ele);
     })
-      townHallsFB.once('value', function () {
-
-        if (init) {
-          app.setState({
-            init: false,
-            allTownHalls: initialTownHalls,
-          })
-        }
-      
+    federalRef.once('value', function () {
+      numberFinished++;
+      if (init && numberFinished === totalPromises) {
+        app.setState({
+          init: false,
+          allTownHalls: initialTownHalls,
+          usState: usState ? usState.USPS : null,
+          allStateTownHalls: initialStateTownHalls,
+        })
+      }
     });
   }
 
@@ -67,11 +107,15 @@ export default class Home extends React.Component {
   render() {
     const {
       allTownHalls,
-      currentDistrict
+      allStateTownHalls,
+      currentDistrict,
+      usState,
     } = this.state;
+    console.log(this.state)
     return (
       <React.Fragment>
         <ZipSearchComponent 
+          usState={usState}
           setDistrict={this.setDistrict}
         />
         {/*Call to action when no events are present*/}

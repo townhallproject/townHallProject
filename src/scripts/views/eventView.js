@@ -71,25 +71,30 @@ function makeReporterText(stateDistricts, chamber) {
 }
 
 eventHandler.renderResults = function (locationData) {
+  console.log(locationData)
   tableHandler.resetFilters();
-  var state = locationData.federal.state;
-  var districts = locationData.federal.districts;
-  var validSelections = locationData.federal.selections;
-  var federalEvents = TownHall.matchSelectionToZip(state, districts);
-  var numFederal = federalEvents.length;
-  var zoomMap = true;
-  //render table
-  var districtText = ' ';
-  emailHandler.clearDistricts();
-  districts.forEach(function (district) {
-    if (district) {
-      districtText = districtText + state + '-' + district + ' ';
-      emailHandler.addDistrict(state + '-' + district)
-    } else {
-      districtText = districtText + state;
-    }
-  });
-  var selectedData = federalEvents;
+  let selectedData = [];
+  let federalEvents = [];
+  if (locationData.federal) {
+    var state = locationData.federal.state;
+    var districts = locationData.federal.districts;
+    var validSelections = locationData.federal.selections;
+    federalEvents = TownHall.matchSelectionToZip(state, districts);
+    var numFederal = federalEvents.length;
+    selectedData = federalEvents;
+    var zoomMap = true;
+    //render table
+    var districtText = ' ';
+    emailHandler.clearDistricts();
+    districts.forEach(function (district) {
+      if (district) {
+        districtText = districtText + state + '-' + district + ' ';
+        emailHandler.addDistrict(state + '-' + district)
+      } else {
+        districtText = districtText + state;
+      }
+    });
+  }
   if (locationData.upper) {
     var upperText = makeReporterText(locationData.upper.districts, 'upper');
     var upperDistricts = locationData.upper.districts;
