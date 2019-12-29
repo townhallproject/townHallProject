@@ -314,6 +314,7 @@ function checkEventParam() {
       if (snapshot.exists()) {
         var townhall = new TownHall(snapshot.val());
         townhall.makeFormattedMember();
+        townhall.makeDisplayDistrict();
         populateEventModal(townhall);
         $('.event-modal').modal('show');
       }
