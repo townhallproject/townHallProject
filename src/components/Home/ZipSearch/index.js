@@ -5,6 +5,7 @@ import urlParamsHandler from '../../../scripts/lib/urlParams';
 
 import TownHall from '../../../scripts/models/TownHall';
 
+import indexView from '../../../scripts/views/indexView';
 import zipLookUpHandler from '../../../scripts/views/zipLookUpView';
 import repCardHandler from '../../../scripts/views/repCardView';
 import stateView from '../../../scripts/views/stateView';
@@ -135,6 +136,9 @@ static handleZipToDistrict(zipToDistrictArray) {
   handleSubmit(e) {
     e.preventDefault();
     const { query } = this.state;
+    if (!query) {
+      indexView.resetHome()
+    }
     if (isZipCode(query)) {
       this.lookUpZip(query);
     } else if (isState(query)) {
@@ -288,7 +292,7 @@ static handleZipToDistrict(zipToDistrictArray) {
               </div>
               <form className="form-inline text-center" onSubmit={this.handleSubmit}>
                 <div className="form-group text-center">
-                  <input className="form-control input-lg search-input" type="zip" placeholder="zip, district or lawmaker" onChange={this.saveZip} value={this.state.query}/>
+                  <input className="form-control input-lg search-input" type="zip" placeholder={usState ? "zip, district or lawmaker": "zipcode or district"} onChange={this.saveZip} value={this.state.query}/>
                   <input type="submit" className="btn btn-primary btn-lg fath-button" value="Find a Town Hall" />
                   <div id="selection-results" className="text-center ">
                     <h4 className="selection-results_content"></h4>
