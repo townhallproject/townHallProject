@@ -73,7 +73,9 @@ class TownHall {
       }
     } else {
       const state = this.state ? this.state : this.stateAbbr;
-      if (this.district && parseInt(this.district)) {
+      if (this.chamber === 'nationwide') {
+        this.displayDistrict = 'President'
+      } else if (this.district && parseInt(this.district)) {
         //House
         this.displayDistrict = state + '-' + parseInt(this.district);
       } else if (this.chamber === 'upper') {
@@ -84,7 +86,7 @@ class TownHall {
       } else {
         this.displayDistrict = state;
       }
-      if (this.meetingType === 'Campaign Town Hall') {
+      if (this.iconFlag === 'campaign') {
         this.displayDistrict = 'Running for: ' + this.displayDistrict;
       }
     }
@@ -310,6 +312,9 @@ TownHall.matchSelectionToZip = (state, districts) => {
   fetchedData = TownHall.allTownHalls.filter(function (townhall) {
     return townhall.state === state && townhall.meetingType !== 'DC Event';
   }).reduce(function (acc, curtownhall) {
+    if (!districts) {
+      acc.push(curtownhall);
+    }
     if (!curtownhall.district) {
       acc.push(curtownhall);
     } else {
