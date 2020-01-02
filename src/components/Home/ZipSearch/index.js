@@ -156,10 +156,13 @@ static handleZipToDistrict(zipToDistrictArray) {
 
       snapshot.forEach(member => {
         const memberData = member.data();
-        console.log(memberData.current_office_index)
         const currentRole = memberData.roles[memberData.current_office_index];
-        if (memberData.current_campaign_index) {
+        if (memberData.campaigns) {
           const currentCampaign = memberData.campaigns[memberData.current_office_index];
+          if (currentCampaign.chamber === 'nationwide') {
+            locationData.displayName = memberData.displayName
+          }
+
         }
         if (currentRole.level === 'federal') {
           locationData.federal = {

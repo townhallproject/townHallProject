@@ -26,6 +26,18 @@ mapHelperFunctions.teleTownHallMarker = function (townhall, state) {
   return townhall;
 };
 
+function addTwoBoundingBoxes(bb1, bb2) {
+  if (!bb2) {
+    return bb1;
+  }
+  let newBB = [0, 0, 0, 0];
+    newBB[0] = Math.min(bb1[0], bb2[0]);
+    newBB[2] = Math.min(bb1[2], bb2[2]);
+    newBB[1] = Math.max(bb1[1], bb2[1]);
+    newBB[3] = Math.max(bb1[3], bb2[3]);
+  return newBB;
+}
+
 function masterBoundingBox(stateAbbr, districtCodes) {
   var masterBB = [0, 0, 0, 0];
   districtCodes.forEach(function (district) {
@@ -38,14 +50,28 @@ function masterBoundingBox(stateAbbr, districtCodes) {
   return masterBB;
 }
 
-mapHelperFunctions.getBoundingBox = function (stateAbbr, districtCodes) {
+mapHelperFunctions.getBoundingBox = function (stateAbbr, districtCodes, additionalDistricts) {
   var statekey = stateAbbr,
     bb = bboxes[stateAbbr];
-  if (districtCodes && districtCodes.length === 1) {
+  if (additionalDistricts) {
+    console.log('has addtional districts')
+    const additionalBB = additionalDistricts.map(locationData => {
+      if (locationData.district) {
+        return masterBoundingBox(locationData.state, [locationData.district])
+      }
+      return bboxes[locationData.state]
+    }).reduce((acc, cur) => {
+      
+      acc = addTwoBoundingBoxes(acc, cur);
+      return acc;
+    }, [0,0,0,0])
+    console.log(bb, additionalBB, addTwoBoundingBoxes(bb, additionalBB))
+    return addTwoBoundingBoxes(bb, additionalBB);
+  } else if (districtCodes && districtCodes.length === 1) {
     statekey = statekey + districtCodes[0];
-    bb = bboxes[statekey];
+    return bboxes[statekey];
   } else if (districtCodes && districtCodes.length > 1) {
-    bb = masterBoundingBox(stateAbbr, districtCodes);
+    return masterBoundingBox(stateAbbr, districtCodes);
   }
   return bb;
 };

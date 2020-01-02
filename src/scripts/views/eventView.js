@@ -1,7 +1,9 @@
 /*globals setTimeout addtocalendar Promise*/
 import $ from 'jquery';
 import page from 'page';
-
+import {
+  uniqBy
+} from 'lodash';
 import { firebasedb } from '../lib/firebasedb';
 
 import eventCardTemplate from '../../templates/eventCards';
@@ -30,12 +32,14 @@ const zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z
 // object to hold the front end view functions
 const eventHandler = {};
 
-eventHandler.whereToZoomMap = function (justSenate, state, districts) {
+eventHandler.whereToZoomMap = function (justSenate, state, districts, additionalDistricts) {
   var bb;
-  if (justSenate) {
+  if (justSenate && !additionalDistricts) {
     bb = mapHelperFunctions.getBoundingBox(state);
-  } else {
+  } else if (!additionalDistricts) {
     bb = mapHelperFunctions.getBoundingBox(state, districts);
+  } else {
+    bb = mapHelperFunctions.getBoundingBox(state, districts, additionalDistricts)
   }
   mapView.zoomLocation = bb;
   mapView.focusMap(bb);
@@ -75,13 +79,25 @@ eventHandler.renderResults = function (locationData) {
   let selectedData = [];
   let federalEvents = [];
   let districtText= '';
+  let newDistricts;
+  if (locationData.displayName) {
+    selectedData = [...selectedData, ...TownHall.matchDisplayName(locationData.displayName)];
+    newDistricts = uniqBy(TownHall.matchDisplayName(locationData.displayName).map(townHall => {
+      return {
+        state: townHall.state,
+        district: townHall.district || null,
+        chamber: townHall.chamber,
+        level: townHall.level
+      }
+    }), ele => `${ele.state}-${ele.district}`)
+  }
   if (locationData.federal) {
     var state = locationData.federal.state;
     var districts = locationData.federal.districts;
     var validSelections = locationData.federal.selections;
     federalEvents = TownHall.matchSelectionToZip(state, districts);
     var numFederal = federalEvents.length;
-    selectedData = federalEvents;
+    selectedData = [...selectedData, ...federalEvents];
     var zoomMap = true;
     //render table
     districtText = ' ';
@@ -104,12 +120,23 @@ eventHandler.renderResults = function (locationData) {
     zoomMap = false;
   }
   if (locationData.lower) {
-    var lowerText = makeReporterText(locationData.upper.districts, 'lower');
+    var lowerText = makeReporterText(locationData.lower.districts, 'lower');
     var lowerDistricts = locationData.lower.districts;
     var lowerEvents = TownHall.matchSelectionToZipStateEvents(state, lowerDistricts, 'lower');
     var numOfLower = lowerEvents.length;
     selectedData = selectedData.concat(lowerEvents);
     zoomMap = false;
+  }
+  if (locationData.displayName) {
+    selectedData = [...selectedData, ...TownHall.matchDisplayName(locationData.displayName)];
+    newDistricts = uniqBy(TownHall.matchDisplayName(locationData.displayName).map(townHall => {
+      return {
+        state: townHall.state,
+        district: townHall.district || null,
+        chamber: townHall.chamber,
+        level: townHall.level
+      }
+    }), ele => `${ele.state}-${ele.district}`)
   }
 
   var $text = $('.selection-results_content');
@@ -117,6 +144,7 @@ eventHandler.renderResults = function (locationData) {
   resultsView.render();
 
   var justSenate = true;
+
   if (selectedData.length > 0) {
     $('#no-events').hide();
     // set globals for filtering
@@ -160,7 +188,7 @@ eventHandler.renderResults = function (locationData) {
     tableHandler.resetTable();
   }
   if (zoomMap) {
-    eventHandler.whereToZoomMap(justSenate, state, districts);
+    eventHandler.whereToZoomMap(justSenate, state, districts, newDistricts);
   }
   if (mapView.webGL && validSelections) {
     mapboxView.highlightDistrict(validSelections);

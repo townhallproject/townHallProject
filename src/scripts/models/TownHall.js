@@ -284,6 +284,12 @@ TownHall.getStateEvents = (state) => {
   return firebasedb.ref('/state_townhalls/' + state + '/').once('value');
 };
 
+TownHall.matchDisplayName = (displayName) => {
+  return TownHall.allTownHalls.filter(townHall => {
+    return townHall.displayName.toLowerCase() === displayName.toLowerCase();
+  })
+}
+
 TownHall.matchSelectionToZipStateEvents = (state, districts, chamber) => {
   return TownHall.allStateTownHalls.reduce(function (acc, townhall) {
     if (townhall.chamber === 'statewide') {
