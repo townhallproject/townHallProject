@@ -15,7 +15,7 @@ import {
   firestore
 } from '../../../scripts/lib/firebasedb';
 
-import { isZipCode, isState, isDistrict, isFederalDistrict } from '../../../utils';
+import { isZipCode, isState, isDistrict, isFederalDistrict, capitalizeName } from '../../../utils';
 
 const zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
 require('./style.less');
@@ -151,7 +151,7 @@ static handleZipToDistrict(zipToDistrictArray) {
   }
 
   lookUpName(name) {
-    const queryRef = firestore.collection('office_people').where('displayName', "==", name);
+    const queryRef = firestore.collection('office_people').where('displayName', "==", capitalizeName(name));
     const locationData = {};
     queryRef.get()
       .then((snapshot) => {

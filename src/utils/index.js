@@ -35,3 +35,13 @@ export function isFederalDistrict(query) {
     const prefix = query.split('-')[0];
     return isState(prefix)
 }
+
+export function capitalizeName(name) {
+      name = name.split(" ");
+
+      for (let i = 0, x = name.length; i < x; i++) {
+          name[i] = name[i][0].toUpperCase() + name[i].substr(1);
+      }
+
+      return name.join(" ");
+}
