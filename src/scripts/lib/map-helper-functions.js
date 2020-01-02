@@ -54,7 +54,6 @@ mapHelperFunctions.getBoundingBox = function (stateAbbr, districtCodes, addition
   var statekey = stateAbbr,
     bb = bboxes[stateAbbr];
   if (additionalDistricts) {
-    console.log('has addtional districts')
     const additionalBB = additionalDistricts.map(locationData => {
       if (locationData.district) {
         return masterBoundingBox(locationData.state, [locationData.district])
@@ -65,7 +64,6 @@ mapHelperFunctions.getBoundingBox = function (stateAbbr, districtCodes, addition
       acc = addTwoBoundingBoxes(acc, cur);
       return acc;
     }, [0,0,0,0])
-    console.log(bb, additionalBB, addTwoBoundingBoxes(bb, additionalBB))
     return addTwoBoundingBoxes(bb, additionalBB);
   } else if (districtCodes && districtCodes.length === 1) {
     statekey = statekey + districtCodes[0];
