@@ -75,6 +75,7 @@ eventHandler.renderResults = function (locationData) {
   tableHandler.resetFilters();
   let selectedData = [];
   let federalEvents = [];
+  let districtText= '';
   if (locationData.federal) {
     var state = locationData.federal.state;
     var districts = locationData.federal.districts;
@@ -84,7 +85,7 @@ eventHandler.renderResults = function (locationData) {
     selectedData = federalEvents;
     var zoomMap = true;
     //render table
-    var districtText = ' ';
+    districtText = ' ';
     emailHandler.clearDistricts();
     districts.forEach(function (district) {
       if (district) {
@@ -131,8 +132,12 @@ eventHandler.renderResults = function (locationData) {
     var numOfDistrictEvents = counts[1];
 
     var numOfUSSenateEvents = numFederal - numOfDistrictEvents;
-    var message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
-    message = message + '<p>' + numOfUSSenateEvents + ' event(s) for ' + state + ' senators</p>';
+    let message = '';
+    if (locationData.federal) {
+      message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
+      message = message + '<p>' + numOfUSSenateEvents + ' event(s) for ' + state + ' senators</p>';
+
+    }
     if (numOfLower) {
       message = message + '<p>' + numOfLower + ' event(s) for the ' + lowerText + ' state representative(s)</p>';
     }
