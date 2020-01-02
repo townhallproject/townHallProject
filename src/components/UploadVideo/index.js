@@ -24,7 +24,7 @@ const UploadVideo = (props) => {
                 placeholder="Please tell us about any particularly powerful questions, answers or other moments--and the relevant timecode when possible"></textarea>
             </div>
             <div>
-              <input input type="file" id="video-file-field" className="button form-control" accept="video/*" />
+              <input type="file" id="video-file-field" className="button form-control" accept="video/*" />
             </div>
             <div>
               <em>By uploading a video you grant the Town Hall Project permission to use the video and share it with

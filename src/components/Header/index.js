@@ -94,6 +94,9 @@ const Header = (props) => {
               <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#year-one">Look back at 2017</a>
             </li>
             <li>
+              <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#support-us">Donate</a>
+            </li>
+            <li>
               <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#year-two">Look back at 2018</a>
             </li>
             <li>
@@ -102,8 +105,8 @@ const Header = (props) => {
           </ul>
           <ul className="nav navbar-nav navbar-right">
             <li>
-              <a href="https://secure.actblue.com/donate/thp" target="_blank" className="btn" id="donate-button" role="button"
-                target="_blank">Donate</a>
+              <a href="https://secure.actblue.com/donate/townhallproject2019" target="_blank" className="btn" id="donate-button" role="button"
+                target="_blank">Donate Now</a>
             </li>
             <li>
               <a className="social-icons" href="https://twitter.com/townhallproject" target="_blank">

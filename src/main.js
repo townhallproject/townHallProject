@@ -27,7 +27,7 @@ import './vendor/scripts/iframeSizer.contentWindow.min.js'
 
 
 // local styles
-import './styles/customboot.less';
+require('./styles/customboot.less');
 
 import './scripts/controllers/routes';
 

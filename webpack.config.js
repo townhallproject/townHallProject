@@ -1,10 +1,16 @@
 require('dotenv').config();
+const path = require('path');
+const fs = require('fs');
+const lessToJs = require('less-vars-to-js');
+
 const HTMLPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './src/styles/ant-vars.less'), 'utf8'));
 
 const { ProvidePlugin } = require('webpack');
 
@@ -82,6 +88,14 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+        options: {
+          plugins: [
+            ['import', {
+              libraryName: 'antd',
+              style: true
+            }],
+          ],
+        },
       },
       { 
         test: /\.handlebars$/, 
@@ -104,6 +118,10 @@ module.exports = {
           },
           {
             loader: 'less-loader',
+            options: {
+              javascriptEnabled: true,
+              modifyVars: themeVariables,
+            },
           },
         ],
       },
@@ -132,5 +150,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
-
+    resolve: {
+      extensions: ['.js', '.jsx']
+    }
 };

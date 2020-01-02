@@ -480,6 +480,7 @@ export const init = () => {
   if (localStorage.getItem('signedUp') === 'true') {
     emailHandler.hideEmailForm();
   }
+  $('#open-email-form').on('click', emailHandler.openEmailForm);
   var divTop = $('#all-events-table').offset().top + 380;
   $(window).scroll(function () {
     if ($(window).scrollTop() > divTop) {
