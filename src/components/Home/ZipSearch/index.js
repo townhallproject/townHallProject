@@ -280,7 +280,7 @@ static handleZipToDistrict(zipToDistrictArray) {
               </div>
               <form className="form-inline text-center" onSubmit={this.handleSubmit}>
                 <div className="form-group text-center">
-                  <input className="form-control input-lg" type="zip" placeholder="zipcode, district or state" onChange={this.saveZip} value={this.state.query}/>
+                  <input className="form-control input-lg" type="zip" placeholder="zip, district or lawmaker" onChange={this.saveZip} value={this.state.query}/>
                   <input type="submit" className="btn btn-primary btn-lg fath-button" value="Find a Town Hall" />
                   <div id="selection-results" className="text-center ">
                     <h4 className="selection-results_content"></h4>
