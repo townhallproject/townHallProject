@@ -112,7 +112,6 @@ export default class Home extends React.Component {
       currentDistrict,
       usState,
     } = this.state;
-    console.log(this.state)
     return (
       <React.Fragment>
         <ZipSearchComponent 
