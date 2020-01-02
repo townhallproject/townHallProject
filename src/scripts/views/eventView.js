@@ -71,7 +71,6 @@ function makeReporterText(stateDistricts, chamber) {
 }
 
 eventHandler.renderResults = function (locationData) {
-  console.log(locationData)
   tableHandler.resetFilters();
   let selectedData = [];
   let federalEvents = [];
@@ -243,7 +242,6 @@ function handleZipToDistrict(zipToDistrictArray) {
 }
 
 eventHandler.lookup = function (e) {
-  console.log('got called')
   e.preventDefault();
   TownHall.resetData();
   TownHall.zipQuery;

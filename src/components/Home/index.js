@@ -24,6 +24,7 @@ export default class Home extends React.Component {
       init: true,
       allTownHalls: [],
       allStateTownHalls: [],
+      usState: '',
     }
   }
 

@@ -259,6 +259,10 @@ static handleZipToDistrict(zipToDistrictArray) {
   };
 
   render() {
+    const {
+      usState
+    } = this.props;
+    const bannerSrc = usState ? `${location.origin}/Images/${usState}/THP_logo_inverse.png` : "/Images/THP_logo_inverse.png";
     return (
       <header className="site-header clearfix">
         <section className="container container-fluid">
@@ -267,7 +271,7 @@ static handleZipToDistrict(zipToDistrictArray) {
               <div className=" text-left site-header clearfix displayoff ">
                 <div className="form-text-results col-md-12">
                   <div className="text-toggle header-large">
-                    <img id="header-image" src="/Images/THP_logo_inverse.png" alt=""></img>
+                    <img id="header-image" src={bannerSrc} alt=""></img>
                   </div>
                   <div className="text-toggle header-small hidden">
                     {/*<img src="/Images/THP_logo_inverse_simple.png" alt=""></img>*/}

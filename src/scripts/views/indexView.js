@@ -12,10 +12,6 @@ indexView.renderAwards = function () {
   $('#awards-banner').removeClass('hidden');
 };
 
-indexView.renderHeader = function () {
-  $('#header-image').attr('src', location.origin + '/Images' + '/THP_logo_inverse.png');
-};
-
 indexView.hideAwards = function () {
   $('#awards-banner').addClass('hidden');
 };
