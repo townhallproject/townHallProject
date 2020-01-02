@@ -17,6 +17,7 @@ import {
 import { isZipCode, isState, isDistrict, isFederalDistrict } from '../../../utils';
 
 const zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
+require('./style.less');
 
 export default class ZipSearch extends React.Component {
 
@@ -287,7 +288,7 @@ static handleZipToDistrict(zipToDistrictArray) {
               </div>
               <form className="form-inline text-center" onSubmit={this.handleSubmit}>
                 <div className="form-group text-center">
-                  <input className="form-control input-lg" type="zip" placeholder="zip, district or lawmaker" onChange={this.saveZip} value={this.state.query}/>
+                  <input className="form-control input-lg search-input" type="zip" placeholder="zip, district or lawmaker" onChange={this.saveZip} value={this.state.query}/>
                   <input type="submit" className="btn btn-primary btn-lg fath-button" value="Find a Town Hall" />
                   <div id="selection-results" className="text-center ">
                     <h4 className="selection-results_content"></h4>
