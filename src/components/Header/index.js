@@ -14,7 +14,13 @@ const Header = (props) => {
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
           </button>
-          <a data-toggle="tab" href="#home" className="navbar-brand hash-link" id="brand-icon">
+          <a 
+            onClick={() =>props.setLocation('')}
+            data-toggle="tab" 
+            href="#home" 
+            className="navbar-brand hash-link" 
+            id="brand-icon"
+          >
             <img src="/Images/THP_logo_horizontal_simple.png" alt=""></img>
           </a>
         </div>
@@ -27,40 +33,40 @@ const Header = (props) => {
                 <span className="caret"></span>
               </button>
               <ul className="dropdown-menu">
-                <li>
+                <li onClick={() => props.setLocation('')}>
                   <a href="/" className="stateNav-federal">Federal</a>
                 </li>
-                <li>
+                <li onClick={() => props.setLocation('arizona')}>
                   <a href="/arizona" className="stateNav-arizona">Arizona</a>
                 </li>
-                <li>
+                <li onClick={() => props.setLocation('colorado')}>
                   <a href="/colorado" className="stateNav-colorado">Colorado</a>
                 </li>
-                <li>
+                <li onClick={() => props.setLocation('florida')}>
                   <a href="/florida" className="stateNav-florida">Florida</a>
                 </li>
-                <li>
+                <li onClick={() => props.setLocation('maine')}>
                   <a href="/maine" className="stateNav-maine">Maine</a>
                 </li>
-                <li>
+                <li onClick={() => props.setLocation('maryland')}>
                   <a href="/maryland" className="stateNav-maryland">Maryland</a>
                 </li>
-                <li>
+                <li onClick={() => props.setLocation('michigan')}>
                   <a href="/michigan" className="stateNav-michigan">Michigan</a>
                 </li>
-                <li>
+                <li onClick={() => props.setLocation('nevada')}>
                   <a href="/nevada" className="stateNav-nevada">Nevada</a>
                 </li>
-                <li>
+                <li onClick={() => props.setLocation('north-carolina')}>
                   <a href="/north-carolina" className="stateNav-north-carolina">North Carolina</a>
                 </li>
-                <li>
+                <li onClick={() => props.setLocation('oregon')}>
                   <a href="/oregon" className="stateNav-oregon">Oregon</a>
                 </li>
-                <li>
+                <li onClick={() => props.setLocation('pennsylvania')}>
                   <a href="/pennsylvania" className="stateNav-pennsylvania">Pennsylvania</a>
                 </li>
-                <li>
+                <li onClick={() => props.setLocation('virginia')}>
                   <a href="/virginia" className="stateNav-virginia">Virginia</a>
                 </li>
               </ul>

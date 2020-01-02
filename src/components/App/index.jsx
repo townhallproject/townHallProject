@@ -25,19 +25,41 @@ import PageComponent from '../PageComponent';
 import Home from '../Home';
 
 class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.setLocation = this.setLocation.bind(this);
+        this.state = {
+            location: location.pathname.split('/')[1]
+        }
+    }
+
     componentDidMount() {
         init();
         // page();
+        this.setState({
+            location: location.pathname.split('/')[1]
+        })
     }
+
+    setLocation(location) {
+        this.setState({
+            location
+        })
+    }
+
     render() {
         return (
             <div>
-                <Header />
+                <Header
+                    setLocation={this.setLocation}
+                />
 
                 {/** Main content & Pages */}
                 <div className="tab-content">
                     <PageComponent id="home" active activeBanner>
-                        <Home />
+                        <Home 
+                            location={this.state.location}
+                        />
                     </PageComponent>
                     <PageComponent id="submit" active={false} activeBanner>
                         <SubmitEventForm />

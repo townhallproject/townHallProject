@@ -16,6 +16,12 @@ import EventModal from './EventModal';
 import { isState } from '../../utils';
 
 export default class Home extends React.Component {
+  static getStateAbr(stateData) {
+    if(stateData) {
+      return stateData.USPS
+    }
+    return '';
+  }
   constructor(props) {
     super(props);
     this.setDistrict = this.setDistrict.bind(this);
@@ -24,12 +30,11 @@ export default class Home extends React.Component {
       init: true,
       allTownHalls: [],
       allStateTownHalls: [],
-      usState: '',
     }
   }
 
   componentDidMount() {
-    const usState = isState(location.pathname.split('/')[1]);
+    const usState = isState(this.props.location);
     const initialTownHalls = [];
     const initialStateTownHalls = [];
     const {
@@ -66,7 +71,6 @@ export default class Home extends React.Component {
           app.setState({
             init: false,
             allTownHalls: initialTownHalls,
-            usState: usState ? usState.USPS : null,
             allStateTownHalls: initialStateTownHalls,
           })
         }
@@ -92,7 +96,6 @@ export default class Home extends React.Component {
         app.setState({
           init: false,
           allTownHalls: initialTownHalls,
-          usState: usState ? usState.USPS : null,
           allStateTownHalls: initialStateTownHalls,
         })
       }
@@ -110,8 +113,9 @@ export default class Home extends React.Component {
       allTownHalls,
       allStateTownHalls,
       currentDistrict,
-      usState,
     } = this.state;
+    const usState = Home.getStateAbr(isState(this.props.location));
+    console.log(usState)
     return (
       <React.Fragment>
         <ZipSearchComponent 
