@@ -440,27 +440,26 @@ mapboxView.removeListeners = function () {
 };
 
 var filterDistrict = ['any'];
-var includedStates = ['in', 'NAME'];
+var includedStates = ['in', 'ABR'];
 
-// Does the initial filter for the map to determine which districts have Town Halls.
-// TODO: Add in a data-driven style for the district layer that does a different fill if it's a local represenative vs. a Senator
 mapboxView.filterMap = function (townHall) {
   // Fetch states with senators in em'
-  if (townHall.meetingType === 'DC Event') {
+  if (townHall.meetingType === 'DC Event' || townHall.chamber === 'nationwide') {
     return;
   }
 
   var district = townHall.district;
 
   if (!district) {
-    if (!townHall.stateName) {
+    if (!townHall.state) {
       return;
     }
-    includedStates.push(townHall.stateName);
+    if (!includedStates.includes(townHall.state)) {
+      includedStates.push(townHall.state);
+    }
   }
 
   var filterSenate = ['all', includedStates];
-
   // Fetch districts w/ town halls occuring
   if (district) {
     var districtId = district;
