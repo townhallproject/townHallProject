@@ -74,7 +74,7 @@ export const EventCard = (props) => {
                 townhall.repeatingEvent ? townhall.repeatingEvent : townhall.dateString
               }
             </span>
-            <span className="profile-summary-value"> at {townhall.Time}{townhall.timeZone}, {townhall.timeZone}</span></h4></span>
+            <span className="profile-summary-value"> at {townhall.Time} {townhall.timeZone ?  `, ${townhall.timeZone}` : ''}</span></h4></span>
           <ul className="list-group list-group-flush">
             {townhall.phoneNumber &&
               (<li className="list-group-item list-item-no-border"> Call in number: {townhall.phoneNumber} </li>)
@@ -83,7 +83,7 @@ export const EventCard = (props) => {
             <li className="list-group-item list-item-no-border">
               <div className="row">
                 <address className="col-xs-8 col-xs-offset-2">
-                  {townhall.Location}<br />
+                  {townhall.Location || null}<br />
                   {townhall.address}<br />
                   {townhall.addressLink &&
                     (<a href={townhall.addressLink} target="_blank">Directions</a>)
