@@ -19,10 +19,10 @@ export const MENU_MAP = new Map([
   //   display: 'Volunteer with THP',
   //   link: VOLUNTEER_LINK
   // }, 
-  // {
-  //   display: 'Organize a Town Hall',
-  //   link: ORGANIZE_A_TOWN_HALL_LINK
-  // }, 
+  {
+    display: 'Organize a Town Hall',
+    link: ORGANIZE_A_TOWN_HALL_LINK,
+  }, 
   {
     display: 'Share your Town Hall video',
     link: SHARE_LINK

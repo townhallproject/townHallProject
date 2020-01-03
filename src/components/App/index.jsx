@@ -19,10 +19,11 @@ import RecessReport from '../RecessReport';
 import SubmitEventForm from '../SubmitEventForm';
 import TownHallPledgeAgreements from '../TownHallPledgeAgreements';
 import UploadVideo from '../UploadVideo';
-
+import IframeEmbed from '../IframeEmbed';
 import PageComponent from '../PageComponent';
 
 import Home from '../Home';
+import { ORGANIZE_A_TOWN_HALL_LINK } from '../Header/menuConstants';
 
 class App extends React.Component {
     constructor(props) {
@@ -42,6 +43,7 @@ class App extends React.Component {
     }
 
     setLocation(location) {
+        console.log(location)
         this.setState({
             location
         })
@@ -63,6 +65,9 @@ class App extends React.Component {
                     </PageComponent>
                     <PageComponent id="submit" active={false} activeBanner>
                         <SubmitEventForm />
+                    </PageComponent>
+                    <PageComponent id={ORGANIZE_A_TOWN_HALL_LINK} active={false} activeBanner>
+                        <IframeEmbed src="https://docs.google.com/document/u/1/d/e/2PACX-1vRB_BYUEiAJScIxrhlur5bDahqOWB3A_ZdPfrpVH9dduhGD-r-mqtJDpxxwUAFEcnO0y4tOLzo9wG2L/pub" />
                     </PageComponent>
                     <PageComponent id="contact" active={false} activeBanner>
                         <ContactUsForm />
