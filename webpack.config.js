@@ -60,7 +60,8 @@ module.exports = {
       alias: {
         'masonry': 'masonry-layout',
         'isotope': 'isotope-layout'
-      }
+      },
+      extensions: ['.js', '.json', '.jsx'],
     },
   mode: 'development',
   optimization: {

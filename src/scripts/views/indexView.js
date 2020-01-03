@@ -12,10 +12,6 @@ indexView.renderAwards = function () {
   $('#awards-banner').removeClass('hidden');
 };
 
-indexView.renderHeader = function () {
-  $('#header-image').attr('src', location.origin + '/Images' + '/THP_logo_inverse.png');
-};
-
 indexView.hideAwards = function () {
   $('#awards-banner').addClass('hidden');
 };
@@ -25,12 +21,13 @@ indexView.setStateDropdown = function () {
   $('.dropdown--stateSelection .stateNav-federal').hide();
 };
 
-// originial view
+// original view
 indexView.initialHome = function () {
   tableHandler.resetTable();
   mapView.initialView();
   var $parent = $('#nearest');
   var $results = $('.selection-results_content');
+  $('#look-up input').val('');
   $parent.removeClass('nearest-with-results');
   $parent.empty();
   $results.empty();
