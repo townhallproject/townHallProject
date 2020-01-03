@@ -86,7 +86,7 @@ class Header extends Component {
              >
                {
                  STATE_LEGISLATURES_MENU.map((stateName) => {
-                   const linkName = stateName.toLowerCase()
+                   const linkName = stateName.toLowerCase().replace(' ', '-');
                    return (
                      <Menu.Item key={stateName} onClick={() => setLocation(stateName.toLowerCase())}>
                        <a href={`/${linkName}`} style={{ textDecoration: 'none' }}>{stateName}</a>
