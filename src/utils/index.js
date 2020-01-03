@@ -36,12 +36,12 @@ export function isFederalDistrict(query) {
     return isState(prefix)
 }
 
-export function capitalizeName(name) {
-      name = name.split(" ");
-
-      for (let i = 0, x = name.length; i < x; i++) {
-          name[i] = name[i][0].toUpperCase() + name[i].substr(1);
-      }
-
-      return name.join(" ");
+export function capitalizeName(fullName) {
+      let names = fullName.split(" ");
+      return names.map((name) => {
+          if (name.length === 1) {
+              return name.toUpperCase();
+          }
+        return name[0].toUpperCase() + name.substr(1);
+      }).join(' ');
 }
