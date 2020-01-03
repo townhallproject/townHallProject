@@ -15,17 +15,18 @@ export default () => {
                 </Col>
             </Row>
             <section className="section-one">
-                <Row>
-                    <Col xs={24} md={16} type="flex" justify="space-around">
+                <Row  type="flex" justify="space-around">
+                    <Col xs={24} md={16}>
                     <p>Town Hall Project is dedicated to the simple, powerful conviction that our democracy is stronger, fairer, and better when every constituent can make their voice heard to the people who represent us.</p>
                     <p>With your help, in 2020, Town Hall Project will fight for transparency during the most important election of our lifetimes.</p>
+                    <p>And in 2021, Town Hall Project will be ready to engage Americans to move forward. Together, we will hold our newly sworn-in representatives to their commitments, and rise to our better values as a nation.</p>
+
                     </Col>
-                    <Col span={8}>
+                    <Col span={8} className="image-container">
                         <img src="/Images/image1.jpg"/>
                     </Col>
                 </Row>
                 <Row>
-                    <p>And in 2021, Town Hall Project will be ready to engage Americans to move forward. Together, we will hold our newly sworn-in representatives to their commitments, and rise to our better values as a nation.</p>
                     <p>Help us ensure a better future. Your monthly donation or one-time contribution will support our hard-hitting work in 2020 and beyond. Thank you!</p>
                 </Row>
                 <div className="donate-form">
@@ -70,8 +71,7 @@ export default () => {
                     </Card>
                     </Col>
                     <Col xs={24} md={12}>
-                        <Card bordered={true}>
-                            
+                        <Card bordered={true}> 
                             <Meta
                                 title="DIGITAL TOOLS"
                                 avatar={<Avatar size="large" src="/Images/tech-01.png" />}

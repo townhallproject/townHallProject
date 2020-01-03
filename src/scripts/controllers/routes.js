@@ -5,24 +5,31 @@ import indexController from './index-controller';
 
 page('/',
   mapController.reset,
+  mapController.checkUrlParamsForSelection,
   indexController.renderMainIndex,
   mapController.setBounds,
   mapController.webGlsupported,
   mapController.hideStateLegend,
+  indexController.renderDom,
   mapController.setMap,
   mapController.readData,
-  mapController.addDistrictListener
+  mapController.addDistrictListener,
+  mapController.setDistrict,
 );
 
 page('/:stateName',
   mapController.getState,
+  mapController.checkUrlParamsForSelection,
   indexController.renderStateIndex,
-  mapController.setBounds,
+  mapController.setStateBounds,
   mapController.webGlsupported,
   mapController.showStateLegend,
   mapController.setborderListeners,
+  indexController.renderDom,
   mapController.setMap,
   mapController.readStateData,
   mapController.maskCountry,
-  mapController.addStateDistrictListener
+  mapController.addStateDistrictListener,
 );
+
+page()

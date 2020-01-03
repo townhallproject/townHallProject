@@ -86,7 +86,7 @@ class Header extends Component {
                  STATE_LEGISLATURES_MENU.map((stateName) => {
                    const linkName = stateName.toLowerCase()
                    return (
-                     <Menu.Item key={stateName}>
+                     <Menu.Item key={stateName} onClick={() => props.setLocation(menuItem.display.toLowerCase())}>
                        <a href={`/${linkName}`} style={{ textDecoration: 'none' }}>{stateName}</a>
                      </Menu.Item>
                    )
@@ -119,7 +119,7 @@ class Header extends Component {
           style={{ lineHeight: '60px' }}
           onClick={this.handleMenuSelect}
         >
-          <Menu.Item key="home">
+          <Menu.Item key="home" onClick={() => props.setLocation('')}>
             <a data-toggle="tab" href="#home" className={classNames("navbar-brand","hash-link","brand-icon")}>
               <img src="/Images/THP_logo_horizontal_simple.png" alt=""></img>
             </a>
@@ -160,6 +160,7 @@ class Header extends Component {
         >
           {this.renderDropdown()}
         </Menu>
+
       </div>
     )
   }

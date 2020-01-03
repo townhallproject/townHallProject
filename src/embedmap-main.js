@@ -87,7 +87,7 @@ class App extends React.Component {
                       <dd>U.S. Senator</dd>
                     </li>
                     <li class="map-legend-li hide-if-no-webgl">
-                      <dt class="map-legend__distrcit"></dt>
+                      <dt class="map-legend__district"></dt>
                       <dd>U.S. Representative</dd>
                     </li>
                     <li class="map-legend-li">

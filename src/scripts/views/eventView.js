@@ -1,7 +1,9 @@
 /*globals setTimeout addtocalendar Promise*/
 import $ from 'jquery';
 import page from 'page';
-
+import {
+  uniqBy
+} from 'lodash';
 import { firebasedb } from '../lib/firebasedb';
 
 import eventCardTemplate from '../../templates/eventCards';
@@ -30,12 +32,14 @@ const zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z
 // object to hold the front end view functions
 const eventHandler = {};
 
-eventHandler.whereToZoomMap = function (justSenate, thisState, validDistricts) {
+eventHandler.whereToZoomMap = function (justSenate, state, districts, additionalDistricts) {
   var bb;
-  if (justSenate) {
-    bb = mapHelperFunctions.getBoundingBox(thisState);
+  if (justSenate && !additionalDistricts) {
+    bb = mapHelperFunctions.getBoundingBox(state);
+  } else if (!additionalDistricts) {
+    bb = mapHelperFunctions.getBoundingBox(state, districts);
   } else {
-    bb = mapHelperFunctions.getBoundingBox(thisState, validDistricts);
+    bb = mapHelperFunctions.getBoundingBox(state, districts, additionalDistricts)
   }
   mapView.zoomLocation = bb;
   mapView.focusMap(bb);
@@ -72,39 +76,67 @@ function makeReporterText(stateDistricts, chamber) {
 
 eventHandler.renderResults = function (locationData) {
   tableHandler.resetFilters();
-  var thisState = locationData.federal.thisState;
-  var validDistricts = locationData.federal.validDistricts;
-  var validSelections = locationData.federal.validSelections;
-  var federalEvents = TownHall.matchSelectionToZip(thisState, validDistricts);
-  var numFederal = federalEvents.length;
-  var zoomMap = true;
-  //render table
-  var districtText = ' ';
-  emailHandler.clearDistricts();
-  validDistricts.forEach(function (district) {
-    if (district) {
-      districtText = districtText + thisState + '-' + district + ' ';
-      emailHandler.addDistrict(thisState + '-' + district)
-    } else {
-      districtText = districtText + thisState;
-    }
-  });
-  var selectedData = federalEvents;
+  let selectedData = [];
+  let federalEvents = [];
+  let districtText= '';
+  let newDistricts;
+  if (locationData.displayName) {
+    selectedData = [...selectedData, ...TownHall.matchDisplayName(locationData.displayName)];
+    newDistricts = uniqBy(TownHall.matchDisplayName(locationData.displayName).map(townHall => {
+      return {
+        state: townHall.state,
+        district: townHall.district || null,
+        chamber: townHall.chamber,
+        level: townHall.level
+      }
+    }), ele => `${ele.state}-${ele.district}`)
+  }
+  if (locationData.federal) {
+    var state = locationData.federal.state;
+    var districts = locationData.federal.districts;
+    var validSelections = locationData.federal.selections;
+    federalEvents = TownHall.matchSelectionToZip(state, districts);
+    var numFederal = federalEvents.length;
+    selectedData = [...selectedData, ...federalEvents];
+    var zoomMap = true;
+    //render table
+    districtText = ' ';
+    emailHandler.clearDistricts();
+    districts.forEach(function (district) {
+      if (district) {
+        districtText = districtText + state + '-' + district + ' ';
+        emailHandler.addDistrict(state + '-' + district)
+      } else {
+        districtText = districtText + state;
+      }
+    });
+  }
   if (locationData.upper) {
-    var upperText = makeReporterText(locationData.upper.validDistricts, 'upper');
-    var upperDistricts = locationData.upper.validDistricts;
-    var upperEvents = TownHall.matchSelectionToZipStateEvents(thisState, upperDistricts, 'upper');
+    var upperText = makeReporterText(locationData.upper.districts, 'upper');
+    var upperDistricts = locationData.upper.districts;
+    var upperEvents = TownHall.matchSelectionToZipStateEvents(state, upperDistricts, 'upper');
     var numOfUpper = upperEvents.length;
     selectedData = selectedData.concat(upperEvents);
     zoomMap = false;
   }
   if (locationData.lower) {
-    var lowerText = makeReporterText(locationData.upper.validDistricts, 'lower');
-    var lowerDistricts = locationData.lower.validDistricts;
-    var lowerEvents = TownHall.matchSelectionToZipStateEvents(thisState, lowerDistricts, 'lower');
+    var lowerText = makeReporterText(locationData.lower.districts, 'lower');
+    var lowerDistricts = locationData.lower.districts;
+    var lowerEvents = TownHall.matchSelectionToZipStateEvents(state, lowerDistricts, 'lower');
     var numOfLower = lowerEvents.length;
     selectedData = selectedData.concat(lowerEvents);
     zoomMap = false;
+  }
+  if (locationData.displayName) {
+    selectedData = [...selectedData, ...TownHall.matchDisplayName(locationData.displayName)];
+    newDistricts = uniqBy(TownHall.matchDisplayName(locationData.displayName).map(townHall => {
+      return {
+        state: townHall.state,
+        district: townHall.district || null,
+        chamber: townHall.chamber,
+        level: townHall.level
+      }
+    }), ele => `${ele.state}-${ele.district}`)
   }
 
   var $text = $('.selection-results_content');
@@ -112,6 +144,7 @@ eventHandler.renderResults = function (locationData) {
   resultsView.render();
 
   var justSenate = true;
+
   if (selectedData.length > 0) {
     $('#no-events').hide();
     // set globals for filtering
@@ -126,8 +159,12 @@ eventHandler.renderResults = function (locationData) {
     var numOfDistrictEvents = counts[1];
 
     var numOfUSSenateEvents = numFederal - numOfDistrictEvents;
-    var message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
-    message = message + '<p>' + numOfUSSenateEvents + ' event(s) for ' + thisState + ' senators</p>';
+    let message = '';
+    if (locationData.federal) {
+      message = '<p>Showing ' + numOfDistrictEvents + ' event(s) for the ' + districtText + ' representative</p>';
+      message = message + '<p>' + numOfUSSenateEvents + ' event(s) for ' + state + ' senators</p>';
+
+    }
     if (numOfLower) {
       message = message + '<p>' + numOfLower + ' event(s) for the ' + lowerText + ' state representative(s)</p>';
     }
@@ -151,7 +188,7 @@ eventHandler.renderResults = function (locationData) {
     tableHandler.resetTable();
   }
   if (zoomMap) {
-    eventHandler.whereToZoomMap(justSenate, thisState, validDistricts);
+    eventHandler.whereToZoomMap(justSenate, state, districts, newDistricts);
   }
   if (mapView.webGL && validSelections) {
     mapboxView.highlightDistrict(validSelections);
@@ -191,37 +228,37 @@ function getLookupArray() {
 
 function handleZipToDistrict(zipToDistrictArray) {
   var federal = zipToDistrictArray[0].reduce(function (acc, cur) {
-    if (!acc.validDistricts) {
-      acc.validDistricts = [];
+    if (!acc.districts) {
+      acc.districts = [];
       acc.validSelections = [];
     }
     var stateObj = eventHandler.getStateDataFromAbbr(cur.abr);
     var geoid = stateObj[0].FIPS + cur.dis;
-    acc.thisState = cur.abr;
-    acc.validDistricts.push(cur.dis);
+    acc.state = cur.abr;
+    acc.districts.push(cur.dis);
     acc.validSelections.push(geoid);
     return acc;
   }, {});
 
-  if (!eventHandler.checkStateName(federal.thisState)) {
+  if (!eventHandler.checkStateName(federal.state)) {
     return zipLookUpHandler.zipErrorResponse('That zipcode is not in ' + stateView.state + '. Go back to <a href="/">Town Hall Project U.S.</a> to search for events.');
   }
 
   if (zipToDistrictArray.length > 1) {
     var lower = zipToDistrictArray[1].reduce(function (acc, cur) {
-      if (!acc.validDistricts) {
-        acc.validDistricts = [];
+      if (!acc.districts) {
+        acc.districts = [];
       }
-      acc.thisState = cur.abr;
-      acc.validDistricts.push(cur.dis);
+      acc.state = cur.abr;
+      acc.districts.push(cur.dis);
       return acc;
     }, {});
     var upper = zipToDistrictArray[2].reduce(function (acc, cur) {
-      if (!acc.validDistricts) {
-        acc.validDistricts = [];
+      if (!acc.districts) {
+        acc.districts = [];
       }
-      acc.thisState = cur.abr;
-      acc.validDistricts.push(cur.dis);
+      acc.state = cur.abr;
+      acc.districts.push(cur.dis);
       return acc;
     }, {});
   }
@@ -313,6 +350,7 @@ function checkEventParam() {
       if (snapshot.exists()) {
         var townhall = new TownHall(snapshot.val());
         townhall.makeFormattedMember();
+        townhall.makeDisplayDistrict();
         populateEventModal(townhall);
         $('.event-modal').modal('show');
       }
@@ -324,7 +362,7 @@ export const init = () => {
   checkEventParam();
   $('#button-to-form').hide();
   $('#save-event').on('submit', eventHandler.save);
-  $('#look-up').on('submit', eventHandler.lookup);
+  // $('#look-up').on('submit', eventHandler.lookup);
   $('#view-all').on('click', TownHall.viewAll);
   $('.sort').on('click', 'a', tableHandler.sortTable);
   setupTypeaheads();
