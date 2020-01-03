@@ -43,7 +43,6 @@ class App extends React.Component {
     }
 
     setLocation(location) {
-        console.log(location)
         this.setState({
             location
         })
