@@ -1,139 +1,174 @@
-import React from 'react';
+/* eslint-disable no-undef */
+import React, { Component } from 'react';
+import { MENU_MAP, STATE_LEGISLATURES_MENU } from './menuConstants';
+import {
+  Button,
+  Menu,
+  Icon
+} from 'antd';
+import classNames from 'classnames';
 
-// import './style.scss';
+const { SubMenu } = Menu;
 
-const Header = (props) => {
-  return (
-    <nav className="navbar navbar-default navbar-main">
-      <div className="container-fluid">
-        <div className="navbar-header">
-          <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav"
-            aria-expanded="false">
-            <span className="sr-only">Toggle navigation</span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-          </button>
+import './style.less';
+
+class Header extends Component {
+  constructor(props) {
+    super(props)
+    this.handleMenuSelect = this.handleMenuSelect.bind(this);
+    this.hasSubMenu = this.hasSubMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
+    this.state = {
+      activeKey: "",
+    }
+  }
+
+  hasSubMenu(key) {
+    const keyToCheck = key || this.state.activeKey;
+    const subMenu = MENU_MAP.get(keyToCheck);
+    return subMenu && subMenu.length;
+  }
+
+  closeMenu() {
+    this.setState({activeKey: ''})
+  }
+
+  handleMenuSelect(refObj) {
+    const { key } = refObj;
+    if (this.hasSubMenu(key) && key !== this.state.activeKey) {
+      this.setState({activeKey: key })
+    } else {
+      this.setState({activeKey: ''})
+    }
+  }
+
+  renderLink(menuItem) {
+    if (!menuItem.link) {
+      return menuItem.display
+    }
+    if (menuItem.external) {
+      return (
+            <a 
+            className={classNames(["menu-link"])}
+            target="_blank"
+            href={menuItem.link}
+          >{menuItem.display}</a>
+      )
+    }
+    return (
           <a 
-            onClick={() =>props.setLocation('')}
-            data-toggle="tab" 
-            href="#home" 
-            className="navbar-brand hash-link" 
-            id="brand-icon"
+            className={classNames(["menu-link", "hash-link"])}
+            data-toggle="tab"
+            href={`#${menuItem.link}`}
+            onClick={() => location.hash = `#${menuItem.link}`}
+          >{menuItem.display}</a>
+    )
+
+  }
+
+  renderDropdown() {
+    const { activeKey } = this.state;
+    const { setLocation } = this.props;
+    const subMenu = MENU_MAP.get(activeKey);
+
+    if (this.hasSubMenu()) {
+      return subMenu.map((menuItem) => {
+         if (menuItem.display === 'State Legislatures') {
+           return (
+             <SubMenu
+               className="state-legislatures-menu fade-in"
+               key={menuItem.display}
+               title={
+                 <span className="state-legislatures-title">
+                   {menuItem.display}
+                 </span>
+               }
+             >
+               {
+                 STATE_LEGISLATURES_MENU.map((stateName) => {
+                   const linkName = stateName.toLowerCase()
+                   return (
+                     <Menu.Item key={stateName} onClick={() => setLocation(stateName.toLowerCase())}>
+                       <a href={`/${linkName}`} style={{ textDecoration: 'none' }}>{stateName}</a>
+                     </Menu.Item>
+                   )
+                 })
+               }
+             </SubMenu>
+           )
+         } 
+        return (
+          <Menu.Item className="fade-in" key={menuItem.display}>
+            {
+              this.renderLink(menuItem)
+            }
+          </Menu.Item>
+        )
+         
+     })
+    } 
+  }
+
+  render() {
+    const arrowClasses = ['arrow', 'fade-in'];
+    const { activeKey } = this.state;
+    const {
+      setLocation
+    } = this.props;
+    return (
+      <div className="menu-container">
+        <Menu
+          className="main-nav-menu"
+          mode="horizontal"
+          overflowedIndicator={<Button icon="menu" type="primary" />}
+          style={{ lineHeight: '60px' }}
+          onClick={this.handleMenuSelect}
+        >
+          <Menu.Item key="home" onClick={() => setLocation('')}>
+            <a data-toggle="tab" href="#home" className={classNames("navbar-brand","hash-link","brand-icon")}>
+              <img src="/Images/THP_logo_horizontal_simple.png" alt=""></img>
+            </a>
+          </Menu.Item>
+          <Menu.Item key="submit-event">
+            <a href={`#submit`} style={{ textDecoration: 'none' }} data-toggle="tab" className="hash-link">Submit an Event</a>
+          </Menu.Item>
+          <Menu.Item key="take-action">
+            Take Action
+            <div className={classNames(arrowClasses, {active : activeKey === 'take-action'})}></div>
+          </Menu.Item>
+          <Menu.Item key="our-projects">
+            Our Projects
+            <div className={classNames(arrowClasses, {active : activeKey === 'our-projects'})}></div>
+          </Menu.Item>
+          <Menu.Item key="learn-more">
+            Learn More
+            <div className={classNames(arrowClasses, {active : activeKey === 'learn-more'})}></div>
+          </Menu.Item>
+          {/* <Button 
+            className="accessibility-report-btn"
+            href="https://docs.google.com/document/u/1/d/e/2PACX-1vTWD9u5IF08YH6tt76Q_S6dTwQYmm7g_2jQbZ4JaXJpEBJV0srbUfS_MseuKudHeo6YDLdyk-x1A58Z/pub"
+            target="_blank"
+            type="primary"
           >
-            <img src="/Images/THP_logo_horizontal_simple.png" alt=""></img>
-          </a>
-        </div>
-        <div className="collapse navbar-collapse" id="main-nav">
-          <ul className="nav navbar-nav navbar-left" roll="tablists">
-            <li className="dropdown dropdown--stateSelection">
-              <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="true">
-                <span className="button-text">State Legislatures</span>
-                <span className="caret"></span>
-              </button>
-              <ul className="dropdown-menu">
-                <li onClick={() => props.setLocation('')}>
-                  <a href="/" className="stateNav-federal">Federal</a>
-                </li>
-                <li onClick={() => props.setLocation('arizona')}>
-                  <a href="/arizona" className="stateNav-arizona">Arizona</a>
-                </li>
-                <li onClick={() => props.setLocation('colorado')}>
-                  <a href="/colorado" className="stateNav-colorado">Colorado</a>
-                </li>
-                <li onClick={() => props.setLocation('florida')}>
-                  <a href="/florida" className="stateNav-florida">Florida</a>
-                </li>
-                <li onClick={() => props.setLocation('maine')}>
-                  <a href="/maine" className="stateNav-maine">Maine</a>
-                </li>
-                <li onClick={() => props.setLocation('maryland')}>
-                  <a href="/maryland" className="stateNav-maryland">Maryland</a>
-                </li>
-                <li onClick={() => props.setLocation('michigan')}>
-                  <a href="/michigan" className="stateNav-michigan">Michigan</a>
-                </li>
-                <li onClick={() => props.setLocation('nevada')}>
-                  <a href="/nevada" className="stateNav-nevada">Nevada</a>
-                </li>
-                <li onClick={() => props.setLocation('north-carolina')}>
-                  <a href="/north-carolina" className="stateNav-north-carolina">North Carolina</a>
-                </li>
-                <li onClick={() => props.setLocation('oregon')}>
-                  <a href="/oregon" className="stateNav-oregon">Oregon</a>
-                </li>
-                <li onClick={() => props.setLocation('pennsylvania')}>
-                  <a href="/pennsylvania" className="stateNav-pennsylvania">Pennsylvania</a>
-                </li>
-                <li onClick={() => props.setLocation('virginia')}>
-                  <a href="/virginia" className="stateNav-virginia">Virginia</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a className="hash-link" data-toggle="tab" href="#about">About</a>
-            </li>
-            <li>
-              <a className="hash-link" href="#missing-members" data-toggle="tab" id="missing-member-tab">Missing Members</a>
-            </li>
-            <li>
-              <a className="hash-link" href="#join" data-toggle="tab">Join us</a>
-            </li>
-            <li>
-              <a href="//www.townhallpledge.com/" target="_blank">Pledge</a>
-            </li>
-            <li>
-              <a className="hash-link" href="#upload-video" data-toggle="tab">Share a video</a>
-            </li>
-            <li>
-              <a className="hash-link" data-toggle="tab" href="#submit">Submit an event</a>
-            </li>
-            <li>
-              <a id="privacy-policy-link" className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#privacy-policy">Privacy
-                Policy</a>
-            </li>
-            <li>
-              <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#thfol-guide">THFOL guide</a>
-            </li>
-            <li>
-              <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#year-one">Look back at 2017</a>
-            </li>
-            <li>
-              <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#support-us">Donate</a>
-            </li>
-            <li>
-              <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#year-two">Look back at 2018</a>
-            </li>
-            <li>
-              <a className="hash-link hidden" data-toggle="tab" aria-hidden="true" href="#town-hall-pledge"></a>
-            </li>
-          </ul>
-          <ul className="nav navbar-nav navbar-right">
-            <li>
-              <a href="https://secure.actblue.com/donate/townhallproject2019" target="_blank" className="btn" id="donate-button" role="button"
-                target="_blank">Donate Now</a>
-            </li>
-            <li>
-              <a className="social-icons" href="https://twitter.com/townhallproject" target="_blank">
-                <i className="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
-              </a>
-            </li>
-            <li>
-              <a className="social-icons" href="https://www.facebook.com/TownHallProject/" target="_blank">
-                <i className="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
-              </a>
-            </li>
-            <li>
-              <a data-toggle="tab" className="social-icons hash-link text-white" href="#contact">
-                <i className="fas fa-envelope-square fa-2x"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
+            Accessibility Report
+            <Icon type="file-done" />
+          </Button> */}
+          <Menu.Item key="donate" className="donate-btn">
+            <Icon type="mail" />
+            Donate
+          </Menu.Item>
+        </Menu>
+        <Menu 
+          className={`submenu-${this.hasSubMenu() ? 'active' : 'hidden'}`}
+          mode="horizontal"
+          overflowedIndicator={<Button type="ghost">More<Icon type="down"/></Button>}
+        >
+          {this.renderDropdown()}
+        </Menu>
+
       </div>
-    </nav>
-  )
-};
+    )
+  }
+}
 
 export default Header;

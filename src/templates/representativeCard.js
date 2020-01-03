@@ -27,26 +27,26 @@ export default (rep)=> (
         <div class="social-icons col-xs-12 col-sm-6 no-padding p-0 text-right">
           ${rep.twitter_canon ?
             `<a href="//twitter.com/${rep.twitter_canon}" class="social-icon" target="_blank">
-              <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
+              <i class="fab fa-twitter-square fa-2x" aria-hidden="true"></i>
             </a>` : ''
           }
           ${rep.facebook_canon ?
             `<a href="//facebook.com/${rep.facebook_canon}" class="social-icon" target="_blank">
-              <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
+              <i class="fab fa-facebook-square fa-2x" aria-hidden="true"></i>
             </a>` : ''
           }
           ${rep.oc_email ?
             `<a href="mailto:${rep.oc_email}" class="social-icon">
-              <i class="fa fa-envelope-square fa-2x" aria-hidden="true"></i>
+              <i class="fab fa-envelope-square fa-2x" aria-hidden="true"></i>
             </a>`: ''
           }
           ${rep.contact_form ?
             `<a href="http://${rep.contact_form}" class="social-icon" target="_blank">
-              <i class="fa fa fa-external-link-square fa-2x" aria-hidden="true"></i>
+              <i class="fas fa-external-link-square-alt fa-2x" aria-hidden="true"></i>
             </a>` :
             rep.domain ?
               `<a href="http://${rep.domain}" class="social-icon" target="_blank">
-                <i class="fa fa fa-external-link-square fa-2x" aria-hidden="true"></i>
+                <i class="fas fa-external-link-square-alt fa-2x" aria-hidden="true"></i>
               </a>`
               : ''
           }

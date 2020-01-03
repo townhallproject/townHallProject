@@ -63,7 +63,7 @@ export default (townhall) => (`<div class="col-md-12 col-sm-6 event-card">
             }
             
         </span>
-      <span class="profile-summary-value"> at ${townhall.Time}, ${townhall.timeZone}</span></h4></span>
+      <span class="profile-summary-value"> at ${townhall.Time}${townhall.timeZone ?  `, ${townhall.timeZone}` : ''}</span></h4></span>
       <ul class="list-group list-group-flush">
         ${townhall.phoneNumber ? 
         `<li class="list-group-item list-item-no-border"> Call in number: ${townhall.phoneNumber}

@@ -1,0 +1,105 @@
+
+.fade-in {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: .4s;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.menu-container {
+  .ant-menu-submenu-title .anticon {
+    margin-right: 0;
+  }
+
+  .main-nav-menu {
+    
+    .ant-menu-overflowed-submenu {
+      float: right;
+    }
+    .ant-menu-item:hover{
+      border-bottom: 2px solid @brand-success;
+    }
+    .ant-menu-item {
+      font-weight: 500;
+      a {
+        text-decoration: none;
+      }
+      .arrow {
+        margin: 0 auto;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        position: absolute;
+        bottom: -2px;
+      }
+      .arrow.active {
+        border-bottom: 10px solid #3fabef;
+        display: block;
+        left: 50%;
+        transform: translate(-50%);
+      }
+    }
+    .ant-menu-item-selected {
+      border-bottom: 2px solid transparent;
+    }
+    .accessibility-report-btn {
+      margin-left: 20px;
+      background: #3fabef;
+      border-color: #3fabef;
+    }
+    .donate-btn {
+      float: right;
+      border-bottom: none;
+    }
+  }
+  .submenu-hidden {
+    background-color: #3facf0;
+    border-bottom: none;
+    height: 0px;
+    -webkit-transition: height .2s ease-in-out;
+  }
+  .submenu-active {
+    align-items: center;
+    background-color: #3facf0;
+    border-bottom: none;
+    color: white;
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    -webkit-transition: height .2s ease-in-out;
+    .ant-menu-item-selected {
+      color: white;
+      border-bottom: 2px solid white;
+    }
+    .ant-menu-item:hover {
+      color: white;
+      border-bottom: 2px solid white;
+    }
+    .menu-link:hover {
+      color: white;
+    }
+    .ant-menu-submenu-title,
+    .menu-link {
+      color: white;
+      text-decoration: none;
+    }
+    .ant-menu-submenu-title:hover {
+      color: white;
+    }
+    .ant-menu-overflowed-submenu:hover {
+      border-bottom: transparent 2px solid;
+    }
+  }
+}
