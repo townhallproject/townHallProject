@@ -77,6 +77,7 @@ class Header extends Component {
            return (
              <SubMenu
                className="state-legislatures-menu fade-in"
+               key={menuItem.display}
                title={
                  <span className="state-legislatures-title">
                    {menuItem.display}
@@ -111,6 +112,9 @@ class Header extends Component {
   render() {
     const arrowClasses = ['arrow', 'fade-in'];
     const { activeKey } = this.state;
+    const {
+      setLocation
+    } = this.props;
     return (
       <div className="menu-container">
         <Menu
