@@ -154,8 +154,12 @@ class Header extends Component {
             <Icon type="file-done" />
           </Button> */}
           <Menu.Item key="donate" className="donate-btn">
-            <Icon type="mail" />
-            Donate
+            <a 
+              href="https://secure.actblue.com/donate/townhallproject2019"
+              target="_blank"
+            >
+              Donate
+            </a>
           </Menu.Item>
         </Menu>
         <Menu 
