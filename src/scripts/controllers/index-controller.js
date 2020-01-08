@@ -8,7 +8,6 @@ const indexController = {};
 indexController.renderMainIndex = function (ctx, next) {
   indexView.initialHome();
   indexView.setStateDropdown();
-  tableHandler.initialFilters();
   tableHandler.configureDropdowns();
   next();
 };
