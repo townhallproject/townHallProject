@@ -1,8 +1,6 @@
 import $ from 'jquery';
-import Isotope from 'isotope-layout';
 import statePopulation from '../../data/statePop';
 import MoC from '../models/MemberOfCongress';
-import missingMemberButtonTemplate from '../../templates/missingMemberButton';
 import missingMemberCardTemplate from '../../templates/missingMemberCard';
 
 const missingMemberView = {};
@@ -16,14 +14,6 @@ missingMemberView.addFilter = function (filterObj, filterValue) {
   Object.keys(filterObj).forEach(function (filter) {
     if (filterObj[filter].length > 0) {
       nofilters = false;
-      $('.' + filter).remove();
-      let removeFilterbutton = '<li class="mm-turn-off-filter button-group ' + filter + '" data-filter-group=' + filter + '><button class=" btn-filter btn btn-secondary btn-xs" ' +
-        'data-filter="" >' +
-        filterObj[filter].split('.')[1] + '<i class="fa fa-times" aria-hidden="true"></i>' +
-        '</button></li>';
-      $('#mm-filter-info').append(removeFilterbutton);
-    } else if (filterObj[filter].length === 0) {
-      $('.' + filter).remove();
     }
   });
   let cur = nofilters ? total : $(filterValue).length;
@@ -74,47 +64,15 @@ function getAllCategories(returnedData) {
   });
 }
 
-missingMemberView.startIsotope = function startIsotope() {
-  let $grid = new Isotope('.grid', {
-    itemSelector: '.element-item',
-    getSortData: {
-      townhall: '.townHallNumber parseInt' // text from querySelector
-    },
-    sortBy: 'townhall',
-    sortAscending: false
-  });
-  // // layout Isotope after each image loads
-  // will probably need diff library with npm - imagesLoaded
-  // $grid.imagesLoaded().progress(function () {
-  //   $grid.isotope('layout');
-  // });
-  let filters = {};
-  $('.filter-button-group').on('click', '.btn-filter', function () {
-    let $this = $(this);
-    // get group key
-    let $buttonGroup = $this.parents('.button-group');
-    let filterGroup = $buttonGroup.attr('data-filter-group');
-    // set filter for group
-    filters[filterGroup] = $this.attr('data-filter');
-    // combine filters
-    let filterValue = concatValues(filters);
-    console.log(filters, filterValue)
-    missingMemberView.addFilter(filters, filterValue);
-    $grid.arrange({
-      filter: filterValue
-    });
-  });
-}
-
 missingMemberView.init = function () {
-  console.log('initing')
+  missingMemberView.loading = true;
   return MoC.all().then(function (MoCs) {
     let missingMembers = MoCs.filter(function (member) {
       member.format();
       return member.missing_member && member.missing_member[116];
     });
-
     missingMemberView.loaded = true;
+    missingMemberView.loading = false;
     let $currentState = $('#mm-current-state');
     let $copy = $('#mm-total-copy');
     $('#mm-current-state').attr('data-current', missingMembers.length);
@@ -126,9 +84,8 @@ missingMemberView.init = function () {
     // make cards
     missingMemberView.renderAll(missingMemberCardTemplate, '.grid', missingMembers);
     // add state buttons
-    let allCategories = getAllCategories(missingMembers);
-    missingMemberView.renderAll(missingMemberButtonTemplate, '#state-buttons', allCategories);
-    // initalize isotope
+    let stateCounts = getAllCategories(missingMembers);
+    return stateCounts
   });
 };
 

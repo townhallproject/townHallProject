@@ -1,12 +1,14 @@
 import React from 'react';
 import { Dropdown, Button, Menu, Icon } from 'antd';
 import Isotope from 'isotope-layout';
-import { isEmpty } from 'lodash';
+import { isEmpty, map, filter} from 'lodash';
 
 import missingMemberView from '../../scripts/views/missingMembersView';
 import { MISSING_MEMBER_LINK } from '../Header/menuConstants';
 
 import './style.less';
+import StateFilterButton from './StateFilterButton';
+import FilterTag from './FilterTag';
 
 class MissingMembers extends React.Component {
   static concatValues(obj) {
@@ -19,12 +21,22 @@ class MissingMembers extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {}
+    this.removeFilter = this.removeFilter.bind(this);
+    this.state = {
+      filters: {
+
+      },
+      stateCounts: [],
+    }
   }
 
   componentDidMount() {
-
     missingMemberView.init()
+      .then((stateCounts) => {
+        this.setState({
+          stateCounts,
+        })
+      })
       .then(() => {
         this.$grid = new Isotope('.grid', {
           itemSelector: '.element-item',
@@ -38,11 +50,12 @@ class MissingMembers extends React.Component {
   }
 
   componentDidUpdate() {
+    const { filters } = this.state;
     if (this.props.hash === MISSING_MEMBER_LINK) {
-      if (!missingMemberView.loaded) {
+      if (!missingMemberView.loading && !missingMemberView.loaded) {
         missingMemberView.init()
           .then(() => {
-            this.grid = new Isotope('.grid', {
+            this.$grid = new Isotope('.grid', {
               itemSelector: '.element-item',
               getSortData: {
                 townhall: '.townHallNumber parseInt' // text from querySelector
@@ -54,21 +67,32 @@ class MissingMembers extends React.Component {
       }
     }
     // combine filters
-    let filterValue = MissingMembers.concatValues(this.state);
-    console.log(this.state, filterValue)
-    if (!isEmpty(this.state)) {
-      missingMemberView.addFilter(this.state, filterValue);
+    let filterValue = MissingMembers.concatValues(filters);
+    if (!isEmpty(filters)) {
+      missingMemberView.addFilter(filters, filterValue);
+      
+    }
+    if(this.$grid) {
       this.$grid.arrange({
         filter: filterValue
       });
-
     }
   }
 
-  handleClick(filterGroup, value) {
-    console.log(filterGroup, value)
+  removeFilter(filterGroup, value) {
+    const newFilters = { ...this.state.filters }
+    delete newFilters[filterGroup];
     this.setState({
-      [filterGroup]: value
+      filters: newFilters
+    })
+  }
+
+  handleClick(filterGroup, value) {
+    this.setState({
+      filters: {
+        ...this.state.filters,
+        [filterGroup]: value
+      }
     })
   }
 
@@ -137,26 +161,19 @@ class MissingMembers extends React.Component {
               </li>
               <li className="block filter-button-group mm-filter-info-holder">
                 <ul className="nav navbar-nav" id="mm-filter-info">
+                  {map(this.state.filters, (filter, key) => {
+                    return (<FilterTag 
+                      filter={filter}
+                      category={key}
+                      key={filter}
+                      handleClick={this.removeFilter}
+                    />)
+                  })}
                 </ul>
               </li>
             </ul>
             <ul className="nav navbar-nav navbar-right btn-group">
-              <li className="nav-item dropdown filter-button-group btn-group">
-                <a href="#" className="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown"
-                  role="button" aria-haspopup="true" aria-expanded="false">Party
-                  <span className="caret"></span>
-                </a>
-                <ul className="dropdown-menu button-group" data-filter-group="party">
-                  <li className="downdown-title">Filter by party</li>
-                  <li role="separator" className="divider"></li>
-                  <li data-filter=".Democratic" id="Democratic" className="btn dropdown-item btn-filter btn-white">Democratic
-                  </li>
-                  <li data-filter=".Republican" id="Republican" className="btn dropdown-item btn-filter btn-white">Republican
-                  </li>
-                  {/*<!-- <li data-filter=".Independent" id="Independent" className="btn dropdown-item btn-filter btn-white">Independent</li> -->*/}
-                  <li data-filter="" id="All" className="btn dropdown-item btn-filter btn-white">All</li>
-                </ul>
-              </li>
+           
               <Dropdown overlay={partyMenu}>
                 <Button ghost>
                   Party <Icon type="down" />
@@ -167,29 +184,24 @@ class MissingMembers extends React.Component {
                   Chamber <Icon type="down" />
                 </Button>
               </Dropdown>
-              <li className="nav-item dropdown filter-button-group btn-group">
-                <a href="#" className="btn btn-xs dropdown-toggle navbar-btn btn-group mm-btn-group" data-toggle="dropdown"
-                  role="button" aria-haspopup="true" aria-expanded="false">Chamber
-                  <span className="caret"></span>
-                </a>
-                <ul className="dropdown-menu button-group" data-filter-group="chamber">
-                  <li className="downdown-title">Filter by chamber</li>
-                  <li role="separator" className="divider"></li>
-                  <li className="btn dropdown-item btn-filter btn-white" data-filter=".Senate">Senate</li>
-                  <li className="btn dropdown-item btn-filter btn-white" data-filter=".House" id="Republican">House</li>
-                  <li className="btn dropdown-item btn-filter btn-white" data-filter="" id="All">All</li>
-                </ul>
-              </li>
-              {/*<!-- <li className="nav-item filter-button-group button-group btn-group" data-filter-group="ahcaFilter">
-                      <a className="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".ahca">Voted for AHCA</a>
-                    </li>
-                    <li className="nav-item filter-button-group button-group btn-group" data-filter-group="taxbillFilter">
-                      <a className="btn btn-xs btn-filter navbar-btn mm-btn-group" data-filter=".taxBill">Voted for 2017 tax bill</a>
-                      </li> -->*/}
             </ul>
-            <ul className="nav navbar-nav state-button-holder filter-button-group ">
-              <ul id="state-buttons" className="button-group " data-filter-group="state">
-              </ul>
+            <ul 
+              className="nav navbar-nav button-group state-button-holder filter-button-group"
+              onClick={({ target }) => 
+                this.handleClick('state', target.getAttribute('data-filter'))}
+              data-filter-group="state"
+              >
+       
+                {this.state.stateCounts.map((ele) => {
+                  return (
+                    <StateFilterButton 
+                      category={ele.Category}
+                      count={ele.count}
+                      key={ele.categoryID}
+                      categoryID={ele.categoryID}
+                    /> 
+                  )
+                })}
             </ul>
           </nav>
         </header>
