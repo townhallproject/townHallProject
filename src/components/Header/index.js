@@ -1,12 +1,13 @@
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
-import { MENU_MAP, STATE_LEGISLATURES_MENU } from './menuConstants';
+import { find } from 'lodash';
 import {
   Button,
   Menu,
   Icon
 } from 'antd';
 import classNames from 'classnames';
+import { MENU_MAP, STATE_LEGISLATURES_MENU, MISSING_MEMBER_LINK } from './menuConstants';
 
 const { SubMenu } = Menu;
 
@@ -21,6 +22,21 @@ class Header extends Component {
     this.state = {
       activeKey: "",
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { hash } = this.props;
+    if (hash && hash !== prevProps.hash) {
+      MENU_MAP.forEach((subMenu, key) => {
+        const menu = find(subMenu, {
+            link: hash
+        })
+        if (menu) {
+          this.setState({ activeKey : key})
+        }
+      })
+    }
+
   }
 
   hasSubMenu(key) {
@@ -68,9 +84,8 @@ class Header extends Component {
 
   renderDropdown() {
     const { activeKey } = this.state;
-    const { setLocation } = this.props;
+    const { setLocation, hash } = this.props;
     const subMenu = MENU_MAP.get(activeKey);
-
     if (this.hasSubMenu()) {
       return subMenu.map((menuItem) => {
          if (menuItem.display === 'State Legislatures') {
@@ -98,7 +113,11 @@ class Header extends Component {
            )
          } 
         return (
-          <Menu.Item className="fade-in" key={menuItem.display}>
+          <Menu.Item 
+            className={classNames(["fade-in", {'ant-menu-item-selected' : hash === menuItem.link && !menuItem.external }])}
+            key={menuItem.display}
+            onClick={() => !menuItem.external ? this.props.setHash(menuItem.link) : undefined}
+          >
             {
               this.renderLink(menuItem)
             }

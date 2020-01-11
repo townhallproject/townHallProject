@@ -29,6 +29,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.setLocation = this.setLocation.bind(this);
+        this.setHash = this.setHash.bind(this);
         this.state = {
             location: location.pathname.split('/')[1]
         }
@@ -38,7 +39,8 @@ class App extends React.Component {
         init();
         // page();
         this.setState({
-            location: location.pathname.split('/')[1]
+            location: location.pathname.split('/')[1],
+            hash: location.hash.replace('#', ''),
         })
     }
 
@@ -48,42 +50,52 @@ class App extends React.Component {
         })
     }
 
+    setHash(hash) {
+        this.setState({
+            hash,
+        })
+    }
+
     render() {
         return (
             <div>
                 <Header
                     setLocation={this.setLocation}
+                    hash={this.state.hash}
+                    setHash={this.setHash}
                 />
 
                 {/** Main content & Pages */}
                 <div className="tab-content">
-                    <PageComponent id="home" active activeBanner>
+                    <PageComponent id="home" active={!this.state.hash} activeBanner>
                         <Home 
                             location={this.state.location}
                         />
                     </PageComponent>
-                    <PageComponent id="submit" active={false} activeBanner>
+                    <PageComponent id="submit" active={this.state.hash === 'submit'} activeBanner>
                         <SubmitEventForm />
                     </PageComponent>
-                    <PageComponent id={ORGANIZE_A_TOWN_HALL_LINK} active={false} activeBanner>
+                    <PageComponent id={ORGANIZE_A_TOWN_HALL_LINK} active={this.state.hash === ORGANIZE_A_TOWN_HALL_LINK} activeBanner>
                         <IframeEmbed src="https://docs.google.com/document/u/1/d/e/2PACX-1vRB_BYUEiAJScIxrhlur5bDahqOWB3A_ZdPfrpVH9dduhGD-r-mqtJDpxxwUAFEcnO0y4tOLzo9wG2L/pub" />
                     </PageComponent>
-                    <PageComponent id="contact" active={false} activeBanner>
+                    <PageComponent id="contact" active={this.state.hash === 'contact'} activeBanner>
                         <ContactUsForm />
                     </PageComponent>
-                    <PageComponent id="about" active={false} activeBanner>
+                    <PageComponent id="about" active={this.state.hash === 'about'} activeBanner>
                         <About />
                     </PageComponent>
-                    <PageComponent id="join" active={false} activeBanner>
+                    <PageComponent id="join" active={this.state.hash === 'join'} activeBanner>
                         <Join />
                     </PageComponent>
-                    <PageComponent id="missing-members" active={false}>
-                        <MissingMembers />
+                    <PageComponent id="missing-members" active={this.state.hash === 'missing-members'}>
+                        <MissingMembers 
+                            hash={this.state.hash}
+                        />
                     </PageComponent>
-                    <PageComponent id="upload-video" active={false} activeBanner>
+                    <PageComponent id="upload-video" active={this.state.hash === 'upload-video'} activeBanner>
                         <UploadVideo />
                     </PageComponent>
-                    <PageComponent id="privacy-policy" active={false}>
+                    <PageComponent id="privacy-policy" active={this.state.hash === 'privacy-policy'}>
                         <PrivacyPolicyComponent />
                     </PageComponent>
                     <TownHallPledgeAgreements />
