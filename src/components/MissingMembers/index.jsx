@@ -68,10 +68,8 @@ class MissingMembers extends React.Component {
     }
     // combine filters
     let filterValue = MissingMembers.concatValues(filters);
-    if (!isEmpty(filters)) {
-      missingMemberView.addFilter(filters, filterValue);
+    missingMemberView.addFilter(filters, filterValue);
       
-    }
     if(this.$grid) {
       this.$grid.arrange({
         filter: filterValue
