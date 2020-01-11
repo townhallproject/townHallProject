@@ -74,7 +74,7 @@ function getAllCategories(returnedData) {
   });
 }
 
-function startIsotope() {
+missingMemberView.startIsotope = function startIsotope() {
   let $grid = new Isotope('.grid', {
     itemSelector: '.element-item',
     getSortData: {
@@ -98,6 +98,7 @@ function startIsotope() {
     filters[filterGroup] = $this.attr('data-filter');
     // combine filters
     let filterValue = concatValues(filters);
+    console.log(filters, filterValue)
     missingMemberView.addFilter(filters, filterValue);
     $grid.arrange({
       filter: filterValue
@@ -106,7 +107,8 @@ function startIsotope() {
 }
 
 missingMemberView.init = function () {
-  MoC.all().then(function (MoCs) {
+  console.log('initing')
+  return MoC.all().then(function (MoCs) {
     let missingMembers = MoCs.filter(function (member) {
       member.format();
       return member.missing_member && member.missing_member[116];
@@ -127,7 +129,6 @@ missingMemberView.init = function () {
     let allCategories = getAllCategories(missingMembers);
     missingMemberView.renderAll(missingMemberButtonTemplate, '#state-buttons', allCategories);
     // initalize isotope
-    startIsotope();
   });
 };
 
