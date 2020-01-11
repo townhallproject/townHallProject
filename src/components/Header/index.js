@@ -112,7 +112,6 @@ class Header extends Component {
              </SubMenu>
            )
          } 
-         console.log('hash', hash)
         return (
           <Menu.Item 
             className={classNames(["fade-in", {'ant-menu-item-selected' : hash === menuItem.link && !menuItem.external }])}
