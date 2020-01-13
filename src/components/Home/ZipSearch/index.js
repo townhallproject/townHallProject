@@ -137,7 +137,7 @@ static handleZipToDistrict(zipToDistrictArray) {
     e.preventDefault();
     const { query } = this.state;
     if (!query) {
-      indexView.resetHome()
+      return indexView.resetHome();
     }
     if (isZipCode(query)) {
       this.lookUpZip(query);
