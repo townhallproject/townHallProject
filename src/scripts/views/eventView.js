@@ -385,13 +385,13 @@ export const init = () => {
     $('.home-page-only').removeClass('hidden');
 
     if (hashLocation === '#missing-members') {
-      if (!missingMemberView.loaded) {
-        missingMemberView.init();
-      } else {
-        setTimeout(function () {
-          $('.grid').isotope();
-        }, 1500);
-      }
+      // if (!missingMemberView.loaded) {
+      //   missingMemberView.init();
+      // } else {
+      //   setTimeout(function () {
+      //     $('.grid').isotope();
+      //   }, 1500);
+      // }
     } else if (hashLocation === '#mfol-submit-event') {
       newEventView.render();
     } else if (hashLocation === '#thfol-guide') {
@@ -424,13 +424,13 @@ export const init = () => {
         indexView.resetHome();
       }, 100);
     } else if (hashid === '#missing-members') {
-      if (!missingMemberView.loaded) {
-        missingMemberView.init();
-      } else {
-        setTimeout(function () {
-          $('.grid').isotope();
-        }, 1500);
-      }
+      // if (!missingMemberView.loaded) {
+      //   missingMemberView.init();
+      // } else {
+      //   setTimeout(function () {
+      //     $('.grid').isotope();
+      //   }, 1500);
+      // }
       location.hash = hashid;
     } else if (hashid === '#mfol-submit-event') {
       newEventView.render();
@@ -443,7 +443,7 @@ export const init = () => {
     else {
       location.hash = hashid;
     }
-    $('html, body').scrollTop(0);
+    // $('html, body').scrollTop(0);
   });
 
   // Remove query param when closing modal
