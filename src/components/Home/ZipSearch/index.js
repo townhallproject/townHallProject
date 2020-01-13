@@ -135,7 +135,10 @@ static handleZipToDistrict(zipToDistrictArray) {
   handleSubmit(e) {
     e.preventDefault();
     const { query } = this.state;
+    const { setDistrict, setZip } = this.props;
     if (!query) {
+      setZip('');
+      setDistrict('');
       return indexView.resetHome();
     }
     if (isZipCode(query)) {

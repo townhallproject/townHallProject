@@ -19,6 +19,12 @@ class RepresentativeCards extends Component {
     if (prevProps.currentZip !== this.props.currentZip && this.props.currentZip !== '') {
       this.lookupReps();
     }
+
+    if(this.state.reps.length && !this.props.currentZip && !this.props.currentDistrict) {
+      this.setState({
+        reps: []
+      })
+    }
   }
 
   lookupReps() {
