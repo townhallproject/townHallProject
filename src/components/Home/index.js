@@ -28,6 +28,7 @@ export default class Home extends React.Component {
     this.setZip = this.setZip.bind(this);
     this.state = {
       currentDistrict: '',
+      currentZip: '',
       init: true,
       allTownHalls: [],
       allStateTownHalls: [],
@@ -137,7 +138,10 @@ export default class Home extends React.Component {
         />
         <EmailSignup />
         {/*Cards showing representatives and their contact info*/}
-        <RepresentativeCards />
+        <RepresentativeCards 
+          currentDistrict={this.state.currentDistrict}
+          currentZip={this.state.currentZip}
+        />
         <EventsTable 
           allTownHalls={allTownHalls}
         />

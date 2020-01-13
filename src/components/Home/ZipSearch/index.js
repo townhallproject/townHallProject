@@ -7,7 +7,6 @@ import TownHall from '../../../scripts/models/TownHall';
 
 import indexView from '../../../scripts/views/indexView';
 import zipLookUpHandler from '../../../scripts/views/zipLookUpView';
-import repCardHandler from '../../../scripts/views/repCardView';
 import stateView from '../../../scripts/views/stateView';
 import eventHandler from '../../../scripts/views/eventView';
 import mapHelperFunctions from '../../../scripts/lib/map-helper-functions';
@@ -223,7 +222,7 @@ static handleZipToDistrict(zipToDistrictArray) {
     TownHall.zipQuery;
 
 
-  repCardHandler.renderRepresentativeCards(TownHall.lookupReps('state', state), $('#representativeCards section'));
+  // repCardHandler.renderRepresentativeCards(TownHall.lookupReps('state', state), $('#representativeCards section'));
 
       urlParamsHandler.setUrlParameter('state', state);
 
@@ -243,9 +242,7 @@ static handleZipToDistrict(zipToDistrictArray) {
     var zipCheck = zip.match(zipcodeRegEx);
     if (zipCheck) {
       var zipClean = zip.split('-')[0];
-      //TODO: move this
       setZip(zipClean)
-      // repCardHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zipClean), $('#representativeCards section'));
       var lookupArray = ZipSearch.getLookupArray();
       var promises = lookupArray.map(function (path) {
         return TownHall.lookupZip(zipClean, path);

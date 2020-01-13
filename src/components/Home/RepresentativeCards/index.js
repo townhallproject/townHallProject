@@ -16,13 +16,13 @@ class RepresentativeCards extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.zip !== this.props.zip && this.props.zip !== '') {
+    if (prevProps.currentZip !== this.props.currentZip && this.props.currentZip !== '') {
       this.lookupReps();
     }
   }
 
   lookupReps() {
-    TownHall.lookupReps('zip', this.props.zip).then((reps) => {
+    TownHall.lookupReps('zip', this.props.currentZip).then((reps) => {
       this.setState({
         reps
       })
@@ -41,7 +41,7 @@ class RepresentativeCards extends Component {
               const newRep = new MoC(rep);
               newRep.format();
               return (
-                <RepCard rep={newRep} />
+                <RepCard key={newRep.id} rep={newRep} />
               );
             })
           }
