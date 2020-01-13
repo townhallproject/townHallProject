@@ -1,11 +1,14 @@
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
-import { MENU_MAP } from './menuConstants';
+import { MENU_MAP, STATE_LEGISLATURES_MENU } from './menuConstants';
 import {
   Button,
   Menu,
   Icon
 } from 'antd';
+import classNames from 'classnames';
+
+const { SubMenu } = Menu;
 
 import './style.less';
 
@@ -13,84 +16,156 @@ class Header extends Component {
   constructor(props) {
     super(props)
     this.handleMenuSelect = this.handleMenuSelect.bind(this);
+    this.hasSubMenu = this.hasSubMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
     this.state = {
-      submenu: [],
-      submenuClass: 'hidden'
+      activeKey: "",
     }
   }
+
+  hasSubMenu(key) {
+    const keyToCheck = key || this.state.activeKey;
+    const subMenu = MENU_MAP.get(keyToCheck);
+    return subMenu && subMenu.length;
+  }
+
+  closeMenu() {
+    this.setState({activeKey: ''})
+  }
+
   handleMenuSelect(refObj) {
     const { key } = refObj;
-    this.renderDropdown(MENU_MAP.get(key))
-  }
-  renderDropdown(submenu) {
-    if (submenu && submenu.length) {
-      this.setState({
-        submenu,
-        submenuClass: 'active'
-      })
+    if (this.hasSubMenu(key) && key !== this.state.activeKey) {
+      this.setState({activeKey: key })
     } else {
-      this.setState({
-        submenu: [],
-        submenuClass: 'hidden'
-      })
+      this.setState({activeKey: ''})
     }
   }
+
+  renderLink(menuItem) {
+    if (!menuItem.link) {
+      return menuItem.display
+    }
+    if (menuItem.external) {
+      return (
+            <a 
+            className={classNames(["menu-link"])}
+            target="_blank"
+            href={menuItem.link}
+          >{menuItem.display}</a>
+      )
+    }
+    return (
+          <a 
+            className={classNames(["menu-link", "hash-link"])}
+            data-toggle="tab"
+            href={`#${menuItem.link}`}
+            onClick={() => location.hash = `#${menuItem.link}`}
+          >{menuItem.display}</a>
+    )
+
+  }
+
+  renderDropdown() {
+    const { activeKey } = this.state;
+    const { setLocation } = this.props;
+    const subMenu = MENU_MAP.get(activeKey);
+
+    if (this.hasSubMenu()) {
+      return subMenu.map((menuItem) => {
+         if (menuItem.display === 'State Legislatures') {
+           return (
+             <SubMenu
+               className="state-legislatures-menu fade-in"
+               key={menuItem.display}
+               title={
+                 <span className="state-legislatures-title">
+                   {menuItem.display}
+                 </span>
+               }
+             >
+               {
+                 STATE_LEGISLATURES_MENU.map((stateName) => {
+                   const linkName = stateName.toLowerCase().replace(' ', '-');
+                   return (
+                     <Menu.Item key={stateName} onClick={() => setLocation(stateName.toLowerCase())}>
+                       <a href={`/${linkName}`} style={{ textDecoration: 'none' }}>{stateName}</a>
+                     </Menu.Item>
+                   )
+                 })
+               }
+             </SubMenu>
+           )
+         } 
+        return (
+          <Menu.Item className="fade-in" key={menuItem.display}>
+            {
+              this.renderLink(menuItem)
+            }
+          </Menu.Item>
+        )
+         
+     })
+    } 
+  }
+
   render() {
+    const arrowClasses = ['arrow', 'fade-in'];
+    const { activeKey } = this.state;
+    const {
+      setLocation
+    } = this.props;
     return (
       <div className="menu-container">
         <Menu
           className="main-nav-menu"
           mode="horizontal"
+          overflowedIndicator={<Button icon="menu" type="primary" />}
           style={{ lineHeight: '60px' }}
           onClick={this.handleMenuSelect}
         >
-          <Menu.Item key="home">
-            <a data-toggle="tab" href="#home" className="navbar-brand hash-link brand-icon">
+          <Menu.Item key="home" onClick={() => setLocation('')}>
+            <a data-toggle="tab" href="#home" className={classNames("navbar-brand","hash-link","brand-icon")}>
               <img src="/Images/THP_logo_horizontal_simple.png" alt=""></img>
             </a>
           </Menu.Item>
           <Menu.Item key="submit-event">
-            Submit an Event
+            <a href={`#submit`} style={{ textDecoration: 'none' }} data-toggle="tab" className="hash-link">Submit an Event</a>
           </Menu.Item>
           <Menu.Item key="take-action">
             Take Action
-            <div className={`arrow fade-in`}></div>
+            <div className={classNames(arrowClasses, {active : activeKey === 'take-action'})}></div>
           </Menu.Item>
           <Menu.Item key="our-projects">
             Our Projects
-            <div className={`arrow fade-in`}></div>
+            <div className={classNames(arrowClasses, {active : activeKey === 'our-projects'})}></div>
           </Menu.Item>
           <Menu.Item key="learn-more">
             Learn More
-            <div className={`arrow fade-in`}></div>
+            <div className={classNames(arrowClasses, {active : activeKey === 'learn-more'})}></div>
           </Menu.Item>
-          <Button 
-            className="current-event-btn"
+          {/* <Button 
+            className="accessibility-report-btn"
             href="https://docs.google.com/document/u/1/d/e/2PACX-1vTWD9u5IF08YH6tt76Q_S6dTwQYmm7g_2jQbZ4JaXJpEBJV0srbUfS_MseuKudHeo6YDLdyk-x1A58Z/pub"
             target="_blank"
-            type="danger"
+            type="primary"
           >
             Accessibility Report
             <Icon type="file-done" />
-          </Button>
+          </Button> */}
           <Menu.Item key="donate" className="donate-btn">
             <Icon type="mail" />
             Donate
           </Menu.Item>
         </Menu>
-        <Menu className={`submenu-${this.state.submenuClass}`} mode="horizontal">
-          {
-            this.state.submenu &&
-            this.state.submenu.map((menuName) => {
-              const menuClass = menuName.toLowerCase().split(" ").join("-");
-              return (
-                <Menu.Item className="fade-in" key={menuClass}>
-                  {menuName}
-                </Menu.Item>
-              )
-            })
-          }
+        <Menu 
+          className={`submenu-${this.hasSubMenu() ? 'active' : 'hidden'}`}
+          mode="horizontal"
+          overflowedIndicator={<Button type="ghost">More<Icon type="down"/></Button>}
+        >
+          {this.renderDropdown()}
         </Menu>
+
       </div>
     )
   }

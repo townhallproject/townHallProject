@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-
 import MoC from '../../../scripts/models/MemberOfCongress';
-import RepresentativeCard from '../../RepresentativeCard';
 import RepCard from '../../RepCard';
 import TownHall from '../../../scripts/models/TownHall';
 
@@ -18,13 +16,8 @@ class RepresentativeCards extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.zip !== this.props.zip) {
+    if (prevProps.zip !== this.props.zip && this.props.zip !== '') {
       this.lookupReps();
-    }
-    if (!this.props.zip) {
-      this.setState({
-        reps: []
-      })
     }
   }
 

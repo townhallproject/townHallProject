@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import representativeCardTemplate from '../../components/RepresentativeCard';
+import representativeCardTemplate from '../../components/RepCard';
 
 import TownHall from '../models/TownHall';
 import MoC from '../models/MemberOfCongress';

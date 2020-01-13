@@ -17,7 +17,18 @@
 }
 
 .menu-container {
+  .ant-menu-submenu-title .anticon {
+    margin-right: 0;
+  }
+
   .main-nav-menu {
+    
+    .ant-menu-overflowed-submenu {
+      float: right;
+    }
+    .ant-menu-item:hover{
+      border-bottom: 2px solid @brand-success;
+    }
     .ant-menu-item {
       font-weight: 500;
       a {
@@ -33,17 +44,17 @@
         position: absolute;
         bottom: -2px;
       }
-    }
-    .ant-menu-item-selected {
-      border-bottom: 2px solid transparent;
-      .arrow {
+      .arrow.active {
         border-bottom: 10px solid #3fabef;
         display: block;
         left: 50%;
         transform: translate(-50%);
       }
     }
-    .current-event-btn {
+    .ant-menu-item-selected {
+      border-bottom: 2px solid transparent;
+    }
+    .accessibility-report-btn {
       margin-left: 20px;
       background: #3fabef;
       border-color: #3fabef;
@@ -75,6 +86,20 @@
     .ant-menu-item:hover {
       color: white;
       border-bottom: 2px solid white;
+    }
+    .menu-link:hover {
+      color: white;
+    }
+    .ant-menu-submenu-title,
+    .menu-link {
+      color: white;
+      text-decoration: none;
+    }
+    .ant-menu-submenu-title:hover {
+      color: white;
+    }
+    .ant-menu-overflowed-submenu:hover {
+      border-bottom: transparent 2px solid;
     }
   }
 }

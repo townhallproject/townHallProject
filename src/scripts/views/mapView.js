@@ -7,7 +7,6 @@ import TownHall from '../models/TownHall';
 
 import mapboxView from './mapboxView';
 import tableHandler from './tableView';
-import zipLookUpHandler from './zipLookUpView';
 import noWebGlMapView from './googleMapView';
 
   var map;
