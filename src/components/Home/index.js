@@ -135,6 +135,7 @@ export default class Home extends React.Component {
         <MapComponent 
           allTownHalls={allTownHalls}
           currentDistrict={currentDistrict}
+          setDistrict={this.setDistrict}
         />
         <EmailSignup />
         {/*Cards showing representatives and their contact info*/}

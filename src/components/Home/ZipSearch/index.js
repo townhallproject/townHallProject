@@ -190,7 +190,8 @@ static handleZipToDistrict(zipToDistrictArray) {
 
   lookUpByDistrict(district) {
     const {
-      usState
+      usState,
+      setDistrict
     } = this.props;
     let locationData = {}
     if (isFederalDistrict(district)) {
@@ -213,8 +214,8 @@ static handleZipToDistrict(zipToDistrictArray) {
         }
       }
     }
+    setDistrict(locationData);
     eventHandler.renderResults(locationData);
-
   }
 
   lookUpByState(state) {

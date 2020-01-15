@@ -1,8 +1,56 @@
 import moment from 'moment';
 
-import { firebasedb } from '../lib/firebasedb';
+import { firebasedb, firestore } from '../lib/firebasedb';
 import constants from '../lib/constants';
 class MoC {
+
+  static getMembersByDistrict(state, districts) {
+    const getSenators = firestore.collection('senators')
+      .where('state', '==', state)
+      .get()
+      .then(snap => {
+          const ids = []
+          snap.forEach(ele =>
+            ids.push(ele.id)
+          )
+          return ids;
+      })
+    const getRep = districts.map(district => firestore.collection('house_reps')
+      .where('district', '==', district)
+      .where('state', '==', state)
+      .get()
+      .then(snap => {
+        const ids = []
+        snap.forEach(ele =>
+          ids.push(ele.id)
+          )
+        return ids;
+      }))
+    return Promise.all([getSenators, ...getRep])
+      .then(returned => {
+        return returned.reduce((acc, cur) => {
+          acc = [...acc, ...cur];
+          return acc;
+        }, [])
+
+      })
+      .then((ids) => {
+        const promises = ids.map((id) => firestore.collection('office_people').doc(id).get().then((snap) => snap.data()))
+        return Promise.all(promises)
+          .then(snap => {
+            return snap.map(person => {
+              const data = {
+                ...person,
+                ...person.roles[person.current_office_index]
+              }
+              delete data.roles;
+              delete data.campaigns;
+              return data;
+            })
+          })
+      })
+  }
+
   constructor(opts) {
     for (var keys in opts) {
       this[keys] = opts[keys];
@@ -78,5 +126,7 @@ class MoC {
       });
     });
   }
+
+
 
 export default MoC;
