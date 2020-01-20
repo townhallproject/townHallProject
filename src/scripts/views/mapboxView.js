@@ -14,6 +14,7 @@ import indexView from './indexView';
 import eventHandler from './eventView';
 import repCardHandler from './repCardView';
 import emailHandler from './emailSignUpView';
+
 const mapboxView = {};
 var map;
 // Define an intial view for the map

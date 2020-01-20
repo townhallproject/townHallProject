@@ -6,7 +6,7 @@ export default class CurrentEventsMap extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { currentDistrict } = this.props;
-    if (currentDistrict && currentDistrict !== prevProps) {
+    if (currentDistrict && currentDistrict !== prevProps.currentDistrict) {
       mapboxView.highlightDistrict(currentDistrict.federal.selections);
     }
   }

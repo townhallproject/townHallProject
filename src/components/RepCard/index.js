@@ -24,11 +24,7 @@ class RepCard extends Component {
         style={{ width: 325 }}
         title={rep.party}
         className={classNames("rep-card", rep.party)}
-        actions={[
-          <Icon key="setting" />,
-          <Icon key="edit" />,
-          <Icon key="ellipsis" />,
-        ]}
+        actions={[]}
       >
       <Meta
         avatar={<Avatar src={`https://www.govtrack.us/static/legislator-photos/${rep.govtrack_id}-100px.jpeg`} />}
