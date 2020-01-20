@@ -57,9 +57,15 @@ class RepCard extends Component {
         <div className="missing-member">Missing</div>
       }
       <div className="rep-card-content">
-        <p>Date of Last Town Hall: </p>
-        <p>Local Office Phone: </p>
+        {/* TODO: add date of last town hall & local phone # */}
+        {/* <p>Date of Last Town Hall: </p> */}
+        {/* <p>Local Office Phone: </p> */}
+        {
+          rep.fax &&
+          <p>Fax: {rep.fax}</p>
+        }
         <p>DC Office Phone: {rep.phone}</p>
+        <br />
         <br />
         <p>Terms Ends:  {rep.next_election}</p>
       </div>
