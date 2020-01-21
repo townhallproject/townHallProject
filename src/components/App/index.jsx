@@ -127,7 +127,6 @@ class App extends React.Component {
 export default App;
 
 export const renderApp = (ctx) => {
-    console.log('ctx', ctx)
     ReactDom.render(<App {...ctx}/>, document.getElementById("root"))
 };
 

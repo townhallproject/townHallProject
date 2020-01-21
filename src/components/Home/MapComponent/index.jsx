@@ -40,7 +40,6 @@ export default class CurrentEventsMap extends React.Component {
     } = this.props;
 
     mapboxView.setDistrict = setDistrict;
-
     mapController.readData({ webGL, map: this.map },
       () => mapController.addDistrictListener({ webGL },
         () => mapController.setDistrict({ feature })
@@ -53,7 +52,6 @@ export default class CurrentEventsMap extends React.Component {
       webGL,
       stateUPSP
     } = this.props;
-    console.log('map', this.map)
     mapController.readStateData({ webGL, map: this.map, stateUPSP },
       () => mapController.maskCountry({ webGL, stateUPSP, map: this.map },
         () => mapController.addStateDistrictListener({ webGL })

@@ -92,10 +92,7 @@ class RepresentativeCards extends Component {
     const {
       reps,
     } = this.state;
-    const {
-      currentDistrict,
-    } = this.props;
-    console.log(currentDistrict)
+
     return (
       <div id="representativeCards">
           {
