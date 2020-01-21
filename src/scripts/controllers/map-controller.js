@@ -216,7 +216,7 @@ mapController.addDistrictListener = function (ctx, next) {
   if (ctx.webGL) {
     mapboxView.addDistrictListener();
   }
-  // next();
+  next();
 };
 
 mapController.showStateLegend = function (ctx, next) {
