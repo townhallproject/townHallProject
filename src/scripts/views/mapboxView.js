@@ -465,8 +465,7 @@ mapboxView.filterMap = function (townHall) {
   if (district) {
     var districtId = district;
     var fipsId = fips[townHall.state];
-    var geoid = fipsId + districtId;
-
+    var geoid = fipsId + mapHelperFunctions.zeroPad(districtId);
     filterDistrict.push(['==', 'GEOID', geoid]);
   }
   // Apply the filters to each of these layers

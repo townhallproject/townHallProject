@@ -3,7 +3,9 @@ import eventHandler from './eventView';
 const stateView = {};
 
 stateView.maskCountry = function (map, state) {
-  map.setFilter('state-mask', ['!=', 'ref', state]);
+  const layer = 'state-mask'
+  map.setFilter(layer, ['!=', 'ref', state]);
+  // map.setLayoutProperty(layer, 'visibility', 'visible');
 };
 
 stateView.setStateDropdown = function (state) {

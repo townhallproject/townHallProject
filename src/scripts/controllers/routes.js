@@ -11,10 +11,6 @@ page('/',
   mapController.webGlsupported,
   mapController.hideStateLegend,
   indexController.renderDom,
-  mapController.setMap,
-  mapController.readData,
-  mapController.addDistrictListener,
-  mapController.setDistrict,
 );
 
 page('/:stateName',
@@ -26,10 +22,6 @@ page('/:stateName',
   mapController.showStateLegend,
   mapController.setborderListeners,
   indexController.renderDom,
-  mapController.setMap,
-  mapController.readStateData,
-  mapController.maskCountry,
-  mapController.addStateDistrictListener,
 );
 
 page()
