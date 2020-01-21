@@ -36,7 +36,11 @@ export default class CurrentEventsMap extends React.Component {
     const {
       webGL,
       feature,
+      setDistrict,
     } = this.props;
+
+    mapboxView.setDistrict = setDistrict;
+
     mapController.readData({ webGL, map: this.map },
       () => mapController.addDistrictListener({ webGL },
         () => mapController.setDistrict({ feature })

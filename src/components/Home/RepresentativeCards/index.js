@@ -28,8 +28,17 @@ class RepresentativeCards extends Component {
 
   componentDidUpdate(prevProps) {
     const { currentDistrict } = this.props; 
+
+    if (!currentDistrict && !this.state.reps.length) {
+      return;
+    }
+
+    if (this.state.reps.length && !currentDistrict) {
+      return this.setReps([])
+    }
+
     const federalSelections = currentDistrict.federal;
-    const prevSelections = prevProps.currentDistrict.federal;
+    const prevSelections = prevProps.currentDistrict ? prevProps.currentDistrict.federal : null;
 
     if (federalSelections && !prevSelections) {
       MoC.getMembersByDistrict(currentDistrict.federal.state, currentDistrict.federal.districts)
@@ -49,11 +58,6 @@ class RepresentativeCards extends Component {
        })
     }
 
-    if(this.state.reps.length && !this.props.currentDistrict.federal) {
-      this.setState({
-        reps: []
-      })
-    }
   }
 
   isNewState(prevSelectedState) {
