@@ -50,15 +50,20 @@ export const MENU_MAP = new Map([
   }, ]],
   ['2019-review', [{
       display: 'Accessibly Report',
-      link: REPORT_2019_ID
+      link: REPORT_2019_ID,
+      icon: 'file-done'
     },
     {
       display: 'THP Awards',
-      link: RESEARCH_LINK
+      link: "/Images/awards-2019.png",
+      type: 'modal',
+      icon: 'trophy'
     },
     {
       display: 'Accessibility Report Infographic',
-      link: RESEARCH_LINK
+      link: "/Images/2019-infographic.png",
+      type: 'modal',
+      icon: 'area-chart'
     },
   ]],
   ['donate', []],

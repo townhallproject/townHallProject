@@ -102,6 +102,7 @@ class App extends React.Component {
                     <PageComponent id={REPORT_2019_ID} active={this.state.hash === REPORT_2019_ID} activeBanner>
                         <IframeEmbed src={REPORT_2019_LINK} />
                     </PageComponent>
+                    
                     <PageComponent id="year-two" active={false}>
                         <EndOfYearReport hashtag={'year-two'} imageSrc={'/Images/lookback2018-Desktop-nobg.png'} />
                     </PageComponent>
