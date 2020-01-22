@@ -163,7 +163,11 @@ class Header extends Component {
             Learn More
             <div className={classNames(arrowClasses, {active : activeKey === 'learn-more'})}></div>
           </Menu.Item>
-          {/* <Button 
+          <Menu.Item key="2019-review">
+            2019 In Review
+            <div className={classNames(arrowClasses, {active : activeKey === '2019-review'})}></div>
+          </Menu.Item>
+          <Button 
             className="accessibility-report-btn"
             href="https://docs.google.com/document/u/1/d/e/2PACX-1vTWD9u5IF08YH6tt76Q_S6dTwQYmm7g_2jQbZ4JaXJpEBJV0srbUfS_MseuKudHeo6YDLdyk-x1A58Z/pub"
             target="_blank"
@@ -171,7 +175,7 @@ class Header extends Component {
           >
             Accessibility Report
             <Icon type="file-done" />
-          </Button> */}
+          </Button>
           <Menu.Item key="donate" className="donate-btn">
             <a 
               href="https://secure.actblue.com/donate/townhallproject2019"
