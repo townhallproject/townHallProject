@@ -123,7 +123,7 @@ class Header extends Component {
          }
         return (
           <Menu.Item 
-            className={classNames(["fade-in", {'ant-menu-item-selected' : hash === menuItem.link && !menuItem.external }])}
+            className={classNames(["fade-in", {'submenu-item-selected' : hash === menuItem.link && !menuItem.external }])}
             key={menuItem.display}
             onClick={() => !menuItem.external ? this.props.setHash(menuItem.link) : undefined}
           >
@@ -173,6 +173,7 @@ class Header extends Component {
             <div className={classNames(arrowClasses, {active : activeKey === 'learn-more'})}></div>
           </Menu.Item>
           <Menu.Item key="2019-review" style={{color: 'red'}}>
+            <Icon type="bank" theme="filled" />
             2019 In Review
             <div className={classNames(arrowClasses, {active : activeKey === '2019-review'})}></div>
           </Menu.Item>

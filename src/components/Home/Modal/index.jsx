@@ -32,12 +32,12 @@ class ImageModal extends React.Component {
   };
 
   render() {
-    const { hash, menuItem } = this.props;
+    const { menuItem } = this.props;
     return (
       <React.Fragment>
         <Menu.Item 
           {...this.props}
-          className={classNames(["fade-in", { 'ant-menu-item-selected': hash === menuItem.link && !menuItem.external }])}
+          className={classNames(["fade-in", { 'submenu-item-selected': this.state.visible }])}
           onClick={this.showModal}>
           {menuItem.icon && <Icon type={menuItem.icon}/>}
           {menuItem.display}
