@@ -136,6 +136,11 @@ export default class Home extends React.Component {
           allTownHalls={allTownHalls}
           currentDistrict={currentDistrict}
           setDistrict={this.setDistrict}
+          stateUPSP={this.props.stateUPSP}
+          parentBB={this.props.parentBB}
+          bounds={this.props.bounds}
+          webGL={this.props.webGL}
+          feature={this.props.feature}
         />
         <EmailSignup />
         {/*Cards showing representatives and their contact info*/}

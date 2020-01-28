@@ -137,7 +137,10 @@ mapboxView.makeZoomToNationalButton = function (state) {
   } else {
     usaButton.innerHTML = '<span class="usa-icon"></span>';
   }
-  usaButton.addEventListener('click', indexView.resetHome);
+  usaButton.addEventListener('click', () => {
+    mapboxView.setDistrict(null)
+    indexView.resetHome();
+  });
   document.querySelector('.mapboxgl-ctrl-group').appendChild(usaButton);
 };
 
@@ -150,10 +153,11 @@ mapboxView.districtSelect = function (feature) {
         selections: [feature.geoID],
       }
     };
+    mapboxView.setDistrict(locationData);
     eventHandler.renderResults(locationData);
     var firstArg = feature.district ? feature.state : 'state';
     var secondArg = feature.district ? feature.district : feature.state;
-    repCardHandler.renderRepresentativeCards(TownHall.lookupReps(firstArg, secondArg), $('#representativeCards section'), feature.state);
+    // repCardHandler.renderRepresentativeCards(TownHall.lookupReps(firstArg, secondArg), $('#representativeCards section'), feature.state);
     emailHandler.clearDistricts();
     emailHandler.addDistrict(feature.state + '-' + feature.district);
     urlParamsHandler.setUrlParameter('zipcode', false);
@@ -164,6 +168,7 @@ mapboxView.districtSelect = function (feature) {
       map.setLayoutProperty('selected-fill', 'visibility', 'none');
       map.setLayoutProperty('selected-border', 'visibility', 'none');
     }
+    mapboxView.setDistrict(null);
   }
 };
 
@@ -465,8 +470,7 @@ mapboxView.filterMap = function (townHall) {
   if (district) {
     var districtId = district;
     var fipsId = fips[townHall.state];
-    var geoid = fipsId + districtId;
-
+    var geoid = fipsId + mapHelperFunctions.zeroPad(districtId);
     filterDistrict.push(['==', 'GEOID', geoid]);
   }
   // Apply the filters to each of these layers

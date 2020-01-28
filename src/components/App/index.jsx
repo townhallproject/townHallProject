@@ -68,7 +68,12 @@ class App extends React.Component {
                 {/** Main content & Pages */}
                 <div className="tab-content">
                     <PageComponent id="home" active={!this.state.hash}>
-                        <Home 
+                        <Home
+                            stateUPSP={this.props.stateUPSP}
+                            parentBB={this.props.parentBB}
+                            bounds={this.props.bounds}
+                            webGL={this.props.webGL}
+                            feature={this.props.feature}
                             location={this.state.location}
                         />
                     </PageComponent>
@@ -121,7 +126,7 @@ class App extends React.Component {
 
 export default App;
 
-export const renderApp = () => {
-    ReactDom.render(<App />, document.getElementById("root"))
+export const renderApp = (ctx) => {
+    ReactDom.render(<App {...ctx}/>, document.getElementById("root"))
 };
 

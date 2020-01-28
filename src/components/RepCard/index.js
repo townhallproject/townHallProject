@@ -49,7 +49,7 @@ class RepCard extends Component {
         }
       </div>
       {
-        rep.missingMember &&
+        rep.missing_member &&
         <div className="missing-member">Missing</div>
       }
       <div className="rep-card-content">

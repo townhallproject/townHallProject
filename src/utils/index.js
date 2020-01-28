@@ -37,7 +37,6 @@ export function isFederalDistrict(query) {
 }
 
 export function capitalizeName(fullName) {
-    console.log(fullName)
       let names = fullName.split(" ");
       return names.map((name) => {
           if (name.length === 1) {
