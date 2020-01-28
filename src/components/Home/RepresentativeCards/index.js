@@ -42,7 +42,7 @@ class RepresentativeCards extends Component {
 
     const federalSelections = currentDistrict.federal;
     const prevSelections = prevProps.currentDistrict ? prevProps.currentDistrict.federal : null;
-
+    // no previous selection - first selection
     if (federalSelections && !prevSelections) {
       MoC.getMembersByDistrict(currentDistrict.federal.state, currentDistrict.federal.districts)
         .then((reps) => {
@@ -50,9 +50,21 @@ class RepresentativeCards extends Component {
           this.setReps(reps)
         })
 
-    } else if (currentDistrict.federal && 
+    } 
+      // previous and current selection - new state
+      else if (currentDistrict.federal &&
       prevSelections &&
-      this.isNewState(prevSelections.state) &&
+      this.isNewState(prevSelections.state)
+      ) {
+      MoC.getMembersByDistrict(currentDistrict.federal.state, currentDistrict.federal.districts)
+       .then((reps) => {
+         this.setReps(reps)
+       })
+    } 
+      // previous and current selection - new district
+      else if (currentDistrict.federal && 
+      prevSelections &&
+      !this.isNewState(prevSelections.state) &&
       this.isNewDistrict(prevSelections.districts)
       ) {
       MoC.getMembersByDistrict(currentDistrict.federal.state, currentDistrict.federal.districts)

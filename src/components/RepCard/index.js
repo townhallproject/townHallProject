@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import classNames from 'classnames';
 import {
   Avatar,
@@ -63,7 +64,7 @@ class RepCard extends Component {
         <p>DC Office Phone: {rep.phone}</p>
         <br />
         <br />
-        <p>Terms Ends:  {rep.next_election}</p>
+        <p>Terms Ends:  {moment(rep.end_date).format('ll')}</p>
       </div>
       </Card>
     )
