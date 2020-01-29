@@ -38,6 +38,8 @@ export const EventCard = (props) => {
       </var>
     </span>
   );
+  
+  console.log(townhall.ada_accessable);
 
   return (
     <div className="col-md-12 col-sm-6 event-card">
@@ -107,6 +109,7 @@ export const EventCard = (props) => {
         </div>
         <div className="panel-footer">
           <small>Last Updated: {dateFormat(townhall.lastUpdated)}</small>
+          {townhall.ada_accessable && <div className="ada-logo"></div>}
         </div>
       </div>
     </div>

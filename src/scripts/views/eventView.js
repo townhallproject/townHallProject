@@ -307,6 +307,7 @@ eventHandler.renderPanels = function (townhall, $parent) {
     townhall.addressLink = 'https://www.google.com/maps/dir/Current+Location/' + escape(townhall.address);
   }
   townhall.makeFormattedMember();
+  console.log(townhall.ada_accessible);
   var $panel = $(eventCardTemplate(townhall));
   $panel.appendTo($parent);
 };

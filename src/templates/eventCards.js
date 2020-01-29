@@ -97,6 +97,8 @@ export default (townhall) => (`<div class="col-md-12 col-sm-6 event-card">
     </div>
     <div class="panel-footer">
         <small>Last Updated: ${dateFormat(townhall.lastUpdated)}</small>
+
+        ${townhall.ada_accessible ? '<div class="ada-logo ada-logo-event-card" ></div>' : ""}
     </div>
   </div>
 </div>`
