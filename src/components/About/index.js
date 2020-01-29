@@ -129,6 +129,7 @@ const About = props => {
         </article>
       </section>
       <div className="banner" id="hand-raised"></div>
+      {/* //BEGIN FAQ */}
       <section className="container mt-5">
         <h3>Frequently Asked Questions</h3>
         <div
@@ -137,6 +138,7 @@ const About = props => {
           role="tablist"
           aria-multiselectable="true"
         >
+          {/* //CAN I JOIN YOU */}
           <div className="panel panel-default">
             <div className="panel-heading" role="tab">
               <h4 className="panel-title">
@@ -169,6 +171,7 @@ const About = props => {
               </div>
             </div>
           </div>
+          {/* //CAN I SUPPORT YOU */}
           <div className="panel panel-default">
             <div className="panel-heading" role="tab">
               <h4 className="panel-title">
@@ -203,6 +206,7 @@ const About = props => {
               </div>
             </div>
           </div>
+          {/* //YOUR STORY */}
           <div className="panel panel-default">
             <div className="panel-heading" role="tab">
               <h4 className="panel-title">
@@ -251,6 +255,7 @@ const About = props => {
               </div>
             </div>
           </div>
+          {/* //PERSPECTIVE */}
           <div className="panel panel-default">
             <div className="panel-heading" role="tab">
               <h4 className="panel-title">
@@ -297,6 +302,7 @@ const About = props => {
               </div>
             </div>
           </div>
+          {/* //TOWNHALL.COM */}
           <div className="panel panel-default">
             <div className="panel-heading" role="tab">
               <h4 className="panel-title">
@@ -321,6 +327,7 @@ const About = props => {
               <div className="panel-body">Nope.</div>
             </div>
           </div>
+          {/* //WHO ARE YOU */}
           <div className="panel panel-default">
             <div className="panel-heading" role="tab">
               <h4 className="panel-title">
@@ -387,38 +394,81 @@ const About = props => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-      <section className="container">
-        <article className="row">
-          <div className="col-sm-5 col-offset-1">
-            <h3>Can I send you town halls that I find?</h3>
-            <p>
+          {/* EXPERIMENT -> CAN I SEND/NO SCHEDULED EVENTS */}
+          <div className="panel panel-default">
+            <div className="panel-heading" role="tab">
+              <h4 className="panel-title">
+                <a
+                  role="button"
+                  data-toggle="collapse"
+                  data-parent="#accordion"
+                  href="#canISendTownHalls"
+                  aria-expanded="true"
+                  aria-controls="canISendTownHalls"
+                >
+                  Can I send you town halls that I find?
+                </a>
+              </h4>
+            </div>
+            <div
+              id="canISendTownHalls"
+              className="panel-collapse collapse"
+              role="tabpanel"
+              aria-labelledby="canISendTownHalls"
+            >
+              <div className="panel-body">
               Yes! Please send town hall or any other congressional events to us
               <a href="#submit">here</a>. Please include as much detail as you
               can, including a date, time, and link or other source of the event
               information.
-            </p>
+              </div>
+            </div>
           </div>
-          <div className="col-sm-5 col-sm-offset-2">
-            <h3>What if my representatives have no public events scheduled?</h3>
-            <p>
-              Call their
-              <a
-                href="https://www.govtrack.us/congress/members"
-                target="_blank"
-              >
-                district offices
-              </a>{" "}
-              and let them know you expect them to hold public events with their
-              constituents. To have even more impact, join with other citizens
-              in your district or state and organize group efforts. Visit the
-              district office together, deliver petitions, inform your local
-              press, or even hold an “Empty Chair” town hall and invite your
-              member of Congress to fill that chair.
-            </p>
-          </div>
-        </article>
+          <div className="panel panel-default">
+                <div className="panel-heading" role="tab">
+                  <h4 className="panel-title">
+                    <a
+                      role="button"
+                      data-toggle="collapse"
+                      data-parent="#accordion"
+                      href="#noScheduledEvents"
+                      aria-expanded="true"
+                      aria-controls="noScheduledEvents"
+                    >
+                      What if my representatives have no public events scheduled?
+                    </a>
+                  </h4>
+                </div>
+                <div
+                  id="noScheduledEvents"
+                  className="panel-collapse collapse"
+                  role="tabpanel"
+                  aria-labelledby="noScheduledEvents"//???is this right? no spaces
+                >
+                  <div className="panel-body">
+                    Call their
+                    <a
+                      href="https://www.govtrack.us/congress/members"
+                      target="_blank"
+                    >
+                      district offices
+                    </a>{" "}
+                    and let them know you expect them to hold public events with their
+                    constituents. To have even more impact, join with other citizens
+                    in your district or state and organize group efforts. Visit the
+                    district office together, deliver petitions, inform your local
+                    press, or even hold an “Empty Chair” town hall and invite your
+                    member of Congress to fill that chair.
+                  </div>
+                </div>
+              </div>
+          {/* END EXPERIMENT -> CAN I SEND/NO SCHEDULED EVENTS? */}
+        </div>
+      </section>
+      {/* //TODO */}
+      {/* END OF PASTE  */}
+      <section className="container">
+        
         <article className="row text-center">
           <h3>Get connected locally!</h3>
           <p>
@@ -437,6 +487,7 @@ const About = props => {
         </article>
         <div className="col-sm-4"></div>
       </section>
+      {/* //END TODO */}
       <section className="container">
         <div className="row">
           <div className="col-sm-12" id="disclaimer">
