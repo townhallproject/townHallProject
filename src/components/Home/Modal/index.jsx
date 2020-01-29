@@ -3,7 +3,10 @@ import { Modal, Menu, Icon } from 'antd';
 import classNames from 'classnames';
 
 class ImageModal extends React.Component {
-  state = { visible: false };
+  state = {
+    visible: false,
+    width: 0
+  };
 
   constructor(props) {
     super(props);
@@ -11,6 +14,19 @@ class ImageModal extends React.Component {
     this.showModal = this.showModal.bind(this);
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+  
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth });
   }
 
   showModal() {
@@ -49,7 +65,10 @@ class ImageModal extends React.Component {
           footer={null}
           width="90%"
         >
-          <img src={menuItem.link} />
+          <img 
+            className={menuItem.background ? "ant-modal-image" : null}
+            src={this.state.width < 740 && menuItem.mobileLink ? menuItem.mobileLink : menuItem.link} 
+          />
         </Modal>
       </React.Fragment>
     );

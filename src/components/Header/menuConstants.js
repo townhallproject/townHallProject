@@ -45,9 +45,26 @@ export const MENU_MAP = new Map([
     display: 'State Legislatures'
   }]],
   ['learn-more', [{
-    display: 'About THP',
-    link: ABOUT_LINK
-  }, ]],
+      display: 'About THP',
+      link: ABOUT_LINK
+    },
+    {
+      display: 'THP 2017 Review',
+      link: "/Images/EOY_2017_Report_Desktop.png",
+      mobileLink: '/Images/EOY_2017_Report_Mobile.png',
+      type: 'modal',
+      icon: 'calendar',
+      background: `#3facef`
+    },
+    {
+      display: 'THP 2018 Review',
+      link: "/Images/lookback2018-Desktop-nobg.png",
+      mobileLink: '/Images/lookback2018-Mobile-nobg.png',
+      type: 'modal',
+      icon: 'calendar',
+      background: `#3facef`
+    }
+  ]],
   ['2019-review', [{
       display: 'Accessibly Report',
       link: REPORT_2019_ID,
