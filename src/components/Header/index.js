@@ -12,6 +12,7 @@ import { MENU_MAP, STATE_LEGISLATURES_MENU, MISSING_MEMBER_LINK } from './menuCo
 const { SubMenu } = Menu;
 
 import './style.less';
+import ImageModal from '../Home/Modal';
 
 class Header extends Component {
   constructor(props) {
@@ -112,13 +113,21 @@ class Header extends Component {
              </SubMenu>
            )
          } 
+         if (menuItem.type === 'modal') {
+           return (
+             <ImageModal
+                hash={hash}
+                menuItem={menuItem}
+             />
+           )
+         }
         return (
           <Menu.Item 
-            className={classNames(["fade-in", {'ant-menu-item-selected' : hash === menuItem.link && !menuItem.external }])}
+            className={classNames(["fade-in", {'submenu-item-selected' : hash === menuItem.link && !menuItem.external }])}
             key={menuItem.display}
             onClick={() => !menuItem.external ? this.props.setHash(menuItem.link) : undefined}
           >
-            {
+            { 
               this.renderLink(menuItem)
             }
           </Menu.Item>
@@ -163,23 +172,22 @@ class Header extends Component {
             Learn More
             <div className={classNames(arrowClasses, {active : activeKey === 'learn-more'})}></div>
           </Menu.Item>
-          {/* <Button 
-            className="accessibility-report-btn"
-            href="https://docs.google.com/document/u/1/d/e/2PACX-1vTWD9u5IF08YH6tt76Q_S6dTwQYmm7g_2jQbZ4JaXJpEBJV0srbUfS_MseuKudHeo6YDLdyk-x1A58Z/pub"
-            target="_blank"
-            type="primary"
-          >
-            Accessibility Report
-            <Icon type="file-done" />
-          </Button> */}
-          <Menu.Item key="donate" className="donate-btn">
-            <a 
+          <Menu.Item key="2019-review" style={{color: 'red'}}>
+            <Icon type="bank" theme="filled" />
+            2019 In Review
+            <div className={classNames(arrowClasses, {active : activeKey === '2019-review'})}></div>
+          </Menu.Item>
+          <div key="donate" className="donate-btn">
+            <Button
+              type="danger"
+              shape="round"
+              size="large"
               href="https://secure.actblue.com/donate/townhallproject2019"
               target="_blank"
             >
               Donate
-            </a>
-          </Menu.Item>
+            </Button>
+          </div>
         </Menu>
         <Menu 
           className={`submenu-${this.hasSubMenu() ? 'active' : 'hidden'}`}

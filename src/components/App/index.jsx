@@ -23,7 +23,7 @@ import IframeEmbed from '../IframeEmbed';
 import PageComponent from '../PageComponent';
 
 import Home from '../Home';
-import { ORGANIZE_A_TOWN_HALL_LINK } from '../Header/menuConstants';
+import { ORGANIZE_A_TOWN_HALL_ID, REPORT_2019_ID, REPORT_2019_LINK } from '../Header/menuConstants';
 
 class App extends React.Component {
     constructor(props) {
@@ -80,7 +80,7 @@ class App extends React.Component {
                     <PageComponent id="submit" active={this.state.hash === 'submit'}>
                         <SubmitEventForm />
                     </PageComponent>
-                    <PageComponent id={ORGANIZE_A_TOWN_HALL_LINK} active={this.state.hash === ORGANIZE_A_TOWN_HALL_LINK} activeBanner>
+                    <PageComponent id={ORGANIZE_A_TOWN_HALL_ID} active={this.state.hash === ORGANIZE_A_TOWN_HALL_ID} activeBanner>
                         <IframeEmbed src="https://docs.google.com/document/u/1/d/e/2PACX-1vRB_BYUEiAJScIxrhlur5bDahqOWB3A_ZdPfrpVH9dduhGD-r-mqtJDpxxwUAFEcnO0y4tOLzo9wG2L/pub" />
                     </PageComponent>
                     <PageComponent id="contact" active={this.state.hash === 'contact'}>
@@ -104,6 +104,10 @@ class App extends React.Component {
                         <PrivacyPolicyComponent />
                     </PageComponent>
                     <TownHallPledgeAgreements />
+                    <PageComponent id={REPORT_2019_ID} active={this.state.hash === REPORT_2019_ID} activeBanner>
+                        <IframeEmbed src={REPORT_2019_LINK} />
+                    </PageComponent>
+                    
                     <PageComponent id="year-two" active={false}>
                         <EndOfYearReport hashtag={'year-two'} imageSrc={'/Images/lookback2018-Desktop-nobg.png'} />
                     </PageComponent>
