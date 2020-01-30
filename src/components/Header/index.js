@@ -177,14 +177,17 @@ class Header extends Component {
             2019 In Review
             <div className={classNames(arrowClasses, {active : activeKey === '2019-review'})}></div>
           </Menu.Item>
-          <Menu.Item key="donate" className="donate-btn">
-            <a 
+          <div key="donate" className="donate-btn">
+            <Button
+              type="danger"
+              shape="round"
+              size="large"
               href="https://secure.actblue.com/donate/townhallproject2019"
               target="_blank"
             >
               Donate
-            </a>
-          </Menu.Item>
+            </Button>
+          </div>
         </Menu>
         <Menu 
           className={`submenu-${this.hasSubMenu() ? 'active' : 'hidden'}`}
