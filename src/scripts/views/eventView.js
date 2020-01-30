@@ -26,7 +26,6 @@ import resultsView from './resultsView';
 import stateView from './stateView';
 import mapboxView from './mapboxView';
 import zipLookUpHandler from './zipLookUpView';
-import repCardHandler from './repCardView';
 
 const zipcodeRegEx = /^(\d{5}-\d{4}|\d{5}|\d{9})$|^([a-zA-Z]\d[a-zA-Z] \d[a-zA-Z]\d)$/g;
 // object to hold the front end view functions
@@ -269,6 +268,7 @@ function handleZipToDistrict(zipToDistrictArray) {
   };
 }
 
+// TODO: delete function
 eventHandler.lookup = function (e) {
   e.preventDefault();
   TownHall.resetData();
@@ -278,8 +278,6 @@ eventHandler.lookup = function (e) {
   var zipCheck = zip.match(zipcodeRegEx);
   if (zipCheck) {
     var zipClean = zip.split('-')[0];
-
-    repCardHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zipClean), $('#representativeCards section'));
     var lookupArray = getLookupArray();
     var promises = lookupArray.map(function (path) {
       return TownHall.lookupZip(zipClean, path);

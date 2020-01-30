@@ -21,7 +21,6 @@ import noWebGlMapView from './googleMapView';
   mapView.initialView = function resetView() {
     mapView.killSidebar();
     mapView.zoomLocation = false;
-    // $('#representativeCards').hide();
     if (mapView.webGL && map) {
       mapboxView.resetMap(map);
     } else if (window.google) {
@@ -33,7 +32,6 @@ import noWebGlMapView from './googleMapView';
   mapView.resetView = function resetView() {
     mapView.killSidebar();
     mapView.zoomLocation = false;
-    // $('#representativeCards').hide();
     if (mapView.webGL && map) {
       mapboxView.resetMap(map);
     } else if (window.google) {
@@ -87,7 +85,6 @@ import noWebGlMapView from './googleMapView';
             mapboxView.setData();
           }
           TownHall.allTownHalls = allTownHalls;
-          // zipLookUpHandler.zipSearchByParam();
         });
     });
   };
@@ -143,7 +140,6 @@ import noWebGlMapView from './googleMapView';
         if (webgl) {
           mapboxView.setStateData();
         }
-        // zipLookUpHandler.zipSearchByParam();
       }
     });
     townHallsFB.once('value', function () {
@@ -152,7 +148,6 @@ import noWebGlMapView from './googleMapView';
         if (webgl) {
           mapboxView.setStateData();
         }
-        // zipLookUpHandler.zipSearchByParam();
       }
     });
   };

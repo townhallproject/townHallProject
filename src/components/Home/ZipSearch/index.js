@@ -226,8 +226,6 @@ static handleZipToDistrict(zipToDistrictArray) {
     TownHall.zipQuery;
 
 
-  // repCardHandler.renderRepresentativeCards(TownHall.lookupReps('state', state), $('#representativeCards section'));
-
       urlParamsHandler.setUrlParameter('state', state);
 
       var locationData = ZipSearch.handleZipToDistrict(zipToDistrictArray);

@@ -12,7 +12,6 @@ import stateView from './stateView';
 import mapView from './mapView';
 import indexView from './indexView';
 import eventHandler from './eventView';
-import repCardHandler from './repCardView';
 import emailHandler from './emailSignUpView';
 
 const mapboxView = {};
@@ -157,7 +156,6 @@ mapboxView.districtSelect = function (feature) {
     eventHandler.renderResults(locationData);
     var firstArg = feature.district ? feature.state : 'state';
     var secondArg = feature.district ? feature.district : feature.state;
-    // repCardHandler.renderRepresentativeCards(TownHall.lookupReps(firstArg, secondArg), $('#representativeCards section'), feature.state);
     emailHandler.clearDistricts();
     emailHandler.addDistrict(feature.state + '-' + feature.district);
     urlParamsHandler.setUrlParameter('zipcode', false);
