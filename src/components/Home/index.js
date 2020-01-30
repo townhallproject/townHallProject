@@ -25,8 +25,10 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.setDistrict = this.setDistrict.bind(this);
+    this.setZip = this.setZip.bind(this);
     this.state = {
       currentDistrict: '',
+      currentZip: '',
       init: true,
       allTownHalls: [],
       allStateTownHalls: [],
@@ -108,6 +110,12 @@ export default class Home extends React.Component {
     })
   }
 
+  setZip(currentZip) {
+    this.setState({
+      currentZip
+    })
+  }
+
   render() {
     const {
       allTownHalls,
@@ -120,16 +128,26 @@ export default class Home extends React.Component {
         <ZipSearchComponent 
           usState={usState}
           setDistrict={this.setDistrict}
+          setZip={this.setZip}
         />
         {/*Call to action when no events are present*/}
         <NoEventsComponent />
         <MapComponent 
           allTownHalls={allTownHalls}
           currentDistrict={currentDistrict}
+          setDistrict={this.setDistrict}
+          stateUPSP={this.props.stateUPSP}
+          parentBB={this.props.parentBB}
+          bounds={this.props.bounds}
+          webGL={this.props.webGL}
+          feature={this.props.feature}
         />
         <EmailSignup />
         {/*Cards showing representatives and their contact info*/}
-        <RepresentativeCards />
+        <RepresentativeCards 
+          currentDistrict={this.state.currentDistrict}
+          currentZip={this.state.currentZip}
+        />
         <EventsTable 
           allTownHalls={allTownHalls}
         />

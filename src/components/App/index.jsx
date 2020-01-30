@@ -67,24 +67,29 @@ class App extends React.Component {
 
                 {/** Main content & Pages */}
                 <div className="tab-content">
-                    <PageComponent id="home" active={!this.state.hash} activeBanner>
-                        <Home 
+                    <PageComponent id="home" active={!this.state.hash}>
+                        <Home
+                            stateUPSP={this.props.stateUPSP}
+                            parentBB={this.props.parentBB}
+                            bounds={this.props.bounds}
+                            webGL={this.props.webGL}
+                            feature={this.props.feature}
                             location={this.state.location}
                         />
                     </PageComponent>
-                    <PageComponent id="submit" active={this.state.hash === 'submit'} activeBanner>
+                    <PageComponent id="submit" active={this.state.hash === 'submit'}>
                         <SubmitEventForm />
                     </PageComponent>
                     <PageComponent id={ORGANIZE_A_TOWN_HALL_ID} active={this.state.hash === ORGANIZE_A_TOWN_HALL_ID} activeBanner>
                         <IframeEmbed src="https://docs.google.com/document/u/1/d/e/2PACX-1vRB_BYUEiAJScIxrhlur5bDahqOWB3A_ZdPfrpVH9dduhGD-r-mqtJDpxxwUAFEcnO0y4tOLzo9wG2L/pub" />
                     </PageComponent>
-                    <PageComponent id="contact" active={this.state.hash === 'contact'} activeBanner>
+                    <PageComponent id="contact" active={this.state.hash === 'contact'}>
                         <ContactUsForm />
                     </PageComponent>
-                    <PageComponent id="about" active={this.state.hash === 'about'} activeBanner>
+                    <PageComponent id="about" active={this.state.hash === 'about'}>
                         <About />
                     </PageComponent>
-                    <PageComponent id="join" active={this.state.hash === 'join'} activeBanner>
+                    <PageComponent id="join" active={this.state.hash === 'join'}>
                         <Join />
                     </PageComponent>
                     <PageComponent id="missing-members" active={this.state.hash === 'missing-members'}>
@@ -92,7 +97,7 @@ class App extends React.Component {
                             hash={this.state.hash}
                         />
                     </PageComponent>
-                    <PageComponent id="upload-video" active={this.state.hash === 'upload-video'} activeBanner>
+                    <PageComponent id="upload-video" active={this.state.hash === 'upload-video'}>
                         <UploadVideo />
                     </PageComponent>
                     <PageComponent id="privacy-policy" active={this.state.hash === 'privacy-policy'}>
@@ -125,7 +130,7 @@ class App extends React.Component {
 
 export default App;
 
-export const renderApp = () => {
-    ReactDom.render(<App />, document.getElementById("root"))
+export const renderApp = (ctx) => {
+    ReactDom.render(<App {...ctx}/>, document.getElementById("root"))
 };
 

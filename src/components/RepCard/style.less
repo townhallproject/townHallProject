@@ -1,0 +1,119 @@
+.ant-card {
+  margin: 10px 15px 10px 15px;
+  .ant-card-body {
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    .social-icons {
+      position: absolute;
+      margin-left: 215px;
+      margin-top: 55px;
+      display: flex;
+      width: 100px;
+      justify-content: flex-end;
+      .anticon {
+        font-size: 30px !important;
+        margin-left: 3px;
+        margin-right: 3px;
+      }
+    }
+    .missing-member {
+      background: red;
+      width: 97px;
+      font-size: 14px;
+      -webkit-transform: rotate(270deg);
+      -moz-transform: rotate(270deg);
+      -o-transform: rotate(270deg);
+      -ms-transform: rotate(270deg);
+      transform: rotate(270deg);
+      position: absolute;
+      margin-left: 287px;
+      margin-top: 33px;
+      text-align: center;
+    }
+    .ant-card-meta {
+      background: white;
+      border-radius: 0px;
+      height: 96px;
+      margin-left: -5%;
+      width: 111.5%;
+      box-shadow: -1px 2px 3px 0px #949292;
+      .ant-card-meta-avatar {
+        padding-right: 10px;
+        .ant-avatar {
+          border-radius: 0px;
+          height: 96px;
+          width: 80px;
+        }
+      }
+      .ant-card-meta-detail {
+        .ant-card-meta-title {
+          font-size: 20px;
+          margin-bottom: 0;
+        }
+        .ant-card-meta-description {
+          font-size: 18px;
+        }
+      }
+    }
+    .rep-card-content {
+      margin-top: 10px;
+      padding: 10px;
+      p {
+        margin: 0 0 3px;
+      }
+    }
+  }
+  .ant-card-head {
+    padding: 5px 1px 5px 10px;
+    min-height: 0px;
+    margin-bottom: 0px;
+    color: white;
+    .ant-card-head-title {
+      display: inline-block;
+      flex: 1;
+      padding: 0px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-weight: 200;
+    }
+  }
+  .ant-card-actions {
+    border-top: none;
+    li {
+      border-right: none;
+      .anticon {
+        color: white;
+      }
+      .anticon:hover {
+        color: white;
+      }
+    }
+  }
+}
+
+.Democratic {
+  background: #1693e2;
+  .ant-card-actions {
+    background: #1693e2;
+    background-color: #ffffff80;
+  }
+}
+
+.Republican {
+  background: #CB0505;
+  .ant-card-actions {
+    background: #CB0505;
+    background-color: #ffffff80;
+  }
+}
+
+.Independent {
+  background: purple;
+  .ant-card-actions {
+    background: purple;
+    background-color: #ffffff80;
+  }
+}

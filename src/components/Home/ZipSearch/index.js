@@ -7,7 +7,6 @@ import TownHall from '../../../scripts/models/TownHall';
 
 import indexView from '../../../scripts/views/indexView';
 import zipLookUpHandler from '../../../scripts/views/zipLookUpView';
-import repCardHandler from '../../../scripts/views/repCardView';
 import stateView from '../../../scripts/views/stateView';
 import eventHandler from '../../../scripts/views/eventView';
 import mapHelperFunctions from '../../../scripts/lib/map-helper-functions';
@@ -136,7 +135,10 @@ static handleZipToDistrict(zipToDistrictArray) {
   handleSubmit(e) {
     e.preventDefault();
     const { query } = this.state;
+    const { setDistrict, setZip } = this.props;
     if (!query) {
+      setZip('');
+      setDistrict('');
       return indexView.resetHome();
     }
     if (isZipCode(query)) {
@@ -188,7 +190,8 @@ static handleZipToDistrict(zipToDistrictArray) {
 
   lookUpByDistrict(district) {
     const {
-      usState
+      usState,
+      setDistrict
     } = this.props;
     let locationData = {}
     if (isFederalDistrict(district)) {
@@ -211,8 +214,8 @@ static handleZipToDistrict(zipToDistrictArray) {
         }
       }
     }
+    setDistrict(locationData);
     eventHandler.renderResults(locationData);
-
   }
 
   lookUpByState(state) {
@@ -223,8 +226,6 @@ static handleZipToDistrict(zipToDistrictArray) {
     TownHall.zipQuery;
 
 
-  repCardHandler.renderRepresentativeCards(TownHall.lookupReps('state', state), $('#representativeCards section'));
-
       urlParamsHandler.setUrlParameter('state', state);
 
       var locationData = ZipSearch.handleZipToDistrict(zipToDistrictArray);
@@ -234,7 +235,8 @@ static handleZipToDistrict(zipToDistrictArray) {
 
   lookUpZip(zip) {
     const {
-      setDistrict
+      setDistrict,
+      setZip
     } = this.props;
     TownHall.resetData();
     TownHall.zipQuery;
@@ -242,8 +244,7 @@ static handleZipToDistrict(zipToDistrictArray) {
     var zipCheck = zip.match(zipcodeRegEx);
     if (zipCheck) {
       var zipClean = zip.split('-')[0];
-      //TODO: move this
-      repCardHandler.renderRepresentativeCards(TownHall.lookupReps('zip', zipClean), $('#representativeCards section'));
+      setZip(zipClean)
       var lookupArray = ZipSearch.getLookupArray();
       var promises = lookupArray.map(function (path) {
         return TownHall.lookupZip(zipClean, path);
