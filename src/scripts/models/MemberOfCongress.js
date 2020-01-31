@@ -1,7 +1,56 @@
-import { firebasedb } from '../lib/firebasedb';
-import constants from '../lib/constants';
+import moment from 'moment';
 
+import { firebasedb, firestore } from '../lib/firebasedb';
+import constants from '../lib/constants';
 class MoC {
+
+  static getMembersByDistrict(state, districts) {
+    const getSenators = firestore.collection('senators')
+      .where('state', '==', state)
+      .get()
+      .then(snap => {
+          const ids = []
+          snap.forEach(ele =>
+            ids.push(ele.id)
+          )
+          return ids;
+      })
+    const getRep = districts.map(district => firestore.collection('house_reps')
+      .where('district', '==', district)
+      .where('state', '==', state)
+      .get()
+      .then(snap => {
+        const ids = []
+        snap.forEach(ele =>
+          ids.push(ele.id)
+          )
+        return ids;
+      }))
+    return Promise.all([getSenators, ...getRep])
+      .then(returned => {
+        return returned.reduce((acc, cur) => {
+          acc = [...acc, ...cur];
+          return acc;
+        }, [])
+
+      })
+      .then((ids) => {
+        const promises = ids.map((id) => firestore.collection('office_people').doc(id).get().then((snap) => snap.data()))
+        return Promise.all(promises)
+          .then(snap => {
+            return snap.map(person => {
+              const data = {
+                ...person,
+                ...person.roles[person.current_office_index]
+              }
+              delete data.roles;
+              delete data.campaigns;
+              return data;
+            })
+          })
+      })
+  }
+
   constructor(opts) {
     for (var keys in opts) {
       this[keys] = opts[keys];
@@ -35,16 +84,16 @@ class MoC {
       this.party = 'Independent';
       break;
     }
-    var termEnd = new Date(this.term_end);
     // Get the canon facebook and twitter accounts
     this.facebook_canon = this.facebook_official_account || this.facebook_account || this.facebook;
     this.twitter_canon = this.twitter_account || this.twitter;
-    // If term expires in janurary then assume the election is in the prior year
-    this.electionYear = termEnd.getMonth() === 0 ? termEnd.getFullYear() - 1 : termEnd.getFullYear();
+
+    this.electionYear = this.next_election;
+
     if (this.dyjd){
       this.pledger = this.dyjd.pledger;
     }
-    var prefix = this.type === 'sen' ? 'Senator' : 'Rep.';
+    var prefix = this.short_title;
 
     var sentence = [prefix, this.displayName];
     this.formattedMember = sentence.join(' ');
@@ -77,5 +126,7 @@ class MoC {
       });
     });
   }
+
+
 
 export default MoC;

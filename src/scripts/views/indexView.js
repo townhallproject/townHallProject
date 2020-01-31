@@ -45,8 +45,6 @@ indexView.resetHome = function () {
   $('#email-signup-form input[name=zipcode]').removeClass('hidden');
   $('#email-signup-form #district-subscribe').addClass('hidden');
   $('#no-events').hide();
-  $('#representativeCards section').empty();
-  $('#representativeCards').hide();
   $('.form-text-results').removeClass('text-center');
   $('.header-with-results .results').removeClass('multipleResults');
   $('.left-panels').removeClass('left-panels-border');

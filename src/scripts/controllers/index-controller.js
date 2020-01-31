@@ -21,7 +21,7 @@ indexController.renderStateIndex = function (ctx, next) {
 };
 
 indexController.renderDom = function(ctx, next) {
-  renderApp();
+  renderApp(ctx);
   next();
 }
 

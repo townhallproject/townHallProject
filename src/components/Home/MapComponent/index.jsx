@@ -1,14 +1,62 @@
 import React from 'react';
 
 import mapboxView from '../../../scripts/views/mapboxView';
+import mapController from '../../../scripts/controllers/map-controller';
 
 export default class CurrentEventsMap extends React.Component {
 
+  componentDidMount() {
+    const {
+      parentBB,
+      bounds,
+      webGL,
+      stateUPSP,
+    } = this.props;
+    this.map = mapController.setMap({
+      parentBB,
+      bounds,
+      webGL,
+      stateUPSP,
+    })
+    if (stateUPSP) {
+      this.initStateMap();
+    } else {
+      this.initFederalMap();
+    }
+  }
+  
   componentDidUpdate(prevProps) {
     const { currentDistrict } = this.props;
-    if (currentDistrict && currentDistrict !== prevProps) {
+    if (currentDistrict && currentDistrict !== prevProps.currentDistrict) {
       mapboxView.highlightDistrict(currentDistrict.federal.selections);
     }
+  }
+
+  initFederalMap() {
+    const {
+      webGL,
+      feature,
+      setDistrict,
+    } = this.props;
+
+    mapboxView.setDistrict = setDistrict;
+    mapController.readData({ webGL, map: this.map },
+      () => mapController.addDistrictListener({ webGL },
+        () => mapController.setDistrict({ feature })
+      )
+    );
+  }
+
+  initStateMap() {
+    const {
+      webGL,
+      stateUPSP
+    } = this.props;
+    mapController.readStateData({ webGL, map: this.map, stateUPSP },
+      () => mapController.maskCountry({ webGL, stateUPSP, map: this.map },
+        () => mapController.addStateDistrictListener({ webGL })
+      )
+    )
   }
 
   render() {
@@ -122,43 +170,43 @@ export default class CurrentEventsMap extends React.Component {
                 <button data-target="#Legend" className="btn-xs btn-default visible-xs" data-toggle="collapse"><i className="fas fa-bars"></i></button>
               </div>
             </div>
-            </div>
           </div>
-          <ul className="state-lines list-inline hide-if-no-webgl hidden">
-            <li className="map-legend-li">Showing: </li>
-            <button type="button" name="button" id="show-federal-borders"
-              className="btn btn-xs btn-transparent border-toggle inactive">
-              <li className="map-legend-li interactive federal">
-                <dt className="map-legend-line map-legend__federal"></dt>
-                <dd>Congressional districts</dd>
+        </div>
+        <ul className="state-lines list-inline hide-if-no-webgl hidden">
+          <li className="map-legend-li">Showing: </li>
+          <button type="button" name="button" id="show-federal-borders"
+            className="btn btn-xs btn-transparent border-toggle inactive">
+            <li className="map-legend-li interactive federal">
+              <dt className="map-legend-line map-legend__federal"></dt>
+              <dd>Congressional districts</dd>
+            </li>
+          </button>
+          <button type="button" name="button" id="show-state-borders"
+            className="btn btn-xs btn-transparent border-toggle active">
+            <ul className="list-inline">
+              <li className="map-legend-li state">
+                <dt className="map-legend-line map-legend__state_lower"></dt>
+                <dd>State House districts</dd>
               </li>
-            </button>
-            <button type="button" name="button" id="show-state-borders"
-              className="btn btn-xs btn-transparent border-toggle active">
-              <ul className="list-inline">
-                <li className="map-legend-li state">
-                  <dt className="map-legend-line map-legend__state_lower"></dt>
-                  <dd>State House districts</dd>
-                </li>
-                <li className="map-legend-li state">
-                  <dt className="map-legend-line map-legend__state_upper"></dt>
-                  <dd>State Senate districts</dd>
-                </li>
-              </ul>
-            </button>
-          </ul>
-          <div className="header-with-results map-container-split hidden">
-            <div className="row">
-              <div className="col-md-6">
-                <section className="results multipleResults">
-                  <div id="nearest" className="flexcroll nearest-with-results"></div>
-                </section>
-              </div>
-              <div className="col-md-6 map-small map-fixing">
-              </div>
+              <li className="map-legend-li state">
+                <dt className="map-legend-line map-legend__state_upper"></dt>
+                <dd>State Senate districts</dd>
+              </li>
+            </ul>
+          </button>
+        </ul>
+        <div className="header-with-results map-container-split hidden">
+          <div className="row">
+            <div className="col-md-6">
+              <section className="results multipleResults">
+                <div id="nearest" className="flexcroll nearest-with-results"></div>
+              </section>
+            </div>
+            <div className="col-md-6 map-small map-fixing">
             </div>
           </div>
+        </div>
       </section>
-        )
-      }
-    }
+    )
+  }
+}

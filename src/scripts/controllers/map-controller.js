@@ -53,8 +53,8 @@ mapController.getState = function (ctx, next) {
   });
   ctx.params.stateName = stateName;
   if (stateName.length > 0) {
-    var stateUsps = stateName[0]['USPS'];
-    ctx.stateUPSP = stateUsps;
+    var stateUPSP = stateName[0]['USPS'];
+    ctx.stateUPSP = stateUPSP;
     stateView.state = ctx.stateUPSP;
     next();
   } else {
@@ -110,8 +110,8 @@ mapController.getStateEmbed = function (ctx, next) {
     });
     ctx.params.stateName = stateInfo;
     if (stateInfo.length > 0) {
-      var stateUsps = stateInfo[0]['USPS'];
-      ctx.stateUPSP = stateUsps;
+      var stateUPSP = stateInfo[0]['USPS'];
+      ctx.stateUPSP = stateUPSP;
       stateView.state = ctx.stateUPSP;
       next();
     } else {
@@ -152,15 +152,14 @@ mapController.readDataNoTable = function (ctx, next) {
   });
 };
 
-mapController.setMap = function (ctx, next) {
+mapController.setMap = function (ctx) {
   if (ctx.webGL) {
     var style = null;
     if (ctx.stateUPSP) {
       style = 'mapbox://styles/townhallproject/cjbqzhc4b8c1x2trz43dk8spj';
     }
-    ctx.map = mapView.setMap(style, ctx.parentBB, ctx.bounds);
+    return mapView.setMap(style, ctx.parentBB, ctx.bounds);
   }
-  next();
 };
 
 mapController.readData = function (ctx, next) {
@@ -194,7 +193,6 @@ mapController.setDistrict = function(ctx, next) {
   if (ctx.feature) {
     mapboxView.districtSelect(ctx.feature);
   }
-  next();
 }
 
 mapController.maskCountry = function (ctx, next) {
@@ -247,7 +245,6 @@ mapController.addStateDistrictListener = function (ctx, next) {
   if (ctx.webGL) {
     mapboxView.addStateDistrictListener();
   }
-  next();
 };
 
 mapController.reset = function (ctx, next) {

@@ -99,10 +99,6 @@ module.exports = {
           ],
         },
       },
-      { 
-        test: /\.handlebars$/, 
-        loader: 'handlebars-loader'
-      },
       {
         test: /\.css$/,
         use: [
@@ -152,7 +148,8 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
-    resolve: {
-      extensions: ['.js', '.jsx']
-    }
+  resolve: {
+    extensions: [".js", ".jsx", ".json"],
+  },
+
 };
