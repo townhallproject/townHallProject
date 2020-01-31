@@ -383,21 +383,6 @@ export const init = () => {
     var hashLocation = location.hash.split('?')[0];
     $("a[href='" + hashLocation + "']").tab('show');
     $('.home-page-only').removeClass('hidden');
-
-    if (hashLocation === '#missing-members') {
-      // if (!missingMemberView.loaded) {
-      //   missingMemberView.init();
-      // } else {
-      //   setTimeout(function () {
-      //     $('.grid').isotope();
-      //   }, 1500);
-      // }
-    } else if (hashLocation === '#mfol-submit-event') {
-      newEventView.render();
-    } else if (hashLocation === '#thfol-guide') {
-      $('.home-page-only').addClass('hidden');
-      location.hash = hashLocation;
-    }
   } else {
     TownHall.isMap = true;
   }
@@ -423,27 +408,9 @@ export const init = () => {
       setTimeout(function () {
         indexView.resetHome();
       }, 100);
-    } else if (hashid === '#missing-members') {
-      // if (!missingMemberView.loaded) {
-      //   missingMemberView.init();
-      // } else {
-      //   setTimeout(function () {
-      //     $('.grid').isotope();
-      //   }, 1500);
-      // }
-      location.hash = hashid;
-    } else if (hashid === '#mfol-submit-event') {
-      newEventView.render();
-      location.hash = hashid;
-    } else if (hashid === '#thfol-guide') {
-      $('.home-page-only').addClass('hidden');
+    } else {
       location.hash = hashid;
     }
-
-    else {
-      location.hash = hashid;
-    }
-    // $('html, body').scrollTop(0);
   });
 
   // Remove query param when closing modal
