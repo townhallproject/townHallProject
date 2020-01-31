@@ -12,7 +12,7 @@ import { MENU_MAP, STATE_LEGISLATURES_MENU, MISSING_MEMBER_LINK } from './menuCo
 const { SubMenu } = Menu;
 
 import './style.less';
-import ImageModal from '../Home/Modal';
+import ImageModal from './Modal';
 
 class Header extends Component {
   constructor(props) {
@@ -118,6 +118,7 @@ class Header extends Component {
              <ImageModal
                 hash={hash}
                 menuItem={menuItem}
+                setHash={this.props.setHash}
              />
            )
          }

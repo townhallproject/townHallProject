@@ -49,36 +49,47 @@ export const MENU_MAP = new Map([
       link: ABOUT_LINK
     },
     {
-      display: 'THP 2017 Review',
-      link: "/Images/EOY_2017_Report_Desktop.png",
-      mobileLink: '/Images/EOY_2017_Report_Mobile.png',
+      display: 'THP Year 1',
+      link: 'year-one',
+      src: "/Images/EOY_2017_Report_Desktop.png",
+      mobileSrc: '/Images/EOY_2017_Report_Mobile.png',
       type: 'modal',
       icon: 'calendar',
       background: `#3facef`
     },
     {
-      display: 'THP 2018 Review',
-      link: "/Images/lookback2018-Desktop-nobg.png",
-      mobileLink: '/Images/lookback2018-Mobile-nobg.png',
+      display: 'THP Year 2',
+      link: "year-two",
+      src: "/Images/lookback2018-Desktop-nobg.png",
+      mobileSrc: '/Images/lookback2018-Mobile-nobg.png',
+      type: 'modal',
+      icon: 'calendar',
+      background: `#3facef`
+    },
+    {
+      display: 'THP Year 3',
+      link: 'year-three',
+      src: "/Images/EOY_2019_Desktop.png",
+      mobileSrc: '/Images/EOY_2019_Mobile.png',
       type: 'modal',
       icon: 'calendar',
       background: `#3facef`
     }
   ]],
   ['2019-review', [{
-      display: 'Accessibly Report',
+      display: 'Accountability Report',
       link: REPORT_2019_ID,
       icon: 'file-done'
     },
     {
       display: 'THP Awards',
-      link: "/Images/awards-2019.png",
+      src: "/Images/awards-2019.png",
       type: 'modal',
       icon: 'trophy'
     },
     {
-      display: 'Accessibility Report Infographic',
-      link: "/Images/2019-infographic.png",
+      display: 'Accountability Report Infographic',
+      src: "/Images/2019-infographic.png",
       type: 'modal',
       icon: 'area-chart'
     },
