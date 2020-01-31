@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Menu, Icon } from 'antd';
 import classNames from 'classnames';
+import indexView from '../../../scripts/views/indexView';
 
 class ImageModal extends React.Component {
   state = {
@@ -30,44 +31,57 @@ class ImageModal extends React.Component {
   }
 
   showModal() {
-    this.setState({
-      visible: true,
-    });
+    const { setHash, menuItem } = this.props;
+    setHash(menuItem.link);
   };
 
   handleOk(e) {
-    this.setState({
-      visible: false,
-    });
+    this.props.setHash('');
   };
 
   handleCancel(e) { 
-    this.setState({
-      visible: false,
-    });
+    this.handleOk();
   };
 
+  afterClose = () => {
+    // TODO: handle this at a higher level
+    // doing this so the map gets reset 
+    indexView.resetHome();
+  }
+
   render() {
-    const { menuItem } = this.props;
+    const { menuItem, hash } = this.props;
+
     return (
       <React.Fragment>
         <Menu.Item 
           {...this.props}
-          className={classNames(["fade-in", { 'submenu-item-selected': this.state.visible }])}
+          className={classNames(["fade-in", { 'submenu-item-selected': hash === menuItem.link }])}
           onClick={this.showModal}>
-          {menuItem.icon && <Icon type={menuItem.icon}/>}
-          {menuItem.display}
+            {menuItem.link ? (
+              <a
+                className={classNames(["menu-link"])}
+                href={`#${menuItem.link}`}
+              >
+              {menuItem.icon && <Icon type={menuItem.icon}/>}
+              {menuItem.display}
+            </a>) : 
+              [menuItem.icon && <Icon type={menuItem.icon} />,
+              menuItem.display]
+            }
         </Menu.Item>
         <Modal
-          visible={this.state.visible}
+          visible={hash === menuItem.link}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           footer={null}
+          style={{ maxWidth: 1440 }}
           width="90%"
+          afterClose={this.afterClose}
         >
           <img 
             className={menuItem.background ? "ant-modal-image" : null}
-            src={this.state.width < 740 && menuItem.mobileLink ? menuItem.mobileLink : menuItem.link} 
+            src={this.state.width < 740 && menuItem.mobileSrc ? menuItem.mobileSrc : menuItem.src} 
           />
         </Modal>
       </React.Fragment>
