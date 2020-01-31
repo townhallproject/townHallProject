@@ -84,5 +84,9 @@ export default (eventInfo) => {
     :
   `<p>Last Updated: ${dateFormat(eventInfo.lastUpdated)}</p>`
     }
+    <div class="event-modal-ada">
+    ${eventInfo.ada_accessible ?
+      '<span>ADA Accessible</span><span class="ada-logo ada-logo-event-modal"></span>' : ""}
+  </div>
 </div>`
 }

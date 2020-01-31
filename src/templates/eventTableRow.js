@@ -45,6 +45,8 @@ return `<li id="${townhall.eventId}"
       `<li>${townhall.phoneNumber}</li>` : ''}
     ${townhall.address ? 
       `<li>${townhall.address}</li>` : ''}
+    ${townhall.ada_accessible ? 
+      `<li class="ada-logo ada-logo-table"t></li>` : ''}
   </ul>
   ${townhall.Notes ? 
     `<div id="notes-${townhall.eventId}" class="collapse notes">${townhall.Notes}</div>`: ''}
