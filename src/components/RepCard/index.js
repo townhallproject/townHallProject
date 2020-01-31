@@ -25,12 +25,12 @@ class RepCard extends Component {
         style={{ width: 325 }}
         title={rep.party}
         className={classNames("rep-card", rep.party)}
-        actions={[]}
+        actions={[<p>Terms Ends:  {moment(rep.end_date).format('ll')}</p>]}
       >
       <Meta
         avatar={<Avatar src={`https://www.govtrack.us/static/legislator-photos/${rep.govtrack_id}-100px.jpeg`} />}
         title={rep.displayName}
-        description={rep.title}
+        description={rep.title.split(',')[0]}
       />
       <div className="social-icons">
         { rep.url &&
@@ -54,18 +54,17 @@ class RepCard extends Component {
         <div className="missing-member">Missing</div>
       }
       <div className="rep-card-content">
+        <p><span className='label'>DC office phone: </span>{rep.phone}</p>
+        {rep.address && <p><span className='label'>Office address: </span>{rep.address}</p>}
         {/* TODO: add date of last town hall & local phone # */}
         {/* <p>Date of Last Town Hall: </p> */}
         {/* <p>Local Office Phone: </p> */}
         {
           rep.fax &&
-          <p>Fax: {rep.fax}</p>
+          <p><span className='label'>Fax: </span>{rep.fax}</p>
         }
-        <p>DC Office Phone: {rep.phone}</p>
-        <br />
-        <br />
-        <p>Terms Ends:  {moment(rep.end_date).format('ll')}</p>
       </div>
+      
       </Card>
     )
   }
