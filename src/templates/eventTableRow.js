@@ -45,8 +45,15 @@ return `<li id="${townhall.eventId}"
       `<li>${townhall.phoneNumber}</li>` : ''}
     ${townhall.address ? 
       `<li>${townhall.address}</li>` : ''}
-  </ul>
-  ${townhall.Notes ? 
-    `<div id="notes-${townhall.eventId}" class="collapse notes">${townhall.Notes}</div>`: ''}
+      ${townhall.ada_accessible ? 
+      `<li class="ada-logo ada-logo-table"t></li>` : ''}
+
+  </ul>    
+    
+    ${townhall.Notes && townhall.iconFlag === 'campaign' ?
+    `<div id="notes-${townhall.eventId}" class="collapse notes">${townhall.Notes} <br /> <span class="disclaimer-text">Town Hall Project lists this event and any third-party link as public information and not as an endorsement of a participating candidate, campaign, or party.</span></div>`: 
+    townhall.Notes ? `<div id="notes-${townhall.eventId}" class="collapse notes">${townhall.Notes}` : 
+    townhall.iconFlag === 'campaign' ? `<div id="notes-${townhall.eventId}" class="collapse notes"><span class="disclaimer-text">Town Hall Project lists this event and any third-party link as public information and not as an endorsement of a participating candidate, campaign, or party.</span></div>` :''
+    }
 </li>`
 }

@@ -59,6 +59,8 @@ export default (eventInfo) => {
 
   ${eventInfo.Notes ?
     `<p>${eventInfo.Notes}</p>` : ''}
+  ${eventInfo.iconFlag === 'campaign' ? `<p class="disclaimer-text">Town Hall Project lists this event and any third-party link as public information and not as an endorsement of a participating candidate, campaign, or party.</p>` : ''}
+
   <p>
     ${eventInfo.phoneNumber ? 
       `<div> Call in number: ${eventInfo.phoneNumber}</div>`: ''
@@ -81,8 +83,11 @@ export default (eventInfo) => {
         </iframe>
       </div>
     </p>`
-    :
-  `<p>Last Updated: ${dateFormat(eventInfo.lastUpdated)}</p>`
-    }
+    : ''}
+  <p>Last Updated: ${dateFormat(eventInfo.lastUpdated)}</p>
+  <div class="event-modal-ada">
+      ${eventInfo.ada_accessible ?
+        '<span>ADA Accessible</span><span class="ada-logo ada-logo-event-modal"></span>' : ""}
+    </div>
 </div>`
 }
