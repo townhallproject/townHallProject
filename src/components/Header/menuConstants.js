@@ -89,7 +89,7 @@ export const MENU_MAP = new Map([
     },
     {
       display: 'Accountability Report Infographic',
-      src: "/Images/2019-infographic.png",
+      src: "/Images/CongressionalAccountabilityReport2019.png",
       type: 'modal',
       icon: 'area-chart'
     },
