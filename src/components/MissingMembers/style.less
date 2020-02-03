@@ -1,0 +1,194 @@
+.missing-member-header {
+    padding: 20px;
+
+    .ant-dropdown-trigger:hover,
+    .ant-dropdown-trigger:active {
+        color: white;
+        border-color: @brand-success;
+    }
+}
+
+.missing-member-cards-container {
+
+    .card-representative {
+        /* Can probably remove some of this when migrating to bootstrap 4 */
+        margin-bottom: 2em;
+        background: @brand-white;
+
+        .popover {
+            color: @brand-text;
+        }
+
+        .card-header {
+            padding: 0 15px;
+            color: white;
+            h3 {
+                margin-top: 10px;
+            }
+
+            .logo {
+                margin-top: 20px;
+            }
+        }
+
+        .card-block {
+            padding: 1.25em 2.5em;
+            height: 6.5em;
+
+            a.social-icon {
+                font-size: 1.25em;
+            }
+        }
+
+        .card-footer {
+
+            // padding: 0 2.5em 1.25em;	
+            label {
+                font-weight: 500;
+            }
+
+            .challenger {
+                padding: 20px;
+                background: @brand-primary;
+                color: @brand-white;
+                height: 80px;
+
+            }
+        }
+
+        h3 {
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        h4 {
+            letter-spacing: 0.05em;
+        }
+
+        label,
+        a {
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+    }
+
+    .Democratic .card-header {
+        color: white;
+        background-color: #3facef;
+    }
+
+    .Independent .card-header {
+        color: white;
+        background-color: darken(#705f8c, 20%);
+    }
+
+    .Republican .card-header {
+        background-color: @brand-secondary;
+    }
+}
+
+#missing-members {
+    .missing-member-cards-container {
+        background-color: @brand-gray;
+        padding-bottom: 130px;
+        -webkit-box-shadow: inset 0px 12px 29px -13px rgba(0, 0, 0, 1);
+        -moz-box-shadow: inset 0px 12px 29px -13px rgba(0, 0, 0, 1);
+        box-shadow: inset 0px 12px 29px -13px rgba(0, 0, 0, 1);
+
+        .card-representative {
+            .fa-address-book {
+                position: absolute;
+                right: 15px;
+                opacity: 0.65;
+                color: #ffffff;
+            }
+
+            .do-your-job-logo {
+                margin-top: 20px;
+            }
+        }
+    }
+
+    .navbar {
+        border-bottom: @brand-cool;
+        min-height: 105px;
+        background-color: transparent;
+        border: none;
+    }
+
+    .navbar-left {
+        padding-left: 15px;
+        padding-right: 15px;
+        min-width: 276px;
+    }
+
+    .navbar-left {
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+
+    .navbar-right .btn {
+        font-size: 1em;
+    }
+
+    .navbar-right {
+        margin-left: 15px;
+        margin-right: 15px;
+
+    }
+
+    .dropdown-menu .btn:hover {
+        background-color: @brand-secondary;
+    }
+
+    .downdown-title {
+        color: @brand-text;
+    }
+
+    .btn-group a {
+        border: 1px solid @brand-white;
+    }
+}
+
+@media (max-width:564px) {
+    #missing-members .navbar-right .nav-item {
+        width: 100%;
+    }
+
+    .navbar-btn.btn-xs {
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+
+    .nav-item a {
+        width: 100%;
+    }
+
+    #missing-members .btn-group {
+        border-radius: 3px;
+    }
+
+    #missing-members .grid {
+        width: 260px;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn-xs.navbar-btn {
+        margin-left: 0px;
+    }
+}
+
+@media (min-width: 768px) {
+    .btn-xs.navbar-btn {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #missing-members .navbar-nav,
+    #missing-members .navbar-right.btn-group {
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+}

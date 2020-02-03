@@ -12,8 +12,8 @@ import stateView from './stateView';
 import mapView from './mapView';
 import indexView from './indexView';
 import eventHandler from './eventView';
-import repCardHandler from './repCardView';
 import emailHandler from './emailSignUpView';
+
 const mapboxView = {};
 var map;
 // Define an intial view for the map
@@ -136,7 +136,10 @@ mapboxView.makeZoomToNationalButton = function (state) {
   } else {
     usaButton.innerHTML = '<span class="usa-icon"></span>';
   }
-  usaButton.addEventListener('click', indexView.resetHome);
+  usaButton.addEventListener('click', () => {
+    mapboxView.setDistrict(null)
+    indexView.resetHome();
+  });
   document.querySelector('.mapboxgl-ctrl-group').appendChild(usaButton);
 };
 
@@ -144,15 +147,15 @@ mapboxView.districtSelect = function (feature) {
   if (feature.state) {
     var locationData = {
       federal: {
-        thisState: feature.state,
-        validDistricts: [feature.district],
-        validSelections: feature.geoID
+        state: feature.state,
+        districts: [feature.district],
+        selections: [feature.geoID],
       }
     };
+    mapboxView.setDistrict(locationData);
     eventHandler.renderResults(locationData);
     var firstArg = feature.district ? feature.state : 'state';
     var secondArg = feature.district ? feature.district : feature.state;
-    repCardHandler.renderRepresentativeCards(TownHall.lookupReps(firstArg, secondArg), $('#representativeCards section'), feature.state);
     emailHandler.clearDistricts();
     emailHandler.addDistrict(feature.state + '-' + feature.district);
     urlParamsHandler.setUrlParameter('zipcode', false);
@@ -163,6 +166,7 @@ mapboxView.districtSelect = function (feature) {
       map.setLayoutProperty('selected-fill', 'visibility', 'none');
       map.setLayoutProperty('selected-border', 'visibility', 'none');
     }
+    mapboxView.setDistrict(null);
   }
 };
 
@@ -185,16 +189,16 @@ mapboxView.getResultsFromSelectingStateDistrict = function (feature) {
   if (feature.state) {
     var locationData = {
       federal: {
-        thisState: feature.state,
-        validDistricts: [feature.senate_district, feature.house_district],
-        validSelections: [],
+        state: feature.state,
+        districts: [feature.senate_district, feature.house_district],
+        selections: [],
       },
       upper: {
-        validDistricts: [feature.senate_district],
+        districts: [feature.senate_district],
         upperEvents: []
       },
       lower: {
-        validDistricts: [feature.house_district],
+        districts: [feature.house_district],
         lowerEvents: []
       }
     };
@@ -205,16 +209,16 @@ mapboxView.getResultsFromSelectingStateDistrict = function (feature) {
 mapboxView.getResultsFromSelectingPoint = function (feature) {
   var locationData = {
     federal: {
-      thisState: feature.state,
-      validDistricts: [],
-      validSelections: []
+      state: feature.state,
+      districts: [],
+      selections: []
     },
     upper: {
-      validDistricts: [],
+      districts: [],
       upperEvents: []
     },
     lower: {
-      validDistricts: [],
+      districts: [],
       lowerEvents: []
     }
   };
@@ -225,16 +229,16 @@ mapboxView.getResultsFromSelectingPoint = function (feature) {
     var filterHouse = ['all', ['==', 'GEOID', feature.house_geoId]];
     map.setFilter('states-house-districts-selected', filterHouse);
     map.setLayoutProperty('states-house-districts-selected', 'visibility', 'visible');
-    locationData.federal.validDistricts.push(feature.house_district);
-    locationData.lower.validDistricts.push(feature.house_district);
+    locationData.federal.districts.push(feature.house_district);
+    locationData.lower.districts.push(feature.house_district);
 
   } else if (feature.senate_geoId) {
 
     var filterSenate = ['all', ['==', 'GEOID', feature.senate_geoId]];
     map.setFilter('states-senate-districts-selected', filterSenate);
     map.setLayoutProperty('states-senate-districts-selected', 'visibility', 'visible');
-    locationData.federal.validDistricts.push(feature.senate_district);
-    locationData.upper.validDistricts.push(feature.senate_district);
+    locationData.federal.districts.push(feature.senate_district);
+    locationData.upper.districts.push(feature.senate_district);
 
   }
   eventHandler.renderResults(locationData);
@@ -440,33 +444,31 @@ mapboxView.removeListeners = function () {
 };
 
 var filterDistrict = ['any'];
-var includedStates = ['in', 'NAME'];
+var includedStates = ['in', 'ABR'];
 
-// Does the initial filter for the map to determine which districts have Town Halls.
-// TODO: Add in a data-driven style for the district layer that does a different fill if it's a local represenative vs. a Senator
 mapboxView.filterMap = function (townHall) {
   // Fetch states with senators in em'
-  if (townHall.meetingType === 'DC Event') {
+  if (townHall.meetingType === 'DC Event' || townHall.chamber === 'nationwide') {
     return;
   }
 
   var district = townHall.district;
 
   if (!district) {
-    if (!townHall.stateName) {
+    if (!townHall.state) {
       return;
     }
-    includedStates.push(townHall.stateName);
+    if (!includedStates.includes(townHall.state)) {
+      includedStates.push(townHall.state);
+    }
   }
 
   var filterSenate = ['all', includedStates];
-
   // Fetch districts w/ town halls occuring
   if (district) {
     var districtId = district;
     var fipsId = fips[townHall.state];
-    var geoid = fipsId + districtId;
-
+    var geoid = fipsId + mapHelperFunctions.zeroPad(districtId);
     filterDistrict.push(['==', 'GEOID', geoid]);
   }
   // Apply the filters to each of these layers
@@ -475,8 +477,13 @@ mapboxView.filterMap = function (townHall) {
 };
 
 function toggleFilters(layer, filter) {
-  map.setFilter(layer, filter);
-  map.setLayoutProperty(layer, 'visibility', 'visible');
+  try {
+    map.setFilter(layer, filter);
+    map.setLayoutProperty(layer, 'visibility', 'visible');
+    
+  } catch (error) {
+    
+  }
 }
 
 // Handles the highlight for districts when clicked on.
@@ -526,7 +533,7 @@ mapboxView.makePoint = function (townhall, stateIcon) {
   }
   // makes staff icon smaller
   iconKey = iconKey === 'staff' ? 'staff-small' : iconKey;
-  if (townhall.thp_id && townhall.district) {
+  if (townhall.level ==='state' && townhall.district) {
     townhall.chamber = townhall.district.split('-')[0] === 'HD' ? 'lower' : 'upper';
   }
   array.features.push({

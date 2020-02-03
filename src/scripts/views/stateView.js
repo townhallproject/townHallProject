@@ -3,11 +3,9 @@ import eventHandler from './eventView';
 const stateView = {};
 
 stateView.maskCountry = function (map, state) {
-  map.setFilter('state-mask', ['!=', 'ref', state]);
-};
-
-stateView.renderHeader = function (state) {
-  $('#header-image').attr('src', `${location.origin}/Images/${state}/THP_logo_inverse.png`);
+  const layer = 'state-mask'
+  map.setFilter(layer, ['!=', 'ref', state]);
+  // map.setLayoutProperty(layer, 'visibility', 'visible');
 };
 
 stateView.setStateDropdown = function (state) {

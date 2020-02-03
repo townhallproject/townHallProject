@@ -1,8 +1,12 @@
-import React from "react";
+import React from 'react';
+import Script from 'react-load-script'
 
 const Join = props => {
   return (
     <React.Fragment>
+      <Script
+        url="https://actionnetwork.org/widgets/v2/form/stay-up-to-date-on-our-work?format=js&source=widget"
+      />
       <header>
         <section className="container container-fluid">
           <div className="col-md-6 col-md-offset-3">

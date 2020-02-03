@@ -22,7 +22,7 @@ noWebGlMapView.noWebGlMapinit = function(){
 };
 //draws map
 window.initMap = function initMap() {
-    if (mapView.webGL) {
+    if (mapboxgl.supported()) {
       return;
     }
     google = window.google;
@@ -384,6 +384,9 @@ window.initMap = function initMap() {
   };
 
   noWebGlMapView.onResizeMap = function() {
+    if (!google.maps) {
+      return;
+    }
     google.maps.event.trigger(googleMap, 'resize');
     var mainBB = [-128.8, 23.6, -65.4, 50.2];
     var data = TownHall.allTownHalls;
@@ -408,6 +411,9 @@ window.initMap = function initMap() {
 
 // TODO; Probably redudent with resize map
 noWebGlMapView.focusMap = function(bb) {
+  if (!google.maps) {
+    return;
+  }
   google.maps.event.trigger(googleMap, 'resize');
   var southWest = new google.maps.LatLng(bb[1], bb[0]);
   var northEast = new google.maps.LatLng(bb[3], bb[2]);

@@ -190,7 +190,7 @@ section.border{
   width: 125px;
 }
 .navbar-brand {
-  padding-top: 5px!important;
+  padding-top: 5px !important;
 }
 .navbar .navbar-left {
   a {
@@ -303,10 +303,9 @@ h1, h2 {
   font-size: 1.3em;
 }
 
-header{
+header {
   background-color: @brand-primary;
   color: white;
-  padding: 20px;
 }
 
 .margin-bottom{
@@ -320,6 +319,7 @@ header{
 
 .footer {
   color: white;
+  position: relative;
   bottom: 0;
   width: 100%;
   height: 200px;
@@ -615,20 +615,6 @@ a.social-icon {
   background-color: @brand-secondary;
 }
 
-.Dem .panel-heading, .card-representative.Democratic .card-header{
-   color: white;
-   background-color: #66bdf4;
- }
-
- .Ind .panel-heading, .card-representative.Independent .card-header{
-   color: white;
-   background-color: darken(#705f8c, 20%);
- }
-
- .card-representative.Republican .card-header{
-   background-color: #f87773;
- }
-
 .event-party { color: #aaa; }
 
 .event-name {
@@ -674,101 +660,8 @@ a.social-icon {
   margin-bottom: 1rem;
 }
 
-.Dem .panel-heading, .card-representative.Democratic .card-header{
-  color: white;
-  background-color: #3facef;
-}
-
-.Rep .panel-heading, .card-representative.Republican .card-header{
-  color: white;
-  background-color: @brand-secondary;
-}
-
-.Ind .panel-heading, .card-representative.Independent .card-header{
-  color: white;
-  background-color: darken(#705f8c, 20%);
-}
-
 #no-events {
   display: none;
-}
-
-#representativeCards {
-  background: @brand-white;
-  display: none;
-  background-color: #f4f4f4;
-  -webkit-box-shadow: inset 0px -39px 29px -45px rgba(0,0,0,1);
-     -moz-box-shadow: inset 0px -39px 29px -45px rgba(0,0,0,1);
-          box-shadow: inset 0px -39px 29px -45px rgba(0,0,0,1);
-  padding-bottom: 1.5em;
-  h2 {
-    margin-top: 1em;
-  }
-  /* Remove this when upgrading to bootstrap 4 and we can do proper cards */
-  .card-representative {
-    min-height: 21em;
-    div.missing-member {
-      position: absolute;
-      bottom: 0px;
-      z-index: 10;
-      line-height: 1em;
-      padding: 0.25em 0;
-      text-align: center;
-      color: @brand-secondary;
-      background-color: rgba(0, 0, 0, 0.66);
-    }
-  }
-}
-
-.card-representative {
-  /* Can probably remove some of this when migrating to bootstrap 4 */
-  margin-bottom: 2em;
-  background: @brand-white;
-  .popover {
-    color: @brand-text;
-  }
-  .card-header {
-    padding: 0 15px;
-    h3 {
-      margin-top: 10px;
-    }
-    .logo {
-      margin-top: 20px;
-    }
-  }
-  .card-block {
-    padding: 1.25em 2.5em;
-    height: 6.5em;
-    a.social-icon {
-      font-size: 1.25em;
-    }
-  }
-  .card-footer {
-    // padding: 0 2.5em 1.25em;
-    label {
-      font-weight: 500;
-    }
-    .challenger {
-      padding: 20px;
-      background: @brand-primary;
-      color: @brand-white;
-      height: 80px;
-    
-    }
-  }
-
-  h3 {
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-  h4 {
-    letter-spacing: 0.05em;
-  }
-  label, a {
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-
 }
 
 .logo {
@@ -1015,6 +908,9 @@ dt.key{
   margin-bottom: 180px;
 }
 
+.disclaimer-text {
+  color: lighten(@navbar-default-color, 10%);
+}
 // scroll button style
 #scrollBtn {
   display: none;
@@ -1417,92 +1313,6 @@ img.grayscale {
   max-width: 260px;
 }
 
-#missing-members {
-  background-color: @brand-gray;
-  .missing-member-cards-container {
-    padding-bottom: 130px;
-    -webkit-box-shadow: inset 0px 12px 29px -13px rgba(0,0,0,1);
-       -moz-box-shadow: inset 0px 12px 29px -13px rgba(0,0,0,1);
-            box-shadow: inset 0px 12px 29px -13px  rgba(0,0,0,1);
-
-    .card-representative {
-      .fa-address-book {
-        position: absolute;
-        right: 15px;
-        opacity: 0.65;
-        color: #ffffff;
-      }
-      .do-your-job-logo {
-        margin-top: 20px;
-      }
-    }
-  }
-  .navbar {
-    border-bottom: @brand-cool;
-    min-height: 105px;
-    background-color: transparent;
-    border: none;
-  }
-  .navbar-left{
-    padding-left: 15px;
-    padding-right: 15px;
-    min-width: 276px;
-  }
-  .navbar-left{
-    padding-top: 1em;
-    padding-bottom: 1em;
-  }
-  .navbar-right .btn {
-    font-size: 1em;
-  }
-  .navbar-right {
-    margin-left: 15px;
-    margin-right: 15px;
-
-  }
-  .dropdown-menu .btn:hover {
-    background-color: @brand-secondary;
-  }
-  .downdown-title {
-    color: @brand-text;
-  }
-  .btn-group a{
-    border: 1px solid @brand-white;
-  }
-}
-@media (max-width:564px) {
-  #missing-members .navbar-right .nav-item {
-    width: 100%;
-  }
-  .navbar-btn.btn-xs {
-    margin-top: 1px;
-    margin-bottom: 1px;
-  }
-  .nav-item a {
-    width: 100%;
-  }
-  #missing-members .btn-group {
-    border-radius: 3px;
-  }
-  #missing-members .grid {
-    width: 260px;
-  }
-}
-@media (max-width: 768px) {
-  .btn-xs.navbar-btn {
-    margin-left: 0px;
-    }
-}
-@media (min-width: 768px) {
-  .btn-xs.navbar-btn {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    }
-    #missing-members .navbar-nav, #missing-members .navbar-right.btn-group {
-      margin-right: 15px;
-      margin-left: 15px;
-    }
-}
 
 .element-item {
   width: 25%;
@@ -1837,7 +1647,7 @@ img.grayscale {
   background-image: url('/Images/map/senate-fill.svg');
 }
 
-.map-legend__distrcit {
+.map-legend__district {
   border: 1px solid black;
   width: 15px;
   height: 15px;
@@ -2131,4 +1941,9 @@ img.grayscale {
   .img-holder{
     padding: 20px;
   }
+}
+
+/* Tab content overrides */
+.tab-content > .active {
+  display: contents;
 }
