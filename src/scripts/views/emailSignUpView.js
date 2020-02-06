@@ -115,7 +115,6 @@ emailHandler.hideEmailForm = function () {
   $('#email-signup').hide();
   $('#email-update').removeClass('hidden').show();
 };
-$('#open-email-form').on('click', emailHandler.openEmailForm);
 
 export default emailHandler;
 

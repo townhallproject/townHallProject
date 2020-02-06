@@ -1,7 +1,9 @@
 require('dotenv').config();
+
 const path = require('path');
 const fs = require('fs');
 const lessToJs = require('less-vars-to-js');
+
 
 const HTMLPlugin = require('html-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
@@ -60,7 +62,8 @@ module.exports = {
       alias: {
         'masonry': 'masonry-layout',
         'isotope': 'isotope-layout'
-      }
+      },
+      extensions: ['.js', '.json', '.jsx'],
     },
   mode: 'development',
   optimization: {
@@ -96,10 +99,6 @@ module.exports = {
           ],
         },
       },
-      { 
-        test: /\.handlebars$/, 
-        loader: 'handlebars-loader'
-      },
       {
         test: /\.css$/,
         use: [
@@ -107,7 +106,7 @@ module.exports = {
           'css-loader',
         ],
       },
-      // If it's a .scss file
+      // If it's a less file
       {
         test: /\.less$/,
         use: [
@@ -149,7 +148,8 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
-    resolve: {
-      extensions: ['.js', '.jsx']
-    }
+  resolve: {
+    extensions: [".js", ".jsx", ".json"],
+  },
+
 };

@@ -63,7 +63,7 @@ export default (townhall) => (`<div class="col-md-12 col-sm-6 event-card">
             }
             
         </span>
-      <span class="profile-summary-value"> at ${townhall.Time}${townhall.timeZone}, ${townhall.timeZone}</span></h4></span>
+      <span class="profile-summary-value"> at ${townhall.Time}${townhall.timeZone ?  `, ${townhall.timeZone}` : ''}</span></h4></span>
       <ul class="list-group list-group-flush">
         ${townhall.phoneNumber ? 
         `<li class="list-group-item list-item-no-border"> Call in number: ${townhall.phoneNumber}
@@ -85,6 +85,7 @@ export default (townhall) => (`<div class="col-md-12 col-sm-6 event-card">
         ${townhall.Notes ? 
         `<li class="list-group-item list-item-no-border list-item-no-border">${townhall.Notes}
         </li>` : ''}
+        ${townhall.iconFlag === 'campaign' ? `Town Hall Project lists this event and any third-party link as public information and not as an endorsement of a participating candidate, campaign, or party.` : ''}
         ${townhall.link ? 
         `<li class="list-group-item list-item-no-border pull-right">
           <a href="${townhall.link}" target="_blank">${townhall.linkName ? townhall.linkName : 'Find out more'}<i class="fa fa-chevron-right" aria-hidden="true"></i></a>
@@ -97,6 +98,9 @@ export default (townhall) => (`<div class="col-md-12 col-sm-6 event-card">
     </div>
     <div class="panel-footer">
         <small>Last Updated: ${dateFormat(townhall.lastUpdated)}</small>
+              ${townhall.ada_accessible ? '<div class="ada-logo ada-logo-event-card" ></div>' : ""}
+
+    </div>
     </div>
   </div>
 </div>`
