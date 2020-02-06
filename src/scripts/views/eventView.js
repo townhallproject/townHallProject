@@ -416,10 +416,10 @@ export const init = () => {
     urlParamsHandler.setUrlParameter('eventId', false);
     urlParamsHandler.setUrlParameter('state', false);
   });
-  $('#close-email').on('click', function () {
-    localStorage.setItem('signedUp', true);
-    emailHandler.closeEmailForm();
-  });
+  // $('#close-email').on('click', function () {
+  //   localStorage.setItem('signedUp', true);
+  //   emailHandler.closeEmailForm();
+  // });
   $('body').on('click', '.popover .popover-title a.close', function () {
     $('[data-toggle="popover"]').popover('hide');
   });
@@ -436,15 +436,15 @@ export const init = () => {
     $('#privacy-policy-link').click();
     $('html,body').scrollTop(0);
   });
-  $('#close-email').on('click', function () {
-    localStorage.setItem('signedUp', true);
-    emailHandler.closeEmailForm();
-  });
-  $('#email-signup-form').on('submit', emailHandler.validateSignup);
-  if (localStorage.getItem('signedUp') === 'true') {
-    emailHandler.hideEmailForm();
-  }
-  $('#open-email-form').on('click', emailHandler.openEmailForm);
+  // $('#close-email').on('click', function () {
+  //   localStorage.setItem('signedUp', true);
+  //   emailHandler.closeEmailForm();
+  // });
+  // $('#email-signup-form').on('submit', emailHandler.validateSignup);
+  // if (localStorage.getItem('signedUp') === 'true') {
+  //   emailHandler.hideEmailForm();
+  // }
+  // $('#open-email-form').on('click', emailHandler.openEmailForm);
   var divTop = $('#all-events-table').offset().top + 380;
   $(window).scroll(function () {
     if ($(window).scrollTop() > divTop) {

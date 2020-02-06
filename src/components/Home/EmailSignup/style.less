@@ -1,0 +1,36 @@
+#email-signup {
+  #email-signup-form {
+    input, select {
+      &.input-lg {
+        background: @brand-white;
+        color: @brand-text;
+        &::-webkit-input-placeholder { /* Chrome */
+          color: @brand-success;
+          opacity: 0.9;
+        }
+        &:-ms-input-placeholder { /* IE 10+ */
+          color: @brand-success;
+          opacity: 0.9;
+        }
+        &::-moz-placeholder { /* Firefox 19+ */
+          color: @brand-success;
+          opacity: 0.9;
+        }
+        &:-moz-placeholder { /* Firefox 4 - 18 */
+          color: @brand-success;
+          opacity: 0.9;
+        }
+      }
+    }
+    .bootstrap-tagsinput {
+       height: 46px;
+       line-height: 1.3333333;
+       border: none;
+       margin-bottom: 10px;
+    }
+  }
+}
+#open-email-form{
+  float: right;
+  margin: 10px;
+}
