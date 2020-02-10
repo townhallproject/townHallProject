@@ -445,14 +445,14 @@ export const init = () => {
     emailHandler.hideEmailForm();
   }
   $('#open-email-form').on('click', emailHandler.openEmailForm);
-  var divTop = $('#all-events-table').offset().top + 380;
-  $(window).scroll(function () {
-    if ($(window).scrollTop() > divTop) {
-      $('#scrollBtn').show();
-    } else {
-      $('#scrollBtn').hide();
-    }
-  });
+  // var divTop = $('#all-events-table').offset().top + 380;
+  // $(window).scroll(function () {
+  //   if ($(window).scrollTop() > divTop) {
+  //     $('#scrollBtn').show();
+  //   } else {
+  //     $('#scrollBtn').hide();
+  //   }
+  // });
 }
 
 export const embedMapInit = () => {

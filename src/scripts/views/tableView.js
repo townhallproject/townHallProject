@@ -19,9 +19,9 @@ tableHandler.resetTable = function () {
 };
 
 tableHandler.clearTableData = function () {
-  $('#all-events-table').children().slice(1).remove();
-  $('#current-state').attr('data-total', 0);
-  $('#current-state').attr('data-current', 0);
+  // $('#all-events-table').children().slice(1).remove();
+  // $('#current-state').attr('data-total', 0);
+  // $('#current-state').attr('data-current', 0);
 };
 
 tableHandler.initialFilters = function () {
@@ -44,15 +44,15 @@ tableHandler.configureDropdowns = function() {
 };
 
 tableHandler.renderTableWithArray = function (array) {
-  $('.event-row').remove();
-  var $table = $('#all-events-table');
-  var $currentState = $('#current-state');
-  var total = parseInt($currentState.attr('data-total'));
-  var cur = array.length;
-  array.forEach(function (ele) {
-    tableHandler.renderTable(ele, $table);
-  });
-  $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
+  // $('.event-row').remove();
+  // var $table = $('#all-events-table');
+  // var $currentState = $('#current-state');
+  // var total = parseInt($currentState.attr('data-total'));
+  // var cur = array.length;
+  // array.forEach(function (ele) {
+  //   tableHandler.renderTable(ele, $table);
+  // });
+  // $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
 };
 
 // render table row
@@ -127,31 +127,31 @@ tableHandler.scrollToTopTable = function () {
 
 // initial state of table
 tableHandler.initialMainTable = function (townhall) {
-  var $currentState = $('#current-state');
-  var total = parseInt($currentState.attr('data-total')) + 1;
-  var cur = parseInt($currentState.attr('data-current'));
-  $currentState.attr('data-total', total);
-  var $table = $('#all-events-table');
-  var meetingTypesToShow = TownHall.filters.meetingType;
-  if (meetingTypesToShow.indexOf(townhall.meetingType) > -1) {
-    cur++;
-    tableHandler.renderTable(townhall, $table);
-    $currentState.attr('data-current', cur);
-  }
-  $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
+  // var $currentState = $('#current-state');
+  // var total = parseInt($currentState.attr('data-total')) + 1;
+  // var cur = parseInt($currentState.attr('data-current'));
+  // $currentState.attr('data-total', total);
+  // var $table = $('#all-events-table');
+  // var meetingTypesToShow = TownHall.filters.meetingType;
+  // if (meetingTypesToShow.indexOf(townhall.meetingType) > -1) {
+  //   cur++;
+  //   tableHandler.renderTable(townhall, $table);
+  //   $currentState.attr('data-current', cur);
+  // }
+  // $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
 };
 
 // initial state of table
 tableHandler.initialStateTable = function (townhall) {
-  var $currentState = $('#current-state');
-  var total = parseInt($currentState.attr('data-total')) + 1;
-  var cur = parseInt($currentState.attr('data-current'));
-  $currentState.attr('data-total', total);
-  var $table = $('#all-events-table');
-  cur++;
-  tableHandler.renderTable(townhall, $table);
-  $currentState.attr('data-current', cur);
-  $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
+  // var $currentState = $('#current-state');
+  // var total = parseInt($currentState.attr('data-total')) + 1;
+  // var cur = parseInt($currentState.attr('data-current'));
+  // $currentState.attr('data-total', total);
+  // var $table = $('#all-events-table');
+  // cur++;
+  // tableHandler.renderTable(townhall, $table);
+  // $currentState.attr('data-current', cur);
+  // $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
 };
 
 export default tableHandler;
