@@ -11,6 +11,7 @@ import Campaign from '../../../Images/map/circle-campaign.svg';
 import InPerson from '../../../Images/map/circle-in-person.svg';
 import Staff from '../../../Images/map/circle-staff.svg';
 import Tele from '../../../Images/map/circle-tele.svg';
+import SearchHeader from './SearchHeader'
 
 import './style.less';
 
@@ -37,26 +38,38 @@ class EventsTable extends React.Component {
 
   }
 
+  updateSortOn = (sortOn) => {
+    this.setState({sortOn})
+  }
+
+  updateSearchFilters = (value, type) => {
+    this.setState(prevState => ({
+      filters: {
+        ...prevState.filters,
+        [type]: value
+      }
+    }))
+  }
+
   renderMissingMemberTitle(townhall) {
-    return (<h4 class="line-height-medium">
+    return (<h4 className="line-height-medium">
       {townhall.District === 'Senate' ?
         `<span class="discriptor-text d-inline-block">Home state MoC (not present): </span>${townhall.formattedMember} <small>  ${townhall.party ? `(${townhall.party})` : ''}${townhall.displayDistrict}</small>`
         :
         `<span class="discriptor-text d-inline-block">Home district MoC (not present): </span>${townhall.formattedMember} <small>  ${townhall.party ? `(${townhall.party})` : ''}${townhall.displayDistrict}</small>`
       }
-      <br /><span class="discriptor-text d-inline-block">Visiting MoC (will be present): </span>${townhall.districtAdopter} <small> (${townhall.districtAdopterParty}) ${townhall.districtAdopterState}, ${townhall.districtAdopterDistrict}</small>
+      <br /><span className="discriptor-text d-inline-block">Visiting MoC (will be present): </span>${townhall.districtAdopter} <small> (${townhall.districtAdopterParty}) ${townhall.districtAdopterState}, ${townhall.districtAdopterDistrict}</small>
     </h4>)
   }
 
   renderTitle(townhall) {
     townhall.makeFormattedMember();
-    console.log(iconFlagToIconMap[townhall.iconFlag])
     return (
-      <span class="member">
+      <span className="member">
         {townhall.meetingType === 'Adopt-A-District/State' ?
           this.renderMissingMemberTitle(townhall)
           :
-          (<h4 class="line-height-medium">
+          (<h4 className="line-height-medium">
             {townhall.formattedMember} <small> {townhall.party && `(${townhall.party})`} {townhall.displayDistrict}</small>
           </h4>)
         }
@@ -73,7 +86,7 @@ class EventsTable extends React.Component {
       allTownHalls
     } = this.props;
 
-    const currentFilteredEvents = getFilteredEvents(allTownHalls, filters, sortOn )
+    const currentFilteredEvents = getFilteredEvents(allTownHalls, filters, sortOn)
 
     return (
     <div className="hidden-xs ">
@@ -88,7 +101,10 @@ class EventsTable extends React.Component {
         </p>
       </section>
         <a name="events-table" id="events-table"></a>
-
+      <SearchHeader
+        handleUpdateSortOn={this.updateSortOn}
+        handleUpdateSearchFilters={this.updateSearchFilters}
+      />
         <section className=" container container-fluid events-table-container">
           <div className="row">
             <div className="col-md-12">
@@ -99,7 +115,7 @@ class EventsTable extends React.Component {
               </span>
             </div>
           </div>
-    
+      
     <List
       itemLayout="vertical"
       dataSource={currentFilteredEvents}
@@ -112,7 +128,7 @@ class EventsTable extends React.Component {
             title={this.renderTitle(townhall)}
           //  description="Ant Design, a design language for background applications, is refined by Ant UED Team"
         />
-          <ul class="list-inline list-inline-separated">
+          <ul className="list-inline list-inline-separated">
             {townhall.repeatingEvent ? (<li>{townhall.repeatingEvent}</li>) : townhall.dateString ? (<li>{townhall.dateString}</li>): null}
             {townhall.Time ? <li>{townhall.Time} {townhall.timeZone ? townhall.timeZone : ''}</li> : null}
             {townhall.eventName && <li>{townhall.eventName}</li>}
