@@ -1,4 +1,9 @@
 import React from 'react';
+import {
+  Button,
+  Menu,
+  Icon
+} from 'antd';
 
 // import './style.scss';
 
@@ -41,7 +46,20 @@ const EmailSignup = (props) => {
         </div>
       </section>
       <div id="email-update" className="hidden background-light-blue container-fluid">
-        <button id="open-email-form" className="btn btn-xs">Update your email subscription</button>
+          <p id="town-hall-paragraph"
+          style={{marginTop: '1%', width: '49%', display: 'inline-block', fontWeight: 'bold'}}
+          >To receive automated alerts by text, text "TOWN HALL" to 202-849-7377</p>
+        <Button
+          style={{verticalAlign: 'top' }}
+            type="danger"
+            shape="round"
+            size="large"
+            id="open-email-form" className="btn btn-xs">
+            Update your email subscription
+          </Button>
+          <p id="thank-you-message" className="hidden"
+         style={{marginTop: '1%', width: '49%', fontWeight: 'bold'}}
+         >Thank you for signing up to receive email alerts for town halls near you and other opportunities to show up and speak out.</p>
       </div>
     </div>
   )

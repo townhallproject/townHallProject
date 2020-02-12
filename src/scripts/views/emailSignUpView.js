@@ -109,6 +109,7 @@ emailHandler.openEmailForm = function () {
 emailHandler.closeEmailForm = function () {
   $('#email-signup').fadeOut(750);
   $('#email-update').removeClass('hidden').fadeIn(750);
+  $('#thank-you-message').removeClass('hidden').fadeIn(750);
 };
 
 emailHandler.hideEmailForm = function () {
