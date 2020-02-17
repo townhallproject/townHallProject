@@ -15,6 +15,9 @@ class ImageModal extends React.Component {
     this.showModal = this.showModal.bind(this);
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.state ={
+      visible: false,
+    }
   }
 
   componentDidMount() {
@@ -32,11 +35,16 @@ class ImageModal extends React.Component {
 
   showModal() {
     const { setHash, menuItem } = this.props;
+    console.log('showing modal', menuItem)
     setHash(menuItem.link);
+    this.setState({
+      visible: true,
+    })
   };
 
   handleOk(e) {
     this.props.setHash('');
+    this.setState({visible: false})
   };
 
   handleCancel(e) { 
@@ -49,9 +57,17 @@ class ImageModal extends React.Component {
     indexView.resetHome();
   }
 
-  render() {
+  getIsVisible = () => {
     const { menuItem, hash } = this.props;
 
+    if (hash && menuItem.link) {
+      return hash === menuItem.link
+    }
+    return this.state.visible;
+  }
+
+  render() {
+    const { menuItem, hash } = this.props;
     return (
       <React.Fragment>
         <Menu.Item 
@@ -71,7 +87,7 @@ class ImageModal extends React.Component {
             }
         </Menu.Item>
         <Modal
-          visible={hash === menuItem.link}
+          visible={this.getIsVisible()}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           footer={null}
