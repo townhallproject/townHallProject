@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Avatar, List, Icon } from 'antd';
+import { Avatar, Button, List, Icon, Typography } from 'antd';
 import classNames from 'classnames';
 
 import tableHandler from "../../../scripts/views/tableView";
@@ -13,6 +13,7 @@ import Staff from '../../../Images/map/circle-staff.svg';
 import Tele from '../../../Images/map/circle-tele.svg';
 import EventsTableHeader from './EventsTableHeader'
 import { defaultSearchFilters } from './eventsConstants'
+import { populateEventModal } from '../../../scripts/views/eventView'
 
 import './style.less';
 
@@ -121,19 +122,21 @@ class EventsTable extends React.Component {
                 extra={<span className={classNames("badge", "badge-default", "badge-pill", townhall.iconFlag)}> <Icon component={iconFlagToIconMap[townhall.iconFlag]} /> {townhall.meetingType}</span>}
             >
               <List.Item.Meta
-                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                avatar={<Avatar src={ townhall.govtrack_id ? `https://www.govtrack.us/static/legislator-photos/${townhall.govtrack_id}-100px.jpeg` : "Images/map/circle-in-person.svg"} />}
                   title={this.renderTitle(townhall)}
                 //  description="Ant Design, a design language for background applications, is refined by Ant UED Team"
               />
-                <ul className="list-inline list-inline-separated">
-                  {townhall.repeatingEvent ? (<li>{townhall.repeatingEvent}</li>) : townhall.dateString ? (<li>{townhall.dateString}</li>): null}
-                  {townhall.Time ? <li>{townhall.Time} {townhall.timeZone ? townhall.timeZone : ''}</li> : null}
-                  {townhall.eventName && <li>{townhall.eventName}</li>}
-                  {townhall.Location && <li>{townhall.Location}</li>}
-                  {townhall.phoneNumber && <li>{townhall.phoneNumber}</li>}
-                  {townhall.address &&<li>{townhall.address}</li>}
-                  {townhall.ada_accessible && <li className="ada-logo ada-logo-table"></li>}
-                </ul>
+              <ul className="list-inline list-inline-separated">
+                {townhall.repeatingEvent ? (<li>{townhall.repeatingEvent}</li>) : townhall.dateString ? (<li>{townhall.dateString}</li>): null}
+                {townhall.Time ? <li>{townhall.Time} {townhall.timeZone ? townhall.timeZone : ''}</li> : null}
+                {townhall.eventName && <li>{townhall.eventName}</li>}
+                {townhall.Location && <li>{townhall.Location}</li>}
+                {townhall.phoneNumber && <li>{townhall.phoneNumber}</li>}
+                {townhall.address &&<li>{townhall.address}</li>}
+                {townhall.ada_accessible && <li className="ada-logo ada-logo-table"></li>}
+              </ul>
+              {townhall.Notes && <Typography.Paragraph className="notes" ellipsis={{ rows: 1, expandable: true }}>{townhall.Notes}</Typography.Paragraph>}
+              {townhall.disclaimer && <Typography.Text type="secondary" className='disclaimer'>{townhall.disclaimer}</Typography.Text>}
             </List.Item>
           )}
         />
