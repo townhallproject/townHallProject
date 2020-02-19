@@ -384,9 +384,9 @@ export const init = () => {
   } else {
     TownHall.isMap = true;
   }
-  if (localStorage.getItem('signedUp') === 'true') {
-    emailHandler.hideEmailForm();
-  }
+  // if (localStorage.getItem('signedUp') === 'true') {
+  //   emailHandler.hideEmailForm();
+  // }
 
   $('.menu-container .hash-link').on('click', function onClickGethref() {
     var hashid = this.getAttribute('href');
