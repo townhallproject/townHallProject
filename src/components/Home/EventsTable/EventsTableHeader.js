@@ -87,7 +87,6 @@ const EventsTableHeader = (props) => {
       >
         {eventOptions()}
       </Select>
-      <Divider />
     </div>
   )
 }
