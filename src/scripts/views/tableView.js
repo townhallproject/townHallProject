@@ -154,6 +154,4 @@ tableHandler.initialStateTable = function (townhall) {
   $currentState.text('Viewing ' + cur + ' of ' + total + ' total events');
 };
 
-console.log("table handler?" + tableHandler.initialFilters);
-
 export default tableHandler;

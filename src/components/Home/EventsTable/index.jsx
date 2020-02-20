@@ -1,6 +1,5 @@
 import React from "react";
 import tableHandler from "../../../scripts/views/tableView";
-import './style.less';
 
 class EventsTable extends React.Component {
   componentDidMount() {
@@ -116,10 +115,10 @@ class EventsTable extends React.Component {
                     id="all-events-table-dropdown-container"
                     className="nav navbar-nav navbar-right"
                   >
-                    <li className="dropdown">
+                    <li className="dropdown hidden">
                       <a
                         href="#"
-                        className="dropdown-toggle"
+                        className="dropdown-toggle hide-on-state-view"
                         data-toggle="dropdown"
                         role="button"
                         aria-haspopup="true"

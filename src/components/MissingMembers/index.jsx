@@ -186,9 +186,7 @@ class MissingMembers extends React.Component {
             <ul 
               className="nav navbar-nav button-group state-button-holder filter-button-group"
               onClick={({ target }) => 
-                this.handleClick('state', target.getAttribute('data-filter')),
-                console.log("Why do you fire without a click!")
-              }
+                this.handleClick('state', target.getAttribute('data-filter'))}
               data-filter-group="state"
               >
        
