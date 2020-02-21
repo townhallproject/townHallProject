@@ -119,7 +119,7 @@ class EventsTable extends React.Component {
           dataSource={currentFilteredEvents}
           renderItem={townhall => (
             <List.Item
-                extra={<span className={classNames("badge", "badge-default", "badge-pill", townhall.iconFlag)}> <Icon component={iconFlagToIconMap[townhall.iconFlag]} /> {townhall.meetingType}</span>}
+              extra={<span className={classNames("badge", "badge-default", "badge-pill", townhall.iconFlag)}> <Icon component={iconFlagToIconMap[townhall.iconFlag]} /> {townhall.meetingType}</span>}
             >
               <List.Item.Meta
                 avatar={<Avatar src={ townhall.govtrack_id ? `https://www.govtrack.us/static/legislator-photos/${townhall.govtrack_id}-100px.jpeg` : "Images/map/circle-in-person.svg"} />}
@@ -137,6 +137,7 @@ class EventsTable extends React.Component {
               </ul>
               {townhall.Notes && <Typography.Paragraph className="notes" ellipsis={{ rows: 1, expandable: true }}>{townhall.Notes}</Typography.Paragraph>}
               {townhall.disclaimer && <Typography.Text type="secondary" className='disclaimer'>{townhall.disclaimer}</Typography.Text>}
+              <Button onClick={() => populateEventModal(townhall)}>Details</Button>
             </List.Item>
           )}
         />
