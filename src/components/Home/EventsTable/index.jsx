@@ -75,6 +75,11 @@ class EventsTable extends React.Component {
     )
   }
 
+  onDetailsClickHandler(townhall) {
+    populateEventModal(townhall)
+    $('.event-modal').modal('show');
+  }
+
   render() {
     const {
       filters, 
@@ -133,11 +138,11 @@ class EventsTable extends React.Component {
                 {townhall.Location && <li>{townhall.Location}</li>}
                 {townhall.phoneNumber && <li>{townhall.phoneNumber}</li>}
                 {townhall.address &&<li>{townhall.address}</li>}
+                <li><Button type="link" onClick={() => this.onDetailsClickHandler(townhall)}>See Details</Button></li>
                 {townhall.ada_accessible && <li className="ada-logo ada-logo-table"></li>}
               </ul>
               {townhall.Notes && <Typography.Paragraph className="notes" ellipsis={{ rows: 1, expandable: true }}>{townhall.Notes}</Typography.Paragraph>}
               {townhall.disclaimer && <Typography.Text type="secondary" className='disclaimer'>{townhall.disclaimer}</Typography.Text>}
-              <Button onClick={() => populateEventModal(townhall)}>Details</Button>
             </List.Item>
           )}
         />
