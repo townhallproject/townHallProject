@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Row, Col, Icon, Input, Button, Select } from 'antd';
+const { Option } = Select;
 import TownHall from '../../../scripts/models/TownHall';
 
 import '../../../vendor/scripts/bootstrap-tagsinput';
@@ -91,7 +92,6 @@ class EmailForm extends Component {
     this.submitSignup = this.submitSignup.bind(this);
     this.validateSignup = this.validateSignup.bind(this);
     this.state = {
-      // signedUp: localStorage.getItem("signedUp"), // better way of storing this? --> pass as prop from App level?
       showForm: true
     }
   };
@@ -101,7 +101,7 @@ class EmailForm extends Component {
 
     // get localStorageValue
     // updateFormVisible
-    this.setState({showForm: localStorage.getItem('signedUp') ? false : true})
+    this.setState({ showForm: localStorage.getItem('signedUp') ? false : true })
   };
 
   setSignedUpInLocalStorage(val) {
@@ -125,7 +125,7 @@ class EmailForm extends Component {
     let partner = $('#email-signup-form input[name=partner]');
     let districts = $('#email-signup-form input[name=districts]').tagsinput('items');
     let errors = 0;
-  
+
     [first, email, zipcode].forEach(function (field) {
       let name = field[0].name;
       if (field[0].value.length === 0 && !$(field[0]).hasClass('hidden')) {
@@ -144,7 +144,7 @@ class EmailForm extends Component {
     if (errors !== 0) {
       return;
     }
-  
+
     let zipClean = zipcode.val().split('-')[0];
     if (districts.length === 0) {
       TownHall.lookupZip(zipClean)
@@ -155,7 +155,7 @@ class EmailForm extends Component {
           submitSignup(first, last, zipClean, email, districts, partner);
         });
     } else {
-  
+
       submitSignup(first, last, zipClean, email, districts, partner);
     }
   };
@@ -225,22 +225,68 @@ class EmailForm extends Component {
       emailHandler.addDistrict(district);
     });
   };
-  
+
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+    const { currentDistrict } = this.props;
     const { showForm } = this.state;
+
     let content;
-    if(showForm) {
-      content = 
-      <section className="background-light-blue email-signup--inline" id="email-signup">
+    let locationInput;
+
+    if (!currentDistrict) {
+      locationInput =
+        <Col span={8}>
+          <Form.Item>
+            {getFieldDecorator('zipcode', {
+              rules: [{ required: true, message: 'Please input your zip code' }],
+            })(
+              <Input
+                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="Zip Code"
+              />,
+            )}
+          </Form.Item>
+        </Col>
+    } else {
+      // district array
+      let currentDistricts = currentDistrict.federal.districts.map((district => `${currentDistrict.federal.state}-${district}`))
+
+      locationInput =
+        <Col span={8}>
+          <Form.Item>
+            {getFieldDecorator('districts', {
+              rules: [ { type: 'array' } ],
+              initialValue: currentDistricts
+            })(
+              <Select mode="multiple" placeholder="Subscribe to districts:">
+                {
+                  currentDistricts.map((district) => {
+                    return (
+                      <Option key={district} value={district}>
+                        {district}
+                      </Option>
+                    )
+                  })
+                }
+              </Select>
+            )}
+          </Form.Item>
+        </Col>
+    }
+
+
+    if (showForm) {
+      content =
+        <section className="email-signup--inline" id="email-signup">
           <button type="button" className="close" data-dismiss="modal" aria-label="Close" id="close-email" onClick={this.closeEmailForm}>
             <span aria-hidden="true">&times;</span>
           </button>
           <div className="container container-fluid">
             <h1 id="email-title" className="text-center extra-large">Sign up to receive updates on local events.</h1>
             <Form id="email-signup-form" onSubmit={this.validateSignup}>
-              <div className="row">
-                <div className="col-lg-8">
+              <Row gutter={24}>
+                <Col span={8}>
                   <Form.Item>
                     {getFieldDecorator('first', {
                       rules: [{ required: true, message: 'Please input your first name' }],
@@ -251,9 +297,11 @@ class EmailForm extends Component {
                       />,
                     )}
                   </Form.Item>
-                  {/* <div className="col-sm-6">
+                </Col>
+                {/* <div className="col-sm-6">
                     <input type="text" className="form-control input-lg" name="first" placeholder="First Name" />
                   </div> */}
+                <Col span={8}>
                   <Form.Item>
                     {getFieldDecorator('last', {
                       rules: [{ required: true, message: 'Please input your last name' }],
@@ -264,9 +312,11 @@ class EmailForm extends Component {
                       />,
                     )}
                   </Form.Item>
-                  {/* <div className="col-sm-6">
+                </Col>
+                {/* <div className="col-sm-6">
                     <input type="text" className="form-control input-lg" name="last" placeholder="Last Name" />
                   </div> */}
+                <Col span={8}>
                   <Form.Item>
                     {getFieldDecorator('email', {
                       rules: [{ required: true, message: 'Please input your email' }],
@@ -277,51 +327,29 @@ class EmailForm extends Component {
                       />,
                     )}
                   </Form.Item>
-                  {/* <div className="col-sm-6">
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                {/* <div className="col-sm-6">
                     <input type="email" className="form-control input-lg" name="email" placeholder="Email" />
                   </div> */}
-                  <Form.Item>
-                    {getFieldDecorator('zipcode', {
-                      rules: [{ required: true, message: 'Please input your zip code' }],
-                    })(
-                      <Input
-                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="Zip Code"
-                      />,
-                    )}
-                  </Form.Item>
-                  {/* <div className="col-sm-6">
-                    <input type="text" className="form-control input-lg" name="zipcode" placeholder="Zip Code" />
-                  </div> */}
-                  <Form.Item>
-                    {getFieldDecorator('districts', {
-                      rules: [],
-                    })(
-                      <Input
-                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="Subscribe to districts:"
-                      />,
-                    )}
-                  </Form.Item>
-                  {/* <div className="col-sm-6 hidden" id="district-subscribe">
+                {locationInput}
+                {/* <div className="col-sm-6 hidden" id="district-subscribe">
                     <label htmlFor="districts" className="col-sm-4">Subscribe to districts:</label>
                     <input type="text" className="form-control input-lg" name="districts" data-role="tagsinput" />
                   </div> */}
-                </div>
-                <div className="col-lg-4">
-                  <div className="col-xs-12">
-                    <Button type="submit" htmlType="submit" name="button" className="btn btn-primary btn-light-background btn-lg btn-block" disabled={hasErrors(getFieldsError())}>Sign up</Button>
-                  </div>
-                </div>
-              </div>
+                <Col span={8}>
+                  <Button block type="submit" htmlType="submit" name="button" id="submit-email-button" icon="check-square" disabled={hasErrors(getFieldsError())}>Sign up</Button>
+                </Col>
+              </Row>
             </Form>
           </div>
         </section>
     } else {
-      content = 
-      <div id="email-update" className="background-light-blue container-fluid">
-        <button id="open-email-form" className="btn btn-xs" onClick={this.openEmailForm}>Update your email subscription</button>
-      </div>
+      content =
+        <div id="email-update" className="container-fluid">
+          <button id="open-email-form" className="btn btn-xs" onClick={this.openEmailForm}>Update your email subscription</button>
+        </div>
     }
     return (
       <div>

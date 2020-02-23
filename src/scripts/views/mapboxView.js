@@ -156,8 +156,11 @@ mapboxView.districtSelect = function (feature) {
     eventHandler.renderResults(locationData);
     var firstArg = feature.district ? feature.state : 'state';
     var secondArg = feature.district ? feature.district : feature.state;
-    emailHandler.clearDistricts();
-    emailHandler.addDistrict(feature.state + '-' + feature.district);
+    // TODO: Figure out emailHandler function called now 
+    // that it is inside react component
+
+    // emailHandler.clearDistricts();
+    // emailHandler.addDistrict(feature.state + '-' + feature.district);
     urlParamsHandler.setUrlParameter('zipcode', false);
     urlParamsHandler.setUrlParameter('district', feature.state + '-' + feature.district + '-' + feature.geoID);
   } else {

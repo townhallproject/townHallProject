@@ -60,7 +60,8 @@ indexView.resetHome = function () {
   $parent.empty();
   $results.empty();
   tableHandler.initialFilters();
-  emailHandler.clearDistricts();
+  // TODO: update
+  // emailHandler.clearDistricts();
   TownHall.sortOn = 'Date';
 };
 

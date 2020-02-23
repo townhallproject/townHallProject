@@ -142,7 +142,9 @@ export default class Home extends React.Component {
           webGL={this.props.webGL}
           feature={this.props.feature}
         />
-        <EmailSignup />
+        <EmailSignup 
+          currentDistrict={this.state.currentDistrict}
+        />
         {/*Cards showing representatives and their contact info*/}
         <RepresentativeCards 
           currentDistrict={this.state.currentDistrict}

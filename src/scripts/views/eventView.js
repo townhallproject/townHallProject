@@ -20,7 +20,7 @@ import mapView from './mapView';
 import newEventView from './mfolSubmitForm';
 import tableHandler from './tableView';
 import videoUploadHandler from './videoView';
-import emailHandler from './emailSignUpView';
+// import emailHandler from './emailSignUpView';
 import missingMemberView from './missingMembersView';
 import resultsView from './resultsView';
 import stateView from './stateView';
@@ -100,11 +100,13 @@ eventHandler.renderResults = function (locationData) {
     var zoomMap = true;
     //render table
     districtText = ' ';
-    emailHandler.clearDistricts();
+    // TODO: figure out email handler
+
+    // emailHandler.clearDistricts();
     districts.forEach(function (district) {
       if (district) {
         districtText = districtText + state + '-' + district + ' ';
-        emailHandler.addDistrict(state + '-' + district)
+        // emailHandler.addDistrict(state + '-' + district)
       } else {
         districtText = districtText + state;
       }
