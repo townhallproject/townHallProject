@@ -125,6 +125,7 @@ class EventsTable extends React.Component {
           dataSource={currentFilteredEvents}
           renderItem={townhall => (
             <List.Item
+              actions={[<Button type="link" onClick={() => this.onDetailsClickHandler(townhall)}>See Details</Button>]}
               extra={<span className={classNames("badge", "badge-default", "badge-pill", townhall.iconFlag)}> <Icon component={iconFlagToIconMap[townhall.iconFlag]} /> {townhall.meetingType}</span>}
             >
               <List.Item.Meta
@@ -139,7 +140,6 @@ class EventsTable extends React.Component {
                 {townhall.Location && <li>{townhall.Location}</li>}
                 {townhall.phoneNumber && <li>{townhall.phoneNumber}</li>}
                 {townhall.address &&<li>{townhall.address}</li>}
-                <li><Button type="link" onClick={() => this.onDetailsClickHandler(townhall)}>See Details</Button></li>
                 {townhall.ada_accessible && <li className="ada-logo ada-logo-table"></li>}
               </ul>
               {townhall.Notes && <Typography.Paragraph className="notes" ellipsis={{ rows: 1, expandable: true }}>{townhall.Notes}</Typography.Paragraph>}
