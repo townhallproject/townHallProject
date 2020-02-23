@@ -121,6 +121,7 @@ class EventsTable extends React.Component {
       
         <List
           itemLayout="vertical"
+          loading={!allTownHalls.length}
           dataSource={currentFilteredEvents}
           renderItem={townhall => (
             <List.Item
