@@ -124,7 +124,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(woff|woff2|ttf|eot|glyph|\.svg)$/,
+        test: /\.(woff|woff2|ttf|eot|glyph)$/,
         use: [
           {
             loader: 'url-loader',
@@ -135,9 +135,23 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+            loader: 'babel-loader',
+          },
+          {
+            loader: '@svgr/webpack',
+            options: {
+              babel: false,
+              icon: true,
+            },
+          },
+        ],
+      },
 
      {
-         test: /\.(png|svg|jpg|gif)$/,
+         test: /\.(png|jpg|gif)$/,
          use: [
            'file-loader'
          ]

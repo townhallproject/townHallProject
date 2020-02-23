@@ -186,7 +186,7 @@ class Header extends Component {
               href="https://secure.actblue.com/donate/townhallproject2019"
               target="_blank"
             >
-              Donate
+              Donate Now
             </Button>
           </div>
         </Menu>
