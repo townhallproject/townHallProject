@@ -144,7 +144,7 @@ mapboxView.makeZoomToNationalButton = function (state) {
 };
 
 mapboxView.districtSelect = function (feature) {
-  if (feature.state) {
+  if (feature.level === 'federal') {
     var locationData = {
       federal: {
         state: feature.state,
@@ -205,6 +205,7 @@ mapboxView.getResultsFromSelectingStateDistrict = function (feature) {
         lowerEvents: []
       }
     };
+    mapboxView.setDistrict(locationData);
     eventHandler.renderResults(locationData);
   }
 };
@@ -244,6 +245,7 @@ mapboxView.getResultsFromSelectingPoint = function (feature) {
     locationData.upper.districts.push(feature.senate_district);
 
   }
+  mapboxView.setDistrict(locationData);
   eventHandler.renderResults(locationData);
 };
 
@@ -358,7 +360,7 @@ mapboxView.backSpaceHack = function () {
   });
 };
 
-function stateDistristListener(e) {
+function stateDistrictListener(e) {
   // when selecting a point
   var pointFeature = {};
 
@@ -377,6 +379,15 @@ function stateDistristListener(e) {
       pointFeature.senate_district = mapHelperFunctions.zeroPad(pointDistrict);
       pointFeature.senate_geoId = clickedPoint.properties.stateCode + '0' + pointFeature.senate_district;
     }
+
+    /***
+     * example:
+     * {
+          "state": "AZ",
+          "house_district": "10",
+          "house_geoId": "04010"
+        }
+     */
 
     return mapboxView.getResultsFromSelectingPoint(pointFeature);
   }
@@ -403,6 +414,30 @@ function stateDistristListener(e) {
         districtFeature.senate_geoId = features[i].properties.GEOID;
       }
     }
+    /**
+     * example:
+     * {
+        "state": "AZ",
+        "house_district": "07",
+        "house_geoId": "04007",
+        "senate_district": "07",
+        "senate_geoId": "04007"
+      }
+     */
+    const locationData = {}
+    const houseKey = `HD-${districtFeature.house_district}`;
+    const senateKey = `SD-${districtFeature.senate_district}`;
+
+    locationData[houseKey] = {
+      state: districtFeature.state,
+      district: districtFeature.house_district
+    }
+    locationData[senateKey] = {
+      state: districtFeature.state,
+      district: districtFeature.house_district
+
+    }
+    locationData.level = 'state';
     mapboxView.getResultsFromSelectingStateDistrict(districtFeature);
   }
 }
@@ -415,6 +450,7 @@ function districtListener(e) {
     feature.state = points[0].properties.stateAbbr;
     feature.district = points[0].properties.districtId;
     feature.geoID = points[0].properties.stateCode + feature.district;
+    feature.level = 'federal';
     mapboxView.districtSelect(feature);
     return;
   }
@@ -438,12 +474,12 @@ mapboxView.addDistrictListener = function () {
 };
 
 mapboxView.addStateDistrictListener = function () {
-  map.on('click', stateDistristListener);
+  map.on('click', stateDistrictListener);
 };
 
 mapboxView.removeListeners = function () {
   map.off('click', districtListener);
-  map.off('click', stateDistristListener);
+  map.off('click', stateDistrictListener);
 };
 
 var filterDistrict = ['any'];

@@ -234,6 +234,8 @@ class EmailForm extends Component {
     let content;
     let locationInput;
 
+    console.log(currentDistrict)
+
     if (!currentDistrict) {
       locationInput =
         <Col span={8}>
@@ -249,9 +251,19 @@ class EmailForm extends Component {
           </Form.Item>
         </Col>
     } else {
-      // district array
-      let currentDistricts = currentDistrict.federal.districts.map((district => `${currentDistrict.federal.state}-${district}`))
+      let currentDistricts = [];
+      if (currentDistrict.federal) {
+        currentDistricts = currentDistrict.federal.districts.map((district => `${currentDistrict.federal.state}-${district}`))
+      }
+      if (currentDistrict.upper) {
+        currentDistricts = [...currentDistricts, ...currentDistrict.upper.districts.map((district => `SD-${district}`))]
 
+      }
+      if (currentDistrict.lower) {
+        currentDistricts = [...currentDistricts, ...currentDistrict.lower.districts.map((district => `HD-${district}`))]
+
+      }
+      console.log(currentDistricts)
       locationInput =
         <Col span={8}>
           <Form.Item>
@@ -274,8 +286,6 @@ class EmailForm extends Component {
           </Form.Item>
         </Col>
     }
-
-
     if (showForm) {
       content =
         <section className="email-signup--inline" id="email-signup">
@@ -348,11 +358,13 @@ class EmailForm extends Component {
     } else {
       content =
         <div id="email-update" className="container-fluid">
-          <button id="open-email-form" className="btn btn-xs" onClick={this.openEmailForm}>Update your email subscription</button>
+          <Button id="open-email-form-btn" onClick={this.openEmailForm}>Update your email subscription</Button>
         </div>
     }
     return (
       <div>
+        {/* TODO: make these functions so the render function isnt so large */}
+        {/* {showForm? this.renderForm : this.renderEmailUpdateButton} */}
         {content}
       </div>
     )
