@@ -5,11 +5,11 @@ Anyone who is actively contributing to this project can become of member of this
 
 ## Development Process
 
-- Open an issue in the repository describing the feature you intend to work on, or assign yourself to an issue.
-- Check out a new branch for this feature from the repository's `development` branch, or from your own fork of this repo.
+- If you have write permissions, assign the issue you intend to work on to yourself, if not, comment on it that you are working on it.
+- Check out a new branch for this feature from the repository's `master` branch, or from your own fork of this repo.
 - Do your work on that branch.
-- When your changes are ready to be merged, open a pull request from your feature branch to the repo's `development` branch.
-- In the comments of your Pull Request, point out which issue you've resolved and how.
+- When your changes are ready to be merged, open a pull request from your feature branch to this repo's `master` branch.
+- In the comments of your Pull Request, reference the issue number and include screen shots of any visual changes. 
 
 ### Dev environment
 
