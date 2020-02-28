@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Row, Col, Icon, Input, Button, Select } from 'antd';
+import { isUndefined } from 'lodash';
 const { Option } = Select;
 import TownHall from '../../../scripts/models/TownHall';
 
@@ -9,72 +10,6 @@ const emailRegEx = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\
 
 
 import './style.less';
-
-// $('#email-signup-form').on('submit', emailHandler.validateSignup);
-//   if (localStorage.getItem('signedUp') === 'true') {
-//     emailHandler.hideEmailForm();
-//   }
-
-// $('#open-email-form').on('click', emailHandler.openEmailForm);
-
-// emailHandler.openEmailForm = function () {
-//   $('#email-signup').fadeIn(750);
-//   $('#email-update').hide();
-// };
-
-// emailHandler.closeEmailForm = function () {
-//   $('#email-signup').fadeOut(750);
-//   $('#email-update').removeClass('hidden').fadeIn(750);
-// };
-
-// emailHandler.hideEmailForm = function () {
-//   $('#email-signup').hide();
-//   $('#email-update').removeClass('hidden').show();
-// };
-
-// $('#close-email').on('click', function () {
-//   localStorage.setItem('signedUp', true);
-//   emailHandler.closeEmailForm();
-// });
-
-// $('#close-email').on('click', function () {
-//   localStorage.setItem('signedUp', true);
-//   emailHandler.closeEmailForm();
-// });
-
-// emailHandler.clearDistricts = function () {
-//   $('#email-signup-form input[name=districts]').tagsinput('removeAll');
-// };
-
-// emailHandler.addDistrict = function (district) {
-//   $('#email-signup-form input[name=districts]').tagsinput('add', district);
-// };
-
-// emailHandler.setDistricts = function (districts) {
-//   districts.forEach(function (district) {
-//     emailHandler.addDistrict(district);
-//   });
-// };
-
-
-
-// in state
-// { visibleEmailForm }
-// on componentDidMount --> check localstorage
-// set visibleEmailForm from localstorage
-// 
-// adv: clear vars
-// dis: adding another variable not necessary
-
-// other option
-// just use localstorage value
-// have listener to change in localstorage value
-// change local state depending on storage value
-// 
-// adv: don't have to keep another value in 
-//      this.state
-
-// dis: variables not necessarily stating what's happening
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -86,8 +21,11 @@ class EmailForm extends Component {
     this.addDistrict = this.addDistrict.bind(this);
     this.clearDistricts = this.clearDistricts.bind(this);
     this.closeEmailForm = this.closeEmailForm.bind(this);
-    // this.hideEmailForm = this.hideEmailForm.bind(this);
+    this.formatDistrictArray = this.formatDistrictArray.bind(this);
     this.openEmailForm = this.openEmailForm.bind(this);
+    this.renderEmailUpdateButton = this.renderEmailUpdateButton.bind(this);
+    this.renderLocationInput = this.renderLocationInput.bind(this);
+    this.renderForm = this.renderForm.bind(this);
     this.setDistricts = this.setDistricts.bind(this);
     this.submitSignup = this.submitSignup.bind(this);
     this.validateSignup = this.validateSignup.bind(this);
@@ -98,9 +36,6 @@ class EmailForm extends Component {
 
   componentDidMount() {
     this.props.form.validateFields();
-
-    // get localStorageValue
-    // updateFormVisible
     this.setState({ showForm: localStorage.getItem('signedUp') ? false : true })
   };
 
@@ -112,9 +47,6 @@ class EmailForm extends Component {
     this.setState(showForm)
   }
 
-  componentDidUpdate() {
-    // may need to check localstorage?? or just change state signedUp
-  };
   validateSignup = function (e) {
     e.preventDefault();
     // TODO: handle form ant design way
@@ -173,10 +105,6 @@ class EmailForm extends Component {
         }
       }
     };
-    // var userID = email.val().split('').reduce(function(a, b) {
-    //   a = ((a << 5) - a) + b.charCodeAt(0);
-    //   return a & a;
-    // }, 0);
     $.ajax({
       url: 'https://actionnetwork.org/api/v2/forms/eafd3b2a-8c6b-42da-bec8-962da91b128c/submissions',
       method: 'POST',
@@ -194,11 +122,6 @@ class EmailForm extends Component {
     });
     return false;
   };
-
-  // hideEmailForm() {
-  //   $('#email-signup').hide();
-  //   $('#email-update').removeClass('hidden').show();
-  // };
 
   openEmailForm() {
     this.setState({
@@ -226,150 +149,144 @@ class EmailForm extends Component {
     });
   };
 
-  render() {
+  renderForm() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-    const { currentDistrict } = this.props;
-    const { showForm } = this.state;
-
-    let content;
-    let locationInput;
-
-    console.log(currentDistrict)
-
-    if (!currentDistrict) {
-      locationInput =
-        <Col span={8}>
-          <Form.Item>
-            {getFieldDecorator('zipcode', {
-              rules: [{ required: true, message: 'Please input your zip code' }],
-            })(
-              <Input
-                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="Zip Code"
-              />,
-            )}
-          </Form.Item>
-        </Col>
-    } else {
-      let currentDistricts = [];
-      if (currentDistrict.federal) {
-        currentDistricts = currentDistrict.federal.districts.map((district => `${currentDistrict.federal.state}-${district}`))
-      }
-      if (currentDistrict.upper) {
-        currentDistricts = [...currentDistricts, ...currentDistrict.upper.districts.map((district => `SD-${district}`))]
-
-      }
-      if (currentDistrict.lower) {
-        currentDistricts = [...currentDistricts, ...currentDistrict.lower.districts.map((district => `HD-${district}`))]
-
-      }
-      console.log(currentDistricts)
-      locationInput =
-        <Col span={8}>
-          <Form.Item>
-            {getFieldDecorator('districts', {
-              rules: [ { type: 'array' } ],
-              initialValue: currentDistricts
-            })(
-              <Select mode="multiple" placeholder="Subscribe to districts:">
-                {
-                  currentDistricts.map((district) => {
-                    return (
-                      <Option key={district} value={district}>
-                        {district}
-                      </Option>
-                    )
-                  })
-                }
-              </Select>
-            )}
-          </Form.Item>
-        </Col>
-    }
-    if (showForm) {
-      content =
-        <section className="email-signup--inline" id="email-signup">
-          <button type="button" className="close" data-dismiss="modal" aria-label="Close" id="close-email" onClick={this.closeEmailForm}>
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div className="container container-fluid">
-            <h1 id="email-title" className="text-center extra-large">Sign up to receive updates on local events.</h1>
-            <Form id="email-signup-form" onSubmit={this.validateSignup}>
-              <Row gutter={24}>
-                <Col span={8}>
-                  <Form.Item>
-                    {getFieldDecorator('first', {
-                      rules: [{ required: true, message: 'Please input your first name' }],
-                    })(
-                      <Input
-                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="First Name"
-                      />,
-                    )}
-                  </Form.Item>
-                </Col>
-                {/* <div className="col-sm-6">
-                    <input type="text" className="form-control input-lg" name="first" placeholder="First Name" />
-                  </div> */}
-                <Col span={8}>
-                  <Form.Item>
-                    {getFieldDecorator('last', {
-                      rules: [{ required: true, message: 'Please input your last name' }],
-                    })(
-                      <Input
-                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="Last Name"
-                      />,
-                    )}
-                  </Form.Item>
-                </Col>
-                {/* <div className="col-sm-6">
-                    <input type="text" className="form-control input-lg" name="last" placeholder="Last Name" />
-                  </div> */}
-                <Col span={8}>
-                  <Form.Item>
-                    {getFieldDecorator('email', {
-                      rules: [{ required: true, message: 'Please input your email' }],
-                    })(
-                      <Input
-                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        placeholder="Email"
-                      />,
-                    )}
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                {/* <div className="col-sm-6">
-                    <input type="email" className="form-control input-lg" name="email" placeholder="Email" />
-                  </div> */}
-                {locationInput}
-                {/* <div className="col-sm-6 hidden" id="district-subscribe">
-                    <label htmlFor="districts" className="col-sm-4">Subscribe to districts:</label>
-                    <input type="text" className="form-control input-lg" name="districts" data-role="tagsinput" />
-                  </div> */}
-                <Col span={8}>
-                  <Button block type="submit" htmlType="submit" name="button" id="submit-email-button" icon="check-square" disabled={hasErrors(getFieldsError())}>Sign up</Button>
-                </Col>
-              </Row>
-            </Form>
-          </div>
-        </section>
-    } else {
-      content =
-        <div id="email-update" className="container-fluid">
-          <Button id="open-email-form-btn" onClick={this.openEmailForm}>Update your email subscription</Button>
-        </div>
-    }
     return (
-      <div>
-        {/* TODO: make these functions so the render function isnt so large */}
-        {/* {showForm? this.renderForm : this.renderEmailUpdateButton} */}
-        {content}
+      <section className="email-signup--inline" id="email-signup">
+        <button type="button" className="close" data-dismiss="modal" aria-label="Close" id="close-email" onClick={this.closeEmailForm}>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div className="container container-fluid">
+          <h1 id="email-title" className="text-center extra-large">Sign up to receive updates on local events.</h1>
+          <Form id="email-signup-form" onSubmit={this.validateSignup}>
+            <Row gutter={24}>
+              <Col span={8}>
+                <Form.Item>
+                  {getFieldDecorator('first', {
+                    rules: [{ required: true, message: 'Please input your first name' }],
+                  })(
+                    <Input
+                      prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                      placeholder="First Name"
+                    />,
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item>
+                  {getFieldDecorator('last', {
+                    rules: [{ required: true, message: 'Please input your last name' }],
+                  })(
+                    <Input
+                      prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                      placeholder="Last Name"
+                    />,
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item>
+                  {getFieldDecorator('email', {
+                    rules: [{ required: true, message: 'Please input your email' }],
+                  })(
+                    <Input
+                      prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                      placeholder="Email"
+                    />,
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={8}>
+                {this.renderLocationInput()}
+              </Col>
+              <Col span={8}>
+                <Button block type="submit" htmlType="submit" name="button" id="submit-email-button" icon="check-square" disabled={hasErrors(getFieldsError())}>Sign up</Button>
+              </Col>
+            </Row>
+          </Form>
+        </div>
+      </section>
+    )
+  }
+
+  formatDistrictArray() {
+    const { currentDistrict } = this.props;
+    let currentDistricts = [];
+    if (currentDistrict && currentDistrict.federal) {
+      currentDistricts = currentDistrict.federal.districts.filter(dis => dis).map(district => {
+        return `${currentDistrict.federal.state}-${district}`
+      })
+    }
+    if (currentDistrict && currentDistrict.upper) {
+      currentDistricts = [...currentDistricts, ...currentDistrict.upper.districts.map((district => `SD-${district}`))]
+    }
+    if (currentDistrict && currentDistrict.lower) {
+      currentDistricts = [...currentDistricts, ...currentDistrict.lower.districts.map((district => `HD-${district}`))]
+    }
+    return currentDistricts;
+  }
+
+  renderLocationInput() {
+    const { getFieldDecorator } = this.props.form;
+    const districtArray = this.formatDistrictArray();
+    if (districtArray.length) {
+      return (
+        <Form.Item>
+          {getFieldDecorator('districts', {
+            rules: [{ type: 'array' }],
+            initialValue: districtArray
+          })(
+            <Select mode="multiple" placeholder="Subscribe to districts:">
+              {
+                districtArray.map((district) => {
+                  return (
+                    <Option key={district} value={district}>
+                      {district}
+                    </Option>
+                  )
+                })
+              }
+            </Select>
+          )}
+        </Form.Item>
+      )
+    }
+    // no district - render zip input
+    return (
+      <Form.Item>
+        {getFieldDecorator('zipcode', {
+          rules: [{ required: true, message: 'Please input your zip code' }],
+        })(
+          <Input
+            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder="Zip Code"
+          />,
+        )}
+      </Form.Item>
+    )
+
+  }
+
+  renderEmailUpdateButton() {
+    return (
+      <div id="email-update" className="container-fluid">
+        <Button id="open-email-form-btn" onClick={this.openEmailForm}>Update your email subscription</Button>
       </div>
     )
   }
-};
+
+  render() {
+    const { showForm } = this.state;
+    return (
+      <div>
+        {showForm ? this.renderForm() : this.renderEmailUpdateButton()}
+      </div>
+    )
+  };
+
+}
 
 const EmailSignup = Form.create({})(EmailForm);
 

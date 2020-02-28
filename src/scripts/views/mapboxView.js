@@ -460,6 +460,7 @@ function districtListener(e) {
       layers: ['district_interactive']
     });
   if (features.length > 0) {
+    feature.level = 'federal';
     feature.state = features[0].properties.ABR;
     feature.district = features[0].properties.GEOID.substring(2, 4);
     feature.geoID = features[0].properties.GEOID;
