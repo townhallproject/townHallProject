@@ -45,7 +45,7 @@
   }
   .disclaimer {
     font-style: italic;
-    font-size: .9em;
+    font-size: 0.9em;
   }
   .notes {
     font-style: italic;
@@ -75,6 +75,13 @@
     border-bottom: 0;
     padding: 12px;
   }
+
+  /* Adding last item class so last item in table has bottom-border class */
+  .ant-list-item:last-child {
+    border: 1px solid #e8e8e8;
+    padding: 12px;
+  }
+
   .ant-btn {
     height: 1em;
     padding: 0;
