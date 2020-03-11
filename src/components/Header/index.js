@@ -119,6 +119,7 @@ class Header extends Component {
                 hash={hash}
                 menuItem={menuItem}
                 setHash={this.props.setHash}
+                key={menuItem.display}
              />
            )
          }
