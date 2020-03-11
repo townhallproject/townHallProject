@@ -149,7 +149,7 @@ export default class Home extends React.Component {
           currentZip={this.state.currentZip}
         />
         <EventsTable 
-          allTownHalls={allTownHalls}
+          allTownHalls={allStateTownHalls || allTownHalls} // if state town halls are present, it's because we are on a state site
         />
         <EventModal />
       </React.Fragment>
