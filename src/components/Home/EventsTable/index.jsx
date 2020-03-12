@@ -12,6 +12,7 @@ import InPerson from '../../../Images/map/circle-in-person.svg';
 import Staff from '../../../Images/map/circle-staff.svg';
 import Tele from '../../../Images/map/circle-tele.svg';
 import EventsTableHeader from './EventsTableHeader'
+import EventsWarningBanner from '../EventsWarningBanner'
 import { defaultSearchFilters } from './eventsConstants'
 import { populateEventModal } from '../../../scripts/views/eventView'
 
@@ -105,6 +106,7 @@ class EventsTable extends React.Component {
       </section>
       <a name="events-table" id="events-table"></a>
       <section className="container container-fluid events-table-container">
+        <EventsWarningBanner />
         <EventsTableHeader
           updateSortOn={sortOn => this.setState({sortOn})}
           updateSearchFilters={this.updateSearchFilters}
@@ -118,7 +120,6 @@ class EventsTable extends React.Component {
             </span>
           </div>
         </div>
-      
         <List
           itemLayout="vertical"
           loading={!allTownHalls.length}
