@@ -4,9 +4,9 @@ import './style.less'
 const EventsWarningBanner = () => {
   return (
     <div className="warningBanner">
-      <h3>
+      <p>
         Face-to-face conversations between Americans and their lawmakers are vital for our democracy.
-      </h3>
+      </p>
       <p>
         At the same time, we encourage everyone to follow the most up-to-date CDC public health guidelines. We are updating events as rapidly as possible as we learn of postponements, rescheduling, or shifts to virtual meetings.
       </p>
