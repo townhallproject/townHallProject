@@ -5,13 +5,10 @@ const EventsWarningBanner = () => {
   return (
     <div className="warningBanner">
       <p>
-        Face-to-face conversations between Americans and their lawmakers are vital for our democracy.
+      Based on the recommendations from health experts, we strongly encourage all lawmakers to suspend in-person town halls and any other public gatherings.
       </p>
       <p>
-        At the same time, we encourage everyone to follow the most up-to-date CDC public health guidelines. We are updating events as rapidly as possible as we learn of postponements, rescheduling, or shifts to virtual meetings.
-      </p>
-      <p>
-        We strongly encourage all lawmakers to continue to find ways to stay in contact with their constituents.
+      We encourage all Americans to avoid large group gatherings at this time. We will track and highlight as many telephone and virtual meetings as possible.
       </p>
     </div>
   )
