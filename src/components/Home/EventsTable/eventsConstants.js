@@ -49,7 +49,8 @@ export const defaultSearchFilters = {
     'Empty Chair Town Hall',
     'Campaign Town Hall',
     'Youth Vote',
-    'Voting Rights'
+    'Voting Rights',
+    'Tele-Town Hall'
   ],
   sortOn: 'Date'
 }
