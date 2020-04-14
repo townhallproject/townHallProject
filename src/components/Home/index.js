@@ -13,6 +13,7 @@ import EmailSignup from './EmailSignup';
 import RepresentativeCards from './RepresentativeCards';
 import EventsTable from './EventsTable';
 import EventModal from './EventModal';
+import MutualAidHubBanner from './MutualAidHubBanner'
 import { isState } from '../../utils';
 
 export default class Home extends React.Component {
@@ -130,6 +131,7 @@ export default class Home extends React.Component {
           setDistrict={this.setDistrict}
           setZip={this.setZip}
         />
+        <MutualAidHubBanner />
         {/*Call to action when no events are present*/}
         <NoEventsComponent />
         <MapComponent 
