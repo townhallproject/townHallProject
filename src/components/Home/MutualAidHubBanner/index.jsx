@@ -2,7 +2,7 @@ import React from 'react';
 
 const MutualAidHubBanner = (props) => {
   return (
-    <div className="time-sensitive">
+    <div className="time-sensitive background-gray">
       <div className="display-flex">
         <div className="happening-now-title">
           <h1><span className="break">Support local</span><span className="break"> communities</span></h1>

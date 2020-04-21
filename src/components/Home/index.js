@@ -126,12 +126,12 @@ export default class Home extends React.Component {
     const usState = Home.getStateAbr(isState(this.props.location));
     return (
       <React.Fragment>
+        <MutualAidHubBanner />
         <ZipSearchComponent 
           usState={usState}
           setDistrict={this.setDistrict}
           setZip={this.setZip}
         />
-        <MutualAidHubBanner />
         {/*Call to action when no events are present*/}
         <NoEventsComponent />
         <MapComponent 
