@@ -30,6 +30,9 @@ export const searchFilters = {
       description: 'A town hall conducted by conference call or online.'
     },
     {
+      type: 'Campaign Tele-Town Hall'
+    },
+    {
       type: 'Youth Vote'
     },
     {
