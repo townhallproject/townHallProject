@@ -73,7 +73,7 @@ export default (townhall) => (`<div class="col-md-12 col-sm-6 event-card">
         <li class="list-group-item list-item-no-border">
           <div class="row">
             <address class="col-xs-8 col-xs-offset-2">
-              ${townhall.Location}<br>
+              ${townhall.Location ? `${townhall.Location}<br>` : ''}
               ${townhall.address}<br>
               ${townhall.addressLink ? 
                 `<a href=${townhall.addressLink} target="_blank">Directions</a></br>`
