@@ -37,11 +37,8 @@ export const MENU_MAP = new Map([
     display: 'Town Hall Pledge',
     link: TOWN_HALL_PLEDGE_LINK,
     external: true,
-  }, {
-    display: 'Fight for Our Democracy',
-    link: FIGHT_FOR_OUR_DEMO_LINK,
-    external: true,
-  }, {
+  },  
+  {
     display: 'State Legislatures'
   }]],
   ['learn-more', [{
