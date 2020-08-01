@@ -20,7 +20,7 @@ import {
 } from './selectors';
 import EventSidebar from './EventSidebar';
 
-export default class Home extends React.Component {
+export default class FindTownhallApp extends React.Component {
   static getStateAbr(stateData) {
     if(stateData) {
       return stateData.USPS
@@ -127,7 +127,7 @@ export default class Home extends React.Component {
       allStateTownHalls,
       currentDistrict,
     } = this.state;
-    const usState = Home.getStateAbr(isState(this.props.location));
+    const usState = FindTownhallApp.getStateAbr(isState(this.props.location));
     const eventsToDisplay = getEventsToDisplay(currentDistrict, allTownHalls, allStateTownHalls)
     console.log(currentDistrict, eventsToDisplay)
     return (

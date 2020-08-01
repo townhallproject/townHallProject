@@ -64,9 +64,7 @@ export default class CurrentEventsMap extends React.Component {
     return (
       <section>
         <div>
-          {/* <div className={eventsToDisplay.length ? "container-fluid map-container-large" : "header-with-results map-container-split"}> */}
               {eventsToDisplay.length ? this.renderTwoColumns() :
-              // (<div id="nearest" className="row map-large">
               (<Map 
                   allTownHalls={allTownHalls}
                   currentDistrict={currentDistrict}

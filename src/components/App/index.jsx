@@ -22,7 +22,7 @@ import UploadVideo from '../UploadVideo';
 import IframeEmbed from '../IframeEmbed';
 import PageComponent from '../PageComponent';
 
-import Home from '../Home';
+import FindTownhallApp from '../FindTownhallApp';
 import { ORGANIZE_A_TOWN_HALL_ID, REPORT_2019_ID, REPORT_2019_LINK } from '../Header/menuConstants';
 
 class App extends React.Component {
@@ -68,7 +68,7 @@ class App extends React.Component {
                 {/** Main content & Pages */}
                 <div className="tab-content">
                     <PageComponent id="home" active={!this.state.hash}>
-                        <Home
+                        <FindTownhallApp
                             stateUPSP={this.props.stateUPSP}
                             parentBB={this.props.parentBB}
                             bounds={this.props.bounds}
