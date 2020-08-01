@@ -1,7 +1,7 @@
 import React from 'react';
 import { dateFormat } from '../../templates/templateUtils';
 
-export const EventCard = (props) => {
+export default (props) => {
   const {
     townhall
   } = props;
@@ -40,14 +40,13 @@ export const EventCard = (props) => {
   );
 
   return (
-    <div className="col-md-12 col-sm-6 event-card">
       <div className="panel panel-secondary">
-        <div className="panel-heading panel-heading_{townhall.iconFlag}">
+        <div className={`panel-heading panel-heading_${townhall.iconFlag}`}>
           <div className="row">
             <div className="col-xs-4">
               <div className="">
               </div>
-              <p className="event-card-icon event-icon__{townhall.iconFlag} {townhall.dateValid ? `event-icon__with-date` : ''}">{townhall.meetingType}</p>
+              <p className={`event-card-icon event-icon__${townhall.iconFlag} ${townhall.dateValid ? `event-icon__with-date` : ''}`}>{townhall.meetingType}</p>
             </div>
             <div className="col-xs-8">
               {townhall.meetingType === 'Adopt-A-District/State' ?
@@ -109,6 +108,5 @@ export const EventCard = (props) => {
           <small>Last Updated: {dateFormat(townhall.lastUpdated)}</small>
         </div>
       </div>
-    </div>
   );
 }

@@ -17,11 +17,9 @@ import TownHall from '../models/TownHall';
 
 import indexView from './indexView';
 import mapView from './mapView';
-import newEventView from './mfolSubmitForm';
 import tableHandler from './tableView';
 import videoUploadHandler from './videoView';
 import emailHandler from './emailSignUpView';
-import missingMemberView from './missingMembersView';
 import resultsView from './resultsView';
 import stateView from './stateView';
 import mapboxView from './mapboxView';

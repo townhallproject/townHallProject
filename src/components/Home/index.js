@@ -8,13 +8,17 @@ import TownHall from '../../scripts/models/TownHall';
 
 import ZipSearchComponent from './ZipSearch';
 import NoEventsComponent from './NoEventsComponent';
-import MapComponent from './MapComponent';
+import MapComponent from './MapAndResultsContainer';
 import EmailSignup from './EmailSignup';
 import RepresentativeCards from './RepresentativeCards';
 import EventsTable from './EventsTable';
 import EventModal from './EventModal';
 import MutualAidHubBanner from './MutualAidHubBanner'
 import { isState } from '../../utils';
+import {
+  getEventsToDisplay
+} from './selectors';
+import EventSidebar from './EventSidebar';
 
 export default class Home extends React.Component {
   static getStateAbr(stateData) {
@@ -124,6 +128,8 @@ export default class Home extends React.Component {
       currentDistrict,
     } = this.state;
     const usState = Home.getStateAbr(isState(this.props.location));
+    const eventsToDisplay = getEventsToDisplay(currentDistrict, allTownHalls, allStateTownHalls)
+    console.log(currentDistrict, eventsToDisplay)
     return (
       <React.Fragment>
         <MutualAidHubBanner />
@@ -133,7 +139,7 @@ export default class Home extends React.Component {
           setZip={this.setZip}
         />
         {/*Call to action when no events are present*/}
-        <NoEventsComponent />
+
         <MapComponent 
           allTownHalls={allTownHalls}
           currentDistrict={currentDistrict}
@@ -143,6 +149,8 @@ export default class Home extends React.Component {
           bounds={this.props.bounds}
           webGL={this.props.webGL}
           feature={this.props.feature}
+          eventsToDisplay={eventsToDisplay}
+          hasSearchResults={eventsToDisplay.length > 0}
         />
         <EmailSignup />
         {/*Cards showing representatives and their contact info*/}
