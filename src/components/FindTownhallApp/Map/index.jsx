@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { isEqual } from 'lodash';
 import mapboxView from '../../../scripts/views/mapboxView';
 import mapController from '../../../scripts/controllers/map-controller';
 import mapView from '../../../scripts/views/mapView';
@@ -30,10 +30,9 @@ export default class CurrentEventsMap extends React.Component {
 
     componentDidUpdate(prevProps) {
         const { currentDistrict, eventsToDisplay } = this.props;
-        if (currentDistrict && currentDistrict !== prevProps.currentDistrict) {
+        if (currentDistrict && !isEqual(currentDistrict,prevProps.currentDistrict)) {
             mapboxView.highlightDistrict(currentDistrict.federal.selections);
             getZoomLocationForMap(currentDistrict, eventsToDisplay);
-            // mapView.makeSidebar(eventsToDisplay);
 
         }
     }
@@ -48,7 +47,9 @@ export default class CurrentEventsMap extends React.Component {
         mapboxView.setDistrict = setDistrict;
         mapController.readData({ webGL, map: this.map },
             () => mapController.addDistrictListener({ webGL },
-                () => mapController.setDistrict({ feature })
+                () => {
+                    mapController.setDistrict({ feature })
+                }
             )
         );
     }

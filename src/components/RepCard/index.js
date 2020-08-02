@@ -30,7 +30,9 @@ class RepCard extends Component {
       <Meta
         avatar={<Avatar src={`https://www.govtrack.us/static/legislator-photos/${rep.govtrack_id}-100px.jpeg`} />}
         title={rep.displayName}
-        description={rep.title.split(',')[0]}
+        description = {
+          rep.title ? rep.title.split(',')[0]: ''
+        }
       />
       <div className="social-icons">
         { rep.url &&

@@ -1,5 +1,7 @@
 import React from 'react';
 import { dateFormat } from '../../templates/templateUtils';
+import './style.less';
+
 
 export default (props) => {
   const {

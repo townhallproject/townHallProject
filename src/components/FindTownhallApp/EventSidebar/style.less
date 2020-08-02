@@ -1,0 +1,15 @@
+@import '../../../styles/constants.less';
+
+.results {
+    height: @map-height;
+    overflow: scroll;
+}
+
+@media screen and (max-width: @map-breakpoint) {
+
+    .results {
+        width: max-content;
+        display: flex;
+        height: initial;
+    }
+}

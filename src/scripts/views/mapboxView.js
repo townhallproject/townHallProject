@@ -121,7 +121,9 @@ mapboxView.resetMap = function (map) {
 
 // Creates the button in our zoom controls to go to the national view
 mapboxView.makeZoomToNationalButton = function (state) {
-  document.querySelector('.mapboxgl-ctrl-compass').remove();
+  if (document.querySelector('.mapboxgl-ctrl-compass')) {
+    document.querySelector('.mapboxgl-ctrl-compass').remove();
+  }
   if (document.querySelector('.state-icon')) {
     document.querySelector('.state-icon').remove();
   }
@@ -258,6 +260,9 @@ mapboxView.featuresHome = {
 };
 
 mapboxView.addLayer = function () {
+  if (map.getLayer('townhall-points')) {
+    return;
+  }
   map.addLayer({
     'id': 'townhall-points',
     'type': 'symbol',
@@ -282,6 +287,9 @@ mapboxView.addLayer = function () {
 };
 
 mapboxView.addStateLayer = function () {
+  if (map.getLayer('townhall-points-states')) {
+    return;
+  }
   map.addLayer({
     'id': 'townhall-points-state',
     'type': 'symbol',
@@ -573,9 +581,6 @@ mapboxView.setData = function () {
   map.getSource('townhall-points').setData(mapboxView.featuresHome);
 };
 
-mapboxView.showStateLegend = function () {
-  $('.state-lines').removeClass('hidden').show();
-};
 
 mapboxView.hideStateLegend = function () {
   $('.state-lines').hide();

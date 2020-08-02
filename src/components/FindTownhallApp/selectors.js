@@ -1,8 +1,25 @@
 
+import { MAP_ICONS } from '../../constants';
+import {
+    uniq,
+    map,
+    intersection
+} from 'lodash'
 export const getTownhallsThatMatchDisplayName = (displayName, allTownHalls) => {
     return allTownHalls.filter(townHall => {
         return townHall.displayName.toLowerCase() === displayName.toLowerCase();
     })
+}
+
+export const getListOfLegendIcons = (allTownHalls) => {
+    const iconsToShow = [];
+    const allIcons = MAP_ICONS;
+    let i = 0;
+    if (!allTownHalls.length) {
+        return iconsToShow;
+    }
+    return intersection(allIcons, uniq(map(allTownHalls, 'iconFlag')));
+  
 }
 
 // Match the looked up zip code to district #

@@ -18,7 +18,6 @@ import { isState } from '../../utils';
 import {
   getEventsToDisplay
 } from './selectors';
-import EventSidebar from './EventSidebar';
 
 export default class FindTownhallApp extends React.Component {
   static getStateAbr(stateData) {
@@ -109,9 +108,16 @@ export default class FindTownhallApp extends React.Component {
     });
   }
 
-  setDistrict(currentDistrict) {
+  setDistrict = (currentDistrict) => {
     this.setState({
       currentDistrict
+    })
+  }
+
+  setDistrictWithMap = (currentDistrict) => {
+    this.setState({
+      currentDistrict,
+      currentZip: ''
     })
   }
 
@@ -139,11 +145,11 @@ export default class FindTownhallApp extends React.Component {
           setZip={this.setZip}
         />
         {/*Call to action when no events are present*/}
-
+        {currentDistrict && !eventsToDisplay.length && <NoEventsComponent />}
         <MapComponent 
           allTownHalls={allTownHalls}
           currentDistrict={currentDistrict}
-          setDistrict={this.setDistrict}
+          setDistrict={this.setDistrictWithMap}
           stateUPSP={this.props.stateUPSP}
           parentBB={this.props.parentBB}
           bounds={this.props.bounds}

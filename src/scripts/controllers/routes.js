@@ -9,7 +9,6 @@ page('/',
   indexController.renderMainIndex,
   mapController.setBounds,
   mapController.webGlsupported,
-  mapController.hideStateLegend,
   indexController.renderDom,
 );
 
@@ -19,7 +18,6 @@ page('/:stateName',
   indexController.renderStateIndex,
   mapController.setStateBounds,
   mapController.webGlsupported,
-  mapController.showStateLegend,
   mapController.setborderListeners,
   indexController.renderDom,
 );

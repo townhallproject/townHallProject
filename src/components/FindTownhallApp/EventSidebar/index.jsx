@@ -1,5 +1,6 @@
 import React from 'react';
 import EventCard from '../../EventCard';
+import './style.less';
 
 export default class EventSidebar extends React.Component {
 
