@@ -141,6 +141,7 @@ export default class FindTownhallApp extends React.Component {
         <MutualAidHubBanner />
         <ZipSearchComponent 
           usState={usState}
+          currentZip={this.state.currentZip}
           setDistrict={this.setDistrict}
           setZip={this.setZip}
         />

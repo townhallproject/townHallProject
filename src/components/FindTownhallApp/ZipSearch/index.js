@@ -126,6 +126,14 @@ static handleZipToDistrict(zipToDistrictArray) {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const {currentZip} = this.props;
+    // clear out input box
+    if (!currentZip && this.state.query && prevProps.currentZip) {
+      this.setState({query: ''})
+    }
+  }
+
   saveZip(e) {
     this.setState({
       query: e.target.value
