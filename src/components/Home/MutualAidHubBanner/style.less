@@ -1,0 +1,72 @@
+.time-sensitive {
+    display: flex;
+
+    .display-flex {
+        display: flex;
+        flex-flow: row wrap;
+        width: 100%;
+    }
+
+    h1 {
+        margin: auto;
+        display: inline-block;
+    }
+
+    .first-row {
+        border-bottom: 1px solid @brand-white;
+        width: 100%;
+        margin: auto;
+    }
+
+    .happening-now-title {
+        display: flex;
+        justify-content: space-between;
+
+        .break {
+            display: block;
+        }
+
+        i {
+            color: #b14038;
+            font-size: 1.3em;
+        }
+
+        background: #ed6c64;
+        color: white;
+        height: 100%;
+        flex: 1;
+        padding: 5px 0px 5px 20px;
+    }
+
+    .happening-now-content {
+        flex: 2;
+        padding: 1em;
+        margin: auto;
+    }
+}
+
+.time-sensitive .container {
+    max-width: 950px;
+}
+
+.time-sensitive p {
+    padding: 10px 20px 5px 20px;
+    margin: 0;
+}
+
+.time-sensitive .large {
+    font-size: 1.5em;
+}
+
+@media screen and (max-width: 850px) {
+    .time-sensitive {
+        .happening-now-title {
+            display: none;
+        }
+
+        .happening-now-content {
+            flex: 1 100%;
+            text-align: left;
+        }
+    }
+}
