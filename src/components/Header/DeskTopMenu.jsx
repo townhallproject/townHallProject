@@ -5,7 +5,6 @@ import classNames from "classnames";
 import {
   MENU_MAP,
   STATE_LEGISLATURES_MENU,
-  MISSING_MEMBER_LINK,
   TOP_LEVEL_MENU,
 } from "./menuConstants";
 
@@ -51,7 +50,6 @@ class Header extends Component {
 
   handleMenuSelect(refObj) {
     const { key } = refObj;
-    console.log(key)
     if (this.hasSubMenu(key) && key !== this.state.activeKey) {
       this.setState({ activeKey: key });
     } else {
@@ -79,7 +77,6 @@ class Header extends Component {
         className={classNames(["menu-link", "hash-link"])}
         data-toggle="tab"
         href={`#${menuItem.link}`}
-        onClick={() => (location.hash = `#${menuItem.link}`)}
       >
         {menuItem.display}
       </a>
