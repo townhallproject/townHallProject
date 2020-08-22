@@ -37,6 +37,7 @@ export const TOP_LEVEL_MENU = [
   
 ]
 
+// eslint-disable-next-line no-undef
 export const MENU_MAP = new Map([
   ['submit-event', []],
   ['take-action', [{
