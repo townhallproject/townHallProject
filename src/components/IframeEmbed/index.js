@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SubmitEventForm = (props) => {
+const IFrameEmbed = (props) => {
   return (
     <React.Fragment>
       <div className='embed-container submit-embed-container'>
@@ -12,4 +12,4 @@ const SubmitEventForm = (props) => {
   )
 };
 
-export default SubmitEventForm;
+export default IFrameEmbed;
