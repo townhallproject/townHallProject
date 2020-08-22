@@ -11,6 +11,32 @@ export const ABOUT_LINK = 'about';
 export const NEWS_LINK = 'news';
 export const RESEARCH_LINK = 'research';
 
+export const TOP_LEVEL_MENU = [
+  {
+    value: 'submit-event',
+    label: 'Submit Event',
+    hash: '#submit'
+  }, {
+    value: 'take-action',
+    label: 'Take Action'
+  }, {
+    value: 'our-projects',
+    label: 'Our Projects'
+  }, {
+    value: 'learn-more',
+    label: 'Learn More'
+  }, {
+    value: '2019-review',
+    label: '2019 In Review'
+  }, {
+    value: 'donate',
+    label: 'Donate Now',
+    href: 'https://secure.actblue.com/donate/townhallproject2019'
+  },
+  
+  
+]
+
 export const MENU_MAP = new Map([
   ['submit-event', []],
   ['take-action', [{

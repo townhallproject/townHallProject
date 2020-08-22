@@ -44,9 +44,19 @@ class Header extends Component {
     const arrowClasses = ['arrow', 'fade-in'];
     const { activeKey } = this.state;
     const {
-      setLocation
+      setLocation,
+      setHash,
+      hash
     } = this.props;
-    return this.state.mobile ? <MobileMenu /> : <DeskTopMenu /> 
+    return this.state.mobile ? <MobileMenu     
+        setLocation={setLocation}
+        setHash={setHash}
+        hash={hash}
+      /> : <DeskTopMenu
+      setLocation={setLocation}
+      setHash={setHash}
+      hash={hash}
+    /> 
   }
 }
 
