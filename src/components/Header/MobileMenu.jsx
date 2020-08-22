@@ -64,9 +64,14 @@ class MobileMenu extends React.Component {
         if (menu) {
           this.setState({ activeKey: key, title: menu.display });
         }
+        const topLevel = find(TOP_LEVEL_MENU, {hash} )
+        if (topLevel) {
+          this.setState({ title: topLevel.label });
+        } else if (hash === 'home') {
+          this.setState({ title: "Home" });
+        }
       });
     } else if (!hash && prevProps.hash) {
-
       this.setState({ title: 'Home'})
     }
   }
@@ -216,9 +221,12 @@ class MobileMenu extends React.Component {
           {TOP_LEVEL_MENU.map((topLevelMenuItem) => {
             if (topLevelMenuItem.hash) {
               return (
-                <Menu.Item key={topLevelMenuItem.value}>
+                <Menu.Item
+                  key={topLevelMenuItem.value}
+                  onClick={() => setHash(topLevelMenuItem.hash)}
+                >
                   <a
-                    href={topLevelMenuItem.hash}
+                    href={`#${topLevelMenuItem.hash}`}
                     style={{ textDecoration: "none" }}
                     data-toggle="tab"
                     className="hash-link"

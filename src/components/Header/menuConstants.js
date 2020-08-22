@@ -15,7 +15,7 @@ export const TOP_LEVEL_MENU = [
   {
     value: 'submit-event',
     label: 'Submit An Event',
-    hash: '#submit'
+    hash: 'submit'
   }, {
     value: 'take-action',
     label: 'Take Action'

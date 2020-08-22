@@ -174,7 +174,7 @@ class Header extends Component {
               return (
                 <Menu.Item key={menuItem.value}>
                   <a
-                    href={menuItem.hash}
+                    href={`#${menuItem.hash}`}
                     style={{ textDecoration: "none" }}
                     data-toggle="tab"
                     className="hash-link"
