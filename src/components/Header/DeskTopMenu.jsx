@@ -12,7 +12,7 @@ const { SubMenu } = Menu;
 
 import "./style.less";
 import ImageModal from "./Modal";
-const BREAKPOINT = 768;
+
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -156,7 +156,7 @@ class Header extends Component {
         <Menu
           className="main-nav-menu"
           mode="horizontal"
-          // overflowedIndicator={<Button icon="menu" type="primary" />}
+          overflowedIndicator={<Button icon="menu" type="primary" />}
           style={{ lineHeight: "60px" }}
           onClick={this.handleMenuSelect}
         >
