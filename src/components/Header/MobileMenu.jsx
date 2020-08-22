@@ -285,6 +285,7 @@ class MobileMenu extends React.Component {
             onClick={() => {
               setLocation("")
               setHash("home");
+              this.onMaskClick();
             }}
             data-toggle="tab"
             href="#home"
