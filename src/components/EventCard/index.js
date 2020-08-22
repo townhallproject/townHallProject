@@ -40,7 +40,6 @@ export default (props) => {
       </var>
     </span>
   );
-
   return (
       <div className="panel panel-secondary">
         <div className={`panel-heading panel-heading_${townhall.iconFlag}`}>
@@ -54,7 +53,7 @@ export default (props) => {
               {townhall.meetingType === 'Adopt-A-District/State' ?
                 adoptADistrict
                 :
-                (<h3>{townhall.formattedMember} <small>{townhall.displayDistrict}</small></h3>)
+                (<h3>{townhall.formattedMember || townhall.displayName} <small>{townhall.displayDistrict}</small></h3>)
               }
               {
                 townhall.dateValid

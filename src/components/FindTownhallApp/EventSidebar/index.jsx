@@ -10,6 +10,7 @@ export default class EventSidebar extends React.Component {
                     <section className="results multipleResults">
                             {eventsToDisplay.map(event => 
                                 (<EventCard 
+                                    key={event.eventId}
                                     townhall={event}
                                 />)
                             )}

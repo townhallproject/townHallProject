@@ -25,17 +25,15 @@ export default class MapAndResultsContainer extends React.Component {
     } = this.props;
     return (
       <section className="map-and-results-container">
-        <Row>
+        <Row >
           {eventsToDisplay.length > 0 && <Col
-            span={24}
-            lg={12}
+            flex="430px"
             className="events-container"
           >
             <EventSidebar eventsToDisplay={eventsToDisplay} />
           </Col>}
           <Col
-            span={24}
-            lg={eventsToDisplay.length> 0? 12: 24}
+            flex="auto"
             className="map-container"
           >
             <Map

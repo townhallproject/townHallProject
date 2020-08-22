@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { map } from 'lodash'
 import {
   firebasedb
 } from '../../scripts/lib/firebasedb';
@@ -136,6 +136,7 @@ export default class FindTownhallApp extends React.Component {
     const usState = FindTownhallApp.getStateAbr(isState(this.props.location));
     const eventsToDisplay = getEventsToDisplay(currentDistrict, allTownHalls, allStateTownHalls)
     console.log(currentDistrict, eventsToDisplay)
+    console.log(map(allTownHalls, (townhall) => townhall.additionalLinks))
     return (
       <React.Fragment>
         <MutualAidHubBanner />
