@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu, Spin, Button } from "antd";
+import { MenuOutlined } from '@ant-design/icons';
 import classNames from "classnames";
 import { find } from "lodash";
 
@@ -8,11 +9,11 @@ import ImageModal from "./Modal";
 import {
   MENU_MAP,
   TOP_LEVEL_MENU,
-  MISSING_MEMBER_LINK,
   STATE_LEGISLATURES_MENU,
 } from "./menuConstants";
 const { SubMenu } = Menu;
 
+import './style.less';
 
 const data = TOP_LEVEL_MENU.map((menuItem) => {
   const subMenu = MENU_MAP.get(menuItem.value);
@@ -29,26 +30,28 @@ const data = TOP_LEVEL_MENU.map((menuItem) => {
   return subMenu
 });
 
-const tabs = TOP_LEVEL_MENU.map((tabItem) => {
-  return {
-    title: tabItem.label,
-    key: tabItem.value
-  }
-});
-// MENU_MAP.forEach((subMenu, key) => {
-//   data.push({
-//     value: key,
-//     label: key,
-//     children: subMenu.length ? subMenu.map((obj) => ({...obj, label: obj.display, value: obj.link})) : null
-//   })
-// })
+
 class MobileMenu extends React.Component {
   constructor(...args) {
     super(...args);
+
+    const { hash } = this.props;
+    let title = 'Home';
+    if (hash) {
+      MENU_MAP.forEach((subMenu, key) => {
+        const menu = find(subMenu, {
+          link: hash,
+        });
+        if (menu) {
+          title = menu.display
+        }
+      });
+    }
     this.state = {
       initData: "",
       show: false,
       activeKey: "",
+      title,
     };
   }
 
@@ -107,7 +110,9 @@ class MobileMenu extends React.Component {
         className={classNames(["menu-link", "hash-link"])}
         data-toggle="tab"
         href={`#${menuItem.link}`}
-        onClick={() => (location.hash = `#${menuItem.link}`)}
+        onClick={() => {
+          this.setState({ title: menuItem.display })
+          location.hash = `#${menuItem.link}`}}
       >
         {menuItem.display}
       </a>
@@ -192,67 +197,64 @@ class MobileMenu extends React.Component {
   };
 
   render() {
-    const { initData, show } = this.state;
+    const { initData, show, activeKey } = this.state;
     const { hash, setLocation, setHash } = this.props;
     const menuEl = (
-      <Menu
-        onClick={this.handleClick}
-        style={{ width: 256 }}
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
-        mode="inline"
-      >
-        <Menu.Item key="home" onClick={() => setLocation("")}>
-          <a
-            data-toggle="tab"
-            href="#home"
-            className={classNames("navbar-brand", "hash-link", "brand-icon")}
-          >
-            <img src="/Images/THP_logo_horizontal_simple.png" alt=""></img>
-          </a>
-        </Menu.Item>
-        {TOP_LEVEL_MENU.map((topLevelMenuItem) => {
-          if (topLevelMenuItem.hash) {
+      <div className="menu-container">
+        <Menu
+          onClick={this.handleClick}
+          style={{
+            width: "100%",
+            minHeight: document.documentElement.clientHeight * 0.6,
+          }}
+          defaultSelectedKeys={[hash]}
+          defaultOpenKeys={[activeKey]}
+          mode="inline"
+          className="mobile-menu"
+        >
+          {TOP_LEVEL_MENU.map((topLevelMenuItem) => {
+            if (topLevelMenuItem.hash) {
+              return (
+                <Menu.Item key={topLevelMenuItem.value}>
+                  <a
+                    href={topLevelMenuItem.hash}
+                    style={{ textDecoration: "none" }}
+                    data-toggle="tab"
+                    className="hash-link"
+                  >
+                    {topLevelMenuItem.label}
+                  </a>
+                </Menu.Item>
+              );
+            }
+            if (topLevelMenuItem.href) {
+              return (
+                <div key="donate" className="donate-btn">
+                  <Button
+                    type="danger"
+                    shape="round"
+                    size="large"
+                    href={topLevelMenuItem.href}
+                    target="_blank"
+                  >
+                    {topLevelMenuItem.label}
+                  </Button>
+                </div>
+              );
+            }
+            const children = MENU_MAP.get(topLevelMenuItem.value);
             return (
-              <Menu.Item key={topLevelMenuItem.value}>
-                <a
-                  href={topLevelMenuItem.hash}
-                  style={{ textDecoration: "none" }}
-                  data-toggle="tab"
-                  className="hash-link"
-                >
-                  {topLevelMenuItem.label}
-                </a>
-              </Menu.Item>
+              <SubMenu
+                key={topLevelMenuItem.value}
+                title={topLevelMenuItem.label}
+                onTitleClick={this.handleMenuSelect}
+              >
+                {children.map(this.renderSubMenuItem)}
+              </SubMenu>
             );
-          }
-          if (topLevelMenuItem.href) {
-            return (
-              <div key="donate" className="donate-btn">
-                <Button
-                  type="danger"
-                  shape="round"
-                  size="large"
-                  href={topLevelMenuItem.href}
-                  target="_blank"
-                >
-                  {topLevelMenuItem.label}
-                </Button>
-              </div>
-            );
-          }
-          const children = MENU_MAP.get(topLevelMenuItem.value);
-          return (
-            <SubMenu
-              key={topLevelMenuItem.value}
-              title={topLevelMenuItem.label}
-              onTitleClick={this.handleMenuSelect}
-            >
-              {children.map(this.renderSubMenuItem)}
-            </SubMenu>
-          );
-        })}
-      </Menu>
+          })}
+        </Menu>
+      </div>
     );
     const loadingEl = (
       <div
@@ -261,6 +263,8 @@ class MobileMenu extends React.Component {
           height: document.documentElement.clientHeight * 0.6,
           display: "flex",
           justifyContent: "center",
+          alignItems: "center",
+          boxShadow: "inset 0px 11px 8px -10px #CCC, inset 0px -11px 8px -10px #CCC"
         }}
       >
         <Spin size="large" />
@@ -268,22 +272,20 @@ class MobileMenu extends React.Component {
     );
     return (
       <div className={show ? "menu-active" : ""}>
-        <div>
+        <div className="mobile-nav-bar">
+          <a
+            data-toggle="tab"
+            href="#home"
+            className={classNames("navbar-brand", "hash-link", "brand-icon")}
+          >
+            <img src="/Images/THP_icon.png" alt=""></img>
+          </a>
+          <h4>{this.state.title}</h4>
           <Button
-            leftContent="Menu"
-            mode="light"
-            icon={
-              <img
-                src="https://gw.alipayobjects.com/zos/rmsportal/iXVHARNNlmdCGnwWxQPH.svg"
-                className="am-icon am-icon-md"
-                alt=""
-              />
-            }
+            icon="menu"
             onClick={this.handleClick}
             className="top-nav-bar"
-          >
-            {this.state.title}
-          </Button>
+          />
         </div>
         {show ? (initData ? menuEl : loadingEl) : null}
         {show ? <div className="menu-mask" onClick={this.onMaskClick} /> : null}

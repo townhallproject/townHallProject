@@ -14,7 +14,7 @@ export const RESEARCH_LINK = 'research';
 export const TOP_LEVEL_MENU = [
   {
     value: 'submit-event',
-    label: 'Submit Event',
+    label: 'Submit An Event',
     hash: '#submit'
   }, {
     value: 'take-action',
