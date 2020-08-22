@@ -1,6 +1,5 @@
 import React from 'react';
 import { Menu, Spin, Button } from "antd";
-import { MenuOutlined } from '@ant-design/icons';
 import classNames from "classnames";
 import { find } from "lodash";
 
@@ -37,11 +36,13 @@ class MobileMenu extends React.Component {
 
     const { hash } = this.props;
     let title = 'Home';
+    console.log(hash)
     if (hash) {
       MENU_MAP.forEach((subMenu, key) => {
         const menu = find(subMenu, {
           link: hash,
         });
+        console.log(men)
         if (menu) {
           title = menu.display
         }
@@ -63,9 +64,12 @@ class MobileMenu extends React.Component {
           link: hash,
         });
         if (menu) {
-          this.setState({ activeKey: key });
+          this.setState({ activeKey: key, title: menu.display });
         }
       });
+    } else if (!hash && prevProps.hash) {
+
+      this.setState({ title: 'Home'})
     }
   }
 
@@ -200,7 +204,6 @@ class MobileMenu extends React.Component {
     const { initData, show, activeKey } = this.state;
     const { hash, setLocation, setHash } = this.props;
     const menuEl = (
-      <div className="menu-container">
         <Menu
           onClick={this.handleClick}
           style={{
@@ -254,7 +257,6 @@ class MobileMenu extends React.Component {
             );
           })}
         </Menu>
-      </div>
     );
     const loadingEl = (
       <div
@@ -274,6 +276,11 @@ class MobileMenu extends React.Component {
       <div className={show ? "menu-active" : ""}>
         <div className="mobile-nav-bar">
           <a
+            onClick={() => {
+              console.log('clicked home')
+              setLocation("")
+              setHash("home");
+            }}
             data-toggle="tab"
             href="#home"
             className={classNames("navbar-brand", "hash-link", "brand-icon")}

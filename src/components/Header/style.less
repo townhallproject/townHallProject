@@ -1,4 +1,4 @@
-
+@import '../../styles/colors.less';
 .fade-in {
 	opacity: 1;
 	animation-name: fadeInOpacity;
@@ -127,23 +127,20 @@
     width: auto!important;
   }
 }
-.menu-container {
 
-  .mobile-menu {
-    box-shadow: inset 0px 11px 8px -10px #CCC, inset 0px -11px 8px -10px #CCC;
-    .ant-menu-sub {
-      background-color: #3fabef;
-      .ant-menu-item, a {
-        color: white;
-      }
-    }
-    .submenu-item-selected {
-      border-left: 2px solid white;
-      background: #ffffff2b;
-    }
-    .donate-btn {
-      text-align: center;
-      padding: 1em;
-    }
+.mobile-menu {
+  box-shadow: inset 0px 11px 8px -10px #CCC,
+  inset 0px -11px 8px -10px #CCC!important;
+  .submenu-item-selected {
+    border-left: 2px solid @brand-success;
+    background: #3facef57;
+  }
+  .donate-btn {
+    text-align: center;
+    padding: 1em;
+  }
+  .ant-menu-sub {
+    border-top: 2px solid @brand-success;
+    border-bottom: 0.5px solid @brand-primary;
   }
 }
