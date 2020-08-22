@@ -36,13 +36,11 @@ class MobileMenu extends React.Component {
 
     const { hash } = this.props;
     let title = 'Home';
-    console.log(hash)
     if (hash) {
       MENU_MAP.forEach((subMenu, key) => {
         const menu = find(subMenu, {
           link: hash,
         });
-        console.log(men)
         if (menu) {
           title = menu.display
         }
@@ -116,7 +114,7 @@ class MobileMenu extends React.Component {
         href={`#${menuItem.link}`}
         onClick={() => {
           this.setState({ title: menuItem.display })
-          location.hash = `#${menuItem.link}`}}
+        }}
       >
         {menuItem.display}
       </a>
@@ -277,7 +275,6 @@ class MobileMenu extends React.Component {
         <div className="mobile-nav-bar">
           <a
             onClick={() => {
-              console.log('clicked home')
               setLocation("")
               setHash("home");
             }}
