@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
-import { find } from 'lodash';
 import {
-  Button,
   Menu,
-  Icon
 } from 'antd';
-import classNames from 'classnames';
-import { MENU_MAP, STATE_LEGISLATURES_MENU, MISSING_MEMBER_LINK } from './menuConstants';
 import DeskTopMenu from './DeskTopMenu';
 import MobileMenu from './MobileMenu';
 
 const { SubMenu } = Menu;
 
 import './style.less';
-import ImageModal from './Modal';
 const BREAKPOINT = 768;
 class Header extends Component {
   constructor(props) {
@@ -25,11 +19,11 @@ class Header extends Component {
 
    this.state = { mobile }
    window.addEventListener('resize', () => {
-        if (window.innerWidth < BREAKPOINT && !this.state.mobile) {
+        if (window.innerWidth <= BREAKPOINT && !this.state.mobile) {
           this.setState({
             mobile: true
           })
-        } else if (this.state.mobile) {
+        } else if (window.innerWidth > BREAKPOINT && this.state.mobile) {
           this.setState({
             mobile: false
           })
