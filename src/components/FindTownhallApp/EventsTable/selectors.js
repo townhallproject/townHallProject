@@ -28,6 +28,9 @@ export const getFilteredEvents = (allEvents, filters, sortOn) => {
         // At least one attribute from within each filter group must match
         return Object.keys(filters).reduce(function (acc, key) {
             return acc.filter(function (townhall) {
+                if (!filters[key].length) {
+                    return true;
+                }
                 // Currently some of the data is inconsistent.  Some parties are listed as "Democrat" and some are listed as "Democratic", etc
                 // TODO:  Once data is sanatized use return TownHall.filters[key].indexOf(townhall[key]) !== -1;
                 return filters[key].some(function (filter) {

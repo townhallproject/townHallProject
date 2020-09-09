@@ -86,11 +86,14 @@ class EventsTable extends React.Component {
       filters, 
       sortOn
     } = this.state;
-    const {
-      allTownHalls
-    } = this.props;
-
-    const currentFilteredEvents = getFilteredEvents(allTownHalls, filters, sortOn)
+    const { allTownHalls, eventsToDisplay } = this.props;
+    const eventsToFilter = eventsToDisplay.length ? eventsToDisplay : allTownHalls
+    const currentFilteredEvents = getFilteredEvents(
+      eventsToFilter,
+      filters,
+      sortOn
+      );
+      console.log(eventsToDisplay, currentFilteredEvents);
 
     return (
     <div className="hidden-xs ">

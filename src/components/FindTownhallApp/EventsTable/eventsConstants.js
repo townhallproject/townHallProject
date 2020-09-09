@@ -48,12 +48,12 @@ export const searchFilters = {
 export const defaultSearchFilters = {
   party: ['Democratic', 'Republican', 'Independent'],
   meetingType: [
-    'Town Hall',
-    'Empty Chair Town Hall',
-    'Campaign Town Hall',
-    'Youth Vote',
-    'Voting Rights',
-    'Tele-Town Hall'
+    // 'Town Hall',
+    // 'Empty Chair Town Hall',
+    // 'Campaign Town Hall',
+    // 'Youth Vote',
+    // 'Voting Rights',
+    // 'Tele-Town Hall'
   ],
   sortOn: 'Date'
 }

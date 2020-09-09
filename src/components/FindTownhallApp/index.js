@@ -13,7 +13,7 @@ import EmailSignup from './EmailSignup';
 import RepresentativeCards from './RepresentativeCards';
 import EventsTable from './EventsTable';
 import EventModal from './EventModal';
-import MutualAidHubBanner from './MutualAidHubBanner'
+import MutualAidHubBanner from '../MutualAidHubBanner'
 import { isState } from '../../utils';
 import {
   getEventsToDisplay
@@ -135,8 +135,6 @@ export default class FindTownhallApp extends React.Component {
     } = this.state;
     const usState = FindTownhallApp.getStateAbr(isState(this.props.location));
     const eventsToDisplay = getEventsToDisplay(currentDistrict, allTownHalls, allStateTownHalls)
-    console.log(currentDistrict, eventsToDisplay)
-    console.log(map(allTownHalls, (townhall) => townhall.additionalLinks))
     return (
       <React.Fragment>
         <MutualAidHubBanner />
@@ -166,7 +164,8 @@ export default class FindTownhallApp extends React.Component {
           currentDistrict={this.state.currentDistrict}
           currentZip={this.state.currentZip}
         />
-        <EventsTable 
+        <EventsTable
+          eventsToDisplay={eventsToDisplay}
           allTownHalls={allStateTownHalls.length ? allStateTownHalls : allTownHalls} // if state town halls are present, it's because we are on a state site
         />
         <EventModal />
