@@ -51,6 +51,11 @@ class App extends React.Component {
     }
 
     setHash(hash) {
+        if (hash === 'home') {
+            location.hash = ''
+        } else {
+            location.hash = `#${hash}`;
+        }
         this.setState({
             hash,
         })
