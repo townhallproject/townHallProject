@@ -1,3 +1,5 @@
+@import "../../styles/colors.less";
+
 .time-sensitive {
     display: flex;
 
@@ -27,12 +29,11 @@
         }
 
         i {
-            color: #b14038;
+            color: darken(@brand-gray, 20%);
             font-size: 1.3em;
         }
 
-        background: #ed6c64;
-        color: white;
+        color: lighten(@brand-gray, 10%);
         height: 100%;
         flex: 1;
         padding: 5px 0px 5px 20px;
