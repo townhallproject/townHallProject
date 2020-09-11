@@ -16,7 +16,7 @@ import EventModal from './EventModal';
 import MutualAidHubBanner from '../MutualAidHubBanner'
 import { isState } from '../../utils';
 import {
-  getEventsToDisplay
+  getEventsWithinLocationSearch
 } from './selectors';
 
 export default class FindTownhallApp extends React.Component {
@@ -133,8 +133,9 @@ export default class FindTownhallApp extends React.Component {
       allStateTownHalls,
       currentDistrict,
     } = this.state;
+
     const usState = FindTownhallApp.getStateAbr(isState(this.props.location));
-    const eventsToDisplay = getEventsToDisplay(currentDistrict, allTownHalls, allStateTownHalls)
+    const eventsToDisplay = getEventsWithinLocationSearch(currentDistrict, allTownHalls, allStateTownHalls)
     return (
       <React.Fragment>
         <MutualAidHubBanner />
@@ -166,7 +167,7 @@ export default class FindTownhallApp extends React.Component {
         />
         <EventsTable
           eventsToDisplay={eventsToDisplay}
-          allTownHalls={allStateTownHalls.length ? allStateTownHalls : allTownHalls} // if state town halls are present, it's because we are on a state site
+          allTownHalls={usState ? [...allStateTownHalls, ...allTownHalls.filter((townHall) => townHall.state === usState)] : allTownHalls} // if state town halls are present, it's because we are on a state site
         />
         <EventModal />
       </React.Fragment>

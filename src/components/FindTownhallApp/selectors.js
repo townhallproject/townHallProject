@@ -70,7 +70,7 @@ export const matchSelectionToZipStateEvents = (state, districts, chamber, townHa
     }, []);
 };
 
-export const getEventsToDisplay = function (locationData, allTownHalls, stateTownHalls) {
+export const getEventsWithinLocationSearch = function (locationData, allTownHalls, stateTownHalls) {
     let selectedData = [];
     let federalEvents = [];
     if (!locationData) {
