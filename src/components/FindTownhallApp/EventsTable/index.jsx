@@ -92,7 +92,6 @@ class EventsTable extends React.Component {
       filters,
       sortOn
       );
-      console.log(eventsToDisplay, currentFilteredEvents);
 
     return (
     <div className="hidden-xs ">
