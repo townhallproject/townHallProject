@@ -66,7 +66,7 @@ mapboxView.getBounds = function () {
   return bounds;
 };
 
-mapboxView.setMap = function (style, parentBB) {
+mapboxView.setMap = function (style, parentBB, currentBounds) {
   // Specify Mapbox default access token
   var accessToken = 'pk.eyJ1IjoidG93bmhhbGxwcm9qZWN0IiwiYSI6ImNqMnRwOG4wOTAwMnMycG1yMGZudHFxbWsifQ.FXyPo3-AD46IuWjjsGPJ3Q';
   // Specify uploaded Mapbox Studio style URL
@@ -82,11 +82,7 @@ mapboxView.setMap = function (style, parentBB) {
     attributionControl: false
     // maxBounds: parentBB
   });
-  $(window).resize(function () {
-    var bb = parentBB;
-    var bounds = mapView.zoomLocation ? mapView.zoomLocation : bb;
-    mapView.focusMap(bounds);
-  });
+
   map.addControl(new mapboxgl.AttributionControl(), 'top-left');
 
   mapboxView.initialView(map);
