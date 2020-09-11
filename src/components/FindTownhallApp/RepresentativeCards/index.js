@@ -14,7 +14,7 @@ const { Title, Text } = Typography;
 import './style.less';
 
 class RepresentativeCards extends Component {
-  defaultProps = {
+  static defaultProps = {
     currentDistrict: {
       federal : {}
     }

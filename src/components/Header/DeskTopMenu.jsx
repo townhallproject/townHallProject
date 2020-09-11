@@ -7,6 +7,7 @@ import {
   STATE_LEGISLATURES_MENU,
   TOP_LEVEL_MENU,
 } from "./menuConstants";
+import { MenuOutlined } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
 
@@ -84,7 +85,6 @@ class Header extends Component {
 
   renderStateLegDropDown = (menuItem) => {
     const { setLocation } = this.props;
-    console.log("rendering drop down", menuItem.display);
     return (
         <SubMenu
           className="state-legislatures-menu fade-in"
@@ -160,7 +160,7 @@ class Header extends Component {
         <Menu
           className="main-nav-menu"
           mode="horizontal"
-          overflowedIndicator={<Button icon="menu" type="primary" />}
+          overflowedIndicator={<Button icon={<MenuOutlined />} type="primary" />}
           style={{ lineHeight: "60px" }}
           onClick={this.handleMenuSelect}
         >
