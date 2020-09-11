@@ -8,7 +8,6 @@ window.populateModal = populateEventModal;
 // components
 import About from '../About';
 import ContactUsForm from '../ContactUsForm';
-import EndOfYearReport from '../EndOfYearReport';
 import Footer from '../Footer';
 import Header from '../Header';
 import Join from '../Join';
@@ -113,12 +112,6 @@ class App extends React.Component {
                         <IframeEmbed src={REPORT_2019_LINK} />
                     </PageComponent>
                     
-                    <PageComponent id="year-two" active={false}>
-                        <EndOfYearReport hashtag={'year-two'} imageSrc={'/Images/lookback2018-Desktop-nobg.png'} />
-                    </PageComponent>
-                    <PageComponent id="year-one" active={false}>
-                        <EndOfYearReport hashtag={'year-one'} imageSrc={'/Images/EOY_Report_Layout_noBG-01-01.png'} />
-                    </PageComponent>
                 </div>
                 {/** END Main content & Pages */}
 
