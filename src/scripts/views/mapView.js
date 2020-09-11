@@ -6,7 +6,6 @@ import urlParamsHandler from '../lib/urlParams';
 import TownHall from '../models/TownHall';
 
 import mapboxView from './mapboxView';
-import tableHandler from './tableView';
 import noWebGlMapView from './googleMapView';
 
   var map;
@@ -55,7 +54,6 @@ import noWebGlMapView from './googleMapView';
     mapboxView.featuresHome.features = [];
     var isPledgerPromises =[];
     var townHallsFB = firebasedb.ref('/townHalls/');
-    tableHandler.clearTableData();
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall(snapshot.val());
       ///If no state filter show all results
@@ -68,9 +66,6 @@ import noWebGlMapView from './googleMapView';
       
       isPledgerPromises.push(ele.getIsPledger());
       TownHall.addFilterIndexes(ele);
-      if (!noTable) {
-        tableHandler.initialMainTable(ele);
-      }
       if (webgl) {
         mapboxView.filterMap(ele);
         mapboxView.makePoint(ele);
@@ -98,7 +93,6 @@ import noWebGlMapView from './googleMapView';
     ///If in state view filter the results before they get displayed on the map and in the table
     var townHallsFB = firebasedb.ref('/state_townhalls/' + state + '/');
     ///clear previous table if it exists
-    tableHandler.clearTableData();
     townHallsFB.orderByChild('dateObj').on('child_added', function getSnapShot(snapshot) {
       var ele = new TownHall(snapshot.val());
       if(ele.district && !ele.chamber) {
@@ -108,7 +102,6 @@ import noWebGlMapView from './googleMapView';
       ele.makeDisplayDistrict();
       TownHall.allStateTownHalls.push(ele);
       TownHall.addFilterIndexes(ele);
-      tableHandler.initialStateTable(ele);
       if (webgl) {
         mapboxView.filterMap(ele);
         mapboxView.makePoint(ele, true);
@@ -124,7 +117,6 @@ import noWebGlMapView from './googleMapView';
       if (ele.state === state) {
         TownHall.allTownHalls.push(ele);
         TownHall.addFilterIndexes(ele);
-        tableHandler.initialStateTable(ele);
         if (webgl) {
           mapboxView.filterMap(ele);
           mapboxView.makePoint(ele);

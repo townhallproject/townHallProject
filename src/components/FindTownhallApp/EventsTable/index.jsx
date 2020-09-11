@@ -3,7 +3,6 @@ import React from "react";
 import { Avatar, Button, List, Icon, Typography } from 'antd';
 import classNames from 'classnames';
 
-import tableHandler from "../../../scripts/views/tableView";
 import { getFilteredEvents } from "./selectors";
 
 import Activism from '../../../Images/map/circle-activism.svg';
@@ -53,9 +52,9 @@ class EventsTable extends React.Component {
   renderMissingMemberTitle(townhall) {
     return (<h4 className="line-height-medium">
       {townhall.District === 'Senate' ?
-        `<span class="discriptor-text d-inline-block">Home state MoC (not present): </span>${townhall.formattedMember} <small>  ${townhall.party ? `(${townhall.party})` : ''}${townhall.displayDistrict}</small>`
+        `<span className="discriptor-text d-inline-block">Home state MoC (not present): </span>${townhall.formattedMember} <small>  ${townhall.party ? `(${townhall.party})` : ''}${townhall.displayDistrict}</small>`
         :
-        `<span class="discriptor-text d-inline-block">Home district MoC (not present): </span>${townhall.formattedMember} <small>  ${townhall.party ? `(${townhall.party})` : ''}${townhall.displayDistrict}</small>`
+        `<span className="discriptor-text d-inline-block">Home district MoC (not present): </span>${townhall.formattedMember} <small>  ${townhall.party ? `(${townhall.party})` : ''}${townhall.displayDistrict}</small>`
       }
       <br /><span className="discriptor-text d-inline-block">Visiting MoC (will be present): </span>${townhall.districtAdopter} <small> (${townhall.districtAdopterParty}) ${townhall.districtAdopterState}, ${townhall.districtAdopterDistrict}</small>
     </h4>)

@@ -3,7 +3,6 @@ import $ from 'jquery';
 import TownHall from '../models/TownHall';
 
 import mapView from './mapView';
-import tableHandler from './tableView';
 import emailHandler from './emailSignUpView';
 
 const indexView = {};
@@ -23,7 +22,6 @@ indexView.setStateDropdown = function () {
 
 // original view
 indexView.initialHome = function () {
-  tableHandler.resetTable();
   mapView.initialView();
   var $parent = $('#nearest');
   var $results = $('.selection-results_content');
@@ -31,7 +29,6 @@ indexView.initialHome = function () {
   $parent.removeClass('nearest-with-results');
   $parent.empty();
   $results.empty();
-  tableHandler.initialFilters();
   TownHall.sortOn = 'Date';
 };
 
@@ -52,14 +49,12 @@ indexView.resetHome = function () {
   $('#button-to-form').hide();
   $('.spacer').show();
   $('#look-up').appendTo($('.right-panels'));
-  tableHandler.resetTable();
   mapView.resetView();
   var $parent = $('#nearest');
   var $results = $('.selection-results_content');
   $parent.removeClass('nearest-with-results');
   $parent.empty();
   $results.empty();
-  tableHandler.initialFilters();
   emailHandler.clearDistricts();
   TownHall.sortOn = 'Date';
 };

@@ -17,7 +17,6 @@ import TownHall from '../models/TownHall';
 
 import indexView from './indexView';
 import mapView from './mapView';
-import tableHandler from './tableView';
 import videoUploadHandler from './videoView';
 import emailHandler from './emailSignUpView';
 import resultsView from './resultsView';
@@ -72,7 +71,6 @@ function makeReporterText(stateDistricts, chamber) {
 }
 
 eventHandler.renderResults = function (locationData) {
-  tableHandler.resetFilters();
   let selectedData = [];
   let federalEvents = [];
   let districtText= '';
@@ -149,7 +147,6 @@ eventHandler.renderResults = function (locationData) {
 
     TownHall.isCurrentContext = true;
     TownHall.currentContext = selectedData.map(function (ele) { return ele; });
-    tableHandler.renderTableWithArray(selectedData);
 
     var counts = eventHandler.checkIfOnlySenate(federalEvents);
     justSenate = counts[0];
@@ -182,7 +179,6 @@ eventHandler.renderResults = function (locationData) {
     $('#no-events').show();
     justSenate = false;
     mapView.killSidebar();
-    tableHandler.resetTable();
   }
   if (zoomMap) {
     eventHandler.whereToZoomMap(justSenate, state, districts, newDistricts);
@@ -323,8 +319,6 @@ function setupTypeaheads() {
     delay: 250,
     highlighter: function (item) { return item; }, // Kill ugly highlight
     updater: function (selection) {
-      tableHandler.addFilter(this.$element.attr('data-filter'), selection);
-      tableHandler.renderTableWithArray(tableHandler.getFilterState());
     }
   };
 
@@ -360,17 +354,13 @@ export const init = () => {
   $('#save-event').on('submit', eventHandler.save);
   // $('#look-up').on('submit', eventHandler.lookup);
   $('#view-all').on('click', TownHall.viewAll);
-  $('.sort').on('click', 'a', tableHandler.sortTable);
   setupTypeaheads();
 
-  $('.filter').on('click', 'a', tableHandler.filterTable);
-  $('#filter-info').on('click', 'button.btn', tableHandler.removeFilter);
   $('button.upload-video-begin').click(videoUploadHandler.uploadVideoStage2);
   $('#upload-another').on('click', videoUploadHandler.resetVideoForm);
   $('#video-file-field').change(function () {
     $('.upload-video-upload').attr('disabled', false);
   });
-  $('#scrollBtn').on('click', tableHandler.scrollToTopTable);
 
 
   // url hash for direct links to subtabs
