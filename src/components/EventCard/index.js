@@ -69,7 +69,7 @@ export default (props) => {
             (<h3 className="text-success text-center event-name">{townhall.eventName}</h3>)
           }
           <span className="text-success text-center"><h4>
-            <span class>
+            <span>
               {
                 townhall.repeatingEvent ? townhall.repeatingEvent : townhall.dateString
               }
