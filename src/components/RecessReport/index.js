@@ -17,7 +17,7 @@ const RecessReport = (props) => {
           <iframe
             src={iframe}
             width="59" height="20" style={{ border: 'none', overflow: 'hidden' }} scrolling="no" frameBorder="0"
-            allowTransparency="true"></iframe>
+            allowtransparency="true"></iframe>
         </div>
       </div>
     </div>
