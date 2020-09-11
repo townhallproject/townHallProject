@@ -30,8 +30,10 @@ export const whereToZoomMap = function (selectedData, state, districts, addition
     } else {
         bb = mapHelperFunctions.getBoundingBox(state, districts, additionalDistricts)
     }
+    //legacy variable for embed map
     mapView.zoomLocation = bb;
     mapView.focusMap(bb);
+    return bb;
 };
 
 
@@ -52,6 +54,6 @@ export const getZoomLocationForMap = (locationData, selectedData) => {
   if (locationData.federal) {
     state = locationData.federal.state;
     districts = locationData.federal.districts;
-    whereToZoomMap(selectedData, state, districts, newDistricts);
+    return whereToZoomMap(selectedData, state, districts, newDistricts);
   }
 };
