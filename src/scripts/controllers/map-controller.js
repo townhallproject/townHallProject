@@ -5,7 +5,6 @@ import stateData from '../../data/states';
 import bboxes from '../../data/bboxes';
 import TownHall from '../models/TownHall';
 import stateView from '../views/stateView';
-import mapView from '../views/mapView';
 import noWebGlMapView from '../views/googleMapView';
 import mapboxView from '../views/mapboxView';
 
@@ -32,19 +31,6 @@ mapController.webGlsupported = function (ctx, next) {
   }
   next();
 };
-
-mapController.getUrlParams = function (ctx, next) {
-  if (ctx.querystring && ctx.querystring.split('=')[0] === 'event-type') {
-    urlParamsHandler.getUrlParamFromQuery(ctx.querystring, 'event-type');
-    ctx.filters = ctx.querystring.split('=')[1].split(',');
-  }
-  if (ctx.querystring && ctx.querystring.split('=')[0] === 'state-name') {
-    urlParamsHandler.getUrlParamFromQuery(ctx.querystring, 'state-name');
-    ctx.stateName = ctx.querystring.split('=')[1].split(',')[0];
-  }
-  next();
-};
-
 
 mapController.getState = function (ctx, next) {
   ///convert state name to necessary coordinates for mapbox url
@@ -102,123 +88,6 @@ mapController.setBounds = function (ctx, next) {
   next();
 };
 
-mapController.getStateEmbed = function (ctx, next) {
-  // ///convert state name to necessary coordinates for mapbox url
-  if (ctx.stateName) {
-    var stateInfo = $.grep(stateData, function (e) {
-      return e.Name === parseState(ctx.stateName);
-    });
-    ctx.params.stateName = stateInfo;
-    if (stateInfo.length > 0) {
-      var stateUPSP = stateInfo[0]['USPS'];
-      ctx.stateUPSP = stateUPSP;
-      stateView.state = ctx.stateUPSP;
-      next();
-    } else {
-      next();
-    }
-  } else {
-    next();
-  }
-};
-
-mapController.legendEmbed = function (ctx, next) {
-  if (ctx.stateUPSP) {
-    return mapController.showStateLegend(ctx, next);
-  }
-  return mapController.hideStateLegend(ctx, next);
-};
-
-mapController.borderEmbed = function (ctx, next) {
-  if (ctx.stateUPSP) {
-    return mapController.setborderListeners(ctx, next);
-  }
-  next();
-};
-
-mapController.readDataNoTable = function (ctx, next) {
-  if (ctx.stateUPSP) {
-    return mapController.readStateData(ctx, next);
-  }
-  if (!ctx.webGL) {
-    mapView.readData(false, 'noTable', ctx.filters);
-    return next();
-  }
-  ctx.map.on('load', function () {
-    mapboxView.onLoad();
-    mapView.readData(true, 'noTable', ctx.filters);
-    TownHall.isMap = true;
-    next();
-  });
-};
-
-mapController.setMap = function (ctx) {
-  if (ctx.webGL) {
-    var style = null;
-    if (ctx.stateUPSP) {
-      style = 'mapbox://styles/townhallproject/cjbqzhc4b8c1x2trz43dk8spj';
-    }
-    return mapView.setMap(style, ctx.parentBB, ctx.bounds);
-  }
-};
-
-mapController.readData = function (ctx, next) {
-  if (!ctx.webGL) {
-    mapView.readData(false);
-    return next();
-  }
-  ctx.map.on('load', function () {
-    mapboxView.onLoad();
-    mapView.readData(true);
-    TownHall.isMap = true;
-    next();
-  });
-};
-
-mapController.readStateData = function (ctx, next) {
-  if (!ctx.webGL) {
-    mapView.readStateData(false, ctx.stateUPSP);
-    return next();
-  }
-  ctx.map.on('load', function () {
-    mapboxView.onLoad(ctx.stateUPSP);
-    mapboxView.addStateLayer();
-    mapView.readStateData(true, ctx.stateUPSP);
-    TownHall.isMap = true;
-    next();
-  });
-};
-
-mapController.setDistrict = function(ctx, next) {
-  if (ctx.feature) {
-    mapboxView.districtSelect(ctx.feature);
-  }
-}
-
-mapController.maskCountry = function (ctx, next) {
-  if (ctx.webGL) {
-    stateView.maskCountry(ctx.map, ctx.stateUPSP);
-  }
-  next();
-};
-
-mapController.addDistrictListenerEmbed = function (ctx, next) {
-  if (ctx.stateUPSP) {
-    return (mapController.addStateDistrictListener(ctx, next));
-  }
-  if (ctx.webGL) {
-    mapboxView.addDistrictListener();
-  }
-  next();
-};
-
-mapController.addDistrictListener = function (ctx, next) {
-  if (ctx.webGL) {
-    mapboxView.addDistrictListener();
-  }
-  next();
-};
-
 mapController.showStateLegend = function (ctx, next) {
   if (ctx.webGL) {
     mapboxView.showStateLegend();
@@ -240,12 +109,6 @@ mapController.setborderListeners = function (ctx, next) {
   next();
 };
 
-// add state legislature district listener
-mapController.addStateDistrictListener = function (ctx, next) {
-  if (ctx.webGL) {
-    mapboxView.addStateDistrictListener();
-  }
-};
 
 mapController.reset = function (ctx, next) {
   TownHall.allTownHalls = [];

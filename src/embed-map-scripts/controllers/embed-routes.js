@@ -23,6 +23,5 @@ page('/mapEmbed.html',
   mapController.borderEmbed,
   mapController.setMap,
   mapController.readDataNoTable,
-  mapController.maskCountry,
   mapController.addDistrictListenerEmbed
 );

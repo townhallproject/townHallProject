@@ -31,7 +31,7 @@ import './vendor/styles/railscasts.css';
 // local styles
 import './styles/customboot.less';
 
-import './scripts/controllers/embed-routes.js';
+import './embed-map-scripts/controllers/embed-routes';
 
 
 class App extends React.Component {

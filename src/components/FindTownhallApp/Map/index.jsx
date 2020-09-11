@@ -1,7 +1,7 @@
 import React from 'react';
 import { isEqual } from 'lodash';
 import mapboxView from '../../../scripts/views/mapboxView';
-import mapController from '../../../scripts/controllers/map-controller';
+import mapController from './scripts';
 import mapView from '../../../scripts/views/mapView';
 
 import { getZoomLocationForMap } from './selectors';
