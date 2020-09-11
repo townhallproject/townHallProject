@@ -10,7 +10,6 @@ import {
 
 const { SubMenu } = Menu;
 
-import "./style.less";
 import ImageModal from "./Modal";
 
 class Header extends Component {
@@ -83,69 +82,74 @@ class Header extends Component {
     );
   }
 
-  renderDropdown = () => {
-    const { activeKey } = this.state;
-    const { setLocation, hash } = this.props;
-    const subMenu = MENU_MAP.get(activeKey);
-    if (this.hasSubMenu()) {
-      return subMenu.map((menuItem) => {
-        if (menuItem.display === "State Legislatures") {
-          return (
-            <SubMenu
-              className="state-legislatures-menu fade-in"
-              key={menuItem.display}
-              title={
-                <span className="state-legislatures-title">
-                  {menuItem.display}
-                </span>
-              }
-            >
-              {STATE_LEGISLATURES_MENU.map((stateName) => {
-                const linkName = stateName.toLowerCase().replace(" ", "-");
-                return (
-                  <Menu.Item
-                    key={stateName}
-                    onClick={() => setLocation(stateName.toLowerCase())}
-                  >
-                    <a href={`/${linkName}`} style={{ textDecoration: "none" }}>
-                      {stateName}
-                    </a>
-                  </Menu.Item>
-                );
-              })}
-            </SubMenu>
-          );
-        }
-        if (menuItem.type === "modal") {
-          return (
-            <ImageModal
-              hash={hash}
-              menuItem={menuItem}
-              setHash={this.props.setHash}
-              key={menuItem.display}
-            />
-          );
-        }
-        return (
-          <Menu.Item
-            className={classNames([
-              "fade-in",
-              {
-                "submenu-item-selected":
-                  hash === menuItem.link && !menuItem.external,
-              },
-            ])}
-            key={menuItem.display}
-            onClick={() =>
-              !menuItem.external ? this.props.setHash(menuItem.link) : undefined
-            }
-          >
-            {this.renderLink(menuItem)}
-          </Menu.Item>
-        );
-      });
+  renderStateLegDropDown = (menuItem) => {
+    const { setLocation } = this.props;
+    console.log("rendering drop down", menuItem.display);
+    return (
+        <SubMenu
+          className="state-legislatures-menu fade-in"
+          key={menuItem.display}
+          title={
+            <span className="state-legislatures-title">{menuItem.display}</span>
+          }
+        >
+          {STATE_LEGISLATURES_MENU.map((stateName) => {
+            const linkName = stateName.toLowerCase().replace(" ", "-");
+            return (
+              <Menu.Item
+                key={stateName}
+                onClick={() => setLocation(stateName.toLowerCase())}
+              >
+                <a href={`/${linkName}`} style={{ textDecoration: "none" }}>
+                  {stateName}
+                </a>
+              </Menu.Item>
+            );
+          })}
+        </SubMenu>
+      )
     }
-  }
+
+  renderSecondLevelItems = () => {
+    const { activeKey } = this.state;
+    const { hash } = this.props;
+    const subMenu = MENU_MAP.get(activeKey);
+    if (!this.hasSubMenu()) {
+      return null;
+    }
+    return subMenu.map((menuItem) => {
+      if (menuItem.display === "State Legislatures") {
+        return this.renderStateLegDropDown(menuItem);
+      }
+      if (menuItem.type === "modal") {
+        return (
+          <ImageModal
+            hash={hash}
+            menuItem={menuItem}
+            setHash={this.props.setHash}
+            key={menuItem.display}
+          />
+        );
+      }
+      return (
+        <Menu.Item
+          className={classNames([
+            "fade-in",
+            {
+              "submenu-item-selected":
+                hash === menuItem.link && !menuItem.external,
+            },
+          ])}
+          key={menuItem.display}
+          onClick={() =>
+            !menuItem.external ? this.props.setHash(menuItem.link) : undefined
+          }
+        >
+          {this.renderLink(menuItem)}
+        </Menu.Item>
+      );
+    });
+  };
 
   render() {
     const arrowClasses = ["arrow", "fade-in"];
@@ -221,7 +225,7 @@ class Header extends Component {
             </Button>
           }
         >
-          {this.renderDropdown()}
+          {this.renderSecondLevelItems()}
         </Menu>
       </div>
     );

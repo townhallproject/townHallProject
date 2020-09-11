@@ -1,17 +1,3 @@
-
-
-
-// Takes an array of TownHalls and sorts by sortOn field
-const sortFunction = (a, b) => {
-    if (a[TownHall.sortOn] && b[TownHall.sortOn]) {
-        if (parseInt(b[TownHall.sortOn])) {
-            return a[TownHall.sortOn] - b[TownHall.sortOn];
-        } else {
-            return a[TownHall.sortOn].toLowerCase().localeCompare(b[TownHall.sortOn].toLowerCase());
-        }
-    }
-};
-
 const makeSortFunction = (sortOn) => {
     return (a, b) => {
         if (a[sortOn] && b[sortOn]) {

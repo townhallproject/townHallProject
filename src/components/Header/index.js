@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import {
-  Menu,
-} from 'antd';
+
 import DeskTopMenu from './DeskTopMenu';
 import MobileMenu from './MobileMenu';
 
-const { SubMenu } = Menu;
 
 import './style.less';
+
 const BREAKPOINT = 768;
+
 class Header extends Component {
   constructor(props) {
    super(props);

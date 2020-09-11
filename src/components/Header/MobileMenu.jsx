@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu, Spin, Button } from "antd";
 import classNames from "classnames";
 import { find } from "lodash";
-
+import { MenuOutlined } from "@ant-design/icons";
 import ImageModal from "./Modal";
 
 import {
@@ -11,8 +11,6 @@ import {
   STATE_LEGISLATURES_MENU,
 } from "./menuConstants";
 const { SubMenu } = Menu;
-
-import './style.less';
 
 const data = TOP_LEVEL_MENU.map((menuItem) => {
   const subMenu = MENU_MAP.get(menuItem.value);
@@ -283,7 +281,7 @@ class MobileMenu extends React.Component {
         <div className="mobile-nav-bar">
           <a
             onClick={() => {
-              setLocation("")
+              setLocation("");
               setHash("home");
               this.onMaskClick();
             }}
@@ -295,7 +293,7 @@ class MobileMenu extends React.Component {
           </a>
           <h4>{this.state.title}</h4>
           <Button
-            icon="menu"
+            icon={<MenuOutlined />}
             onClick={this.handleClick}
             className="top-nav-bar"
           />
