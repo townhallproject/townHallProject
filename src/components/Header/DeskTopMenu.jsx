@@ -194,7 +194,6 @@ class Header extends Component {
                   <Button
                     type="danger"
                     shape="round"
-                    size="large"
                     href={menuItem.href}
                     target="_blank"
                   >

@@ -240,7 +240,6 @@ class MobileMenu extends React.Component {
                   <Button
                     type="danger"
                     shape="round"
-                    size="large"
                     href={topLevelMenuItem.href}
                     target="_blank"
                   >
