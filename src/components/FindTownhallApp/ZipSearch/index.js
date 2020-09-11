@@ -191,7 +191,6 @@ static handleZipToDistrict(zipToDistrictArray) {
           }
         }
       });
-      // eventHandler.renderResults(locationData);
     })
 
   }
@@ -223,7 +222,6 @@ static handleZipToDistrict(zipToDistrictArray) {
       }
     }
     setDistrict(locationData);
-    // eventHandler.renderResults(locationData);
   }
 
   lookUpByState(state) {
@@ -238,7 +236,6 @@ static handleZipToDistrict(zipToDistrictArray) {
 
       var locationData = ZipSearch.handleZipToDistrict(zipToDistrictArray);
       setDistrict(locationData);
-      // eventHandler.renderResults(locationData);
   }
 
   lookUpZip(zip) {
@@ -265,7 +262,6 @@ static handleZipToDistrict(zipToDistrictArray) {
 
           var locationData = ZipSearch.handleZipToDistrict(zipToDistrictArray);
           setDistrict(locationData);
-          // eventHandler.renderResults(locationData);
         })
         .catch(function (error) {
           zipLookUpHandler.zipErrorResponse('That zip code is not in our database, if you think this is an error please email us.', error);
