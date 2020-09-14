@@ -46,7 +46,7 @@ class MoC {
               delete data.roles;
               delete data.campaigns;
               return data;
-            })
+            }).filter(person => person.in_office)
           })
       })
   }
