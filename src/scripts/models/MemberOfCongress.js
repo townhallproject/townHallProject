@@ -1,7 +1,6 @@
 import moment from 'moment';
 
 import { firebasedb, firestore } from '../lib/firebasedb';
-import constants from '../lib/constants';
 class MoC {
 
   static getMembersByDistrict(state, districts) {
@@ -10,9 +9,11 @@ class MoC {
       .get()
       .then(snap => {
           const ids = []
-          snap.forEach(ele =>
-            ids.push(ele.id)
-          )
+          snap.forEach(ele => {
+            if (ele.data().in_office) {
+              ids.push(ele.id)
+            }
+          })
           return ids;
       })
     const getRep = districts.map(district => firestore.collection('house_reps')
@@ -21,9 +22,12 @@ class MoC {
       .get()
       .then(snap => {
         const ids = []
-        snap.forEach(ele =>
-          ids.push(ele.id)
-          )
+        snap.forEach(ele => {
+          if (ele.data().in_office) {
+
+            ids.push(ele.id)
+          }
+        })
         return ids;
       }))
     return Promise.all([getSenators, ...getRep])
@@ -46,7 +50,8 @@ class MoC {
               delete data.roles;
               delete data.campaigns;
               return data;
-            }).filter(person => person.in_office)
+            })
+            .filter(person => person.in_office) // shouldnt be necessary 
           })
       })
   }
