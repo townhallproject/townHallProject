@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import { firebasedb, firestore } from '../lib/firebasedb';
 class MoC {
 
