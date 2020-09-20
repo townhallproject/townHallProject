@@ -23,19 +23,22 @@ export default class MapAndResultsContainer extends React.Component {
       currentDistrict, 
       allTownHalls
     } = this.props;
+
+    const renderEventSidebar = () => {
+      if (eventsToDisplay.length > 0) {
+        return (
+          <Col className="events-container">
+            <EventSidebar eventsToDisplay={eventsToDisplay} />
+          </Col>
+        )
+      }
+    }
+
     return (
       <section className="map-and-results-container">
-        <Row >
-          {eventsToDisplay.length > 0 && <Col
-            flex="430px"
-            className="events-container"
-          >
-            <EventSidebar eventsToDisplay={eventsToDisplay} />
-          </Col>}
-          <Col
-            flex="auto"
-            className="map-container"
-          >
+        <Row id="map-events-row">
+          {renderEventSidebar()}
+          <Col className="map-container">
             <Map
               allTownHalls={allTownHalls}
               currentDistrict={currentDistrict}
@@ -57,8 +60,6 @@ export default class MapAndResultsContainer extends React.Component {
             />
           </Col>
         </Row>
-    )
-      
       </section>
     )
   }

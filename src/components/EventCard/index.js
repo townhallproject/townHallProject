@@ -40,8 +40,20 @@ export default (props) => {
       </var>
     </span>
   );
+
+  const renderLocation = () => {
+    if (townhall.Location && townhall.Location.includes('Watch')) {
+      return (
+        <a href={townhall.Location} target="_blank">Link to Watch Town Hall</a>
+      )
+    } else if (townhall.Location) {
+      return <span>{townhall.Location}</span>
+    }
+    return null;
+  }
+  
   return (
-      <div className="panel panel-secondary">
+      <div className="panel event-panel panel-secondary">
         <div className={`panel-heading panel-heading_${townhall.iconFlag}`}>
           <div className="row">
             <div className="col-xs-4">
@@ -83,7 +95,7 @@ export default (props) => {
             <li className="list-group-item list-item-no-border">
               <div className="row">
                 <address className="col-xs-8 col-xs-offset-2">
-                  {townhall.Location || null}<br />
+                  {renderLocation()}<br />
                   {townhall.address}<br />
                   {townhall.addressLink &&
                     (<a href={townhall.addressLink} target="_blank">Directions</a>)

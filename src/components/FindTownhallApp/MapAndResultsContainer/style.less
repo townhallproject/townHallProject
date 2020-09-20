@@ -1,18 +1,31 @@
 @import '../../../styles/constants.less';
 
 .map-and-results-container {
-    height: @map-height;
-    background-color: #d4e0e5;
-
-}
-.map-container {
-    position: relative;
-}
-
-@media screen and (max-width: @map-breakpoint) {
+  height: @map-height;
+  background-color: #d4e0e5;
+  #map-events-row {
+    display: flex;
+    flex-wrap: wrap;
     .events-container {
 
-        // width: 100%;
-        overflow: scroll;
     }
+    .map-container {
+      flex: auto;
+    }
+  }
+}
+
+ /**
+  * Resizing styles
+ */
+@media screen and (max-width: @map-breakpoint) {
+  .map-and-results-container {
+    height: auto;
+    .events-container {
+      overflow: scroll;
+    }
+    .map-container {
+      width: 100%;
+    }
+  }
 }

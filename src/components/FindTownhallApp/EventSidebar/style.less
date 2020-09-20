@@ -2,14 +2,15 @@
 
 .results {
     height: @map-height;
+    width: 50vw;
     overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
 }
 
 @media screen and (max-width: @map-breakpoint) {
-
     .results {
-        // width: max-content;
-        // display: flex;
-        // height: initial;
+        width: 100vw;
     }
 }

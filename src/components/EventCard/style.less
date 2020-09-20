@@ -1,13 +1,17 @@
 @import '../../styles/constants.less';
 
-.panel {
-    margin: 20px;
+.event-panel {
+  max-width: 700px;
+  height: fit-content;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 @media screen and (max-width: @map-breakpoint) {
-    .panel {
+    .event-panel {
         display: inline-block;
-        margin-right: 40px;
-        max-width: 320px;
-
+        width: 90%;
+        .event-loc {
+          margin-left: 5px;
+        }
     }
 }
