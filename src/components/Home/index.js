@@ -65,10 +65,7 @@ export default class Home extends React.Component {
           var townhall = new TownHall(snapshot.val());
           townhall.makeFormattedMember();
           townhall.makeDisplayDistrict();
-          app.setState({
-            selectedTownHall: townhall
-          })
-          $('.event-modal').modal('show');
+          this.selectTownhall(townhall);
         }
       });
     }
@@ -142,6 +139,12 @@ export default class Home extends React.Component {
     })
   }
 
+  selectTownhall(townhall) {
+    this.setState({
+      selectedTownHall: townhall
+    });
+    $('.event-modal').modal('show');
+  }
   
   render() {
     const {
@@ -178,6 +181,7 @@ export default class Home extends React.Component {
         />
         <EventsTable 
           allTownHalls={allStateTownHalls.length ? allStateTownHalls : allTownHalls} // if state town halls are present, it's because we are on a state site
+          selectTownhall={(townhall) => this.selectTownhall(townhall)}
         />
         <EventModal townhall={this.state.selectedTownHall}/>
       </React.Fragment>

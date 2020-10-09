@@ -77,8 +77,9 @@ class EventsTable extends React.Component {
   }
 
   onDetailsClickHandler(townhall) {
-    populateEventModal(townhall)
-    $('.event-modal').modal('show');
+    if(this.props.selectTownhall) {
+      this.props.selectTownhall(townhall);
+    }
   }
 
   render() {
