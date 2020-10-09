@@ -2,34 +2,34 @@ import React from 'react';
 
 const ModalBody = (({townhall}) => {
     return(
-        <div class="modal-body">
-            <div class="row">
+        <div className="modal-body">
+            <div className="row">
                 {
                 townhall.meetingType === 'Adopt-A-District/State' 
-                    ? <h3 class="col-xs-10 col-md-9 line-height-medium">
-                        <span class="discriptor-text d-inline-block">  Home {townhall.District === 'Senate' ? state : district} MoC (not present): </span>
+                    ? <h3 className="col-xs-10 col-md-9 line-height-medium">
+                        <span className="discriptor-text d-inline-block">  Home {townhall.District === 'Senate' ? 'state' : 'district'} MoC (not present): </span>
                         {townhall.displayName} <small> {townhall.party || ''}{townhall.state}, {townhall.displayDistrict}</small>
                         <br/>
-                        <span class="discriptor-text d-inline-block">Visiting MoC (will be present):</span>
+                        <span className="discriptor-text d-inline-block">Visiting MoC (will be present):</span>
                         {townhall.districtAdopter} <small> ({townhall.districtAdopterParty}) {townhall.districtAdopterState}, {townhall.districtAdopterDistrict}</small>
                       </h3>
-                    : <h3 class="col-xs-10 col-md-9">{townhall.formattedMember} <small>
+                    : <h3 className="col-xs-10 col-md-9">{townhall.formattedMember} <small>
                         {townhall.party || ''}
                         {townhall.displayDistrict}</small>
                       </h3>
                 }
-                <h3 class="col-xs-2 col-md-3">
-                    <span class="addtocalendar pull-right">
-                        <a class="atcb-link btn btn-white btn-md"><span class="calendarButton">Add to Calendar </span>
-                        <i class="fa fa-calendar-plus-o" aria-hidden="true"></i></a>
-                        <var class="atc_event">
-                            <var class="atc_date_start">{townhall.yearMonthDay} {townhall.timeStart24}</var>
-                            <var class="atc_date_end">{townhall.yearMonthDay} {townhall.timeEnd24}</var>
-                            <var class="atc_timezone">{townhall.zoneString}</var>
-                            <var class="atc_title">{townhall.meetingType}: {townhall.displayName}</var>
-                            <var class="atc_description">{townhall.Notes}</var>
-                            <var class="atc_location">{townhall.address}</var>
-                            <var class="atc_organizer">{townhall.party}</var>
+                <h3 className="col-xs-2 col-md-3">
+                    <span className="addtocalendar pull-right">
+                        <a className="atcb-link btn btn-white btn-md"><span className="calendarButton">Add to Calendar </span>
+                        <i className="fa fa-calendar-plus-o" aria-hidden="true"/></a>
+                        <var className="atc_event">
+                            <var className="atc_date_start">{townhall.yearMonthDay} {townhall.timeStart24}</var>
+                            <var className="atc_date_end">{townhall.yearMonthDay} {townhall.timeEnd24}</var>
+                            <var className="atc_timezone">{townhall.zoneString}</var>
+                            <var className="atc_title">{townhall.meetingType}: {townhall.displayName}</var>
+                            <var className="atc_description">{townhall.Notes}</var>
+                            <var className="atc_location">{townhall.address}</var>
+                            <var className="atc_organizer">{townhall.party}</var>
                         </var>
                     </span>
               </h3>
@@ -37,13 +37,13 @@ const ModalBody = (({townhall}) => {
         { townhall.Notes ? <p>{townhall.Notes}</p> : null }
         {
             townhall.iconFlag === 'campaign' 
-            ? <p class="disclaimer-text">Town Hall Project lists this event and any
+            ? <p className="disclaimer-text">Town Hall Project lists this event and any
                 third-party link as public information and not as an endorsement of a participating candidate, campaign, or
                 party.
               </p> 
             : null
         }
-    <p>
+    <span>
         {
           townhall.phoneNumber 
             ? <div> Call in number: {townhall.phoneNumber}</div> 
@@ -61,26 +61,26 @@ const ModalBody = (({townhall}) => {
           ? <div><a href="{townhall.RSVP}" target="_blank">{townhall.rsvpName}</a></div>
           : null
         }
-    </p>
+    </span>
     {
         townhall.address && townhall.address.match(/[0-9]{5}/g).length > 0 
-        ? <p>
-            <div class="map">
-                <iframe width="600" height="450" frameborder="0" style="border:0"
+        ? <span>
+            <div className="map">
+                <iframe width="600" height="450" frameBorder="0" style={{border:0}}
                     src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&q={addressQuery(townhall.address)}"
-                    allowfullscreen>
+                    allowFullScreen>
                 </iframe>
             </div>
-          </p>
+          </span>
       : null
     }
     <p>Last Updated: {townhall.lastUpdated}</p>
-    <div class="event-modal-ada">
+    <div className="event-modal-ada">
             {
               townhall.ada_accessible 
               ? <React.Fragment> 
                   <span>ADA Accessible</span>
-                  <span class="ada-logo ada-logo-event-modal"></span> 
+                  <span className="ada-logo ada-logo-event-modal"></span> 
                 </React.Fragment>
               : null
             }
