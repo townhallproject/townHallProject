@@ -34,37 +34,33 @@ const ModalBody = (({townhall}) => {
                     </span>
               </h3>
           </div>
-        { townhall.Notes ? <p>{townhall.Notes}</p> : null }
+        { townhall.Notes && <p>{townhall.Notes}</p> }
         {
             townhall.iconFlag === 'campaign' 
-            ? <p className="disclaimer-text">Town Hall Project lists this event and any
+            && <p className="disclaimer-text">Town Hall Project lists this event and any
                 third-party link as public information and not as an endorsement of a participating candidate, campaign, or
                 party.
               </p> 
-            : null
         }
     <span>
         {
           townhall.phoneNumber 
-            ? <div> Call in number: {townhall.phoneNumber}</div> 
-            : null
+            && <div> Call in number: {townhall.phoneNumber}</div> 
         }
         {
           townhall.link 
-          ? <div><a href="{townhall.link}" target="_blank">
+          && <div><a href="{townhall.link}" target="_blank">
                   {townhall.linkName ? townhall.linkName : 'Find out more'}
             </a></div> 
-          : null
         }
         {
           townhall.RSVP 
-          ? <div><a href="{townhall.RSVP}" target="_blank">{townhall.rsvpName}</a></div>
-          : null
+          && <div><a href="{townhall.RSVP}" target="_blank">{townhall.rsvpName}</a></div>
         }
     </span>
     {
         townhall.address && townhall.address.match(/[0-9]{5}/g).length > 0 
-        ? <span>
+        && <span>
             <div className="map">
                 <iframe width="600" height="450" frameBorder="0" style={{border:0}}
                     src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&q={addressQuery(townhall.address)}"
@@ -72,17 +68,15 @@ const ModalBody = (({townhall}) => {
                 </iframe>
             </div>
           </span>
-      : null
     }
     <p>Last Updated: {townhall.lastUpdated}</p>
     <div className="event-modal-ada">
             {
               townhall.ada_accessible 
-              ? <React.Fragment> 
+              && <React.Fragment> 
                   <span>ADA Accessible</span>
                   <span className="ada-logo ada-logo-event-modal"></span> 
                 </React.Fragment>
-              : null
             }
     </div>
 </div >
