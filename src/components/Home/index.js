@@ -15,6 +15,7 @@ import EventsTable from './EventsTable';
 import EventModal from './EventModal';
 import MutualAidHubBanner from './MutualAidHubBanner'
 import { isState } from '../../utils';
+import urlParamsHandler from '../../scripts/lib/urlParams';
 
 export default class Home extends React.Component {
   static getStateAbr(stateData) {
@@ -33,6 +34,7 @@ export default class Home extends React.Component {
       init: true,
       allTownHalls: [],
       allStateTownHalls: [],
+      selectedTownHall: null
     }
   }
 
@@ -48,6 +50,29 @@ export default class Home extends React.Component {
     const app = this;
     let totalPromises = 1;
     let numberFinished = 0;
+
+    let eventId = urlParamsHandler.getUrlParameter('eventId');
+    var stateId = urlParamsHandler.getUrlParameter('state');
+    let ref;
+    if (stateId && eventId) {
+      ref = `/state_townhalls/${stateId}/${eventId}`;
+    } else if (eventId) {
+      ref = `/townHalls/${eventId}`;
+    }
+    if (ref) {
+      firebasedb.ref(ref).once('value').then(function (snapshot) {
+        if (snapshot.exists()) {
+          var townhall = new TownHall(snapshot.val());
+          townhall.makeFormattedMember();
+          townhall.makeDisplayDistrict();
+          app.setState({
+            selectedTownHall: townhall
+          })
+          $('.event-modal').modal('show');
+        }
+      });
+    }
+
 
     const federalRef = firebasedb.ref('/townHalls/');
     if (usState) {
@@ -117,6 +142,7 @@ export default class Home extends React.Component {
     })
   }
 
+  
   render() {
     const {
       allTownHalls,
@@ -153,7 +179,7 @@ export default class Home extends React.Component {
         <EventsTable 
           allTownHalls={allStateTownHalls.length ? allStateTownHalls : allTownHalls} // if state town halls are present, it's because we are on a state site
         />
-        <EventModal />
+        <EventModal townhall={this.state.selectedTownHall}/>
       </React.Fragment>
     )
   }

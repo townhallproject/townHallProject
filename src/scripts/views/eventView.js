@@ -311,7 +311,7 @@ eventHandler.renderPanels = function (townhall, $parent) {
 
 export const populateEventModal = function (townhall) {
   let { level } = townhall;
-  $('.event-modal .modal-content').html(eventModalTemplate(townhall));
+  // $('.event-modal .modal-content').html(eventModalTemplate(townhall));
   if (level === 'state') {
     urlParamsHandler.setUrlParameter('state', townhall.state);
   }
