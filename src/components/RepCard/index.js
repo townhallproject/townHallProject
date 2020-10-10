@@ -25,7 +25,7 @@ class RepCard extends Component {
         style={{ width: 325 }}
         title={rep.party}
         className={classNames("rep-card", rep.party)}
-        actions={[<p>Terms Ends:  {moment(rep.end_date).format('ll')}</p>]}
+        actions={rep.next_election ? [<p>Next election: {moment(rep.next_election).format('YYYY')}</p>] : []}
       >
       <Meta
         avatar={<Avatar src={`https://www.govtrack.us/static/legislator-photos/${rep.govtrack_id}-100px.jpeg`} />}

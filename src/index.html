@@ -3,7 +3,19 @@
 
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0 user-scalable=no" name="viewport">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+  <script>
+    if ('addEventListener' in document) {
+      document.addEventListener('DOMContentLoaded', function () {
+        FastClick.attach(document.body);
+      }, false);
+    }
+    if (!window.Promise) {
+      document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
+    }
+  </script>
   <title>Town Hall Project || Find a Town Hall Near you</title>
   <meta name="google-site-verification" content="Z-DITr7yziksJNk7OlwHxiD2WK31wNO0GbRP7px3xL8" />
   <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
@@ -43,9 +55,7 @@
   <script src="https://kit.fontawesome.com/a1f2fbd90c.js"></script>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="https://addtocalendar.com/atc/1.5/atc-style-blue.css" rel="stylesheet" type="text/css">
-  <!-- <link href="/vendor/styles/jquery-ui.min.css" rel="stylesheet" type="text/css">
-    <link href="/vendor/styles/jquery-ui.structure.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,900" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,900" rel="stylesheet">
 
   <script>
     (function (i, s, o, g, r, a, m) {
@@ -72,7 +82,7 @@
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js'></script>
   <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+  <!-- <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script> -->
   <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
   <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 

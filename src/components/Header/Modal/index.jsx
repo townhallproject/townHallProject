@@ -35,7 +35,6 @@ class ImageModal extends React.Component {
 
   showModal() {
     const { setHash, menuItem } = this.props;
-    console.log('showing modal', menuItem)
     setHash(menuItem.link);
     this.setState({
       visible: true,
@@ -79,10 +78,10 @@ class ImageModal extends React.Component {
                 className={classNames(["menu-link"])}
                 href={`#${menuItem.link}`}
               >
-              {menuItem.icon && <Icon type={menuItem.icon}/>}
+              {menuItem.icon && <Icon key={menuItem.icon} type={menuItem.icon}/>}
               {menuItem.display}
             </a>) : 
-              [menuItem.icon && <Icon type={menuItem.icon} />,
+              [menuItem.icon && <Icon key={menuItem.icon} type={menuItem.icon} />,
               menuItem.display]
             }
         </Menu.Item>

@@ -11,6 +11,33 @@ export const ABOUT_LINK = 'about';
 export const NEWS_LINK = 'news';
 export const RESEARCH_LINK = 'research';
 
+export const TOP_LEVEL_MENU = [
+  {
+    value: 'submit-event',
+    label: 'Submit An Event',
+    hash: 'submit'
+  }, {
+    value: 'take-action',
+    label: 'Take Action'
+  }, {
+    value: 'our-projects',
+    label: 'Our Projects'
+  }, {
+    value: 'learn-more',
+    label: 'Learn More'
+  }, {
+    value: '2019-review',
+    label: '2019 In Review'
+  }, {
+    value: 'donate',
+    label: 'Donate Now',
+    href: 'https://secure.actblue.com/donate/townhallproject2019'
+  },
+  
+  
+]
+
+// eslint-disable-next-line no-undef
 export const MENU_MAP = new Map([
   ['submit-event', []],
   ['take-action', [{
@@ -37,11 +64,8 @@ export const MENU_MAP = new Map([
     display: 'Town Hall Pledge',
     link: TOWN_HALL_PLEDGE_LINK,
     external: true,
-  }, {
-    display: 'Fight for Our Democracy',
-    link: FIGHT_FOR_OUR_DEMO_LINK,
-    external: true,
-  }, {
+  },  
+  {
     display: 'State Legislatures'
   }]],
   ['learn-more', [{

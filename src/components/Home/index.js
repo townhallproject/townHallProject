@@ -13,6 +13,7 @@ import EmailSignup from './EmailSignup';
 import RepresentativeCards from './RepresentativeCards';
 import EventsTable from './EventsTable';
 import EventModal from './EventModal';
+import MutualAidHubBanner from './MutualAidHubBanner'
 import { isState } from '../../utils';
 
 export default class Home extends React.Component {
@@ -125,6 +126,7 @@ export default class Home extends React.Component {
     const usState = Home.getStateAbr(isState(this.props.location));
     return (
       <React.Fragment>
+        <MutualAidHubBanner />
         <ZipSearchComponent 
           usState={usState}
           setDistrict={this.setDistrict}
@@ -149,7 +151,7 @@ export default class Home extends React.Component {
           currentZip={this.state.currentZip}
         />
         <EventsTable 
-          allTownHalls={allTownHalls}
+          allTownHalls={allStateTownHalls.length ? allStateTownHalls : allTownHalls} // if state town halls are present, it's because we are on a state site
         />
         <EventModal />
       </React.Fragment>
