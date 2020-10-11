@@ -1,4 +1,8 @@
 import React from 'react';
+import { 
+  addressQuery,
+  dateFormat
+} from '../../../templates/templateUtils';
 
 const ModalBody = (({townhall}) => {
     return(
@@ -63,13 +67,13 @@ const ModalBody = (({townhall}) => {
         && <span>
             <div className="map">
                 <iframe width="600" height="450" frameBorder="0" style={{border:0}}
-                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&q={addressQuery(townhall.address)}"
+                    src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDQqJSJk6FsBRCtT3scm49ShAB5zZDFAys&q=${addressQuery(townhall.address)}`}
                     allowFullScreen>
                 </iframe>
             </div>
           </span>
     }
-    <p>Last Updated: {townhall.lastUpdated}</p>
+    <p>Last Updated: {dateFormat(townhall.lastUpdated)}</p>
     <div className="event-modal-ada">
             {
               townhall.ada_accessible 

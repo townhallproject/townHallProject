@@ -1,4 +1,7 @@
 import React from 'react';
+import { 
+  shortDateTime,
+} from '../../../templates/templateUtils';
 
 const ModalHeader = (({townhall}) => {
     return (
@@ -7,7 +10,7 @@ const ModalHeader = (({townhall}) => {
             <span className="text-center">
                 <h4 className="hidden-xs">{townhall.dateString} 
                 <span className="profile-summary-value"> at {townhall.timeZone || ''}</span></h4>
-                <h4 className="visible-xs-block"></h4>
+                <h4 className="visible-xs-block">{shortDateTime(townhall)}</h4>
                 <h4>{townhall.Location || ''}</h4>
             </span>
         </div>
