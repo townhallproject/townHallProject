@@ -34,7 +34,8 @@ export default class Home extends React.Component {
       init: true,
       allTownHalls: [],
       allStateTownHalls: [],
-      selectedTownHall: null
+      selectedTownHall: null,
+      showEventModal: false
     }
   }
 
@@ -51,8 +52,8 @@ export default class Home extends React.Component {
     let totalPromises = 1;
     let numberFinished = 0;
 
-    let eventId = urlParamsHandler.getUrlParameter('eventId');
-    var stateId = urlParamsHandler.getUrlParameter('state');
+    const eventId = urlParamsHandler.getUrlParameter('eventId');
+    const stateId = urlParamsHandler.getUrlParameter('state');
     let ref;
     if (stateId && eventId) {
       ref = `/state_townhalls/${stateId}/${eventId}`;
@@ -62,7 +63,7 @@ export default class Home extends React.Component {
     if (ref) {
       firebasedb.ref(ref).once('value').then(function (snapshot) {
         if (snapshot.exists()) {
-          var townhall = new TownHall(snapshot.val());
+          const townhall = new TownHall(snapshot.val());
           townhall.makeFormattedMember();
           townhall.makeDisplayDistrict();
           this.selectTownhall(townhall);
@@ -141,9 +142,9 @@ export default class Home extends React.Component {
 
   selectTownhall(townhall) {
     this.setState({
-      selectedTownHall: townhall
+      selectedTownHall: townhall,
+      showEventModal: true
     });
-    $('.event-modal').modal('show');
   }
   
   render() {
@@ -183,7 +184,16 @@ export default class Home extends React.Component {
           allTownHalls={allStateTownHalls.length ? allStateTownHalls : allTownHalls} // if state town halls are present, it's because we are on a state site
           selectTownhall={(townhall) => this.selectTownhall(townhall)}
         />
-        <EventModal townhall={this.state.selectedTownHall}/>
+        <EventModal 
+          townhall={this.state.selectedTownHall} 
+          visible={this.state.showEventModal} 
+          onCancel={(e) => {
+            this.setState({
+              selectedTownHall: null,
+              showEventModal: false
+            })
+          }}
+        />
       </React.Fragment>
     )
   }

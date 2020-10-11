@@ -1,21 +1,23 @@
 import React from 'react';
 import ModalHeader from './modal-header';
 import ModalBody from './modal-body';
+import {Modal} from 'antd';
 
-const EventModal = ({townhall}) => {
+const EventModal = ({visible, townhall, onCancel}) => {
   
   return (
     <React.Fragment>
     {
       townhall 
-        ? <div className="modal fade event-modal" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-          <div className="modal-dialog modal-lg" role="document">
-            <div className="modal-content">
-              <ModalHeader townhall={townhall}/>
-              <ModalBody townhall={townhall}/>
-            </div>
-          </div>
-        </div>
+        ? 
+          <Modal 
+          visible={visible} 
+          title={<ModalHeader townhall={townhall} />}
+          onCancel={onCancel}
+          footer={null}
+          >
+            <ModalBody townhall={townhall}/>
+          </Modal>
       : null
     }
     </React.Fragment>
