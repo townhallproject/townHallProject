@@ -423,9 +423,9 @@ export const init = () => {
   $('body').on('click', '.popover .popover-title a.close', function () {
     $('[data-toggle="popover"]').popover('hide');
   });
-  $('#missing-member-banner-btn').on('click', function () {
-    $('#missing-member-tab').click();
-  });
+  // $('#missing-member-banner-btn').on('click', function () {
+  //   $('#missing-member-tab').click();
+  // });
   $('#view-missing-member-report').on('click', function () {
     $('.missing-members-modal').modal('show');
   });

@@ -97,11 +97,11 @@ class App extends React.Component {
                     <PageComponent id="join" active={this.state.hash === 'join'}>
                         <Join />
                     </PageComponent>
-                    <PageComponent id="missing-members" active={this.state.hash === 'missing-members'}>
+                    {/* <PageComponent id="missing-members" active={this.state.hash === 'missing-members'}>
                         <MissingMembers 
                             hash={this.state.hash}
                         />
-                    </PageComponent>
+                    </PageComponent> */}
                     <PageComponent id="upload-video" active={this.state.hash === 'upload-video'}>
                         <UploadVideo />
                     </PageComponent>

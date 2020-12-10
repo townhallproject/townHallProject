@@ -57,10 +57,12 @@ export const MENU_MAP = new Map([
       link: SHARE_LINK
     }
   ]],
-  ['our-projects', [{
-    display: 'Missing Members',
-    link: MISSING_MEMBER_LINK
-  }, {
+  ['our-projects', [
+  //   {
+  //   display: 'Missing Members',
+  //   link: MISSING_MEMBER_LINK
+  // }, 
+  {
     display: 'Town Hall Pledge',
     link: TOWN_HALL_PLEDGE_LINK,
     external: true,
