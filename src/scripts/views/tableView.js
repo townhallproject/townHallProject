@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 import TownHall from '../models/TownHall';
 import stateView from './stateView';
-import eventTableRowTemplate from '../../templates/eventTableRow';
+// import eventTableRowTemplate from '../../templates/eventTableRow';
 
 const tableHandler = {};
 
