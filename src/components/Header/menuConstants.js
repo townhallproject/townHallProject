@@ -7,6 +7,8 @@ export const TOWN_HALL_PLEDGE_LINK = 'https://www.townhallpledge.com/';
 export const FIGHT_FOR_OUR_DEMO_LINK = 'http://fightforourdemocracy.com/';
 export const REPORT_2019_LINK = "https://docs.google.com/document/u/1/d/e/2PACX-1vTrbPYgMsrtXauULljeXvscO8SK4-96oFXuwiHycP3XQB8aGD7lGUvkmoz_VO71LAcp508WZ-Yx7DB7/pub";
 export const REPORT_2019_ID = "2019-report";
+export const REPORT_2020_LINK = "https://docs.google.com/document/u/1/d/e/2PACX-1vSwH66OWsI_TNeRCLUkfdbyEFZkLXi3kIqLoSPbX0k2DzI8bxqKi911UV7AwhY6XjjuosyMT8Rv-gX4/pub";
+export const REPORT_2020_ID = "2020-report";
 export const ABOUT_LINK = 'about';
 export const NEWS_LINK = 'news';
 export const RESEARCH_LINK = 'research';
@@ -26,8 +28,8 @@ export const TOP_LEVEL_MENU = [
     value: 'learn-more',
     label: 'Learn More'
   }, {
-    value: '2019-review',
-    label: '2019 In Review'
+    value: '2020-review',
+    label: '2020 In Review'
   }, {
     value: 'donate',
     label: 'Donate Now',
@@ -102,23 +104,24 @@ export const MENU_MAP = new Map([
       background: `#3facef`
     }
   ]],
-  ['2019-review', [{
-      display: 'Accountability Report',
-      link: REPORT_2019_ID,
+  ['2020-review', [
+    {
+      display: '2020 End of Year Report',
+      link: REPORT_2020_ID,
       icon: 'file-done'
     },
-    {
-      display: 'THP Awards',
-      src: "/Images/awards-2019.png",
-      type: 'modal',
-      icon: 'trophy'
-    },
-    {
-      display: 'Accountability Report Infographic',
-      src: "/Images/CongressionalAccountabilityReport2019.png",
-      type: 'modal',
-      icon: 'area-chart'
-    },
+    // {
+    //   display: 'THP Awards',
+    //   src: "/Images/awards-2019.png",
+    //   type: 'modal',
+    //   icon: 'trophy'
+    // },
+    // {
+    //   display: 'Accountability Report Infographic',
+    //   src: "/Images/CongressionalAccountabilityReport2019.png",
+    //   type: 'modal',
+    //   icon: 'area-chart'
+    // },
   ]],
   ['donate', []],
 ]);

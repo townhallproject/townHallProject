@@ -23,7 +23,7 @@ import IframeEmbed from '../IframeEmbed';
 import PageComponent from '../PageComponent';
 
 import Home from '../Home';
-import { ORGANIZE_A_TOWN_HALL_ID, REPORT_2019_ID, REPORT_2019_LINK } from '../Header/menuConstants';
+import { ORGANIZE_A_TOWN_HALL_ID, REPORT_2020_ID, REPORT_2020_LINK } from '../Header/menuConstants';
 
 class App extends React.Component {
     constructor(props) {
@@ -109,8 +109,8 @@ class App extends React.Component {
                         <PrivacyPolicyComponent />
                     </PageComponent>
                     <TownHallPledgeAgreements />
-                    <PageComponent id={REPORT_2019_ID} active={this.state.hash === REPORT_2019_ID} activeBanner>
-                        <IframeEmbed src={REPORT_2019_LINK} />
+                    <PageComponent id={REPORT_2020_ID} active={this.state.hash === REPORT_2020_ID} activeBanner>
+                        <IframeEmbed src={REPORT_2020_LINK} />
                     </PageComponent>
                     
                     <PageComponent id="year-two" active={false}>
