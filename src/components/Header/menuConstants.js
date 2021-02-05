@@ -122,6 +122,15 @@ export const MENU_MAP = new Map([
     //   type: 'modal',
     //   icon: 'area-chart'
     // },
+      {
+        display: 'THP 2020',
+        link: 'year-four',
+        src: "/Images/EOY_2020_Desktop_noBG.png",
+        mobileSrc: '/Images/EOY_2020_Mobile_noBG.png',
+        type: 'modal',
+        icon: 'calendar',
+        background: `#3facef`
+      }
   ]],
   ['donate', []],
 ]);
