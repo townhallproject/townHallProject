@@ -15,7 +15,7 @@ const Banner = (props) => {
             <h3 className="text-primary">
               <a
                 target="_blank"
-                href="https://secure.actblue.com/donate/townhallproject2019"
+                href="https://secure.actblue.com/donate/thp2021"
                 >Help Town Hall Project hold lawmakers accountable in 2020. Stand up for democracy and support us today. <i className="fas fa-external-link-alt"></i></a>
             </h3>
             {/*<button className="btn btn-primary " type="button" name="button" id="view-accessibility-report">Infographic</button>*/}

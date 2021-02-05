@@ -33,7 +33,7 @@ export const TOP_LEVEL_MENU = [
   }, {
     value: 'donate',
     label: 'Donate Now',
-    href: 'https://secure.actblue.com/donate/townhallproject2019'
+    href: 'https://secure.actblue.com/donate/thp2021'
   },
   
   
@@ -112,7 +112,7 @@ export const MENU_MAP = new Map([
     },
     // {
     //   display: 'THP Awards',
-    //   src: "/Images/awards-2019.png",
+    //   src: "/Images/2020-awards.png",
     //   type: 'modal',
     //   icon: 'trophy'
     // },
