@@ -15,6 +15,7 @@ import EventsTable from './EventsTable';
 import EventModal from './EventModal';
 import MutualAidHubBanner from './MutualAidHubBanner'
 import { isState } from '../../utils';
+import urlParamsHandler from '../../scripts/lib/urlParams';
 
 export default class Home extends React.Component {
   static getStateAbr(stateData) {
@@ -33,6 +34,8 @@ export default class Home extends React.Component {
       init: true,
       allTownHalls: [],
       allStateTownHalls: [],
+      selectedTownHall: null,
+      showEventModal: false
     }
   }
 
@@ -48,6 +51,26 @@ export default class Home extends React.Component {
     const app = this;
     let totalPromises = 1;
     let numberFinished = 0;
+
+    const eventId = urlParamsHandler.getUrlParameter('eventId');
+    const stateId = urlParamsHandler.getUrlParameter('state');
+    let ref;
+    if (stateId && eventId) {
+      ref = `/state_townhalls/${stateId}/${eventId}`;
+    } else if (eventId) {
+      ref = `/townHalls/${eventId}`;
+    }
+    if (ref) {
+      firebasedb.ref(ref).once('value').then(function (snapshot) {
+        if (snapshot.exists()) {
+          const townhall = new TownHall(snapshot.val());
+          townhall.makeFormattedMember();
+          townhall.makeDisplayDistrict();
+          this.selectTownhall(townhall);
+        }
+      });
+    }
+
 
     const federalRef = firebasedb.ref('/townHalls/');
     if (usState) {
@@ -117,6 +140,13 @@ export default class Home extends React.Component {
     })
   }
 
+  selectTownhall(townhall) {
+    this.setState({
+      selectedTownHall: townhall,
+      showEventModal: true
+    });
+  }
+  
   render() {
     const {
       allTownHalls,
@@ -152,8 +182,18 @@ export default class Home extends React.Component {
         />
         <EventsTable 
           allTownHalls={allStateTownHalls.length ? allStateTownHalls : allTownHalls} // if state town halls are present, it's because we are on a state site
+          selectTownhall={(townhall) => this.selectTownhall(townhall)}
         />
-        <EventModal />
+        <EventModal 
+          townhall={this.state.selectedTownHall} 
+          visible={this.state.showEventModal} 
+          onCancel={(e) => {
+            this.setState({
+              selectedTownHall: null,
+              showEventModal: false
+            })
+          }}
+        />
       </React.Fragment>
     )
   }

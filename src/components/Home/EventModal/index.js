@@ -1,13 +1,26 @@
 import React from 'react';
+import ModalHeader from './modal-header';
+import ModalBody from './modal-body';
+import {Modal} from 'antd';
 
-const EventModal = (props) => {
+const EventModal = ({visible, townhall, onCancel}) => {
+  
   return (
-    <div className="modal fade event-modal" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-      <div className="modal-dialog modal-lg" role="document">
-        <div className="modal-content">
-        </div>
-      </div>
-    </div>
+    <React.Fragment>
+    {
+      townhall 
+        ? 
+          <Modal 
+          visible={visible} 
+          title={<ModalHeader townhall={townhall} />}
+          onCancel={onCancel}
+          footer={null}
+          >
+            <ModalBody townhall={townhall}/>
+          </Modal>
+      : null
+    }
+    </React.Fragment>
   )
 };
 
