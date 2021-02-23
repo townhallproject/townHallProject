@@ -7,16 +7,17 @@ const Banner = (props) => {
     <div className="time-sensitive background-gray">
       <div className=" display-flex">
         <div className="happening-now-title">
-          <h1><span className="break">What's</span><span className="break"> happening</span> now</h1>
-          <h1><i className="fa fa-chevron-right"></i></h1>
+          <h1>What's happening now</h1>
+          <h2><i className="fa fa-chevron-right"></i></h2>
         </div>
         <div className="happening-now-content">
           <div className="text-center">
             <h3 className="text-primary">
+              Exciting news! Town Hall Project is joining forces with Indivisible.{" "}
               <a
                 target="_blank"
-                href="https://secure.actblue.com/donate/thp2021"
-                >Help Town Hall Project hold lawmakers accountable in 2020. Stand up for democracy and support us today. <i className="fas fa-external-link-alt"></i></a>
+                href="https://indivisible.org/statement/town-hall-project-will-join-indivisible"
+                >Learn more. <i className="fas fa-external-link-alt"></i></a>
             </h3>
             {/*<button className="btn btn-primary " type="button" name="button" id="view-accessibility-report">Infographic</button>*/}
           </div>
