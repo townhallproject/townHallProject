@@ -5,10 +5,10 @@ const EventsWarningBanner = () => {
   return (
     <div className="warningBanner">
       <p>
-      Based on the recommendations from health experts, we strongly encourage all lawmakers to suspend in-person town halls and any other public gatherings.
+      As vaccination rates increase nationally, in person events are becoming more common.
       </p>
       <p>
-      We encourage all Americans to avoid large group gatherings at this time. We will track and highlight as many telephone and virtual meetings as possible.
+      We encourage lawmakers and constituents to follow CDC guidance and local guidelines (taking into account vaccination rates and case numbers in your area) when planning or attending town halls.
       </p>
     </div>
   )
